@@ -1,53 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
-import android.net.Uri
-import app.cash.turbine.turbineScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.fake.FakeAlarmKitImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.fake.FakeMyJsonWriterImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.fake.FakeAccountRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.fake.FakeCategoryRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.fake.FakeMyPreferencesRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.fake.FakeTransactionRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor.fake.FakeTransactionForRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigatorImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.appversion.TestAppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.jsonreader.TestMyJsonReader
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.logger.TestMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.repository.TestMyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
-import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Ignore
-import org.junit.Rule
-import org.junit.Test
-import javax.inject.Inject
-
+/*
 @Ignore("Fix Hilt")
 @HiltAndroidTest
 public class SettingsScreenViewModelTest {
@@ -149,7 +102,8 @@ public class SettingsScreenViewModelTest {
         }
     }
 
-    /*
+    */
+/*
     @Test
     public fun navigateToCategoriesScreenTest(): TestResult = runTest {
         navigationManager = FakeNavigationManagerImpl(
@@ -284,7 +238,8 @@ public class SettingsScreenViewModelTest {
             receiver.cancel()
         }
     }
-    */
+    *//*
+
 
     private fun initViewModel() {
         settingsScreenViewModel = SettingsScreenViewModel(
@@ -300,3 +255,4 @@ public class SettingsScreenViewModelTest {
         )
     }
 }
+*/
