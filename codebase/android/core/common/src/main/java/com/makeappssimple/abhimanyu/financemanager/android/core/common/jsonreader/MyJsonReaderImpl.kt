@@ -40,17 +40,14 @@ public class MyJsonReaderImpl(
     ): String? {
         try {
             val contentResolver = context.contentResolver
-            val stringBuilder = StringBuilder()
             contentResolver.openInputStream(uri)?.use { inputStream ->
                 BufferedReader(InputStreamReader(inputStream)).use { bufferedReader ->
-                    var line: String? = bufferedReader.readLine()
-                    while (line.isNotNull()) {
-                        stringBuilder.append(line)
-                        line = bufferedReader.readLine()
-                    }
+                    return readFromBufferedReader(
+                        bufferedReader = bufferedReader,
+                    )
                 }
             }
-            return stringBuilder.toString()
+            return null
         } catch (
             fileNotFoundException: FileNotFoundException,
         ) {
@@ -62,5 +59,17 @@ public class MyJsonReaderImpl(
             ioException.printStackTrace()
             return null
         }
+    }
+
+    private fun readFromBufferedReader(
+        bufferedReader: BufferedReader,
+    ): String {
+        val stringBuilder = StringBuilder()
+        var line: String? = bufferedReader.readLine()
+        while (line.isNotNull()) {
+            stringBuilder.append(line)
+            line = bufferedReader.readLine()
+        }
+        return stringBuilder.toString()
     }
 }
