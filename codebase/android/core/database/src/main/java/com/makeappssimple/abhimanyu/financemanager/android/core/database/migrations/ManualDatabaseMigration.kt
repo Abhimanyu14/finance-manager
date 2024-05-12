@@ -227,20 +227,27 @@ private object ManualDatabaseMigration {
         ) {
             // Create the new table
             db.execSQL(
-                "CREATE TABLE IF NOT EXISTS `transaction_for_table` (" +
-                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL)"
+                """
+                    CREATE TABLE IF NOT EXISTS `transaction_for_table` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `title` TEXT NOT NULL
+                    )
+                """.trimIndent()
             )
 
             // Insert values
             db.execSQL(
-                """INSERT INTO transaction_for_table (id, title) VALUES (1, 'SELF'), 
-                (2, 'COMMON'), (3, 'OTHERS')""".trimIndent()
+                """
+                    INSERT INTO transaction_for_table  (id, title) 
+                    VALUES (1, 'SELF'), (2, 'COMMON'), (3, 'OTHERS')
+                """.trimIndent()
             )
 
             // Add column with a default value
             db.execSQL(
-                """ALTER TABLE transaction_table 
-                ADD COLUMN `transaction_for_id` INTEGER  DEFAULT -1 NOT NULL
+                """
+                    ALTER TABLE transaction_table 
+                    ADD COLUMN `transaction_for_id` INTEGER  DEFAULT -1 NOT NULL
                 """.trimIndent()
             )
 
