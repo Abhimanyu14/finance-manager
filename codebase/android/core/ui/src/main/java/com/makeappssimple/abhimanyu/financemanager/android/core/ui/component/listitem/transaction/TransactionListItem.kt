@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.composeColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButtonData
@@ -182,7 +182,7 @@ public fun TransactionListItem(
                         text = data.amountText,
                         style = MaterialTheme.typography.headlineMedium
                             .copy(
-                                color = data.amountColor.getComposeColor(),
+                                color = data.amountColor.composeColor,
                                 textAlign = TextAlign.End,
                             ),
                     )

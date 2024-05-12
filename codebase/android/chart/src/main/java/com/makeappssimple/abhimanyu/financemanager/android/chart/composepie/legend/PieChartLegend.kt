@@ -15,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.HorizontalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NonFillingVerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.composeColor
 
 @Composable
 public fun PieChartLegend(
@@ -32,7 +32,7 @@ public fun PieChartLegend(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Dot(
-                        color = item.color.getComposeColor(),
+                        color = item.color.composeColor,
                     )
                     HorizontalSpacer(
                         width = 8.dp,

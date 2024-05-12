@@ -42,9 +42,9 @@ public enum class MyColor {
     OUTLINE,
 }
 
-@Composable
-public fun MyColor.getComposeColor(): Color {
-    return when (this) {
+public val MyColor.composeColor: Color
+    @Composable
+    get() = when (this) {
         MyColor.PRIMARY -> {
             MaterialTheme.colorScheme.primary
         }
@@ -149,4 +149,3 @@ public fun MyColor.getComposeColor(): Color {
             MaterialTheme.colorScheme.outline
         }
     }
-}

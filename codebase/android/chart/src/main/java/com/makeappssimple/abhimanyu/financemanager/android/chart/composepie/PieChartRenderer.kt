@@ -16,7 +16,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.util.fastForEachIndexed
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.composeColor
 import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.max
@@ -70,7 +70,7 @@ internal fun PieChartRenderer(
         (chartSizePx - (sliceWidthPx * 2F)) / 2F
     }
     val colors = entryColors.map {
-        it.getComposeColor()
+        it.composeColor
     }
 
     LaunchedEffect(
