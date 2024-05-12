@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 
 @Stable
-internal class CategoriesScreenUIState(
+internal data class CategoriesScreenUIState(
     val isBottomSheetVisible: Boolean,
     val screenBottomSheetType: CategoriesScreenBottomSheetType,
     var categoryIdToDelete: Int?,

@@ -6,7 +6,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-internal class AddOrEditTransactionForScreenUIState(
+internal data class AddOrEditTransactionForScreenUIState(
     val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean?,

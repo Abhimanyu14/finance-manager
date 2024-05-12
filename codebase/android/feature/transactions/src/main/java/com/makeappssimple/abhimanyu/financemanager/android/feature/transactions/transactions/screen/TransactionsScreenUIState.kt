@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import java.time.LocalDate
 
 @Stable
-internal class TransactionsScreenUIState(
+internal data class TransactionsScreenUIState(
     val isBottomSheetVisible: Boolean,
     val isInSelectionMode: Boolean,
     val isLoading: Boolean,

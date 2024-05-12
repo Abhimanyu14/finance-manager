@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 
 @Stable
-internal class AddOrEditTransactionScreenUIState(
+internal data class AddOrEditTransactionScreenUIState(
     val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
     val uiState: AddOrEditTransactionScreenUiStateData,
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,

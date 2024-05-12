@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 
 @Stable
-internal class HomeScreenUIState(
+internal data class HomeScreenUIState(
     val isBackupCardVisible: Boolean,
     val isBalanceVisible: Boolean,
     val isLoading: Boolean,

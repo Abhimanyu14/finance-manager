@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-internal class TransactionForValuesScreenUIState(
+internal data class TransactionForValuesScreenUIState(
     val isBottomSheetVisible: Boolean,
     val transactionForIdToDelete: Int?,
     val transactionForValuesIsUsedInTransactions: List<Boolean>,

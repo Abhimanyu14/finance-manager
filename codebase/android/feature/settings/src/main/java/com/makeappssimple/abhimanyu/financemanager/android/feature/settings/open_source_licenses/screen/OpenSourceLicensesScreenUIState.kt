@@ -4,6 +4,6 @@ import androidx.compose.runtime.Stable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-internal class OpenSourceLicensesScreenUIState(
+internal data class OpenSourceLicensesScreenUIState(
     val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType,
 ) : ScreenUIState

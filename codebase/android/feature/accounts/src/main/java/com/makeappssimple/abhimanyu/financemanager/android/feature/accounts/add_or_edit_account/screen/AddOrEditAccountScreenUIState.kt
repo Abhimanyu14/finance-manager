@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 
 @Stable
-internal class AddOrEditAccountScreenUIState(
+internal data class AddOrEditAccountScreenUIState(
     val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
     val visibilityData: AddOrEditAccountScreenUIVisibilityData,
     val isCtaButtonEnabled: Boolean,

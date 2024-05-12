@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import java.time.LocalDate
 
 @Stable
-internal class AnalysisScreenUIState(
+internal data class AnalysisScreenUIState(
     val screenBottomSheetType: AnalysisScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
     val selectedFilter: Filter,

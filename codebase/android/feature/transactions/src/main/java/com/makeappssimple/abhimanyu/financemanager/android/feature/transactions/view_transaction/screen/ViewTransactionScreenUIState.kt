@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 
 @Stable
-internal class ViewTransactionScreenUIState(
+internal data class ViewTransactionScreenUIState(
     val isBottomSheetVisible: Boolean,
     val transactionIdToDelete: Int?,
     val refundTransactionListItemData: List<TransactionListItemData>?,

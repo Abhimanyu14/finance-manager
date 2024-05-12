@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
 
 @Stable
-internal class AccountsScreenUIState(
+internal data class AccountsScreenUIState(
     val screenBottomSheetType: AccountsScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
     val isLoading: Boolean,

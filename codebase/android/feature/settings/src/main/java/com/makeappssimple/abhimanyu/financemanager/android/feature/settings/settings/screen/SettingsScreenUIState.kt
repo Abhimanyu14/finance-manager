@@ -5,7 +5,7 @@ import androidx.compose.runtime.Stable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-internal class SettingsScreenUIState(
+internal data class SettingsScreenUIState(
     val isLoading: Boolean,
     val isReminderEnabled: Boolean?,
     val screenBottomSheetType: SettingsScreenBottomSheetType,
