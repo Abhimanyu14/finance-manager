@@ -1,3 +1,6 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+
 buildscript {
     // App version code
     val appVersionCode = 116
@@ -84,43 +87,29 @@ koverMerged {
 }
 */
 
+// region Detekt
 detekt {
     toolVersion = "1.23.6"
-    config.setFrom("config/detekt/detekt.yml")
-    buildUponDefaultConfig = true
-//    reports {
-//        xml.required.set(true)
-//        html.required.set(true)
-//        txt.required.set(false)
-//        sarif.required.set(false)
-//        md.required.set(false)
-//    }
+    config.setFrom("$projectDir/config/detekt./detekt.yml")
+    buildUponDefaultConfig = true // preconfigure defaults
+    allRules = false // activate all available (even unstable) rules.
 }
 
-/*
-// TODO(Abhi): Fix detekt
-tasks.named("detekt").configure {
+tasks.withType<Detekt>().configureEach {
     reports {
-        // Enable/Disable XML report (default: true)
-        xml.required.set(true)
-        xml.outputLocation.set(file("build/reports/detekt.xml"))
-        // Enable/Disable HTML report (default: true)
-        html.required.set(true)
-        html.outputLocation.set(file("build/reports/detekt.html"))
-        // Enable/Disable TXT report (default: true)
-        txt.required.set(true)
-        txt.outputLocation.set(file("build/reports/detekt.txt"))
-        // Enable/Disable SARIF report (default: false)
-        sarif.required.set(true)
-        sarif.outputLocation.set(file("build/reports/detekt.sarif"))
-        // Enable/Disable MD report (default: false)
-        md.required.set(true)
-        md.outputLocation.set(file("build/reports/detekt.md"))
-        custom {
-            // The simple class name of your custom report.
-            reportId = "CustomJsonReport"
-            outputLocation.set(file("build/reports/detekt.json"))
-        }
+        html.required.set(true) // observe findings in your browser with structure and code snippets
+        xml.required.set(false) // checkstyle like format mainly for integrations like Jenkins
+        txt.required.set(true) // similar to the console output, contains issue signature to manually edit baseline files
+        sarif.required.set(false) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
+        md.required.set(true) // simple Markdown format
     }
 }
-*/
+
+// Kotlin DSL
+tasks.withType<Detekt>().configureEach {
+    jvmTarget = "1.8"
+}
+tasks.withType<DetektCreateBaselineTask>().configureEach {
+    jvmTarget = "1.8"
+}
+// endregion
