@@ -1,8 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.test.hilt.manifest
 
-import androidx.activity.ComponentActivity
-import dagger.hilt.android.AndroidEntryPoint
-
 /**
  * Source: Now in android codebase
  *
