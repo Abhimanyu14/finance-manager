@@ -83,7 +83,8 @@ public class CategoriesScreenViewModel @Inject constructor(
                             isDeleteEnabled = isDeleteEnabled,
                             category = category,
                         )
-                    }.orEmpty()
+                    }
+                    .orEmpty()
             val incomeCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INCOME]
                     ?.sortedBy {
@@ -108,7 +109,8 @@ public class CategoriesScreenViewModel @Inject constructor(
                             isDeleteEnabled = isDeleteEnabled,
                             category = category,
                         )
-                    }.orEmpty()
+                    }
+                    .orEmpty()
             val investmentCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INVESTMENT]
                     ?.sortedBy {
@@ -133,7 +135,8 @@ public class CategoriesScreenViewModel @Inject constructor(
                             isDeleteEnabled = isDeleteEnabled,
                             category = category,
                         )
-                    }.orEmpty()
+                    }
+                    .orEmpty()
             mapOf(
                 TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
                 TransactionType.INCOME to incomeCategoriesGridItemDataList,

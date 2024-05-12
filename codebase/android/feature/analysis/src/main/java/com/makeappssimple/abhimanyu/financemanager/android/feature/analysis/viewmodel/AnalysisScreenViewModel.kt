@@ -150,7 +150,8 @@ public class AnalysisScreenViewModel @Inject constructor(
                     endLocalDate = selectedFilterValue.toLocalDate,
                     transactionData = transactionData,
                 )
-            }.groupBy {
+            }
+            .groupBy {
                 it.category
             }
             .mapNotNull { (category, transactionDataList) ->

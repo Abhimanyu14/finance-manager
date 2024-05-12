@@ -99,7 +99,8 @@ internal fun rememberAddOrEditAccountScreenUIStateAndEvents(
                             text = accountType.title,
                             icon = accountType.icon,
                         )
-                    }.orEmpty(),
+                    }
+                    .orEmpty(),
                 balanceAmountValue = unwrappedData?.balanceAmountValue.orEmpty(),
                 minimumBalanceAmountValue = unwrappedData?.minimumBalanceAmountValue.orEmpty(),
                 name = unwrappedData?.name.orEmpty(),

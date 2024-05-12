@@ -15,7 +15,8 @@ public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
         val result = transactionRepository.getAllTransactionData()
             .filter {
                 it.transaction.transactionType == transactionType
-            }.groupBy {
+            }
+            .groupBy {
                 it.category
             }
             .mapNotNull { (category, transactionDataList) ->
