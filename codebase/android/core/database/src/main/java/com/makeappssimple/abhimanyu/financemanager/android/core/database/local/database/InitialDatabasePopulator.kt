@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import java.io.FileNotFoundException
 
 public interface InitialDatabasePopulator {
     public fun populateInitialDatabaseData(
@@ -35,53 +36,55 @@ public class InitialDatabasePopulatorImpl(
             CoroutineScope(
                 context = dispatcherProvider.io + SupervisorJob(),
             ).launch {
-                val initialDatabaseData = try {
+                try {
                     val jsonString = myJsonReader.readJsonFromAssets(
                         fileName = AppConstants.INITIAL_DATA_FILE_NAME,
-                    ) ?: return@launch
-                    Json.decodeFromString<InitialDatabaseData>(
+                    ) ?: throw FileNotFoundException()
+                    val initialDatabaseData = Json.decodeFromString<InitialDatabaseData>(
                         string = jsonString,
                     )
+                    val initialDataVersionNumber: InitialDataVersionNumber? =
+                        myPreferencesDataSource.getInitialDataVersionNumber().first()
+
+                    launch {
+                        populateAccountsData(
+                            initialDatabaseData = initialDatabaseData,
+                            accountsInitialDataVersionNumber = initialDataVersionNumber?.account.orZero(),
+                            myRoomDatabase = myRoomDatabase,
+                        )
+                    }
+                    launch {
+                        populateCategoriesData(
+                            initialDatabaseData = initialDatabaseData,
+                            categoriesInitialDataVersionNumber = initialDataVersionNumber?.category.orZero(),
+                            myRoomDatabase = myRoomDatabase,
+                        )
+                    }
+                    launch {
+                        populateTransactionForValuesData(
+                            initialDatabaseData = initialDatabaseData,
+                            transactionForValuesInitialDataVersionNumber = initialDataVersionNumber?.transactionFor.orZero(),
+                            myRoomDatabase = myRoomDatabase,
+                        )
+                    }
+                    launch {
+                        transactionsCleanUpIfRequired(
+                            transactionsInitialDataVersionNumber = initialDataVersionNumber?.transaction.orZero(),
+                            myRoomDatabase = myRoomDatabase,
+                        )
+                    }
+                } catch (
+                    fileNotFoundException: FileNotFoundException,
+                ) {
+                    fileNotFoundException.printStackTrace()
                 } catch (
                     serializationException: SerializationException,
                 ) {
                     serializationException.printStackTrace()
-                    return@launch
                 } catch (
                     illegalArgumentException: IllegalArgumentException,
                 ) {
                     illegalArgumentException.printStackTrace()
-                    return@launch
-                }
-                val initialDataVersionNumber: InitialDataVersionNumber? =
-                    myPreferencesDataSource.getInitialDataVersionNumber().first()
-
-                launch {
-                    populateAccountsData(
-                        initialDatabaseData = initialDatabaseData,
-                        accountsInitialDataVersionNumber = initialDataVersionNumber?.account.orZero(),
-                        myRoomDatabase = myRoomDatabase,
-                    )
-                }
-                launch {
-                    populateCategoriesData(
-                        initialDatabaseData = initialDatabaseData,
-                        categoriesInitialDataVersionNumber = initialDataVersionNumber?.category.orZero(),
-                        myRoomDatabase = myRoomDatabase,
-                    )
-                }
-                launch {
-                    populateTransactionForValuesData(
-                        initialDatabaseData = initialDatabaseData,
-                        transactionForValuesInitialDataVersionNumber = initialDataVersionNumber?.transactionFor.orZero(),
-                        myRoomDatabase = myRoomDatabase,
-                    )
-                }
-                launch {
-                    transactionsCleanUpIfRequired(
-                        transactionsInitialDataVersionNumber = initialDataVersionNumber?.transaction.orZero(),
-                        myRoomDatabase = myRoomDatabase,
-                    )
                 }
             }
         }
