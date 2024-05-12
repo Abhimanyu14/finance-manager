@@ -164,18 +164,6 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
             .toLocalTime()
     }
 
-    override fun getLocalDateTime(
-        timestamp: Long,
-        zoneId: ZoneId,
-    ): LocalDateTime {
-        return Instant
-            .ofEpochMilli(timestamp)
-            .toZonedDateTime(
-                zoneId = zoneId,
-            )
-            .toLocalDateTime()
-    }
-
     override fun getStartOfDayTimestamp(
         timestamp: Long,
         zoneId: ZoneId,

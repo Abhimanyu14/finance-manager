@@ -6,11 +6,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
-public interface DateTimeUtil {
-    public fun getCurrentLocalDate(): LocalDate
-
-    public fun getCurrentLocalTime(): LocalTime
-
+public interface DateTimeUtil : DateUtil, TimeUtil {
     public fun getCurrentLocalDateTime(): LocalDateTime
 
     public fun getCurrentInstant(): Instant
@@ -73,21 +69,6 @@ public interface DateTimeUtil {
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): Long
 
-    public fun getLocalDate(
-        timestamp: Long = getCurrentTimeMillis(),
-        zoneId: ZoneId = getSystemDefaultZoneId(),
-    ): LocalDate
-
-    public fun getLocalTime(
-        timestamp: Long = getCurrentTimeMillis(),
-        zoneId: ZoneId = getSystemDefaultZoneId(),
-    ): LocalTime
-
-    public fun getLocalDateTime(
-        timestamp: Long,
-        zoneId: ZoneId = getSystemDefaultZoneId(),
-    ): LocalDateTime
-
     public fun getStartOfDayTimestamp(
         timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -103,11 +84,6 @@ public interface DateTimeUtil {
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): Long
 
-    public fun getStartOfMonthLocalDate(
-        timestamp: Long = getCurrentTimeMillis(),
-        zoneId: ZoneId = getSystemDefaultZoneId(),
-    ): LocalDate
-
     public fun getEndOfMonthTimestamp(
         timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -117,11 +93,6 @@ public interface DateTimeUtil {
         timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): Long
-
-    public fun getStartOfYearLocalDate(
-        timestamp: Long = getCurrentTimeMillis(),
-        zoneId: ZoneId = getSystemDefaultZoneId(),
-    ): LocalDate
 
     public fun getEndOfYearTimestamp(
         timestamp: Long = getCurrentTimeMillis(),

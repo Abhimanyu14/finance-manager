@@ -471,7 +471,9 @@ public class TransactionsScreenViewModel @Inject constructor(
                     transactionForId = transactionForId,
                 )
             }
-            updateTransactionsUseCase(*updatedTransactions.toTypedArray())
+            updateTransactionsUseCase(
+                transactions = updatedTransactions.toTypedArray(),
+            )
             clearSelectedTransactions()
         }
     }

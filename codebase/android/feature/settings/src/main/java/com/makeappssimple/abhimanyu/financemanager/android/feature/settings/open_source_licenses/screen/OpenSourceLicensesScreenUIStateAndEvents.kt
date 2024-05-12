@@ -40,17 +40,6 @@ internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(
         screenBottomSheetType,
         setScreenBottomSheetType,
     ) {
-        val unwrappedData: OpenSourceLicensesScreenUIData? = when (data) {
-            is MyResult.Success -> {
-                data.data
-            }
-
-            else -> {
-                null
-            }
-        }
-
-        // TODO(Abhi): Can be reordered to match the class ordering
         OpenSourceLicensesScreenUIStateAndEvents(
             state = OpenSourceLicensesScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,

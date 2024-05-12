@@ -20,7 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -125,7 +124,6 @@ public class SettingsScreenViewModel @Inject constructor(
             ) {
                 isLoading.value = true
             }
-            delay(5000)
             if (restoreDataUseCase(
                     uri = uri,
                 )
@@ -149,7 +147,6 @@ public class SettingsScreenViewModel @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true
-            delay(5000)
             recalculateTotalUseCase()
             navigator.navigateUp()
         }

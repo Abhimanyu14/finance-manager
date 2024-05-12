@@ -6,7 +6,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
@@ -20,9 +19,11 @@ public class AccountsScreenViewModelTest {
 //    @Inject
 //    public lateinit var accountsScreenViewModel: AccountsScreenViewModel
 
+    /*
     @Before
     public fun setUp() {
     }
+    */
 
     @Test
     public fun screenUIDataTest(): TestResult = runTest {

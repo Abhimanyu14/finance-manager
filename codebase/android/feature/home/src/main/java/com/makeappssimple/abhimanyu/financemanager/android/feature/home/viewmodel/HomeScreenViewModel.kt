@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel
 
 import android.net.Uri
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
@@ -41,8 +40,9 @@ import java.time.Instant
 import javax.inject.Inject
 import kotlin.math.abs
 
-@VisibleForTesting
-internal const val defaultOverviewTabSelection = 1
+private object HomeScreenViewModelConstant {
+    const val DEFAULT_OVERVIEW_TAB_SELECTION = 1
+}
 
 @HiltViewModel
 public class HomeScreenViewModel @Inject constructor(
@@ -63,7 +63,7 @@ public class HomeScreenViewModel @Inject constructor(
     private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
 
     private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = defaultOverviewTabSelection,
+        value = HomeScreenViewModelConstant.DEFAULT_OVERVIEW_TAB_SELECTION,
     )
 
     private val timestamp: MutableStateFlow<Long> = MutableStateFlow(
