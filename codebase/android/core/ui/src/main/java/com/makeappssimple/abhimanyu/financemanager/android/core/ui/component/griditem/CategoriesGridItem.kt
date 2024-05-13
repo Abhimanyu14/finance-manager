@@ -20,14 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
 
-public data class CategoriesGridItemData(
-    val isDeleteVisible: Boolean? = null,
-    val isEditVisible: Boolean? = null,
-    val isSetAsDefaultVisible: Boolean? = null,
-    val isSelected: Boolean,
-    val category: Category,
-)
-
 @Composable
 public fun CategoriesGridItem(
     modifier: Modifier = Modifier,

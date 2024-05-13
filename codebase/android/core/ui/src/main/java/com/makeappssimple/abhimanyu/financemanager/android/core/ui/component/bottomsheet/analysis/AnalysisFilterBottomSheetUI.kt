@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -30,21 +28,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
 import java.time.LocalDate
-
-@Immutable
-public data class AnalysisFilterBottomSheetUIData(
-    val isFromDatePickerDialogVisible: Boolean,
-    val isToDatePickerDialogVisible: Boolean,
-    @StringRes val headingTextStringResourceId: Int,
-    val fromDatePickerEndLocalDate: LocalDate,
-    val fromDatePickerSelectedLocalDate: LocalDate,
-    val fromDatePickerStartLocalDate: LocalDate,
-    val toDatePickerEndLocalDate: LocalDate,
-    val toDatePickerSelectedLocalDate: LocalDate,
-    val toDatePickerStartLocalDate: LocalDate,
-    val fromDateText: String,
-    val toDateText: String,
-)
 
 @Composable
 public fun AnalysisFilterBottomSheetUI(

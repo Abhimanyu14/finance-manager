@@ -4,17 +4,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-
-@Immutable
-public data class SettingsListItemAppVersionData(
-    override val type: SettingsListItemType = SettingsListItemType.APP_VERSION,
-    val appVersionText: String,
-) : SettingsListItemData
 
 @Composable
 public fun SettingsListItemAppVersion(

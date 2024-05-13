@@ -11,7 +11,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,7 +23,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.composeColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
@@ -33,35 +31,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
-
-@Immutable
-public data class TransactionListItemData(
-    val isDeleteButtonEnabled: Boolean = false,
-    val isDeleteButtonVisible: Boolean = false,
-    val isEditButtonVisible: Boolean = false,
-    val isExpanded: Boolean = false,
-    val isInSelectionMode: Boolean = false,
-    val isRefundButtonVisible: Boolean = false,
-    val isSelected: Boolean = false,
-    val transactionId: Int,
-    val amountColor: MyColor,
-    val amountText: String,
-    val dateAndTimeText: String,
-    val emoji: String,
-    val accountFromName: String?,
-    val accountToName: String?,
-    val title: String,
-    val transactionForText: String,
-)
-
-@Immutable
-public sealed class TransactionListItemEvent {
-    public data object OnClick : TransactionListItemEvent()
-    public data object OnDeleteButtonClick : TransactionListItemEvent()
-    public data object OnEditButtonClick : TransactionListItemEvent()
-    public data object OnLongClick : TransactionListItemEvent()
-    public data object OnRefundButtonClick : TransactionListItemEvent()
-}
 
 @Composable
 public fun TransactionListItem(

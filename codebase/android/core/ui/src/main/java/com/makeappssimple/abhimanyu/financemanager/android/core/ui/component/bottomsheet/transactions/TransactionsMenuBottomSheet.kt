@@ -1,17 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-
-@Immutable
-public sealed class TransactionsMenuBottomSheetEvent {
-    public data object OnSelectAllTransactionsClick : TransactionsMenuBottomSheetEvent()
-    public data object OnUpdateTransactionForClick : TransactionsMenuBottomSheetEvent()
-}
 
 @Composable
 public fun TransactionsMenuBottomSheet(

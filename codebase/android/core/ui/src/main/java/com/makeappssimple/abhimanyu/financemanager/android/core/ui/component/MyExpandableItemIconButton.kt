@@ -5,26 +5,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-
-@Immutable
-public data class MyExpandableItemIconButtonData(
-    val isClickable: Boolean,
-    val isEnabled: Boolean,
-    val iconImageVector: ImageVector,
-    val labelText: String,
-)
-
-@Immutable
-public sealed class MyExpandableItemIconButtonEvent {
-    public data object OnClick : MyExpandableItemIconButtonEvent()
-}
 
 @Composable
 public fun MyExpandableItemIconButton(

@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -9,29 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
-
-@Immutable
-public data class SettingsListItemContentData(
-    override val type: SettingsListItemType = SettingsListItemType.CONTENT,
-    val isChecked: Boolean? = null,
-    val isEnabled: Boolean = false,
-    val hasToggle: Boolean = false,
-    val imageVector: ImageVector? = null,
-    @StringRes val textStringResourceId: Int,
-) : SettingsListItemData
-
-@Immutable
-public sealed class SettingsListItemContentEvent {
-    public data object OnClick : SettingsListItemContentEvent()
-    public data object OnCheckedChange : SettingsListItemContentEvent()
-}
 
 @Composable
 public fun SettingsListItemContent(

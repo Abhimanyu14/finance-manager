@@ -10,34 +10,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
-
-@Immutable
-public data class ChipUIData(
-    val isLoading: Boolean = false,
-    val isSelected: Boolean = false,
-    val borderColor: Color? = null,
-    val textColor: Color? = null,
-    val text: String = "",
-    val icon: ImageVector? = null,
-)
-
-@Immutable
-public sealed class ChipUIEvent {
-    public data object OnClick : ChipUIEvent()
-}
 
 @Composable
 public fun ChipUI(

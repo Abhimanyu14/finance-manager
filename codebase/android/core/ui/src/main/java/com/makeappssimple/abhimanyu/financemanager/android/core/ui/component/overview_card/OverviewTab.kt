@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -48,19 +47,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 private val overviewTabMinimumWidth = 64.dp
 private val overviewTextHorizontalPadding = 12.dp
 private val overviewTextVerticalPadding = 8.dp
-
-@Immutable
-public data class OverviewTabData(
-    val items: List<String>,
-    val selectedItemIndex: Int,
-)
-
-@Immutable
-public sealed class OverviewTabEvent {
-    public data class OnClick(
-        val index: Int,
-    ) : OverviewTabEvent()
-}
 
 @Composable
 public fun OverviewTab(

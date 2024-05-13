@@ -6,7 +6,6 @@ import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,22 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import java.time.LocalDate
 import java.time.ZoneId
-
-@Immutable
-public data class MyDatePickerData(
-    val isVisible: Boolean = false,
-    val endLocalDate: LocalDate? = null,
-    val selectedLocalDate: LocalDate? = null,
-    val startLocalDate: LocalDate? = null,
-)
-
-@Immutable
-public sealed class MyDatePickerEvent {
-    public data object OnNegativeButtonClick : MyDatePickerEvent()
-    public data class OnPositiveButtonClick(
-        val selectedDate: LocalDate,
-    ) : MyDatePickerEvent()
-}
 
 @Composable
 public fun MyDatePicker(

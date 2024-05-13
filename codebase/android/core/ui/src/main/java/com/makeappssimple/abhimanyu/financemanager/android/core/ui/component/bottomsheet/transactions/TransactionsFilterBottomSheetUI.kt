@@ -19,13 +19,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,24 +56,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 import java.time.LocalDate
-
-@Immutable
-internal data class TransactionsFiltersBottomSheetData(
-    val data: TransactionFilterBottomSheetFilterGroupData,
-    val handleEvent: (event: TransactionFilterBottomSheetFilterGroupEvent) -> Unit = {},
-)
-
-@Immutable
-internal data class TransactionFilterBottomSheetFilterGroupData(
-    @StringRes val headingTextStringResourceId: Int,
-    val items: List<ChipUIData>,
-    val selectedItemsIndices: SnapshotStateList<Int>,
-)
-
-@Immutable
-internal sealed class TransactionFilterBottomSheetFilterGroupEvent {
-    data object OnClearButtonClick : TransactionFilterBottomSheetFilterGroupEvent()
-}
 
 @Composable
 public fun TransactionsFiltersBottomSheetUI(

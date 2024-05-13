@@ -361,7 +361,7 @@ naming:
     parameterPattern: '[a-z][A-Za-z0-9]*|_'
   # TODO(Abhi): Enable this later
   MatchingDeclarationName:
-    active: false
+    active: true
     mustBeFirst: false
   MemberNameEqualsClassName:
     active: true

@@ -1,18 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetEvent
-
-@Immutable
-public sealed class AccountsSetAsDefaultConfirmationBottomSheetEvent {
-    public data object OnNegativeButtonClick : AccountsSetAsDefaultConfirmationBottomSheetEvent()
-    public data object OnPositiveButtonClick : AccountsSetAsDefaultConfirmationBottomSheetEvent()
-}
 
 @Composable
 public fun AccountsSetAsDefaultConfirmationBottomSheet(

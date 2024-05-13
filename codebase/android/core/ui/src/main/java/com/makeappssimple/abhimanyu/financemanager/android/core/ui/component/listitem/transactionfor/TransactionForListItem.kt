@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,24 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumListItemHeight
-
-@Immutable
-public data class TransactionForListItemDataAndEventHandler(
-    val data: TransactionForListItemData,
-    val handleEvent: (event: TransactionForListItemEvent) -> Unit = {},
-)
-
-@Immutable
-public data class TransactionForListItemData(
-    val isMoreOptionsIconButtonVisible: Boolean = false,
-    val title: String,
-)
-
-@Immutable
-public sealed class TransactionForListItemEvent {
-    public data object OnClick : TransactionForListItemEvent()
-    public data object OnMoreOptionsIconButtonClick : TransactionForListItemEvent()
-}
 
 @Composable
 public fun TransactionForListItem(

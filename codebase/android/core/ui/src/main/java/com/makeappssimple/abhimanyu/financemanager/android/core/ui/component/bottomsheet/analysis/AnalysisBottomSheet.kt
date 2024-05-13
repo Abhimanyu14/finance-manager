@@ -1,44 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
-import java.time.LocalDate
-
-public enum class DateRangeOptions(
-    public val title: String,
-) {
-    THIS_MONTH(
-        title = "This Month",
-    ),
-    THIS_YEAR(
-        title = "This Year",
-    ),
-}
-
-@Immutable
-public data class AnalysisFilterBottomSheetData(
-    val selectedFilter: Filter,
-    @StringRes val headingTextStringResourceId: Int,
-    val endLocalDate: LocalDate,
-    val startLocalDate: LocalDate,
-    val startOfMonthLocalDate: LocalDate,
-    val startOfYearLocalDate: LocalDate,
-)
-
-@Immutable
-public sealed class AnalysisFilterBottomSheetEvent {
-    public data object OnNegativeButtonClick : AnalysisFilterBottomSheetEvent()
-    public data class OnPositiveButtonClick(
-        val updatedFilter: Filter,
-    ) : AnalysisFilterBottomSheetEvent()
-}
 
 @Composable
 public fun AnalysisFilterBottomSheet(

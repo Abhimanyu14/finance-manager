@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,21 +36,6 @@ private object TotalBalanceCardConstants {
     val loadingUIHeight = 96.dp
     val loadingUIHorizontalPadding = 32.dp
     val loadingUIVerticalPadding = 16.dp
-}
-
-@Immutable
-public data class TotalBalanceCardData(
-    val isBalanceVisible: Boolean = false,
-    val isClickable: Boolean = false,
-    val isLoading: Boolean = false,
-    val totalBalanceAmount: Long = 0L,
-    val totalMinimumBalanceAmount: Long = 0L,
-)
-
-@Immutable
-public sealed class TotalBalanceCardEvent {
-    public data object OnClick : TotalBalanceCardEvent()
-    public data object OnViewBalanceClick : TotalBalanceCardEvent()
 }
 
 /**

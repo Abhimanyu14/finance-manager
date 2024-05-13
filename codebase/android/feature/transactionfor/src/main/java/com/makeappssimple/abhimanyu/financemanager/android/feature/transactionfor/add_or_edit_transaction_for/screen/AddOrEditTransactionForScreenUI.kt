@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,14 +40,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import kotlinx.coroutines.delay
-
-public enum class AddOrEditTransactionForScreenUIError(
-    @StringRes public val textStringResourceId: Int,
-) {
-    EXISTS(
-        textStringResourceId = R.string.screen_add_or_edit_transaction_for_error_exists,
-    ),
-}
 
 @Composable
 internal fun AddOrEditTransactionForScreenUI(

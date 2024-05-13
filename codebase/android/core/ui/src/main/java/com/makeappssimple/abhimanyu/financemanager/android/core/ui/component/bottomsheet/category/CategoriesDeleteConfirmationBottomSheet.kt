@@ -1,18 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetEvent
-
-@Immutable
-public sealed class CategoriesDeleteConfirmationBottomSheetEvent {
-    public data object OnNegativeButtonClick : CategoriesDeleteConfirmationBottomSheetEvent()
-    public data object OnPositiveButtonClick : CategoriesDeleteConfirmationBottomSheetEvent()
-}
 
 @Composable
 public fun CategoriesDeleteConfirmationBottomSheet(

@@ -1,31 +1,17 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
-
-@Immutable
-public data class MyReadOnlyTextFieldData(
-    val isLoading: Boolean = false,
-    val value: String,
-    @StringRes val labelTextStringResourceId: Int,
-)
-
-@Immutable
-public sealed class MyReadOnlyTextFieldEvent {
-    public data object OnClick : MyReadOnlyTextFieldEvent()
-}
 
 @Composable
 public fun MyReadOnlyTextField(

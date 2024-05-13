@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -9,44 +8,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.NullableComposableContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
-
-@Immutable
-public data class MyOutlinedTextFieldData(
-    val isError: Boolean = false,
-    val isLoading: Boolean = false,
-    @StringRes val labelTextStringResourceId: Int,
-    @StringRes val trailingIconContentDescriptionTextStringResourceId: Int,
-    val keyboardActions: KeyboardActions = KeyboardActions(),
-    val keyboardOptions: KeyboardOptions = KeyboardOptions(),
-    val textFieldValue: TextFieldValue = TextFieldValue(),
-    val visualTransformation: VisualTransformation = VisualTransformation.None,
-    val supportingText: NullableComposableContent = null,
-)
-
-@Immutable
-public sealed class MyOutlinedTextFieldEvent {
-    public data object OnClickTrailingIcon : MyOutlinedTextFieldEvent()
-    public data class OnValueChange(
-        val updatedValue: TextFieldValue,
-    ) : MyOutlinedTextFieldEvent()
-}
 
 @Composable
 public fun MyOutlinedTextField(

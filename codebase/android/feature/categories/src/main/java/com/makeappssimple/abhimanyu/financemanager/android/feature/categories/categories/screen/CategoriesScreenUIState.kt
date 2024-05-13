@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Stable
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData

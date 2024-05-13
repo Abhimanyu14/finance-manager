@@ -1,16 +1,11 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-
-@Immutable
-public data class MyTabData(
-    val title: String,
-)
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 public fun MyTabRow(

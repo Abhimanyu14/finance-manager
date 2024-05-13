@@ -17,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -32,21 +31,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
-
-@Immutable
-public data class MySearchBarData(
-    val autoFocus: Boolean = true,
-    val placeholderText: String,
-    val searchText: String,
-)
-
-@Immutable
-public sealed class MySearchBarEvent {
-    public data object OnSearch : MySearchBarEvent()
-    public data class OnSearchTextChange(
-        val updatedSearchText: String,
-    ) : MySearchBarEvent()
-}
 
 @Composable
 public fun MySearchBar(

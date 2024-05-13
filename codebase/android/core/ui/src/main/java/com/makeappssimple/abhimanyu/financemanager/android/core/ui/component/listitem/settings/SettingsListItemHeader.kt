@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -8,11 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-
-public data class SettingsListItemHeaderData(
-    override val type: SettingsListItemType = SettingsListItemType.HEADER,
-    @StringRes val textStringResourceId: Int,
-) : SettingsListItemData
 
 @Composable
 public fun SettingsListItemHeader(

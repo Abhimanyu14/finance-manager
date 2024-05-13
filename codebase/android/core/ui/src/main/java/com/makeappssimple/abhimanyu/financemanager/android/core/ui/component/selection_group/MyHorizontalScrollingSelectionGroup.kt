@@ -4,26 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.fadingedge.fadingEdge
-
-@Immutable
-public data class MyHorizontalScrollingSelectionGroupData(
-    val isLoading: Boolean = false,
-    val loadingItemSize: Int = 3,
-    val items: List<ChipUIData>,
-)
-
-@Immutable
-public sealed class MyHorizontalScrollingSelectionGroupEvent {
-    public data class OnSelectionChange(
-        val index: Int,
-    ) : MyHorizontalScrollingSelectionGroupEvent()
-}
 
 @Composable
 public fun MyHorizontalScrollingSelectionGroup(

@@ -1,17 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-
-@Immutable
-public data class CategoryMenuBottomSheetData(
-    val isDeleteVisible: Boolean,
-    val isEditVisible: Boolean,
-    val isSetAsDefaultVisible: Boolean,
-)
 
 @Composable
 public fun CategoryMenuBottomSheet(

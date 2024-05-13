@@ -9,7 +9,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -17,26 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
-
-@Immutable
-public data class MyConfirmationBottomSheetDataAndEventHandler(
-    val data: MyConfirmationBottomSheetData,
-    val handleEvent: (event: MyConfirmationBottomSheetEvent) -> Unit = {},
-)
-
-@Immutable
-public data class MyConfirmationBottomSheetData(
-    val message: String,
-    val negativeButtonText: String,
-    val positiveButtonText: String,
-    val title: String,
-)
-
-@Immutable
-public sealed class MyConfirmationBottomSheetEvent {
-    public data object OnNegativeButtonClick : MyConfirmationBottomSheetEvent()
-    public data object OnPositiveButtonClick : MyConfirmationBottomSheetEvent()
-}
 
 @Composable
 public fun MyConfirmationBottomSheet(

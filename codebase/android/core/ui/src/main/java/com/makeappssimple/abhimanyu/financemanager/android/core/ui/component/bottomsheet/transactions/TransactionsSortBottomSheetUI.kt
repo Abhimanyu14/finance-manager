@@ -11,7 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
@@ -21,28 +20,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
-
-@Immutable
-public data class TransactionsSortBottomSheetData(
-    val data: TransactionsSortBottomSheetItemData,
-    val handleEvent: (event: TransactionsSortBottomSheetItemEvent) -> Unit = {},
-)
-
-@Immutable
-public data class TransactionsSortBottomSheetItemData(
-    val sortOption: SortOption,
-    val isSelected: Boolean,
-)
-
-@Immutable
-public sealed class TransactionsSortBottomSheetItemEvent {
-    public data object OnClick : TransactionsSortBottomSheetItemEvent()
-}
 
 @Composable
 public fun TransactionsSortBottomSheetUI(

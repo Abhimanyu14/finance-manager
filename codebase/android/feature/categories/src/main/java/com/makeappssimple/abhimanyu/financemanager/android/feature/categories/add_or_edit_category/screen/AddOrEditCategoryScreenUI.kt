@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,14 +51,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.delay
-
-public enum class AddOrEditCategoryScreenUIError(
-    @StringRes public val textStringResourceId: Int,
-) {
-    CATEGORY_EXISTS(
-        textStringResourceId = R.string.screen_add_or_edit_category_error_category_exists,
-    ),
-}
 
 @Composable
 internal fun AddOrEditCategoryScreenUI(
