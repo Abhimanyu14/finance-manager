@@ -1,4 +1,4 @@
-@file:Suppress("TopLevelPropertyNaming")
+@file:Suppress("TopLevelPropertyNaming", "UnderscoresInNumericLiterals")
 
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 

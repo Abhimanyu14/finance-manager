@@ -1,3 +1,5 @@
+@file:Suppress("UnderscoresInNumericLiterals")
+
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
 import org.junit.Assert
