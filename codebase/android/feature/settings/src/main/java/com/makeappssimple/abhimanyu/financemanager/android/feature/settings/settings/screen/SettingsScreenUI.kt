@@ -43,6 +43,8 @@ public data class SettingsScreenListItemData(
     val handleEvent: (event: SettingsListItemContentEvent) -> Unit = {},
 )
 
+// TODO(Abhi): To Fix - StringLiteralDuplication
+@Suppress("StringLiteralDuplication")
 @Composable
 internal fun SettingsScreenUI(
     uiState: SettingsScreenUIState,

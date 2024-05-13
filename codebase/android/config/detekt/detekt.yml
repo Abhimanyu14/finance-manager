@@ -124,7 +124,7 @@ complexity:
       - 'use'
       - 'with'
   LabeledExpression:
-    active: false
+    active: true
     ignoredLabels: [ ]
   # TODO(Abhi): Enable this later
   LargeClass:
@@ -144,7 +144,7 @@ complexity:
     ignoreDataClasses: true
     ignoreAnnotatedParameter: [ ]
   MethodOverloading:
-    active: false
+    active: true
     threshold: 6
   NamedArguments:
     active: true
@@ -155,7 +155,7 @@ complexity:
     active: false
     threshold: 4
   NestedScopeFunctions:
-    active: false
+    active: true
     threshold: 1
     functions:
       - 'kotlin.apply'
@@ -164,9 +164,9 @@ complexity:
       - 'kotlin.let'
       - 'kotlin.also'
   ReplaceSafeCallChainWithRun:
-    active: false
+    active: true
   StringLiteralDuplication:
-    active: false
+    active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
     threshold: 3
     ignoreAnnotation: true

@@ -28,6 +28,7 @@ public class AlarmKitImpl(
 ) : AlarmKit {
     // TODO(Abhi): Return status of alarm
     override fun enableReminder() {
+        // TODO(Abhi): To fix - https://kotlinlang.slack.com/archives/C88E12QH4/p1715586092060619?thread_ts=1715581758.821969&cid=C88E12QH4
         CoroutineScope(
             context = dispatcherProvider.io,
         ).launch {
@@ -35,29 +36,13 @@ public class AlarmKitImpl(
             val initialAlarmTimestamp = dateTimeUtil.getTimestamp(
                 time = LocalTime.of(reminder.hour, reminder.min)
             )
-            myLogger.logError(
-                message = "Alarm set for : ${reminder.hour}:${reminder.min}",
-            )
-
-            val alarmManager = getAlarmManager() ?: return@launch
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                getAlarmReceiverIntent(),
-                PendingIntent.FLAG_IMMUTABLE
-            )
-
-            alarmManager.setRepeating(
-                AlarmManager.RTC,
-                initialAlarmTimestamp,
-                AlarmManager.INTERVAL_DAY,
-                pendingIntent,
-            )
-
-            enableBroadcastReceivers()
-            myPreferencesRepository.setIsReminderEnabled(
-                isReminderEnabled = true,
-            )
+            getAlarmManager()?.let { alarmManager ->
+                setAlarm(
+                    alarmManager = alarmManager,
+                    initialAlarmTimestamp = initialAlarmTimestamp,
+                    reminder = reminder,
+                )
+            }
         }
     }
 
@@ -89,6 +74,34 @@ public class AlarmKitImpl(
 
     private fun getAlarmManager(): AlarmManager? {
         return context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+    }
+
+    private suspend fun setAlarm(
+        alarmManager: AlarmManager,
+        initialAlarmTimestamp: Long,
+        reminder: Reminder,
+    ) {
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            getAlarmReceiverIntent(),
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC,
+            initialAlarmTimestamp,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent,
+        )
+        myLogger.logError(
+            message = "Alarm set for : ${reminder.hour}:${reminder.min}",
+        )
+
+        enableBroadcastReceivers()
+        myPreferencesRepository.setIsReminderEnabled(
+            isReminderEnabled = true,
+        )
     }
 
     private fun getAlarmReceiverIntent(): Intent {

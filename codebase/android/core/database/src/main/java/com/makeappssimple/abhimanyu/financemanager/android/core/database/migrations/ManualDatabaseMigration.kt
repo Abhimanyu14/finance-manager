@@ -1,4 +1,4 @@
-@file:Suppress("MagicNumber", "LongMethod")
+@file:Suppress("MagicNumber", "LongMethod", "StringLiteralDuplication")
 
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations
 
@@ -262,12 +262,19 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
-                    `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                    `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, 
-                    `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, 
-                    `transaction_timestamp` INTEGER NOT NULL, `transaction_for_id` INTEGER NOT NULL, 
-                    `transaction_type` TEXT NOT NULL)
+                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (
+                        `amount` TEXT NOT NULL, 
+                        `category_id` INTEGER, 
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `source_from_id` INTEGER, 
+                        `source_to_id` INTEGER, 
+                        `description` TEXT NOT NULL, 
+                        `title` TEXT NOT NULL, 
+                        `creation_timestamp` INTEGER NOT NULL, 
+                        `transaction_timestamp` INTEGER NOT NULL, 
+                        `transaction_for_id` INTEGER NOT NULL, 
+                        `transaction_type` TEXT NOT NULL
+                    )
                 """.trimIndent()
             )
 

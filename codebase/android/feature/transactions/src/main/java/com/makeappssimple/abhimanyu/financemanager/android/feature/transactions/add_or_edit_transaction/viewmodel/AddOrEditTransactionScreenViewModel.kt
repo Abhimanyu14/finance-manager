@@ -873,118 +873,127 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     ) {
         coroutineScope.launch {
             selectedTransactionType.collectLatest { transactionType ->
-                transactionType ?: return@collectLatest
-                val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
-                    when (transactionType) {
-                        TransactionType.INCOME -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Income
-                        }
-
-                        TransactionType.EXPENSE -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Expense
-                        }
-
-                        TransactionType.TRANSFER -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Transfer
-                        }
-
-                        TransactionType.ADJUSTMENT -> {
-                            null
-                        }
-
-                        TransactionType.INVESTMENT -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Investment
-                        }
-
-                        TransactionType.REFUND -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Refund
-                        }
-                    }
-                uiVisibilityState?.let {
-                    updateAddOrEditTransactionScreenUiVisibilityState(
-                        updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
+                transactionType?.let {
+                    handleTransactionTypeChange(
+                        transactionType = transactionType,
                     )
                 }
+            }
+        }
+    }
 
-                when (transactionType) {
-                    TransactionType.INCOME -> {
-                        val updatedCategory =
-                            if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionData.value?.category ?: incomeDefaultCategory
-                            } else {
-                                incomeDefaultCategory
-                            }
-                        updateCategory(
-                            updatedCategory = updatedCategory,
-                        )
+    private fun handleTransactionTypeChange(
+        transactionType: TransactionType,
+    ) {
+        val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
+            when (transactionType) {
+                TransactionType.INCOME -> {
+                    AddOrEditTransactionScreenUiVisibilityState.Income
+                }
 
-                        updateAccountFrom(
-                            updatedAccountFrom = null,
-                        )
-                        updateAccountTo(
-                            updatedAccountTo = originalTransactionData.value?.accountTo
-                                ?: defaultAccount,
-                        )
-                    }
+                TransactionType.EXPENSE -> {
+                    AddOrEditTransactionScreenUiVisibilityState.Expense
+                }
 
-                    TransactionType.EXPENSE -> {
-                        val updatedCategory =
-                            if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionData.value?.category
-                                    ?: expenseDefaultCategory
-                            } else {
-                                expenseDefaultCategory
-                            }
-                        updateCategory(
-                            updatedCategory = updatedCategory,
-                        )
+                TransactionType.TRANSFER -> {
+                    AddOrEditTransactionScreenUiVisibilityState.Transfer
+                }
 
-                        updateAccountFrom(
-                            updatedAccountFrom = originalTransactionData.value?.accountFrom
-                                ?: defaultAccount,
-                        )
-                        updateAccountTo(
-                            updatedAccountTo = null,
-                        )
-                    }
+                TransactionType.ADJUSTMENT -> {
+                    null
+                }
 
-                    TransactionType.TRANSFER -> {
-                        updateAccountFrom(
-                            updatedAccountFrom = originalTransactionData.value?.accountFrom
-                                ?: defaultAccount,
-                        )
-                        updateAccountTo(
-                            updatedAccountTo = originalTransactionData.value?.accountTo
-                                ?: defaultAccount,
-                        )
-                    }
+                TransactionType.INVESTMENT -> {
+                    AddOrEditTransactionScreenUiVisibilityState.Investment
+                }
 
-                    TransactionType.ADJUSTMENT -> {}
-
-                    TransactionType.INVESTMENT -> {
-                        val updatedCategory =
-                            if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionData.value?.category
-                                    ?: investmentDefaultCategory
-                            } else {
-                                investmentDefaultCategory
-                            }
-                        updateCategory(
-                            updatedCategory = updatedCategory,
-                        )
-
-                        updateAccountFrom(
-                            updatedAccountFrom = originalTransactionData.value?.accountFrom
-                                ?: defaultAccount,
-                        )
-                        updateAccountTo(
-                            updatedAccountTo = null,
-                        )
-                    }
-
-                    TransactionType.REFUND -> {}
+                TransactionType.REFUND -> {
+                    AddOrEditTransactionScreenUiVisibilityState.Refund
                 }
             }
+        uiVisibilityState?.let {
+            updateAddOrEditTransactionScreenUiVisibilityState(
+                updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
+            )
+        }
+
+        when (transactionType) {
+            TransactionType.INCOME -> {
+                val updatedCategory =
+                    if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
+                        originalTransactionData.value?.category ?: incomeDefaultCategory
+                    } else {
+                        incomeDefaultCategory
+                    }
+                updateCategory(
+                    updatedCategory = updatedCategory,
+                )
+
+                updateAccountFrom(
+                    updatedAccountFrom = null,
+                )
+                updateAccountTo(
+                    updatedAccountTo = originalTransactionData.value?.accountTo
+                        ?: defaultAccount,
+                )
+            }
+
+            TransactionType.EXPENSE -> {
+                val updatedCategory =
+                    if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
+                        originalTransactionData.value?.category
+                            ?: expenseDefaultCategory
+                    } else {
+                        expenseDefaultCategory
+                    }
+                updateCategory(
+                    updatedCategory = updatedCategory,
+                )
+
+                updateAccountFrom(
+                    updatedAccountFrom = originalTransactionData.value?.accountFrom
+                        ?: defaultAccount,
+                )
+                updateAccountTo(
+                    updatedAccountTo = null,
+                )
+            }
+
+            TransactionType.TRANSFER -> {
+                updateAccountFrom(
+                    updatedAccountFrom = originalTransactionData.value?.accountFrom
+                        ?: defaultAccount,
+                )
+                updateAccountTo(
+                    updatedAccountTo = originalTransactionData.value?.accountTo
+                        ?: defaultAccount,
+                )
+            }
+
+            TransactionType.ADJUSTMENT -> {}
+
+            TransactionType.INVESTMENT -> {
+                val updatedCategory =
+                    if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
+                        originalTransactionData.value?.category
+                            ?: investmentDefaultCategory
+                    } else {
+                        investmentDefaultCategory
+                    }
+                updateCategory(
+                    updatedCategory = updatedCategory,
+                )
+
+                updateAccountFrom(
+                    updatedAccountFrom = originalTransactionData.value?.accountFrom
+                        ?: defaultAccount,
+                )
+                updateAccountTo(
+                    updatedAccountTo = null,
+                )
+            }
+
+            TransactionType.REFUND -> {}
         }
     }
 
@@ -997,12 +1006,13 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
             ) { selectedCategoryId, uiState ->
                 Pair(selectedCategoryId, uiState)
             }.collectLatest { (selectedCategoryId, uiState) ->
-                selectedCategoryId ?: return@collectLatest
-                titleSuggestions.update {
-                    getTitleSuggestionsUseCase(
-                        categoryId = selectedCategoryId,
-                        enteredTitle = uiState.title.text,
-                    )
+                selectedCategoryId?.let {
+                    titleSuggestions.update {
+                        getTitleSuggestionsUseCase(
+                            categoryId = selectedCategoryId,
+                            enteredTitle = uiState.title.text,
+                        )
+                    }
                 }
             }
         }
