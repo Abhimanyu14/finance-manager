@@ -52,6 +52,7 @@ output-reports:
 
 comments:
   active: true
+  # TODO(Abhi): Can enable after adding license
   AbsentOrWrongFileLicense:
     active: false
     licenseTemplateFile: 'license.template'
@@ -73,6 +74,7 @@ comments:
     matchTypeParameters: true
     matchDeclarationsOrder: true
     allowParamOnConstructorProperties: false
+  # TODO(Abhi): Enable this later
   UndocumentedPublicClass:
     active: false
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
@@ -92,6 +94,7 @@ comments:
 
 complexity:
   active: true
+  # TODO(Abhi): Enable this later
   CognitiveComplexMethod:
     active: false
     threshold: 15
@@ -99,6 +102,7 @@ complexity:
   ComplexCondition:
     active: false
     threshold: 4
+  # TODO(Abhi): Enable this later
   ComplexInterface:
     active: false
     threshold: 10
@@ -337,7 +341,7 @@ naming:
   FunctionMaxLength:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
-    # TODO(Abhi): Too long function name - optimize later
+    # TODO(Abhi): Optimize this later
     maximumFunctionNameLength: 70
   FunctionMinLength:
     active: true
@@ -479,7 +483,7 @@ potential-bugs:
   IteratorNotThrowingNoSuchElementException:
     active: true
   LateinitUsage:
-    active: false
+    active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
     ignoreOnClassesPattern: ''
     ignoreAnnotated: [ 'Inject' ]
@@ -570,9 +574,9 @@ style:
   ExplicitItLambdaParameter:
     active: true
   # Do not enable this, project convention is opposite of this
-  ExpressionBodySyntax:
-    active: false
-    includeLineWrapping: false
+  #  ExpressionBodySyntax:
+  #    active: false
+  #    includeLineWrapping: false
   ForbiddenAnnotation:
     active: true
     annotations:
@@ -689,11 +693,12 @@ style:
   ProtectedMemberInFinalClass:
     active: true
   RedundantExplicitType:
-    active: false
+    active: true
   RedundantHigherOrderMapUsage:
     active: true
-  RedundantVisibilityModifierRule:
-    active: false
+  # Do not enable this, project convention is opposite of this
+  #  RedundantVisibilityModifierRule:
+  #    active: false
   ReturnCount:
     active: false
     max: 2
@@ -745,9 +750,10 @@ style:
     active: true
   UnnecessaryLet:
     active: true
-  UnnecessaryParentheses:
-    active: false
-    allowForUnclearPrecedence: false
+    # Do not enable this, project convention is opposite of this
+    #  UnnecessaryParentheses:
+    #    active: false
+    #    allowForUnclearPrecedence: false
   UntilInsteadOfRangeTo:
     active: true
   UnusedImports:
