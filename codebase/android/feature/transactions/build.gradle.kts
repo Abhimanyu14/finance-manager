@@ -71,7 +71,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.12" // jetpackComposeCompilerVersion
+        kotlinCompilerExtensionVersion = "1.5.14" // jetpackComposeCompilerVersion
     }
 }
 
