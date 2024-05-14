@@ -21,9 +21,7 @@ public fun SettingsListItemContent(
     handleEvent: (event: SettingsListItemContentEvent) -> Unit = {},
 ) {
     ListItem(
-        leadingContent = if (data.imageVector == null) {
-            null
-        } else {
+        leadingContent = data.imageVector?.let {
             {
                 Icon(
                     imageVector = data.imageVector,
@@ -84,4 +82,3 @@ public fun SettingsListItemContent(
             ),
     )
 }
-

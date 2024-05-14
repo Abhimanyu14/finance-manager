@@ -779,13 +779,14 @@ style:
     active: true
   UseIfEmptyOrIfBlank:
     active: true
+  # Do not enable this
   UseIfInsteadOfWhen:
     active: false
     ignoreWhenContainingVariableDeclaration: false
   UseIsNullOrEmpty:
     active: true
   UseLet:
-    active: false
+    active: true
   UseOrEmpty:
     active: true
   UseRequire:
@@ -793,7 +794,7 @@ style:
   UseRequireNotNull:
     active: true
   UseSumOfInsteadOfFlatMapSize:
-    active: false
+    active: true
   UselessCallOnNotNull:
     active: true
   UtilityClassWithPublicConstructor:
