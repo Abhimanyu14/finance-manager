@@ -12,7 +12,7 @@ public fun LocalDate?.orMin(): LocalDate {
 }
 
 /**
- * [LocalDate] to [LocalDateTime]
+ * [LocalDate] to [LocalDateTime].
  * Time: 23:59:59
  */
 public fun LocalDate.atEndOfDay(): LocalDateTime {
@@ -20,7 +20,7 @@ public fun LocalDate.atEndOfDay(): LocalDateTime {
 }
 
 /**
- * Sample format - 30 Mar, 2023
+ * Sample format - 30 Mar, 2023.
  */
 public fun LocalDate.formattedDate(
     zoneId: ZoneId = getSystemDefaultZoneId(),

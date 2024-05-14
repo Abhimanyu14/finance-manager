@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 import java.time.ZonedDateTime
 
 /**
- * [ZonedDateTime] to [Long]
+ * [ZonedDateTime] to [Long].
  */
 public fun ZonedDateTime.toEpochMilli(): Long {
     return this

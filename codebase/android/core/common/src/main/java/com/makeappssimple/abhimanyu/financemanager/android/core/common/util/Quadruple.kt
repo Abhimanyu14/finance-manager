@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 import java.io.Serializable
 
 /**
- * Expanding [Pair] and [Triple]
+ * Expanding [Pair] and [Triple].
  */
 public data class Quadruple<out A, out B, out C, out D>(
     val first: A,

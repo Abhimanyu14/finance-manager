@@ -47,7 +47,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 
     /**
-     * Sample format - 30 Mar, 2023
+     * Sample format - 30 Mar, 2023.
      */
     override fun getFormattedDate(
         timestamp: Long,
@@ -61,7 +61,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 
     /**
-     * Sample format - 30 Mar
+     * Sample format - 30 Mar.
      */
     override fun getFormattedDay(
         timestamp: Long,
@@ -75,7 +75,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 
     /**
-     * Sample format - March, 2023
+     * Sample format - March, 2023.
      */
     override fun getFormattedMonth(
         timestamp: Long,
@@ -89,7 +89,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 
     /**
-     * Sample format - 2023
+     * Sample format - 2023.
      */
     override fun getFormattedYear(
         timestamp: Long,
@@ -103,7 +103,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 
     /**
-     * Sample format - 2023-Mar-30, 08-24 AM
+     * Sample format - 2023-Mar-30, 08-24 AM.
      */
     override fun getFormattedDateAndTime(
         timestamp: Long,
@@ -117,7 +117,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 
     /**
-     * Sample format - 30 Mar, 2023 at 08:24 AM
+     * Sample format - 30 Mar, 2023 at 08:24 AM.
      */
     override fun getReadableDateAndTime(
         timestamp: Long,

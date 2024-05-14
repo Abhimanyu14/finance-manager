@@ -7,7 +7,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * Sample format - 30 Mar, 2023
+ * Sample format - 30 Mar, 2023.
  */
 internal fun Instant.formattedDate(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -19,7 +19,7 @@ internal fun Instant.formattedDate(
 }
 
 /**
- * Sample format - 30 Mar
+ * Sample format - 30 Mar.
  */
 internal fun Instant.formattedDay(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -31,7 +31,7 @@ internal fun Instant.formattedDay(
 }
 
 /**
- * Sample format - March, 2023
+ * Sample format - March, 2023.
  */
 internal fun Instant.formattedMonth(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -43,7 +43,7 @@ internal fun Instant.formattedMonth(
 }
 
 /**
- * Sample format - 2023
+ * Sample format - 2023.
  */
 internal fun Instant.formattedYear(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -55,7 +55,7 @@ internal fun Instant.formattedYear(
 }
 
 /**
- * Sample format - 2023-Mar-30, 08-24 AM
+ * Sample format - 2023-Mar-30, 08-24 AM.
  */
 internal fun Instant.formattedDateAndTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -69,7 +69,7 @@ internal fun Instant.formattedDateAndTime(
 }
 
 /**
- * Sample format - 30 Mar, 2023 at 08:24 AM
+ * Sample format - 30 Mar, 2023 at 08:24 AM.
  */
 internal fun Instant.formattedReadableDateAndTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -78,7 +78,7 @@ internal fun Instant.formattedReadableDateAndTime(
 }
 
 /**
- * Sample format - 08:24 AM
+ * Sample format - 08:24 AM.
  */
 internal fun Instant.formattedTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -92,7 +92,7 @@ internal fun Instant.formattedTime(
 }
 
 /**
- * [Instant] to [ZonedDateTime]
+ * [Instant] to [ZonedDateTime].
  */
 public fun Instant.toZonedDateTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -101,7 +101,7 @@ public fun Instant.toZonedDateTime(
 }
 
 /**
- * [Instant] to [Instant]
+ * [Instant] to [Instant].
  */
 internal fun Instant.atStartOfDay(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -116,7 +116,7 @@ internal fun Instant.atStartOfDay(
 }
 
 /**
- * [Instant] to [Instant]
+ * [Instant] to [Instant].
  */
 public fun Instant.atEndOfDay(
     zoneId: ZoneId = getSystemDefaultZoneId(),

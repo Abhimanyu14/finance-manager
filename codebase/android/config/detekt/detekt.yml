@@ -61,9 +61,9 @@ comments:
   CommentOverPrivateProperty:
     active: true
   DeprecatedBlockTag:
-    active: false
+    active: true
   EndOfSentenceFormat:
-    active: false
+    active: true
     endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
   KDocReferencesNonPublicProperty:
     active: true
@@ -780,9 +780,9 @@ style:
   UseIfEmptyOrIfBlank:
     active: true
   # Do not enable this
-  UseIfInsteadOfWhen:
-    active: false
-    ignoreWhenContainingVariableDeclaration: false
+  #  UseIfInsteadOfWhen:
+  #    active: false
+  #    ignoreWhenContainingVariableDeclaration: false
   UseIsNullOrEmpty:
     active: true
   UseLet:

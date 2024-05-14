@@ -402,7 +402,7 @@ private object ManualDatabaseMigration {
     }
 
     /**
-     * Column added
+     * Column added.
      */
     val MIGRATION_13_14 = object : Migration(13, 14) {
         override fun migrate(
@@ -418,7 +418,7 @@ private object ManualDatabaseMigration {
     }
 
     /**
-     * Adding new table
+     * Adding new table.
      */
     val MIGRATION_12_13 = object : Migration(12, 13) {
         override fun migrate(
@@ -435,7 +435,7 @@ private object ManualDatabaseMigration {
     }
 
     /**
-     * Column added
+     * Column added.
      */
     val MIGRATION_9_10 = object : Migration(9, 10) {
         override fun migrate(
@@ -488,7 +488,7 @@ private object ManualDatabaseMigration {
     }
 
     /**
-     * Column added
+     * Column added.
      */
     val MIGRATION_7_8 = object : Migration(7, 8) {
         override fun migrate(
@@ -505,7 +505,7 @@ private object ManualDatabaseMigration {
     }
 
     /**
-     * Column added
+     * Column added.
      */
     val MIGRATION_6_7 = object : Migration(6, 7) {
         override fun migrate(
@@ -521,7 +521,7 @@ private object ManualDatabaseMigration {
     }
 
     /**
-     * Column data type change
+     * Column data type change.
      */
     val MIGRATION_4_5 = object : Migration(4, 5) {
         override fun migrate(
@@ -573,7 +573,7 @@ private object ManualDatabaseMigration {
     }
 
     /**
-     * Adding new table
+     * Adding new table.
      */
     val MIGRATION_2_3 = object : Migration(2, 3) {
         override fun migrate(

@@ -6,7 +6,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 /**
- * Sample format - 08:24 AM
+ * Sample format - 08:24 AM.
  */
 public fun LocalTime.formattedTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),

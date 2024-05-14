@@ -16,7 +16,7 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     public fun getSystemDefaultZoneId(): ZoneId
 
     /**
-     * Sample format - 30 Mar, 2023
+     * Sample format - 30 Mar, 2023.
      */
     public fun getFormattedDate(
         timestamp: Long,
@@ -24,7 +24,7 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     ): String
 
     /**
-     * Sample format - 30 Mar
+     * Sample format - 30 Mar.
      */
     public fun getFormattedDay(
         timestamp: Long,
@@ -32,7 +32,7 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     ): String
 
     /**
-     * Sample format - March, 2023
+     * Sample format - March, 2023.
      */
     public fun getFormattedMonth(
         timestamp: Long,
@@ -40,7 +40,7 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     ): String
 
     /**
-     * Sample format - 2023
+     * Sample format - 2023.
      */
     public fun getFormattedYear(
         timestamp: Long,
@@ -48,7 +48,7 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     ): String
 
     /**
-     * Sample format - 2023-Mar-30, 08-24 AM
+     * Sample format - 2023-Mar-30, 08-24 AM.
      */
     public fun getFormattedDateAndTime(
         timestamp: Long = getCurrentTimeMillis(),
@@ -56,7 +56,7 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     ): String
 
     /**
-     * Sample format - 30 Mar, 2023 at 08:24 AM
+     * Sample format - 30 Mar, 2023 at 08:24 AM.
      */
     public fun getReadableDateAndTime(
         timestamp: Long = getCurrentTimeMillis(),

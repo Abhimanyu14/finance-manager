@@ -39,7 +39,7 @@ private object TotalBalanceCardConstants {
 }
 
 /**
- * This is coupled with [Amount]
+ * This is coupled with [Amount].
  */
 @Composable
 public fun TotalBalanceCard(

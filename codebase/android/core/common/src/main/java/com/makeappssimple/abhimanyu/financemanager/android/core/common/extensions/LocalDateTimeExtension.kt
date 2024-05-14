@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 /**
- * [LocalDateTime] to [Instant]
+ * [LocalDateTime] to [Instant].
  */
 internal fun LocalDateTime.toInstant(
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -17,7 +17,7 @@ internal fun LocalDateTime.toInstant(
 }
 
 /**
- * [LocalDateTime] to [Long]
+ * [LocalDateTime] to [Long].
  */
 public fun LocalDateTime.toEpochMilli(
     zoneId: ZoneId = getSystemDefaultZoneId(),

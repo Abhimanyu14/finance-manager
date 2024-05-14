@@ -148,7 +148,7 @@ internal val Gray10 = Color(
 // Theme colors
 
 /**
- * Used
+ * Used.
  */
 internal val Primary = Blue900
 internal val OnPrimary = White
@@ -166,18 +166,18 @@ internal val TertiaryContainer = Green100
 internal val OnTertiaryContainer = Green1000
 
 /**
- * Usages -
+ * Usages.
  */
 internal val Background = Blue10
 internal val OnBackground = DarkGray
 
 /**
- * Usages -
+ * Usages.
  */
 internal val Surface = Blue10
 
 /**
- * Usages - Bottom sheet scrim color
+ * Usages - Bottom sheet scrim color.
  */
 internal val OnSurface = DarkGray
 
@@ -189,7 +189,7 @@ internal val InverseSurface = DarkGray
 internal val InverseOnSurface = White
 
 /**
- * Usages -
+ * Usages.
  */
 internal val Error = Red
 internal val OnError = White

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Daily 09:30 PM
+ * Daily 09:30 PM.
  */
 public object ReminderConstant {
     public const val DEFAULT_REMINDER_HOUR: Int = 21
