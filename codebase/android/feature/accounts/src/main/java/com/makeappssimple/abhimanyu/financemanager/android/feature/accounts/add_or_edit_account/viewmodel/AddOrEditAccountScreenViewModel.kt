@@ -61,7 +61,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         stringDecoder = stringDecoder,
     )
 
-    private lateinit var accounts: List<Account>
+    private val accounts: MutableList<Account> = mutableListOf()
     private val originalAccount: MutableStateFlow<Account?> = MutableStateFlow(
         value = null,
     )
@@ -307,7 +307,8 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
-            accounts = getAllAccountsUseCase()
+            accounts.clear()
+            accounts.addAll(getAllAccountsUseCase())
         }
     }
 
@@ -384,15 +385,11 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
             return false
         }
 
-        val doesNotExist = if (::accounts.isInitialized) {
-            accounts.find {
-                it.name.trim().equalsIgnoringCase(
-                    other = name.trim(),
-                )
-            }.isNull()
-        } else {
-            true
-        }
+        val doesNotExist = accounts.find {
+            it.name.trim().equalsIgnoringCase(
+                other = name.trim(),
+            )
+        }.isNull()
 
         val isValidData = name.trim() == originalAccount?.name?.trim() || doesNotExist
         errorData.update {

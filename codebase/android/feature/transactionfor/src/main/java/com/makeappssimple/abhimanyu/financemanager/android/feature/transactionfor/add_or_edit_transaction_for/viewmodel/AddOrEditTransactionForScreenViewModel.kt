@@ -47,7 +47,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
         stringDecoder = stringDecoder,
     )
 
-    private lateinit var transactionForValues: List<TransactionFor>
+    private val transactionForValues: MutableList<TransactionFor> = mutableListOf()
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(),
     )
@@ -155,7 +155,8 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
-            transactionForValues = getAllTransactionForValuesUseCase()
+            transactionForValues.clear()
+            transactionForValues.addAll(getAllTransactionForValuesUseCase())
         }
     }
 

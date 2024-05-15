@@ -54,7 +54,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
-    private lateinit var categories: List<Category>
+    private val categories: MutableList<Category> = mutableListOf()
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
@@ -281,7 +281,8 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
                 async(
                     context = dispatcherProvider.io,
                 ) {
-                    categories = getAllCategoriesUseCase()
+                    categories.clear()
+                    categories.addAll(getAllCategoriesUseCase())
                 },
             )
         }
