@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -16,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.orDefault
+import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class AddOrEditTransactionScreenUIStateAndEvents(
@@ -109,19 +111,19 @@ internal fun rememberAddOrEditTransactionScreenUIStateAndEvents(
                     ChipUIData(
                         text = transactionType.title,
                     )
-                }.orEmpty(),
+                }?.toImmutableList().orEmpty(),
                 titleSuggestions = unwrappedData?.titleSuggestions.orEmpty(),
                 titleSuggestionsChipUIData = titleSuggestions.map { title ->
                     ChipUIData(
                         text = title,
                     )
-                },
+                }.toImmutableList(),
                 accounts = unwrappedData?.accounts.orEmpty(),
                 transactionForValuesChipUIData = unwrappedData?.transactionForValues?.map { transactionFor ->
                     ChipUIData(
                         text = transactionFor.titleToDisplay,
                     )
-                }.orEmpty(),
+                }?.toImmutableList().orEmpty(),
                 currentLocalDate = unwrappedData?.currentLocalDate.orMin(),
             ),
             events = AddOrEditTransactionScreenUIStateEvents(

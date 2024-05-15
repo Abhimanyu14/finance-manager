@@ -30,6 +30,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -50,7 +52,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
-    private val allTransactionData: StateFlow<List<TransactionData>> =
+    private val allTransactionData: StateFlow<ImmutableList<TransactionData>> =
         getAllTransactionDataFlowUseCase().defaultListStateIn(
             scope = closeableCoroutineScope,
         )
@@ -90,7 +92,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     }.defaultObjectStateIn(
         scope = closeableCoroutineScope,
     )
-    private val transactionForValues: StateFlow<List<TransactionFor>> =
+    private val transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
             scope = closeableCoroutineScope,
         )
@@ -120,7 +122,8 @@ public class TransactionsScreenViewModel @Inject constructor(
         value = emptyList(),
     )
 
-    private val transactionTypes: List<TransactionType> = TransactionType.entries
+    private val transactionTypes: ImmutableList<TransactionType> =
+        TransactionType.entries.toImmutableList()
 
     private var oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
         dateTimeUtil.getLocalDate(
@@ -132,7 +135,7 @@ public class TransactionsScreenViewModel @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    private val sortOptions: List<SortOption> = SortOption.entries
+    private val sortOptions: ImmutableList<SortOption> = SortOption.entries.toImmutableList()
 
     private val transactionDetailsListItemViewData: StateFlow<Map<String, List<TransactionListItemData>>?> =
         combine(
@@ -329,23 +332,29 @@ public class TransactionsScreenViewModel @Inject constructor(
                 it.key as String
             }
             ?.mapValues {
-                (it.value as List<*>).filterIsInstance<TransactionListItemData>()
+                (it.value as ImmutableList<*>).filterIsInstance<TransactionListItemData>()
+                    .toImmutableList()
             }
         val searchText = flows[4] as? String
         val selectedSortOption = flows[5] as? SortOption
         // TODO-Abhi: Write a helper function to type cast list
-        val transactionForValuesValue: List<TransactionFor> =
-            (flows[6] as? List<*>)?.filterIsInstance<TransactionFor>().orEmpty()
-        val selectedTransactionsValue: List<Int> =
-            (flows[7] as? List<*>)?.filterIsInstance<Int>().orEmpty()
-        val expenseCategoriesValue: List<Category> =
-            (flows[8] as? List<*>)?.filterIsInstance<Category>().orEmpty()
-        val incomeCategoriesValue: List<Category> =
-            (flows[9] as? List<*>)?.filterIsInstance<Category>().orEmpty()
-        val investmentCategoriesValue: List<Category> =
-            (flows[10] as? List<*>)?.filterIsInstance<Category>().orEmpty()
-        val accountsValue: List<Account> =
-            (flows[11] as? List<*>)?.filterIsInstance<Account>().orEmpty()
+        val transactionForValuesValue: ImmutableList<TransactionFor> =
+            (flows[6] as? ImmutableList<*>)?.filterIsInstance<TransactionFor>().orEmpty()
+                .toImmutableList()
+        val selectedTransactionsValue: ImmutableList<Int> =
+            (flows[7] as? ImmutableList<*>)?.filterIsInstance<Int>().orEmpty().toImmutableList()
+        val expenseCategoriesValue: ImmutableList<Category> =
+            (flows[8] as? ImmutableList<*>)?.filterIsInstance<Category>().orEmpty()
+                .toImmutableList()
+        val incomeCategoriesValue: ImmutableList<Category> =
+            (flows[9] as? ImmutableList<*>)?.filterIsInstance<Category>().orEmpty()
+                .toImmutableList()
+        val investmentCategoriesValue: ImmutableList<Category> =
+            (flows[10] as? ImmutableList<*>)?.filterIsInstance<Category>().orEmpty()
+                .toImmutableList()
+        val accountsValue: ImmutableList<Account> =
+            (flows[11] as? ImmutableList<*>)?.filterIsInstance<Account>().orEmpty()
+                .toImmutableList()
 
         if (
             isLoading.isNull() ||

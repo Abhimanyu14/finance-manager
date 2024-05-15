@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,16 +21,29 @@ public fun Flow<Boolean>.defaultBooleanStateIn(
     )
 }
 
-public fun <T> Flow<List<T>>.defaultListStateIn(
+//public fun <T> Flow<List<T>>.defaultListStateIn(
+//    scope: CoroutineScope,
+//    started: SharingStarted = SharingStarted.WhileSubscribed(
+//        stopTimeoutMillis = 5000,
+//    ),
+//): StateFlow<List<T>> {
+//    return this.stateIn(
+//        scope = scope,
+//        started = started,
+//        initialValue = emptyList(),
+//    )
+//}
+
+public fun <T> Flow<ImmutableList<T>>.defaultListStateIn(
     scope: CoroutineScope,
     started: SharingStarted = SharingStarted.WhileSubscribed(
         stopTimeoutMillis = 5000,
     ),
-): StateFlow<List<T>> {
+): StateFlow<ImmutableList<T>> {
     return this.stateIn(
         scope = scope,
         started = started,
-        initialValue = emptyList(),
+        initialValue = persistentListOf(),
     )
 }
 

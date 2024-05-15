@@ -14,6 +14,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class CategoriesScreenUIStateAndEvents(
@@ -99,8 +101,8 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
                     MyTabData(
                         title = it.title,
                     )
-                },
-                validTransactionTypes = listOf(
+                }.toImmutableList(),
+                validTransactionTypes = persistentListOf(
                     TransactionType.EXPENSE,
                     TransactionType.INCOME,
                     TransactionType.INVESTMENT,

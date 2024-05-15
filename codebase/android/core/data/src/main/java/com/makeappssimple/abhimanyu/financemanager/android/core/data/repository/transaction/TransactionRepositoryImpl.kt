@@ -12,6 +12,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -30,11 +32,11 @@ public class TransactionRepositoryImpl(
         }
     }
 
-    override fun getAllTransactionDataFlow(): Flow<List<TransactionData>> {
+    override fun getAllTransactionDataFlow(): Flow<ImmutableList<TransactionData>> {
         return transactionDao.getAllTransactionDataFlow().map {
             it.map(
                 transform = TransactionDataEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 

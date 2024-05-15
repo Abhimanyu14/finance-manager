@@ -139,6 +139,9 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation(libs.hilt.navigation.compose)
 
+    // KotlinX collections immutable
+    implementation(libs.collections.immutable)
+
     // Detekt formatting
     // detektPlugins(libs.detekt.formatting)
 

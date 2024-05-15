@@ -5,13 +5,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 public fun TransactionsMenuBottomSheet(
     modifier: Modifier = Modifier,
     handleEvent: (event: TransactionsMenuBottomSheetEvent) -> Unit = {},
 ) {
-    val items = listOf(
+    val items = persistentListOf(
         TransactionsMenuBottomSheetItemData(
             imageVector = MyIcons.Edit,
             text = stringResource(

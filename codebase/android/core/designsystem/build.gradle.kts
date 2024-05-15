@@ -98,6 +98,9 @@ dependencies {
     // Jetpack compose material icons
     implementation(libs.compose.icons)
 
+    // KotlinX collections immutable
+    implementation(libs.collections.immutable)
+
     // Detekt compose
     detektPlugins(libs.detekt.rules.compose.nlopez)
 

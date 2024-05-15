@@ -2,18 +2,20 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 public class FakeTransactionForRepositoryImpl : TransactionForRepository {
-    override fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>> {
+    override fun getAllTransactionForValuesFlow(): Flow<ImmutableList<TransactionFor>> {
         return flow {
             emptyList<TransactionFor>()
         }
     }
 
-    override suspend fun getAllTransactionForValues(): List<TransactionFor> {
-        return emptyList()
+    override suspend fun getAllTransactionForValues(): ImmutableList<TransactionFor> {
+        return persistentListOf()
     }
 
     override suspend fun getTransactionFor(
@@ -24,8 +26,8 @@ public class FakeTransactionForRepositoryImpl : TransactionForRepository {
 
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    ): List<Long> {
-        return emptyList()
+    ): ImmutableList<Long> {
+        return persistentListOf()
     }
 
     override suspend fun updateTransactionForValues(

@@ -6,6 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,19 +17,19 @@ public class TransactionForRepositoryImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val transactionForDao: TransactionForDao,
 ) : TransactionForRepository {
-    override fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>> {
+    override fun getAllTransactionForValuesFlow(): Flow<ImmutableList<TransactionFor>> {
         return transactionForDao.getAllTransactionForValuesFlow().map {
             it.map(
                 transform = TransactionForEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
-    override suspend fun getAllTransactionForValues(): List<TransactionFor> {
+    override suspend fun getAllTransactionForValues(): ImmutableList<TransactionFor> {
         return executeOnIoDispatcher {
             transactionForDao.getAllTransactionForValues().map(
                 transform = TransactionForEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
@@ -43,13 +45,13 @@ public class TransactionForRepositoryImpl(
 
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    ): List<Long> {
+    ): ImmutableList<Long> {
         return executeOnIoDispatcher {
             transactionForDao.insertTransactionForValues(
                 transactionForValues = transactionForValues.map(
                     transform = TransactionFor::asEntity,
                 ).toTypedArray(),
-            )
+            ).toImmutableList()
         }
     }
 

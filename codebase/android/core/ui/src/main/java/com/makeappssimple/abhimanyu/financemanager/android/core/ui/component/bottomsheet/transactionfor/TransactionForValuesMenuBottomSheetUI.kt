@@ -7,11 +7,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemDataAndEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemEvent
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun TransactionForValuesMenuBottomSheetUI(
     modifier: Modifier = Modifier,
-    items: List<TransactionForValuesMenuBottomSheetItemData>,
+    items: ImmutableList<TransactionForValuesMenuBottomSheetItemData>,
 ) {
     MyBottomSheetList(
         modifier = modifier,

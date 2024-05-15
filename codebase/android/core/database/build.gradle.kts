@@ -111,6 +111,9 @@ dependencies {
     // KotlinX serialization
     implementation(libs.serialization)
 
+    // KotlinX collections immutable
+    implementation(libs.collections.immutable)
+
     // Paging
     implementation(libs.paging.ktx)
 

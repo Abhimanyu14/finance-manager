@@ -14,11 +14,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun SelectCategoryBottomSheetUI(
     modifier: Modifier = Modifier,
-    items: List<SelectCategoryBottomSheetItemData>,
+    items: ImmutableList<SelectCategoryBottomSheetItemData>,
 ) {
     Column(
         modifier = modifier
@@ -37,7 +39,7 @@ internal fun SelectCategoryBottomSheetUI(
                     isSelected = it.isSelected,
                     category = it.category,
                 )
-            },
+            }.toImmutableList(),
             onItemClick = {
                 items[it].onClick()
             },

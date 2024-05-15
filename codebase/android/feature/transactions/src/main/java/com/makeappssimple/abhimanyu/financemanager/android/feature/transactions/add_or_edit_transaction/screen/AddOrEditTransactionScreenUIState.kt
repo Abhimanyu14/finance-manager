@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
+import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Stable
@@ -24,11 +25,11 @@ internal data class AddOrEditTransactionScreenUIState(
     @StringRes val accountToTextFieldLabelTextStringResourceId: Int,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    val accounts: List<Account>,
-    val filteredCategories: List<Category>,
-    val titleSuggestionsChipUIData: List<ChipUIData>,
-    val transactionForValuesChipUIData: List<ChipUIData>,
-    val transactionTypesForNewTransactionChipUIData: List<ChipUIData>,
-    val titleSuggestions: List<String>,
+    val accounts: ImmutableList<Account>,
+    val filteredCategories: ImmutableList<Category>,
+    val titleSuggestionsChipUIData: ImmutableList<ChipUIData>,
+    val transactionForValuesChipUIData: ImmutableList<ChipUIData>,
+    val transactionTypesForNewTransactionChipUIData: ImmutableList<ChipUIData>,
+    val titleSuggestions: ImmutableList<String>,
     val currentLocalDate: LocalDate,
 ) : ScreenUIState

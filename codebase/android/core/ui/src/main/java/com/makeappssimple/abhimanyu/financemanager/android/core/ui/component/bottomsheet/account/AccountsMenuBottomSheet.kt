@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 public fun AccountsMenuBottomSheet(
@@ -48,7 +49,7 @@ public fun AccountsMenuBottomSheet(
                 )
             )
         }
-    }
+    }.toImmutableList()
 
     AccountsMenuBottomSheetUI(
         items = items,

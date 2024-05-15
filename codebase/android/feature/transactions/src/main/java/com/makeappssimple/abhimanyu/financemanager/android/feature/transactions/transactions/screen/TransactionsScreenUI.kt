@@ -58,6 +58,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MySelectionModeTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun TransactionsScreenUI(
@@ -159,7 +160,7 @@ internal fun TransactionsScreenUI(
                 TransactionsScreenBottomSheetType.Sort -> {
                     TransactionsSortBottomSheet(
                         selectedSortOptionIndex = uiState.sortOptions.indexOf(uiState.selectedSortOption),
-                        sortOptions = uiState.sortOptions.toList(),
+                        sortOptions = uiState.sortOptions.toImmutableList(),
                         resetBottomSheetType = {
                             handleUIEvent(TransactionsScreenUIEvent.OnBottomSheetDismissed)
                         },

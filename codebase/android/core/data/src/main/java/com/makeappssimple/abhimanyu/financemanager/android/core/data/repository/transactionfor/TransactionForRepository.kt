@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 
 public interface TransactionForRepository {
-    public fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>>
+    public fun getAllTransactionForValuesFlow(): Flow<ImmutableList<TransactionFor>>
 
-    public suspend fun getAllTransactionForValues(): List<TransactionFor>
+    public suspend fun getAllTransactionForValues(): ImmutableList<TransactionFor>
 
     public suspend fun getTransactionFor(
         id: Int,
@@ -14,7 +15,7 @@ public interface TransactionForRepository {
 
     public suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    ): List<Long>
+    ): ImmutableList<Long>
 
     public suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionFor,

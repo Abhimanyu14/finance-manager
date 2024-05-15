@@ -10,13 +10,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun CategoriesGrid(
     modifier: Modifier = Modifier,
     bottomPadding: Dp = 0.dp,
     topPadding: Dp = 0.dp,
-    categoriesGridItemDataList: List<CategoriesGridItemData>,
+    categoriesGridItemDataList: ImmutableList<CategoriesGridItemData>,
     onItemClick: ((index: Int) -> Unit)? = null,
 ) {
     LazyVerticalGrid(

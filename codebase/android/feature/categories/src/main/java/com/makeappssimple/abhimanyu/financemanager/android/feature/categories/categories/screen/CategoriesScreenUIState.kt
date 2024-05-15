@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal data class CategoriesScreenUIState(
@@ -14,8 +15,8 @@ internal data class CategoriesScreenUIState(
     val categoryIdToDelete: Int?,
     val clickedItemId: Int?,
     val selectedTabIndex: Int,
-    val tabData: List<MyTabData>,
-    val validTransactionTypes: List<TransactionType>,
-    val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
+    val tabData: ImmutableList<MyTabData>,
+    val validTransactionTypes: ImmutableList<TransactionType>,
+    val categoriesGridItemDataMap: Map<TransactionType, ImmutableList<CategoriesGridItemData>>,
     val pagerState: PagerState,
 ) : ScreenUIState

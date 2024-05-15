@@ -59,6 +59,9 @@ dependencies {
     // KotlinX serialization
     implementation(libs.serialization)
 
+    // KotlinX collections immutable
+    implementation(libs.collections.immutable)
+
     // Detekt compose
     detektPlugins(libs.detekt.rules.compose.nlopez)
 }

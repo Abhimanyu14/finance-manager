@@ -573,7 +573,7 @@ style:
     active: true
   ExplicitItLambdaParameter:
     active: true
-  # Do not enable this, project convention is opposite of this
+  # Note: Do not enable this, project convention is opposite of this
   #  ExpressionBodySyntax:
   #    active: false
   #    includeLineWrapping: false
@@ -696,7 +696,7 @@ style:
     active: true
   RedundantHigherOrderMapUsage:
     active: true
-  # Do not enable this, project convention is opposite of this
+  # Note: Do not enable this, project convention is opposite of this
   #  RedundantVisibilityModifierRule:
   #    active: false
   ReturnCount:
@@ -750,10 +750,10 @@ style:
     active: true
   UnnecessaryLet:
     active: true
-    # Do not enable this, project convention is opposite of this
-    #  UnnecessaryParentheses:
-    #    active: false
-    #    allowForUnclearPrecedence: false
+  # Note: Do not enable this, project convention is opposite of this
+  #  UnnecessaryParentheses:
+  #    active: false
+  #    allowForUnclearPrecedence: false
   UntilInsteadOfRangeTo:
     active: true
   UnusedImports:
@@ -785,7 +785,7 @@ style:
     active: true
   UseIfEmptyOrIfBlank:
     active: true
-  # Do not enable this
+  # Note: Do not enable this
   #  UseIfInsteadOfWhen:
   #    active: false
   #    ignoreWhenContainingVariableDeclaration: false
@@ -822,17 +822,18 @@ Compose:
   ComposableAnnotationNaming:
     active: true
   ComposableNaming:
-    active: true
     # -- You can optionally disable the checks in this rule for regex matches against the composable name (e.g. molecule presenters)
     # allowedComposableFunctionNames: .*Presenter,.*MoleculePresenter
-  ComposableParamOrder:
-    active: false
-    # -- You can optionally have a list of types to be treated as lambdas (e.g. typedefs or fun interfaces not picked up automatically)
-    # treatAsLambda: MyLambdaType
+    active: true
+  # Note: Do not enable this.
+  # TODO(Abhi): Create a custom param ordering rule for this project
+  #  ComposableParamOrder:
+  #    active: false
+  # -- You can optionally have a list of types to be treated as lambdas (e.g. typedefs or fun interfaces not picked up automatically)
+  # treatAsLambda: MyLambdaType
   CompositionLocalAllowlist:
-    active: false
-    # -- You can optionally define a list of CompositionLocals that are allowed here
-    # allowedCompositionLocals: LocalSomething,LocalSomethingElse
+    active: true
+    allowedCompositionLocals: LocalMyLogger
   CompositionLocalNaming:
     active: true
   ContentEmitterReturningValues:
@@ -909,7 +910,7 @@ Compose:
   RememberContentMissing:
     active: true
   UnstableCollections:
-    active: false # Opt-in, disabled by default. Turn on if you want to enforce this (e.g. you have strong skipping disabled)
+    active: true # Opt-in, disabled by default. Turn on if you want to enforce this (e.g. you have strong skipping disabled)
   ViewModelForwarding:
     active: true
     # -- You can optionally use this rule on things other than types ending in "ViewModel" or "Presenter" (which are the defaults). You can add your own via a regex here:

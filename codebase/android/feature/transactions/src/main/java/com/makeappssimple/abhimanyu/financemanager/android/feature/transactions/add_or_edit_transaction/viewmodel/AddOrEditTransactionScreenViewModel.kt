@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isTrue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
@@ -55,6 +56,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddOrEditTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -116,20 +119,21 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     // endregion
 
     // region Data source
-    private var transactionTypesForNewTransaction: MutableStateFlow<List<TransactionType>?> =
+    private var transactionTypesForNewTransaction: MutableStateFlow<ImmutableList<TransactionType>?> =
         MutableStateFlow(
             value = null,
         )
-    private var categories: MutableStateFlow<List<Category>?> = MutableStateFlow(
+    private var categories: MutableStateFlow<ImmutableList<Category>?> = MutableStateFlow(
         value = null,
     )
-    private val titleSuggestions: MutableStateFlow<List<String>?> = MutableStateFlow(
+    private val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
         value = null,
     )
-    private var transactionForValues: MutableStateFlow<List<TransactionFor>?> = MutableStateFlow(
-        value = null,
-    )
-    private var accounts: MutableStateFlow<List<Account>?> = MutableStateFlow(
+    private var transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>?> =
+        MutableStateFlow(
+            value = null,
+        )
+    private var accounts: MutableStateFlow<ImmutableList<Account>?> = MutableStateFlow(
         value = null,
     )
     // endregion
@@ -158,13 +162,13 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         value = null,
     )
 
-    private val filteredCategories: StateFlow<List<Category>> = combine(
+    private val filteredCategories: StateFlow<ImmutableList<Category>> = combine(
         flow = categories,
         flow2 = selectedTransactionType,
     ) { categories, selectedTransactionType ->
         categories?.filter { category ->
             category.transactionType == selectedTransactionType
-        }.orEmpty()
+        }?.toImmutableList().orEmpty()
     }.defaultListStateIn(
         scope = closeableCoroutineScope,
     )
@@ -264,13 +268,20 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         val uiState = flows[0] as? AddOrEditTransactionScreenUiStateData
         val uiVisibilityState = flows[1] as? AddOrEditTransactionScreenUiVisibilityState
         val isCtaButtonEnabled = flows[2] as? Boolean
-        val filteredCategories = (flows[3] as? List<*>)?.filterIsInstance<Category>()
-        val accounts = (flows[4] as? List<*>)?.filterIsInstance<Account>()
-        val titleSuggestions = (flows[5] as? List<*>)?.filterIsInstance<String>()
+        val filteredCategories =
+            (flows[3] as? ImmutableList<*>)?.filterIsInstance<Category>()?.toImmutableList()
+                .orEmpty()
+        val accounts =
+            (flows[4] as? ImmutableList<*>)?.filterIsInstance<Account>()?.toImmutableList()
+                .orEmpty()
+        val titleSuggestions =
+            (flows[5] as? ImmutableList<*>)?.filterIsInstance<String>()?.toImmutableList().orEmpty()
         val transactionTypesForNewTransaction =
-            (flows[6] as? List<*>)?.filterIsInstance<TransactionType>()
+            (flows[6] as? ImmutableList<*>)?.filterIsInstance<TransactionType>()?.toImmutableList()
+                .orEmpty()
         val transactionForValues =
-            (flows[7] as? List<*>)?.filterIsInstance<TransactionFor>()
+            (flows[7] as? ImmutableList<*>)?.filterIsInstance<TransactionFor>()?.toImmutableList()
+                .orEmpty()
         val selectedTransactionType = flows[8] as? TransactionType
 
         if (
@@ -828,7 +839,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
                     defaultDataIdFromDataStore = myPreferencesRepository.getDefaultDataId().first()
                 },
                 async {
-                    categories.value = getAllCategoriesUseCase()
+                    categories.value = getAllCategoriesUseCase().toImmutableList()
                 },
                 async {
                     accounts.value = getAllAccountsUseCase()
@@ -839,9 +850,11 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
                                 it.balanceAmount.value
                             }
                         )
+                        .toImmutableList()
                 },
                 async {
-                    transactionForValues.value = getAllTransactionForValuesUseCase()
+                    transactionForValues.value =
+                        getAllTransactionForValuesUseCase().toImmutableList()
                 },
             )
             getTransactionTypesForNewTransaction()
@@ -1005,7 +1018,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
                         getTitleSuggestionsUseCase(
                             categoryId = selectedCategoryId,
                             enteredTitle = uiState.title.text,
-                        )
+                        ).toImmutableList()
                     }
                 }
             }
@@ -1025,7 +1038,8 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         }
         val transactionTypesForNewTransaction =
             (TransactionType.entries.toSet() - excludedTransactionTypes).toList()
-        this.transactionTypesForNewTransaction.value = transactionTypesForNewTransaction
+        this.transactionTypesForNewTransaction.value =
+            transactionTypesForNewTransaction.toImmutableList()
 
         if (screenArgs.isEdit.isFalse() &&
             screenArgs.originalTransactionId.isNull()

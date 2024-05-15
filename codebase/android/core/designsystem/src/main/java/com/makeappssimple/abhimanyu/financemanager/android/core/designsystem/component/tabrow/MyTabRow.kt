@@ -6,12 +6,13 @@ import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun MyTabRow(
     modifier: Modifier = Modifier,
     selectedTabIndex: Int,
-    tabDataList: List<MyTabData>,
+    tabDataList: ImmutableList<MyTabData>,
     updateSelectedTabIndex: (updatedSelectedTabIndex: Int) -> Unit,
 ) {
     TabRow(

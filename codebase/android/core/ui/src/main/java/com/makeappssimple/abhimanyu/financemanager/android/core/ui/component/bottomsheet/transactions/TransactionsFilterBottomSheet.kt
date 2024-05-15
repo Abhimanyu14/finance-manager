@@ -6,16 +6,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
+import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Composable
 public fun TransactionsFilterBottomSheet(
-    expenseCategories: List<Category>,
-    incomeCategories: List<Category>,
-    investmentCategories: List<Category>,
-    accounts: List<Account>,
-    transactionForValues: List<TransactionFor>,
-    transactionTypes: List<TransactionType>,
+    expenseCategories: ImmutableList<Category>,
+    incomeCategories: ImmutableList<Category>,
+    investmentCategories: ImmutableList<Category>,
+    accounts: ImmutableList<Account>,
+    transactionForValues: ImmutableList<TransactionFor>,
+    transactionTypes: ImmutableList<TransactionType>,
     defaultMinDate: LocalDate,
     defaultMaxDate: LocalDate,
     selectedFilter: Filter,

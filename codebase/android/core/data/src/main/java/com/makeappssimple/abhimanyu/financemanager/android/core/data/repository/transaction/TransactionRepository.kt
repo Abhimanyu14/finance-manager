@@ -5,12 +5,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 
 public interface TransactionRepository {
     public suspend fun getAllTransactions(): List<Transaction>
 
-    public fun getAllTransactionDataFlow(): Flow<List<TransactionData>>
+    public fun getAllTransactionDataFlow(): Flow<ImmutableList<TransactionData>>
 
     public suspend fun getAllTransactionData(): List<TransactionData>
 

@@ -23,6 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -141,7 +143,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         selectedFilterValue: Filter,
         selectedTransactionTypeIndexValue: Int,
         allTransactionDataValue: List<TransactionData>,
-    ): List<AnalysisListItemData> {
+    ): ImmutableList<AnalysisListItemData> {
         val selectedTransactionType = validTransactionTypes[selectedTransactionTypeIndexValue]
         val result = allTransactionDataValue
             .filter { transactionData ->
@@ -185,7 +187,7 @@ public class AnalysisScreenViewModel @Inject constructor(
                     },
                 title = it.category.title,
             )
-        }
+        }.toImmutableList()
     }
 
     private fun isAvailableAfterDateFilter(

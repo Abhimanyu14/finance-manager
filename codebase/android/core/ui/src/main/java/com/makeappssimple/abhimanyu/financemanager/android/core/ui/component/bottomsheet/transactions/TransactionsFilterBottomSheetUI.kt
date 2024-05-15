@@ -55,17 +55,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import java.time.LocalDate
 
 @Composable
 public fun TransactionsFiltersBottomSheetUI(
     modifier: Modifier = Modifier,
-    expenseCategories: List<Category>,
-    incomeCategories: List<Category>,
-    investmentCategories: List<Category>,
-    accounts: List<Account>,
-    transactionForValues: List<TransactionFor>,
-    transactionTypes: List<TransactionType>,
+    expenseCategories: ImmutableList<Category>,
+    incomeCategories: ImmutableList<Category>,
+    investmentCategories: ImmutableList<Category>,
+    accounts: ImmutableList<Account>,
+    transactionForValues: ImmutableList<TransactionFor>,
+    transactionTypes: ImmutableList<TransactionType>,
     defaultMinDate: LocalDate,
     defaultMaxDate: LocalDate,
     selectedFilter: Filter,
@@ -134,7 +136,7 @@ public fun TransactionsFiltersBottomSheetUI(
                             ChipUIData(
                                 text = category.title,
                             )
-                        },
+                        }.toImmutableList(),
                         selectedItemsIndices = selectedExpenseCategoryIndicesValue,
                     ),
                     handleEvent = { event ->
@@ -156,7 +158,7 @@ public fun TransactionsFiltersBottomSheetUI(
                             ChipUIData(
                                 text = category.title,
                             )
-                        },
+                        }.toImmutableList(),
                         selectedItemsIndices = selectedIncomeCategoryIndicesValue,
                     ),
                     handleEvent = { event ->
@@ -178,7 +180,7 @@ public fun TransactionsFiltersBottomSheetUI(
                             ChipUIData(
                                 text = category.title,
                             )
-                        },
+                        }.toImmutableList(),
                         selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
                     ),
                     handleEvent = { event ->
@@ -200,7 +202,7 @@ public fun TransactionsFiltersBottomSheetUI(
                             ChipUIData(
                                 text = account.name,
                             )
-                        },
+                        }.toImmutableList(),
                         selectedItemsIndices = selectedAccountIndicesValue,
                     ),
                     handleEvent = { event ->
@@ -222,7 +224,7 @@ public fun TransactionsFiltersBottomSheetUI(
                             ChipUIData(
                                 text = transactionFor.titleToDisplay,
                             )
-                        },
+                        }.toImmutableList(),
                         selectedItemsIndices = selectedTransactionForValuesIndicesValue,
                     ),
                     handleEvent = { event ->
@@ -244,7 +246,7 @@ public fun TransactionsFiltersBottomSheetUI(
                             ChipUIData(
                                 text = transactionType.title,
                             )
-                        },
+                        }.toImmutableList(),
                         selectedItemsIndices = selectedTransactionTypeIndicesValue,
                     ),
                     handleEvent = { event ->
@@ -287,7 +289,7 @@ public fun TransactionsFiltersBottomSheetUI(
                     isExpanded = expandedItemsIndices[index],
                     headingTextStringResourceId = listItem.data.headingTextStringResourceId,
                     items = listItem.data.items,
-                    selectedItemsIndices = listItem.data.selectedItemsIndices,
+                    selectedItemsIndices = listItem.data.selectedItemsIndices.toImmutableList(),
                     onClearButtonClick = {
                         listItem.handleEvent(TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick)
                     },
@@ -400,8 +402,8 @@ public fun TransactionsFiltersBottomSheetUI(
 private fun TransactionFilterBottomSheetFilterGroup(
     isExpanded: Boolean,
     @StringRes headingTextStringResourceId: Int,
-    items: List<ChipUIData>,
-    selectedItemsIndices: List<Int>,
+    items: ImmutableList<ChipUIData>,
+    selectedItemsIndices: ImmutableList<Int>,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,
     onItemClick: (index: Int) -> Unit,

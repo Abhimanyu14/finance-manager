@@ -24,11 +24,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun TransactionsSortBottomSheetUI(
     modifier: Modifier = Modifier,
-    data: List<TransactionsSortBottomSheetData>,
+    data: ImmutableList<TransactionsSortBottomSheetData>,
 ) {
     Column(
         modifier = modifier

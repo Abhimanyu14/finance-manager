@@ -21,6 +21,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -44,14 +46,18 @@ public class CategoriesScreenViewModel @Inject constructor(
     )
 
     private val defaultDataId: Flow<DefaultDataId?> = myPreferencesRepository.getDefaultDataId()
-    private val categoriesTransactionTypeMap: Flow<Map<TransactionType, List<Category>>> =
+    private val categoriesTransactionTypeMap: Flow<Map<TransactionType, ImmutableList<Category>>> =
         getAllCategoriesFlowUseCase()
             .map { categories ->
-                categories.groupBy { category ->
-                    category.transactionType
-                }
+                categories
+                    .groupBy { category ->
+                        category.transactionType
+                    }
+                    .mapValues { (_, value) ->
+                        value.toImmutableList()
+                    }
             }
-    private val categoriesGridItemDataMap: Flow<Map<TransactionType, List<CategoriesGridItemData>>> =
+    private val categoriesGridItemDataMap: Flow<Map<TransactionType, ImmutableList<CategoriesGridItemData>>> =
         combine(
             categoriesTransactionTypeMap,
             defaultDataId,
@@ -138,9 +144,9 @@ public class CategoriesScreenViewModel @Inject constructor(
                     }
                     .orEmpty()
             mapOf(
-                TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
-                TransactionType.INCOME to incomeCategoriesGridItemDataList,
-                TransactionType.INVESTMENT to investmentCategoriesGridItemDataList,
+                TransactionType.EXPENSE to expenseCategoriesGridItemDataList.toImmutableList(),
+                TransactionType.INCOME to incomeCategoriesGridItemDataList.toImmutableList(),
+                TransactionType.INVESTMENT to investmentCategoriesGridItemDataList.toImmutableList(),
             )
         }
 

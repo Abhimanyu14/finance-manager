@@ -8,6 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDate
 
 @Immutable
@@ -15,11 +17,11 @@ public data class AddOrEditTransactionScreenUIData(
     val uiState: AddOrEditTransactionScreenUiStateData = AddOrEditTransactionScreenUiStateData(),
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = AddOrEditTransactionScreenUiVisibilityState.Expense,
     val isCtaButtonEnabled: Boolean = false,
-    val filteredCategories: List<Category> = emptyList(),
-    val accounts: List<Account> = emptyList(),
-    val titleSuggestions: List<String> = emptyList(),
-    val transactionTypesForNewTransaction: List<TransactionType> = emptyList(),
-    val transactionForValues: List<TransactionFor> = emptyList(),
+    val filteredCategories: ImmutableList<Category> = persistentListOf(),
+    val accounts: ImmutableList<Account> = persistentListOf(),
+    val titleSuggestions: ImmutableList<String> = persistentListOf(),
+    val transactionTypesForNewTransaction: ImmutableList<TransactionType> = persistentListOf(),
+    val transactionForValues: ImmutableList<TransactionFor> = persistentListOf(),
     val currentLocalDate: LocalDate = LocalDate.MIN,
     val selectedTransactionType: TransactionType? = null,
 ) : ScreenUIData

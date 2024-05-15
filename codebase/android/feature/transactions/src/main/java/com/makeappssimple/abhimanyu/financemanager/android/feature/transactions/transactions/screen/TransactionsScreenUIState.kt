@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Fi
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
+import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Stable
@@ -18,17 +19,17 @@ internal data class TransactionsScreenUIState(
     val isLoading: Boolean,
     val isSearchSortAndFilterVisible: Boolean,
     val selectedFilter: Filter,
-    val selectedTransactions: List<Int>,
-    val sortOptions: List<SortOption>,
-    val transactionForValues: List<TransactionFor>,
-    val accounts: List<Account>,
-    val expenseCategories: List<Category>,
-    val incomeCategories: List<Category>,
-    val investmentCategories: List<Category>,
-    val transactionTypes: List<TransactionType>,
+    val selectedTransactions: ImmutableList<Int>,
+    val sortOptions: ImmutableList<SortOption>,
+    val transactionForValues: ImmutableList<TransactionFor>,
+    val accounts: ImmutableList<Account>,
+    val expenseCategories: ImmutableList<Category>,
+    val incomeCategories: ImmutableList<Category>,
+    val investmentCategories: ImmutableList<Category>,
+    val transactionTypes: ImmutableList<TransactionType>,
     val currentLocalDate: LocalDate,
     val oldestTransactionLocalDate: LocalDate,
-    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>>,
+    val transactionDetailsListItemViewData: Map<String, ImmutableList<TransactionListItemData>>,
     val selectedSortOption: SortOption,
     val searchText: String,
     val screenBottomSheetType: TransactionsScreenBottomSheetType,
