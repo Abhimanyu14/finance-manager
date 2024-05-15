@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -31,53 +30,48 @@ public fun MyOutlinedTextField(
             modifier = modifier,
         )
     } else {
-        // TODO(Abhi): Check if this box is required
-        Box(
-            contentAlignment = Alignment.Center,
+        OutlinedTextField(
+            value = data.textFieldValue,
+            label = {
+                MyOutlinedTextFieldLabelText(
+                    textStringResourceId = data.labelTextStringResourceId,
+                )
+            },
+            trailingIcon = {
+                AnimatedVisibility(
+                    visible = data.textFieldValue.text.isNotNullOrBlank(),
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
+                    MyIconButton(
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        imageVector = MyIcons.Clear,
+                        contentDescriptionStringResourceId = data.trailingIconContentDescriptionTextStringResourceId,
+                        onClick = {
+                            handleEvent(MyOutlinedTextFieldEvent.OnClickTrailingIcon)
+                        },
+                        modifier = Modifier
+                            .padding(
+                                end = 4.dp,
+                            ),
+                    )
+                }
+            },
+            onValueChange = {
+                handleEvent(
+                    MyOutlinedTextFieldEvent.OnValueChange(
+                        updatedValue = it,
+                    )
+                )
+            },
+            supportingText = data.supportingText,
+            isError = data.isError,
+            visualTransformation = data.visualTransformation,
+            keyboardActions = data.keyboardActions,
+            keyboardOptions = data.keyboardOptions,
+            singleLine = true,
             modifier = modifier,
-        ) {
-            OutlinedTextField(
-                value = data.textFieldValue,
-                label = {
-                    MyOutlinedTextFieldLabelText(
-                        textStringResourceId = data.labelTextStringResourceId,
-                    )
-                },
-                trailingIcon = {
-                    AnimatedVisibility(
-                        visible = data.textFieldValue.text.isNotNullOrBlank(),
-                        enter = fadeIn(),
-                        exit = fadeOut(),
-                    ) {
-                        MyIconButton(
-                            tint = MaterialTheme.colorScheme.onBackground,
-                            imageVector = MyIcons.Clear,
-                            contentDescriptionStringResourceId = data.trailingIconContentDescriptionTextStringResourceId,
-                            onClick = {
-                                handleEvent(MyOutlinedTextFieldEvent.OnClickTrailingIcon)
-                            },
-                            modifier = Modifier
-                                .padding(
-                                    end = 4.dp,
-                                ),
-                        )
-                    }
-                },
-                onValueChange = {
-                    handleEvent(
-                        MyOutlinedTextFieldEvent.OnValueChange(
-                            updatedValue = it,
-                        )
-                    )
-                },
-                supportingText = data.supportingText,
-                isError = data.isError,
-                visualTransformation = data.visualTransformation,
-                keyboardActions = data.keyboardActions,
-                keyboardOptions = data.keyboardOptions,
-                singleLine = true,
-            )
-        }
+        )
     }
 }
 

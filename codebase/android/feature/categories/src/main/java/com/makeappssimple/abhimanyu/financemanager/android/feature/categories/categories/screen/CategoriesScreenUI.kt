@@ -44,6 +44,7 @@ internal fun CategoriesScreenUI(
 ) {
     LaunchedEffect(
         key1 = uiState.pagerState.currentPage,
+        key2 = handleUIEvent,
     ) {
         handleUIEvent(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(uiState.pagerState.currentPage))
     }

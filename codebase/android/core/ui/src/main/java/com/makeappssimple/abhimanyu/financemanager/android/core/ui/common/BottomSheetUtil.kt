@@ -41,7 +41,7 @@ private fun BottomSheetDisposeHandler(
 ) {
     if (modalBottomSheetState.currentValue != SheetValue.Hidden) {
         DisposableEffect(
-            key1 = Unit,
+            key1 = resetBottomSheetType,
         ) {
             onDispose {
                 resetBottomSheetType()
