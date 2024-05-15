@@ -98,6 +98,9 @@ dependencies {
     // Jetpack compose material icons
     implementation(libs.compose.icons)
 
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
+
     // Testing
 
     // JUnit

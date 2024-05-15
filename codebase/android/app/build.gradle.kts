@@ -293,10 +293,11 @@ dependencies {
     implementation(libs.paging.compose)
 
     // Detekt formatting
-    detektPlugins(libs.detekt.formatting)
+    // detektPlugins(libs.detekt.formatting)
 
     // Detekt compose
-    detektPlugins(libs.detekt.rules.compose)
+    // detektPlugins(libs.detekt.rules.compose)
+    detektPlugins(libs.detekt.rules.compose.nlopez)
 
     // Hilt
     implementation(libs.hilt.android)

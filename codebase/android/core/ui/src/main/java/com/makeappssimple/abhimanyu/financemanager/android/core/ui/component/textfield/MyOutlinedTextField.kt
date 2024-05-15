@@ -31,8 +31,10 @@ public fun MyOutlinedTextField(
             modifier = modifier,
         )
     } else {
+        // TODO(Abhi): Check if this box is required
         Box(
             contentAlignment = Alignment.Center,
+            modifier = modifier,
         ) {
             OutlinedTextField(
                 value = data.textFieldValue,
@@ -74,7 +76,6 @@ public fun MyOutlinedTextField(
                 keyboardActions = data.keyboardActions,
                 keyboardOptions = data.keyboardOptions,
                 singleLine = true,
-                modifier = modifier,
             )
         }
     }

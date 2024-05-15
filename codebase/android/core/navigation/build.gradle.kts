@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
+
     // Testing
 
     // JUnit

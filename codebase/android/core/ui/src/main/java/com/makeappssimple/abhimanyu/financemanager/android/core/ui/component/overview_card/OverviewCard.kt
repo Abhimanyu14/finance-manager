@@ -104,7 +104,7 @@ public fun OverviewCard(
 
 @Composable
 private fun OverviewCardUI(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     data: OverviewCardData,
     handleEvent: (event: OverviewCardEvent) -> Unit = {},
 ) {

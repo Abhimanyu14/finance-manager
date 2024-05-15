@@ -36,7 +36,7 @@ public fun SaveButton(
 
 @Composable
 private fun SaveButtonUI(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     data: SaveButtonData,
     handleEvent: (event: SaveButtonEvent) -> Unit = {},
 ) {

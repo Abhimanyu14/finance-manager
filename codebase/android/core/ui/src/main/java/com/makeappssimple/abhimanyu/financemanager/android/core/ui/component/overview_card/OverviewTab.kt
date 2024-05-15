@@ -99,6 +99,7 @@ public fun OverviewTab(
 
 @Composable
 public fun OverviewTabText(
+    modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle,
     isSelected: Boolean,
@@ -123,7 +124,7 @@ public fun OverviewTabText(
     )
 
     BasicText(
-        modifier = Modifier
+        modifier = modifier
             .widthIn(
                 min = overviewTabMinimumWidth,
             )

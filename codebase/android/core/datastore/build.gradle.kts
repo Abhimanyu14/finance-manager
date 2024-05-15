@@ -81,6 +81,9 @@ dependencies {
     // Data store
     implementation(libs.datastore)
 
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
+
     // Testing
 
     // JUnit

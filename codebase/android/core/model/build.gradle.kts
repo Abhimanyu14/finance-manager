@@ -58,4 +58,7 @@ dependencies {
 
     // KotlinX serialization
     implementation(libs.serialization)
+
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
 }

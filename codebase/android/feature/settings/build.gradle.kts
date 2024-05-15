@@ -141,6 +141,9 @@ dependencies {
     implementation(libs.about.libraries.core)
     implementation(libs.about.libraries.compose)
 
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
+
     // Testing
 
     // JUnit

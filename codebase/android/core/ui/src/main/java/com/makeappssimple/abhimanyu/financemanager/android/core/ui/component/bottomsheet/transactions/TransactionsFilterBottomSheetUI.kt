@@ -506,6 +506,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
 
 @Composable
 public fun TransactionFilterBottomSheetDateFilter(
+    modifier: Modifier = Modifier,
     isExpanded: Boolean,
     @StringRes headingTextStringResourceId: Int,
     onClearButtonClick: () -> Unit,
@@ -573,7 +574,7 @@ public fun TransactionFilterBottomSheetDateFilter(
         },
     )
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .animateContentSize(),
     ) {

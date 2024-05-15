@@ -20,6 +20,7 @@ hilt-navigation-compose = "1.2.0"
 paging-compose = "3.2.1"
 detekt-formatting = "1.23.6"
 detekt-rules-compose = "1.3.0"
+detekt-rules-compose-nlopez = "0.3.21"
 hilt-android = "2.51.1"
 ksp = "1.9.23-1.0.20"
 jdk-desugaring = "2.0.4"
@@ -100,6 +101,7 @@ paging-compose = { group = "androidx.paging", name = "paging-compose", version.r
 
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt-formatting" }
 detekt-rules-compose = { group = "ru.kode", name = "detekt-rules-compose", version.ref = "detekt-rules-compose" }
+detekt-rules-compose-nlopez = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-rules-compose.nlopez" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-android" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt-android-compiler" }

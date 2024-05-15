@@ -42,7 +42,7 @@ public fun BackupCard(
 
 @Composable
 private fun BackupCardUI(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     handleEvent: (event: BackupCardEvent) -> Unit = {},
 ) {
     Card(

@@ -70,6 +70,9 @@ dependencies {
     // Retrofit kotlinX serialization converter
     implementation(libs.retrofit.serialization.converter)
 
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
+
     // Testing
 
     // JUnit

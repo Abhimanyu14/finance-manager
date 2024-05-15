@@ -83,4 +83,7 @@ dependencies {
 
     // Firebase remote config
     implementation(libs.firebase.config)
+
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
 }

@@ -64,34 +64,42 @@ public fun NonFillingVerticalSpacer(
 }
 
 @Composable
-public fun StatusBarSpacer() {
+public fun StatusBarSpacer(
+    modifier: Modifier = Modifier,
+) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .statusBarSpacer(),
     )
 }
 
 @Composable
-public fun NavigationBarsAndImeSpacer() {
+public fun NavigationBarsAndImeSpacer(
+    modifier: Modifier = Modifier,
+) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .navigationBarsSpacer()
             .imeSpacer(),
     )
 }
 
 @Composable
-public fun NavigationBarsSpacer() {
+public fun NavigationBarsSpacer(
+    modifier: Modifier = Modifier,
+) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .navigationBarsSpacer(),
     )
 }
 
 @Composable
-public fun ImeSpacer() {
+public fun ImeSpacer(
+    modifier: Modifier = Modifier,
+) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .imeSpacer(),
     )
 }

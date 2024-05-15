@@ -13,6 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 
 @Composable
 public fun CategoriesGrid(
+    modifier: Modifier = Modifier,
     bottomPadding: Dp = 0.dp,
     topPadding: Dp = 0.dp,
     categoriesGridItemDataList: List<CategoriesGridItemData>,
@@ -26,7 +27,7 @@ public fun CategoriesGrid(
             top = topPadding,
             bottom = bottomPadding,
         ),
-        modifier = Modifier,
+        modifier = modifier,
     ) {
         itemsIndexed(
             items = categoriesGridItemDataList,

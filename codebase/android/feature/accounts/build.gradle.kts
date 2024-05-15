@@ -139,6 +139,13 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation(libs.hilt.navigation.compose)
 
+    // Detekt formatting
+    // detektPlugins(libs.detekt.formatting)
+
+    // Detekt compose
+    // detektPlugins(libs.detekt.rules.compose)
+    detektPlugins(libs.detekt.rules.compose.nlopez)
+
     // Testing
 
     // JUnit

@@ -29,10 +29,11 @@ public val pieChartData = PieChartData(
 
 @Composable
 public fun PieChart(
+    modifier: Modifier = Modifier,
     pieChartData: com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartData,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(150.dp)
             .padding(

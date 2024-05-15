@@ -64,4 +64,7 @@ dependencies {
 
     // Appcompat
     implementation(libs.appcompat)
+
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
 }

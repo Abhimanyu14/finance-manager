@@ -133,6 +133,9 @@ dependencies {
     // Compose emoji picker
     implementation(libs.compose.emoji.picker)
 
+    // Detekt compose
+    detektPlugins(libs.detekt.rules.compose.nlopez)
+
     // Testing
 
     // JUnit
