@@ -491,7 +491,7 @@ potential-bugs:
     active: true
   # TODO(Abhi): Detekt rule not working as intended
   MissingPackageDeclaration:
-    active: false
+    active: true
     excludes: [ '**/*.kts' ]
   NullCheckOnMutableProperty:
     active: true
