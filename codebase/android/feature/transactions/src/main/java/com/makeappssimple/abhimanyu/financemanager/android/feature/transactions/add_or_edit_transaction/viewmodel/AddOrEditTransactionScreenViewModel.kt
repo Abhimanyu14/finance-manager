@@ -137,15 +137,9 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     private val uiState: MutableStateFlow<AddOrEditTransactionScreenUiStateData> = MutableStateFlow(
         value = AddOrEditTransactionScreenUiStateData(
             selectedTransactionTypeIndex = null,
-            amount = TextFieldValue(
-                text = "",
-            ),
-            title = TextFieldValue(
-                text = "",
-            ),
-            description = TextFieldValue(
-                text = "",
-            ),
+            amount = TextFieldValue(),
+            title = TextFieldValue(),
+            description = TextFieldValue(),
             category = null,
             selectedTransactionForIndex = 0,
             accountFrom = null,

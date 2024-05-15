@@ -49,9 +49,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
 
     private lateinit var transactionForValues: List<TransactionFor>
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(
-            text = "",
-        ),
+        value = TextFieldValue(),
     )
     private val transactionFor: MutableStateFlow<TransactionFor?> = MutableStateFlow(
         value = null,

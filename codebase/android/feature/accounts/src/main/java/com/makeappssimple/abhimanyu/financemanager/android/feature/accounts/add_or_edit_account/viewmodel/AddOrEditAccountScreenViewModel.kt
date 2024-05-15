@@ -77,20 +77,14 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         ),
     )
     private val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(
-            text = "",
-        ),
+        value = TextFieldValue(),
     )
     private val balanceAmountValue: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(
-            text = "",
-        ),
+        value = TextFieldValue(),
     )
     private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
         MutableStateFlow(
-            value = TextFieldValue(
-                text = "",
-            ),
+            value = TextFieldValue(),
         )
 
     public val screenUIData: StateFlow<MyResult<AddOrEditAccountScreenUIData>?> = combine(

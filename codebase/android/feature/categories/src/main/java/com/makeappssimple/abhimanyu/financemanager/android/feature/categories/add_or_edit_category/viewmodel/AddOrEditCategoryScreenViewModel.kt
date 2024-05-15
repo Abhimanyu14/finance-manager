@@ -64,9 +64,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         TransactionType.INVESTMENT,
     )
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(
-            text = "",
-        ),
+        value = TextFieldValue(),
     )
     private val titleTextFieldError: MutableStateFlow<AddOrEditCategoryScreenUIError?> =
         MutableStateFlow(
