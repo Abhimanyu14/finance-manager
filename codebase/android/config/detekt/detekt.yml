@@ -865,7 +865,7 @@ Compose:
   ModifierComposed:
     active: false
     # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
+    customModifiers: navigationBarLandscapeSpacer, statusBarSpacer, navigationBarsSpacer, imeSpacer, conditionalClickable, fadingEdge, shimmer
   ModifierMissing:
     active: true
     # -- You can optionally control the visibility of which composables to check for here
