@@ -1,15 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlinx.kover)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt.android)
 }
 
 android {
-    namespace = "com.makeappssimple.abhimanyu.financemanager.android.core.alarmkitimpl"
+    namespace = "com.makeappssimple.abhimanyu.financemanager.android.rules"
     compileSdk = 34 // rootProject.compileSdkVersion
 
     defaultConfig {
@@ -51,34 +47,24 @@ android {
             "-opt-in=kotlin.contracts.ExperimentalContracts",
             "-opt-in=kotlin.ExperimentalUnsignedTypes",
             "-opt-in=kotlin.time.ExperimentalTime",
-
-            // Kotlinx
-            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-opt-in=kotlinx.coroutines.FlowPreview",
-            "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
-            "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
         )
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
 dependencies {
-    implementation(project(":core:alarmkit"))
-    implementation(project(":core:boot"))
-    implementation(project(":core:common"))
-    implementation(project(":core:data"))
-    implementation(project(":core:logger"))
-    implementation(project(":core:model"))
-    implementation(project(":core:notificationkit"))
-    implementation(project(":core:time"))
+    // Detekt API
+    compileOnly(libs.detekt.api)
 
-    // Coroutines
-    implementation(libs.coroutines.android)
+    // Androidx core
+    implementation(libs.androidx.core)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    // JUnit
+    testImplementation(libs.junit)
 
-    // Detekt compose
-    detektPlugins(libs.detekt.rules.compose.nlopez)
-    detektPlugins(project(":rules"))
+    // Android X test
+    androidTestImplementation(libs.test.junit)
 }

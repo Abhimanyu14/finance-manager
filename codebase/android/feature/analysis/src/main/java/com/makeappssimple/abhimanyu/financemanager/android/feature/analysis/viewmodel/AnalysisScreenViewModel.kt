@@ -207,3 +207,4 @@ public class AnalysisScreenViewModel @Inject constructor(
         return transactionData.transaction.transactionTimestamp in fromDateStartOfDayTimestamp until toDateStartOfDayTimestamp
     }
 }
+

@@ -103,6 +103,7 @@ dependencies {
 
     // Detekt compose
     detektPlugins(libs.detekt.rules.compose.nlopez)
+    detektPlugins(project(":rules"))
 
     // Testing
 
