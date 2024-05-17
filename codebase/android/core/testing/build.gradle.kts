@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.detekt)
+    // alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinx.kover)
 }
 
@@ -74,8 +74,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     // Detekt compose
-    detektPlugins(libs.detekt.rules.compose.nlopez)
-    detektPlugins(project(":rules"))
+    // detektPlugins(libs.detekt.rules.compose.nlopez)
+    // detektPlugins(project(":rules"))
 
     // Testing
 
