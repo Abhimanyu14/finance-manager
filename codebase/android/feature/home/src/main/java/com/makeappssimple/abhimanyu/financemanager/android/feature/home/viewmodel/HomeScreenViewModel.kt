@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
@@ -181,14 +182,14 @@ public class HomeScreenViewModel @Inject constructor(
         overviewCardData,
         accountsTotalBalanceAmountValue,
         accountsTotalMinimumBalanceAmountValue,
-    ) { flows ->
-        val isBackupCardVisible = flows[0] as? Boolean
-        val homeListItemViewData =
-            (flows[1] as? List<*>)?.filterIsInstance<TransactionListItemData>()
-        val overviewTabSelectionIndex = flows[2] as? Int
-        val overviewCardData = flows[3] as? OverviewCardViewModelData
-        val accountsTotalBalanceAmountValue = flows[4] as? Long
-        val accountsTotalMinimumBalanceAmountValue = flows[5] as? Long
+    ) {
+            isBackupCardVisible,
+            homeListItemViewData,
+            overviewTabSelectionIndex,
+            overviewCardData,
+            accountsTotalBalanceAmountValue,
+            accountsTotalMinimumBalanceAmountValue,
+        ->
 
         if (
             isBackupCardVisible.isNull() ||

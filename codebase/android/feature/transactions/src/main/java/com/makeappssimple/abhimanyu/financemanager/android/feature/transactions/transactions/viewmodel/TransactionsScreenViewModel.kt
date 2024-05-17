@@ -6,8 +6,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -35,7 +37,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -137,7 +138,7 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     private val sortOptions: ImmutableList<SortOption> = SortOption.entries.toImmutableList()
 
-    private val transactionDetailsListItemViewData: StateFlow<Map<String, List<TransactionListItemData>>?> =
+    private val transactionDetailsListItemViewData: StateFlow<Map<String, ImmutableList<TransactionListItemData>>?> =
         combine(
             allTransactionData,
             searchText,
@@ -149,26 +150,19 @@ public class TransactionsScreenViewModel @Inject constructor(
             accounts,
             transactionForValues,
             oldestTransactionLocalDate,
-        ) { flows ->
+        ) {
+                allTransactionDataValue,
+                searchTextValue,
+                selectedFilterValue,
+                selectedSortOptionValue,
+                expenseCategoriesValue,
+                incomeCategoriesValue,
+                investmentCategoriesValue,
+                accountsValue,
+                transactionForValuesValue,
+                oldestTransactionLocalDateValue,
+            ->
             isLoading.value = true
-
-            val allTransactionDataValue: List<TransactionData> =
-                (flows[0] as? List<*>)?.filterIsInstance<TransactionData>().orEmpty()
-            val searchTextValue: String = flows[1] as String
-            val selectedFilterValue: Filter = flows[2] as? Filter ?: Filter()
-            val selectedSortOptionValue: SortOption =
-                flows[3] as? SortOption ?: SortOption.LATEST_FIRST
-            val expenseCategoriesValue: List<Category> =
-                (flows[4] as? List<*>)?.filterIsInstance<Category>().orEmpty()
-            val incomeCategoriesValue: List<Category> =
-                (flows[5] as? List<*>)?.filterIsInstance<Category>().orEmpty()
-            val investmentCategoriesValue: List<Category> =
-                (flows[6] as? List<*>)?.filterIsInstance<Category>().orEmpty()
-            val accountsValue: List<Account> =
-                (flows[7] as? List<*>)?.filterIsInstance<Account>().orEmpty()
-            val transactionForValuesValue: List<TransactionFor> =
-                (flows[8] as? List<*>)?.filterIsInstance<TransactionFor>().orEmpty()
-            val oldestTransactionLocalDateValue: LocalDate? = flows[9] as? LocalDate
 
             updateSelectedFilter(
                 updatedSelectedFilter = selectedFilterValue.copy(
@@ -194,16 +188,16 @@ public class TransactionsScreenViewModel @Inject constructor(
                         transactionData = transactionData,
                     ) && isAvailableAfterAccountFilter(
                         selectedAccountsIndicesValue = selectedFilterValue.selectedAccountsIndices,
-                        accountsValue = accountsValue,
+                        accountsValue = accountsValue.orEmpty(),
                         transactionData = transactionData,
                     ) && isAvailableAfterCategoryFilter(
                         selectedExpenseCategoryIndicesValue = selectedFilterValue.selectedExpenseCategoryIndices,
                         selectedIncomeCategoryIndicesValue = selectedFilterValue.selectedIncomeCategoryIndices,
                         selectedInvestmentCategoryIndicesValue = selectedFilterValue.selectedInvestmentCategoryIndices,
-                        expenseCategoriesValue = expenseCategoriesValue,
+                        expenseCategoriesValue = expenseCategoriesValue.orEmpty(),
                         transactionData = transactionData,
-                        incomeCategoriesValue = incomeCategoriesValue,
-                        investmentCategoriesValue = investmentCategoriesValue,
+                        incomeCategoriesValue = incomeCategoriesValue.orEmpty(),
+                        investmentCategoriesValue = investmentCategoriesValue.orEmpty(),
                     )
                 }
                 .also {
@@ -300,7 +294,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                             transactionForText = transactionForText,
                         )
                     }
-                    transactionListItemDataList
+                    transactionListItemDataList.toImmutableList()
                 }
                 .also {
                     isLoading.value = false
@@ -322,40 +316,20 @@ public class TransactionsScreenViewModel @Inject constructor(
         incomeCategories,
         investmentCategories,
         accounts,
-    ) { flows ->
-        val isLoading = flows[0] as? Boolean
-        val selectedFilter = flows[1] as? Filter
-        val oldestTransactionLocalDate = flows[2] as? LocalDate
-        // TODO-Abhi: Write a helper function to type cast map
-        val transactionDetailsListItemViewData = (flows[3] as? Map<*, *>)
-            ?.mapKeys {
-                it.key as String
-            }
-            ?.mapValues {
-                (it.value as ImmutableList<*>).filterIsInstance<TransactionListItemData>()
-                    .toImmutableList()
-            }
-        val searchText = flows[4] as? String
-        val selectedSortOption = flows[5] as? SortOption
-        // TODO-Abhi: Write a helper function to type cast list
-        val transactionForValuesValue: ImmutableList<TransactionFor> =
-            (flows[6] as? ImmutableList<*>)?.filterIsInstance<TransactionFor>().orEmpty()
-                .toImmutableList()
-        val selectedTransactionsValue: ImmutableList<Int> =
-            (flows[7] as? ImmutableList<*>)?.filterIsInstance<Int>().orEmpty().toImmutableList()
-        val expenseCategoriesValue: ImmutableList<Category> =
-            (flows[8] as? ImmutableList<*>)?.filterIsInstance<Category>().orEmpty()
-                .toImmutableList()
-        val incomeCategoriesValue: ImmutableList<Category> =
-            (flows[9] as? ImmutableList<*>)?.filterIsInstance<Category>().orEmpty()
-                .toImmutableList()
-        val investmentCategoriesValue: ImmutableList<Category> =
-            (flows[10] as? ImmutableList<*>)?.filterIsInstance<Category>().orEmpty()
-                .toImmutableList()
-        val accountsValue: ImmutableList<Account> =
-            (flows[11] as? ImmutableList<*>)?.filterIsInstance<Account>().orEmpty()
-                .toImmutableList()
-
+    ) {
+            isLoading,
+            selectedFilter,
+            oldestTransactionLocalDate,
+            transactionDetailsListItemViewData,
+            searchText,
+            selectedSortOption,
+            transactionForValuesValue,
+            selectedTransactionsValue,
+            expenseCategoriesValue,
+            incomeCategoriesValue,
+            investmentCategoriesValue,
+            accountsValue,
+        ->
         if (
             isLoading.isNull() ||
             selectedFilter.isNull() ||
@@ -370,11 +344,11 @@ public class TransactionsScreenViewModel @Inject constructor(
                 data = TransactionsScreenUIData(
                     isLoading = isLoading,
                     selectedFilter = selectedFilter,
-                    accounts = accountsValue,
-                    expenseCategories = expenseCategoriesValue,
-                    incomeCategories = incomeCategoriesValue,
-                    investmentCategories = investmentCategoriesValue,
-                    selectedTransactions = selectedTransactionsValue,
+                    accounts = accountsValue?.toImmutableList().orEmpty(),
+                    expenseCategories = expenseCategoriesValue?.toImmutableList().orEmpty(),
+                    incomeCategories = incomeCategoriesValue?.toImmutableList().orEmpty(),
+                    investmentCategories = investmentCategoriesValue?.toImmutableList().orEmpty(),
+                    selectedTransactions = selectedTransactionsValue.toImmutableList().orEmpty(),
                     sortOptions = sortOptions,
                     transactionTypes = transactionTypes,
                     transactionForValues = transactionForValuesValue,

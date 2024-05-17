@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -36,7 +37,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -94,14 +94,14 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         name,
         originalAccount,
         minimumAccountBalanceAmountValue,
-    ) { flows ->
-        val errorData = flows[0] as? AddOrEditAccountScreenUIErrorData
-            ?: AddOrEditAccountScreenUIErrorData()
-        val selectedAccountTypeIndex = flows[1] as? Int ?: 0
-        val balanceAmountValue = flows[2] as? TextFieldValue ?: TextFieldValue()
-        val name = flows[3] as? TextFieldValue ?: TextFieldValue()
-        val originalAccount = flows[4] as? Account
-        val minimumAccountBalanceAmountValue = flows[5] as? TextFieldValue ?: TextFieldValue()
+    ) {
+            errorData,
+            selectedAccountTypeIndex,
+            balanceAmountValue,
+            name,
+            originalAccount,
+            minimumAccountBalanceAmountValue,
+        ->
 
         val accountIsNotCash = originalAccount?.type != AccountType.CASH
         val isValidAccountData = checkIfAccountDataIsValid(

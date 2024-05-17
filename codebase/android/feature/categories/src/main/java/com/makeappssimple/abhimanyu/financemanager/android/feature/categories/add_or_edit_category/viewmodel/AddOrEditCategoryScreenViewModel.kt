@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -108,13 +109,14 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         title,
         isValidCategoryData,
         titleTextFieldError,
-    ) { flows ->
-        val selectedTransactionTypeIndex = flows[0] as? Int
-        val emoji = flows[1] as? String
-        val searchText = flows[2] as? String
-        val title = flows[3] as? TextFieldValue
-        val isValidCategoryData = flows[4] as? Boolean
-        val titleTextFieldErrorValue = flows[5] as? AddOrEditCategoryScreenUIError
+    ) {
+            selectedTransactionTypeIndex,
+            emoji,
+            searchText,
+            title,
+            isValidCategoryData,
+            titleTextFieldErrorValue,
+        ->
 
         if (
             selectedTransactionTypeIndex.isNull() ||

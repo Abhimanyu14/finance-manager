@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -264,25 +265,17 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         transactionTypesForNewTransaction,
         transactionForValues,
         selectedTransactionType,
-    ) { flows ->
-        val uiState = flows[0] as? AddOrEditTransactionScreenUiStateData
-        val uiVisibilityState = flows[1] as? AddOrEditTransactionScreenUiVisibilityState
-        val isCtaButtonEnabled = flows[2] as? Boolean
-        val filteredCategories =
-            (flows[3] as? ImmutableList<*>)?.filterIsInstance<Category>()?.toImmutableList()
-                .orEmpty()
-        val accounts =
-            (flows[4] as? ImmutableList<*>)?.filterIsInstance<Account>()?.toImmutableList()
-                .orEmpty()
-        val titleSuggestions =
-            (flows[5] as? ImmutableList<*>)?.filterIsInstance<String>()?.toImmutableList().orEmpty()
-        val transactionTypesForNewTransaction =
-            (flows[6] as? ImmutableList<*>)?.filterIsInstance<TransactionType>()?.toImmutableList()
-                .orEmpty()
-        val transactionForValues =
-            (flows[7] as? ImmutableList<*>)?.filterIsInstance<TransactionFor>()?.toImmutableList()
-                .orEmpty()
-        val selectedTransactionType = flows[8] as? TransactionType
+    ) {
+            uiState,
+            uiVisibilityState,
+            isCtaButtonEnabled,
+            filteredCategories,
+            accounts,
+            titleSuggestions,
+            transactionTypesForNewTransaction,
+            transactionForValues,
+            selectedTransactionType,
+        ->
 
         if (
             uiState.isNull() ||
