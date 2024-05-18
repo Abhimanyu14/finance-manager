@@ -2,7 +2,6 @@
 <a href="https://github.com/Abhimanyu14/finance-manager/stargazers" target="_blank"><img alt="License" src="https://img.shields.io/github/stars/Abhimanyu14/finance-manager?style=social"/></a>
 <a href="https://github.com/Abhimanyu14/finance-manager/fork" target="_blank"><img alt="License" src="https://img.shields.io/github/forks/Abhimanyu14/finance-manager?logo=github&style=social"/></a>
 
-
 # Overview
 
 A finance manager app to track and analyse income, expenses and investments.
@@ -276,26 +275,32 @@ And the core parts of the app are inside the module named `core`.
 ./gradlew clean :app:assembleDebug
 ```
 
-3. To run all the unit tests
+3. To install the app
+
+```
+./gradlew installDebug
+```
+
+4. To run all the unit tests
 
 ```
 ./gradlew test
 ./gradlew testDebugUnitTest
 ```
 
-4. To run the lint checks
+5. To run the lint checks
 
 ```
 ./gradlew lint
 ```
 
-5. To run all the android UI tests
+6. To run all the android UI tests
 
 ```
 
 ```
 
-6. To generate Kover Unit test coverage HTML Report
+7. To generate Kover Unit test coverage HTML Report
 
 ```
 ./gradlew koverMergedHtmlReport
