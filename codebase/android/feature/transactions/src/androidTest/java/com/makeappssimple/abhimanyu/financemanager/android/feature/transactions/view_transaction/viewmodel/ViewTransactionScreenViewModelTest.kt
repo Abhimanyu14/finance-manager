@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.turbineScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
@@ -31,7 +30,6 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
@@ -53,9 +51,6 @@ public class ViewTransactionScreenViewModelTest {
     private val dispatcherProvider = TestDispatcherProviderImpl(
         testDispatcher = UnconfinedTestDispatcher(),
     )
-
-    @Inject
-    public lateinit var closeableCoroutineScope: CloseableCoroutineScope
 
     private lateinit var viewTransactionScreenViewModel: ViewTransactionScreenViewModel
 
@@ -111,7 +106,6 @@ public class ViewTransactionScreenViewModelTest {
         viewTransactionScreenViewModel = ViewTransactionScreenViewModel(
             savedStateHandle = savedStateHandle,
             stringDecoder = stringDecoder,
-            closeableCoroutineScope = closeableCoroutineScope,
             dateTimeUtil = dateTimeUtil,
             deleteTransactionUseCase = deleteTransactionUseCase,
             dispatcherProvider = dispatcherProvider,

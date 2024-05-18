@@ -22,9 +22,6 @@ public class SettingsScreenViewModelTest {
         testDispatcher = UnconfinedTestDispatcher(),
     )
 
-    @Inject
-    public lateinit var closeableCoroutineScope: CloseableCoroutineScope
-
     private lateinit var settingsScreenViewModel: SettingsScreenViewModel
 
     @Before
@@ -247,7 +244,6 @@ public class SettingsScreenViewModelTest {
             myPreferencesRepository = myPreferencesRepository,
             alarmKit = alarmKit,
             backupDataUseCase = backupDataUseCase,
-            closeableCoroutineScope = closeableCoroutineScope,
             dispatcherProvider = dispatcherProvider,
             navigator = navigator,
             recalculateTotalUseCase = recalculateTotalUseCase,

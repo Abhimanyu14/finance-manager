@@ -251,14 +251,10 @@ dependencies {
 
     lintChecks(project(":lint"))
 
-    // Androidx core
     implementation(libs.androidx.core)
-
-    // Lifecycle components
-    implementation(libs.lifecycle.runtime.ktx)
-
-    // Appcompat
     implementation(libs.appcompat)
+    implementation(libs.lifecycle.runtime.core)
+    implementation(libs.lifecycle.runtime.compose)
 
     // Jetpack compose
     implementation(libs.compose.ui.androidx)
@@ -279,9 +275,6 @@ dependencies {
 
     // Jetpack compose integration with view models
     implementation(libs.lifecycle.viewmodel.compose)
-
-    // Jetpack compose lifecycle runtime
-    implementation(libs.lifecycle.runtime.compose)
 
     // Jetpack compose navigation
     implementation(libs.navigation.compose)
@@ -318,9 +311,6 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     androidTestImplementation(libs.room.testing)
-
-    // Work manager
-    implementation(libs.work.manager)
 
     // Firebase BoM
     implementation(platform(libs.firebase))

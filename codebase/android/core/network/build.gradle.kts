@@ -70,9 +70,6 @@ dependencies {
     // Okhttp logging interceptor
     implementation(libs.okhttp)
 
-    // Retrofit kotlinX serialization converter
-    implementation(libs.retrofit.serialization.converter)
-
     // Detekt compose
     detektPlugins(libs.detekt.rules.compose.nlopez)
     // detektPlugins(project(":rules"))

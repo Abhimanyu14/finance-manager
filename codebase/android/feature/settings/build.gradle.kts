@@ -95,14 +95,9 @@ dependencies {
 
     lintChecks(project(":lint"))
 
-    // Androidx core
     implementation(libs.androidx.core)
-
-    // Lifecycle components
-    implementation(libs.lifecycle.runtime.ktx)
-
-    // Appcompat
     implementation(libs.appcompat)
+    implementation(libs.lifecycle.runtime.core)
 
     // Coroutines
     implementation(libs.coroutines.android)
@@ -133,9 +128,6 @@ dependencies {
 
     // Jetpack compose navigation with hilt
     implementation(libs.hilt.navigation.compose)
-
-    // Work manager
-    implementation(libs.work.manager)
 
     // About libraries
     implementation(libs.about.libraries.core)

@@ -107,11 +107,10 @@ dependencies {
 
     lintChecks(project(":lint"))
 
-    // Androidx core
     implementation(libs.androidx.core)
-
-    // Lifecycle components
-    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.lifecycle.runtime.core)
+    implementation(libs.lifecycle.runtime.compose)
 
     // Jetpack compose
     implementation(libs.compose.ui.androidx)
@@ -132,9 +131,6 @@ dependencies {
 
     // Jetpack compose integration with view models
     implementation(libs.lifecycle.viewmodel.compose)
-
-    // Jetpack compose lifecycle runtime
-    implementation(libs.lifecycle.runtime.compose)
 
     // Jetpack compose navigation
     implementation(libs.navigation.compose)

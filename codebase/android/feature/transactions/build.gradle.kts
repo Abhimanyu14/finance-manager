@@ -92,14 +92,9 @@ dependencies {
 
     lintChecks(project(":lint"))
 
-    // Androidx core
     implementation(libs.androidx.core)
-
-    // Lifecycle components
-    implementation(libs.lifecycle.runtime.ktx)
-
-    // Appcompat
     implementation(libs.appcompat)
+    implementation(libs.lifecycle.runtime.core)
 
     // Coroutines
     implementation(libs.coroutines.android)

@@ -88,14 +88,9 @@ dependencies {
 
     androidTestImplementation(project(":core:testing"))
 
-    // Androidx core
     implementation(libs.androidx.core)
-
-    // Lifecycle components
-    implementation(libs.lifecycle.runtime.ktx)
-
-    // Appcompat
     implementation(libs.appcompat)
+    implementation(libs.lifecycle.runtime.core)
 
     // Jetpack compose
     implementation(libs.compose.ui.androidx)
