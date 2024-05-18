@@ -10,16 +10,12 @@ import io.gitlab.arturbosch.detekt.api.Severity
 import org.jetbrains.kotlin.psi.KtNamedFunction
 
 public class ContextOrder(config: Config) : Rule(config) {
-    public companion object {
-        public const val CONTEXT: String = "Context"
-        public const val CONTEXT_WITH_QUESTION_MARK: String = "$CONTEXT?"
-        public const val REPORT_MESSAGE: String = "Context must be the first parameter"
-        public const val ISSUE_DESCRIPTION: String =
-            "This rule reports the method which doesn't use Context as the first parameter"
-    }
-
-    override val issue: Issue =
-        Issue(javaClass.simpleName, Severity.Minor, ISSUE_DESCRIPTION, Debt.FIVE_MINS)
+    override val issue: Issue = Issue(
+        id = javaClass.simpleName,
+        severity = Severity.Minor,
+        description = ISSUE_DESCRIPTION,
+        debt = Debt.FIVE_MINS,
+    )
 
     //Triggers for every function
     override fun visitNamedFunction(function: KtNamedFunction) {
@@ -47,5 +43,13 @@ public class ContextOrder(config: Config) : Rule(config) {
 
     private fun isContext(s: List<String>): Boolean {
         return (s.contains(CONTEXT) || s.contains(CONTEXT_WITH_QUESTION_MARK))
+    }
+
+    public companion object {
+        public const val CONTEXT: String = "Context"
+        public const val CONTEXT_WITH_QUESTION_MARK: String = "$CONTEXT?"
+        public const val REPORT_MESSAGE: String = "Context must be the first parameter"
+        public const val ISSUE_DESCRIPTION: String =
+            "This rule reports the method which doesn't use Context as the first parameter"
     }
 }

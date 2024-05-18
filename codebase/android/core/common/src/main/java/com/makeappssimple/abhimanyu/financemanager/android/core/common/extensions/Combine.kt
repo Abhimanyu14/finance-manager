@@ -1,4 +1,4 @@
-@file:Suppress("UNCHECKED_CAST")
+@file:Suppress("UNCHECKED_CAST", "MethodOverloading")
 
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
