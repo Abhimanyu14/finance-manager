@@ -252,7 +252,6 @@ dependencies {
     lintChecks(project(":lint"))
 
     implementation(libs.androidx.core)
-    implementation(libs.appcompat)
     implementation(libs.lifecycle.runtime.core)
     implementation(libs.lifecycle.runtime.compose)
 

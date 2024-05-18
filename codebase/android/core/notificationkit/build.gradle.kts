@@ -62,9 +62,6 @@ dependencies {
     // Androidx core
     implementation(libs.androidx.core)
 
-    // Appcompat
-    implementation(libs.appcompat)
-
     // Detekt compose
     detektPlugins(libs.detekt.rules.compose.nlopez)
     // detektPlugins(project(":rules"))

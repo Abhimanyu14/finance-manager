@@ -77,9 +77,6 @@ dependencies {
     // Androidx core
     implementation(libs.androidx.core)
 
-    // Appcompat
-    implementation(libs.appcompat)
-
     // Coroutines
     implementation(libs.coroutines.android)
 

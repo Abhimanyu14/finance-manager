@@ -71,9 +71,6 @@ dependencies {
     // Androidx core
     implementation(libs.androidx.core)
 
-    // Appcompat
-    implementation(libs.appcompat)
-
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

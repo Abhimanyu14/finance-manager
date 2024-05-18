@@ -62,9 +62,6 @@ dependencies {
     // Androidx core
     implementation(libs.androidx.core)
 
-    // Appcompat
-    implementation(libs.appcompat)
-
     // Jetpack compose
     implementation(libs.compose.ui.androidx)
     implementation(libs.compose.util)

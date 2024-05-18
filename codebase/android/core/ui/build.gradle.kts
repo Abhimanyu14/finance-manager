@@ -89,7 +89,6 @@ dependencies {
     androidTestImplementation(project(":core:testing"))
 
     implementation(libs.androidx.core)
-    implementation(libs.appcompat)
     implementation(libs.lifecycle.runtime.core)
 
     // Jetpack compose
