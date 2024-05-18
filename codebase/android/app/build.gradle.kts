@@ -256,15 +256,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
 
     // Jetpack compose
-    implementation(libs.compose.ui.androidx)
-    implementation(libs.compose.util)
-
-    // Jetpack compose tooling support (Previews, etc.)
-    debugImplementation(libs.compose.tooling)
-    implementation(libs.compose.preiew)
-
-    // Jetpack compose material design
-    implementation(libs.compose.material3)
+    implementation(libs.bundles.compose)
 
     // Jetpack compose material design adapter
     implementation(libs.material.compose.theme.adapter)
@@ -306,8 +298,7 @@ dependencies {
     implementation(libs.datastore)
 
     // Room
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
+    implementation(libs.bundles.room)
     ksp(libs.room.compiler)
     androidTestImplementation(libs.room.testing)
 
