@@ -289,9 +289,6 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation(libs.hilt.navigation.compose)
 
-    // Jetpack compose paging
-    implementation(libs.paging.compose)
-
     // Detekt formatting
     // detektPlugins(libs.detekt.formatting)
 
@@ -312,9 +309,6 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
-
-    // Paging
-    implementation(libs.paging.ktx)
 
     // Data store
     implementation(libs.datastore)

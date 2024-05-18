@@ -114,9 +114,6 @@ dependencies {
     // KotlinX collections immutable
     implementation(libs.collections.immutable)
 
-    // Paging
-    implementation(libs.paging.ktx)
-
     // Data store
     implementation(libs.datastore)
 
