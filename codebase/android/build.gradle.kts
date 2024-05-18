@@ -41,6 +41,7 @@ plugins {
     alias(libs.plugins.about.libraries) apply false
 }
 
+// region Kover
 /*
 // TODO(Abhi): Fix kover
 koverMerged {
@@ -86,6 +87,7 @@ koverMerged {
     }
 }
 */
+// endregion
 
 // region Detekt
 detekt {
