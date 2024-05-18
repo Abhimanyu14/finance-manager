@@ -83,11 +83,7 @@ dependencies {
     implementation(libs.junit)
 
     // Android X test
-    implementation(libs.test.core)
-    implementation(libs.test.junit)
-    implementation(libs.test.truth)
-    implementation(libs.test.runner)
-    implementation(libs.test.rules)
+    implementation(libs.bundles.test)
 
     // Mockito kotlin
     implementation(libs.mockito.kotlin)

@@ -156,3 +156,10 @@ room = [
     "room-core",
     "room-runtime",
 ]
+test = [
+    "test-core",
+    "test-rules",
+    "test-truth",
+    "test-junit",
+    "test-runner",
+]

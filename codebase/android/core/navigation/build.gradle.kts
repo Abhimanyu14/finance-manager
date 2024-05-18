@@ -67,11 +67,7 @@ dependencies {
     testImplementation(libs.junit)
 
     // Android X test
-    androidTestImplementation(libs.test.core)
-    androidTestImplementation(libs.test.junit)
-    androidTestImplementation(libs.test.truth)
-    androidTestImplementation(libs.test.runner)
-    androidTestImplementation(libs.test.rules)
+    androidTestImplementation(libs.bundles.test)
 
     // Mockito kotlin
     testImplementation(libs.mockito.kotlin)

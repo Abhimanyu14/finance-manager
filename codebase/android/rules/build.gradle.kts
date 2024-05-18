@@ -59,15 +59,6 @@ dependencies {
     // Detekt API
     compileOnly(libs.detekt.api)
 
-    // Androidx core
-    implementation(libs.androidx.core)
-
     // Detekt compose
     detektPlugins(libs.detekt.rules.compose.nlopez)
-
-    // JUnit
-    testImplementation(libs.junit)
-
-    // Android X test
-    androidTestImplementation(libs.test.junit)
 }
