@@ -128,13 +128,7 @@ dependencies {
     // KotlinX collections immutable
     implementation(libs.collections.immutable)
 
-    // Detekt formatting
-    // detektPlugins(libs.detekt.formatting)
-
-    // Detekt compose
-    // detektPlugins(libs.detekt.rules.compose)
-    detektPlugins(libs.detekt.rules.compose.nlopez)
-    // detektPlugins(project(":rules"))
+    detektPlugins(libs.bundles.detekt)
 
     // Testing
 

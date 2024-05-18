@@ -104,9 +104,7 @@ dependencies {
     ksp(libs.room.compiler)
     androidTestImplementation(libs.room.testing)
 
-    // Detekt compose
-    detektPlugins(libs.detekt.rules.compose.nlopez)
-    // detektPlugins(project(":rules"))
+    detektPlugins(libs.bundles.detekt)
 
     // Testing
 

@@ -78,9 +78,7 @@ dependencies {
     // KSP
     implementation(libs.ksp)
 
-    // Detekt compose
-    detektPlugins(libs.detekt.rules.compose.nlopez)
-    // detektPlugins(project(":rules"))
+    detektPlugins(libs.bundles.detekt)
 
     // Testing
 

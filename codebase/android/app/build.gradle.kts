@@ -10,8 +10,8 @@ plugins {
     alias(libs.plugins.about.libraries)
 }
 
+// region Kover
 /*
-// Kover
 kover {
     // true to disable instrumentation of all Kover tasks in this project
     isDisabled.set(false)
@@ -60,6 +60,7 @@ tasks.koverHtmlReport {
     )
 }
 */
+// endregion
 
 android {
     namespace = "com.makeappssimple.abhimanyu.financemanager.android"
@@ -273,14 +274,6 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation(libs.hilt.navigation.compose)
 
-    // Detekt formatting
-    // detektPlugins(libs.detekt.formatting)
-
-    // Detekt compose
-    // detektPlugins(libs.detekt.rules.compose)
-    detektPlugins(libs.detekt.rules.compose.nlopez)
-    // detektPlugins(project(":rules"))
-
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
@@ -311,7 +304,7 @@ dependencies {
     // Firebase crashlytics
     implementation(libs.firebase.crashlytics)
 
-    // implementation libs.manifest.merger
+    detektPlugins(libs.bundles.detekt)
 
     // Testing
 
@@ -356,8 +349,8 @@ kover {
     }
 }
 
+// region Detekt
 /*
-// Detekt
 // TODO(Abhi): Check how to enable
 tasks.withType(Detekt).configureEach {
     reports {
@@ -369,3 +362,4 @@ tasks.withType(Detekt).configureEach {
     }
 }
 */
+// endregion

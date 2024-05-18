@@ -59,6 +59,5 @@ dependencies {
     // Detekt API
     compileOnly(libs.detekt.api)
 
-    // Detekt compose
-    detektPlugins(libs.detekt.rules.compose.nlopez)
+    detektPlugins(libs.bundles.detekt)
 }

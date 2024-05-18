@@ -113,8 +113,8 @@ lint-checks = { group = "com.android.tools.lint", name = "lint-checks", version.
 
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 detekt-rules-compose = { group = "ru.kode", name = "detekt-rules-compose", version.ref = "detekt-rules-compose" }
-detekt-rules-compose-nlopez = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-rules-compose.nlopez" }
 detekt-api = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
+detekt-rules-compose-nlopez = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-rules-compose.nlopez" }
 
 # Tesing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -151,6 +151,9 @@ compose = [
     "compose-tooling",
     "compose-preiew",
     "compose-material3",
+]
+detekt = [
+    "detekt-rules-compose-nlopez",
 ]
 room = [
     "room-core",
