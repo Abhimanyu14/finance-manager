@@ -3,9 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -36,12 +36,11 @@ public class SettingsScreenViewModel @Inject constructor(
     myPreferencesRepository: MyPreferencesRepository,
     private val alarmKit: AlarmKit,
     private val backupDataUseCase: BackupDataUseCase,
-    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dispatcherProvider: DispatcherProvider,
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
     private val reminder = myPreferencesRepository.getReminder()
     private val isLoading = MutableStateFlow(
@@ -62,13 +61,13 @@ public class SettingsScreenViewModel @Inject constructor(
             ),
         )
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public fun backupDataToDocument(
         uri: Uri,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true
@@ -116,7 +115,7 @@ public class SettingsScreenViewModel @Inject constructor(
     public fun restoreDataFromDocument(
         uri: Uri,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             withContext(
@@ -143,7 +142,7 @@ public class SettingsScreenViewModel @Inject constructor(
     }
 
     public fun recalculateTotal() {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true

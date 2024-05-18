@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -35,12 +35,12 @@ import javax.inject.Inject
 public class CategoriesScreenViewModel @Inject constructor(
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
-    private val closeableCoroutineScope: CloseableCoroutineScope,
+
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private val selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )
@@ -171,13 +171,13 @@ public class CategoriesScreenViewModel @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public fun deleteCategory(
         id: Int,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteCategoryUseCase(
@@ -210,7 +210,7 @@ public class CategoriesScreenViewModel @Inject constructor(
         defaultCategoryId: Int,
         transactionType: TransactionType,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             @Suppress("UNUSED_VARIABLE")

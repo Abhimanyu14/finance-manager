@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
@@ -47,15 +47,14 @@ import javax.inject.Inject
 public class TransactionsScreenViewModel @Inject constructor(
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
-    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private val allTransactionData: StateFlow<ImmutableList<TransactionData>> =
         getAllTransactionDataFlowUseCase().defaultListStateIn(
-            scope = closeableCoroutineScope,
+            scope = viewModelScope,
         )
     private val categoriesMap: Flow<Map<TransactionType, List<Category>>> =
         allTransactionData.map {
@@ -71,17 +70,17 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val expenseCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.EXPENSE].orEmpty()
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
     private val incomeCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.INCOME].orEmpty()
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
     private val investmentCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.INVESTMENT].orEmpty()
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
     private val accounts: StateFlow<List<Account>?> = allTransactionData.map {
         it.flatMap { transactionData ->
@@ -91,11 +90,11 @@ public class TransactionsScreenViewModel @Inject constructor(
             )
         }.distinct()
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
     private val transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
-            scope = closeableCoroutineScope,
+            scope = viewModelScope,
         )
 
     // region Search
@@ -133,7 +132,7 @@ public class TransactionsScreenViewModel @Inject constructor(
             }.orZero(),
         )
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     private val sortOptions: ImmutableList<SortOption> = SortOption.entries.toImmutableList()
@@ -300,7 +299,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                     isLoading.value = false
                 }
         }.defaultObjectStateIn(
-            scope = closeableCoroutineScope,
+            scope = viewModelScope,
         )
 
     public val screenUIData: StateFlow<MyResult<TransactionsScreenUIData>?> = combine(
@@ -362,7 +361,7 @@ public class TransactionsScreenViewModel @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     // region Search
@@ -442,7 +441,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     public fun updateTransactionForValuesInTransactions(
         transactionForId: Int,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             val updatedTransactions = allTransactionData.value.map { transactionData ->

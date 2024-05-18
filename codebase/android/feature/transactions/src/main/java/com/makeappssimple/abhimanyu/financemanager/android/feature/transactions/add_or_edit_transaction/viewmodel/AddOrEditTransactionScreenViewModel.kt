@@ -4,7 +4,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
@@ -80,7 +80,6 @@ import kotlin.math.abs
 public class AddOrEditTransactionScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -94,7 +93,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateAccountBalanceAmountUseCase: UpdateAccountBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private val screenArgs = AddOrEditTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
@@ -171,13 +170,13 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
             category.transactionType == selectedTransactionType
         }?.toImmutableList().orEmpty()
     }.defaultListStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     private val selectedCategoryId: StateFlow<Int?> = uiState.map {
         it.category?.id
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     private val isCtaButtonEnabled: StateFlow<Boolean> = combine(
@@ -252,7 +251,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
             }
         }
     }.defaultBooleanStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?> = combine(
@@ -305,11 +304,11 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public fun initViewModel() {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             fetchData()
@@ -317,7 +316,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     }
 
     public fun insertTransaction() {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             val uiStateValue = uiState.value
@@ -498,7 +497,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     }
 
     public fun updateTransaction() {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             val selectedTransactionTypeValue = selectedTransactionType.value
@@ -821,7 +820,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     // endregion
 
     private fun fetchData() {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             // Initial data setup

@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -26,14 +26,13 @@ import javax.inject.Inject
 public class TransactionForValuesScreenViewModel @Inject constructor(
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val checkIfTransactionForIsUsedInTransactionsUseCase: CheckIfTransactionForIsUsedInTransactionsUseCase,
-    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
-            scope = closeableCoroutineScope,
+            scope = viewModelScope,
         )
     private val transactionForValuesIsUsedInTransactions: Flow<List<Boolean>> =
         transactionForValues
@@ -66,13 +65,13 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public fun deleteTransactionFor(
         id: Int,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteTransactionForUseCase(

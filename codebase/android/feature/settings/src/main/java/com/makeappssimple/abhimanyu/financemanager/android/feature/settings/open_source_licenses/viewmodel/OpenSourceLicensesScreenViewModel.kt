@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
@@ -15,16 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class OpenSourceLicensesScreenViewModel @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     @VisibleForTesting internal val navigator: Navigator,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     public val screenUIData: StateFlow<MyResult<OpenSourceLicensesScreenUIData>?> =
         MutableStateFlow(
             value = MyResult.Success(
                 data = OpenSourceLicensesScreenUIData(),
             )
         ).defaultObjectStateIn(
-            scope = closeableCoroutineScope,
+            scope = viewModelScope,
         )
 
     public fun navigateUp() {

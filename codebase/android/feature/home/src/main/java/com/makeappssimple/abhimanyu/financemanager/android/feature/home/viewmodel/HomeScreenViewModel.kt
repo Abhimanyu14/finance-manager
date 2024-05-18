@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmod
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
@@ -51,7 +51,6 @@ public class HomeScreenViewModel @Inject constructor(
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     private val backupDataUseCase: BackupDataUseCase,
-    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
@@ -59,7 +58,7 @@ public class HomeScreenViewModel @Inject constructor(
     private val getTransactionUseCase: GetTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private val homeListItemViewData: Flow<List<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
     private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
@@ -167,7 +166,7 @@ public class HomeScreenViewModel @Inject constructor(
             title = title,
         )
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     private val accountsTotalBalanceAmountValue: Flow<Long> =
@@ -212,13 +211,13 @@ public class HomeScreenViewModel @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public fun backupDataToDocument(
         uri: Uri,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             launch {

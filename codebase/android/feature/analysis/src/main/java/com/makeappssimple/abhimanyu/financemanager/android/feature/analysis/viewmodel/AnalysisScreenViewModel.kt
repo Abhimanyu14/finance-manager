@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -40,11 +40,10 @@ private object AnalysisScreenViewModelConstants {
 
 @HiltViewModel
 public class AnalysisScreenViewModel @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
     private val validTransactionTypes = listOf(
         TransactionType.EXPENSE,
@@ -69,7 +68,7 @@ public class AnalysisScreenViewModel @Inject constructor(
             }.orZero(),
         )
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     private val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>> = combine(
@@ -83,7 +82,7 @@ public class AnalysisScreenViewModel @Inject constructor(
             allTransactionDataValue = allTransactionDataValue
         )
     }.defaultListStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?> = combine(
@@ -116,7 +115,7 @@ public class AnalysisScreenViewModel @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public fun navigateUp() {

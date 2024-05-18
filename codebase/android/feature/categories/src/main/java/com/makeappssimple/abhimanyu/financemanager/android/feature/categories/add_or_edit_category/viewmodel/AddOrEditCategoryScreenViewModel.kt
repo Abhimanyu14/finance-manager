@@ -4,8 +4,8 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
@@ -43,14 +43,13 @@ import javax.inject.Inject
 public class AddOrEditCategoryScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
-) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
+) : ScreenViewModel, ViewModel() {
     private val screenArgs = AddOrEditCategoryScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
@@ -140,11 +139,11 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
+        scope = viewModelScope,
     )
 
     public fun initViewModel() {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             getOriginalCategory()
@@ -163,7 +162,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
 
     public fun insertCategory() {
         val emojiValue = emoji.value ?: return
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             insertCategoriesUseCase(
@@ -186,7 +185,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             title = title.value.text,
             transactionType = transactionTypes[selectedTransactionTypeIndex.value],
         )
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             updateCategoriesUseCase(
@@ -211,7 +210,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
     public fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.main
         ) {
             title.update {
@@ -240,7 +239,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
 
     private fun getOriginalCategory() {
         screenArgs.originalCategoryId?.let { id ->
-            closeableCoroutineScope.launch(
+            viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
                 category.update {
@@ -260,7 +259,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
                 element = category.transactionType,
             ),
         )
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.main
         ) {
             title.update {
@@ -276,7 +275,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
     }
 
     private fun fetchData() {
-        closeableCoroutineScope.launch(
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             awaitAll(
