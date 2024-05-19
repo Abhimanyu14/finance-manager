@@ -265,46 +265,58 @@ And the core parts of the app are inside the module named `core`.
 
 1. To build the project
 
-```
-./gradlew :app:assembleDebug
-```
+   ```
+   ./gradlew :app:assembleDebug
+   ```
 
 2. To clean and build the project
 
-```
-./gradlew clean :app:assembleDebug
-```
+   ```
+   ./gradlew clean :app:assembleDebug
+   ```
 
 3. To install the app
 
-```
-./gradlew installDebug
-```
+   ```
+   ./gradlew installDebug
+   ```
 
 4. To run all the unit tests
 
-```
-./gradlew test
-./gradlew testDebugUnitTest
-```
+   ```
+   ./gradlew test
+   ./gradlew testDebugUnitTest
+   ```
 
 5. To run the lint checks
 
-```
-./gradlew lint
-```
+   ```
+   ./gradlew lint
+   ```
 
-6. To run all the android UI tests
+6. To run detekt checks
 
-```
+   ```
+   ./gradlew detekt
+   ```
 
-```
+7. To run the konsist checks
 
-7. To generate Kover Unit test coverage HTML Report
+   ```
+   ./gradlew konsistTest:test --rerun-tasks
+   ```
 
-```
-./gradlew koverMergedHtmlReport
-```
+8. To run all the android UI tests
+
+   ```
+
+   ```
+
+9. To generate Kover Unit test coverage HTML Report
+
+   ```
+   ./gradlew koverMergedHtmlReport
+   ```
 
 ## Scrcpy commands
 
