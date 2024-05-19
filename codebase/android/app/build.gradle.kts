@@ -284,9 +284,6 @@ dependencies {
     // JDK desugaring
     coreLibraryDesugaring(libs.jdk.desugaring)
 
-    // Coil
-    implementation(libs.coil)
-
     // Data store
     implementation(libs.datastore)
 
