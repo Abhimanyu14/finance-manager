@@ -14,7 +14,7 @@ hilt-navigation-compose = "1.2.0"
 detekt = "1.23.6"
 detekt-rules-compose = "1.3.0"
 detekt-rules-compose-nlopez = "0.3.21"
-detekt-rules = "0971594ba2cf108fd303189c53870179b5217d27"
+detekt-rules = "0e52b2171e2c3b9e6efc20c517d819947312d534"
 
 hilt-android = "2.51.1"
 hilt-android-compiler = "2.51.1"
