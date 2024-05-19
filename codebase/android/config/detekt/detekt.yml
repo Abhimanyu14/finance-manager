@@ -928,7 +928,7 @@ project-convention:
   AvoidFunctionExpression:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
-  EnforceNamedParameters:
-    active: true
   PublicApiOrdering:
     active: false
+  UseNamedParameters:
+    active: true

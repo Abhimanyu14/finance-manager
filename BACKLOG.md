@@ -13,18 +13,18 @@
 
 # Tech Debt
 
-1. Immutable collection
-2. Android ViewModel to ViewModel
-3. Throttle all clicks
-4. Process death
-5. Unit testing
-6. UI Testing
-7. Screenshot testing
-8. Linting
-9. Architecture structure rules
-10. Groovy to Kotlin
-11. Proguard/R8
-12. Minify resources
+1. Android ViewModel to ViewModel
+2. Throttle all clicks
+3. Process death
+4. Unit testing
+5. UI Testing
+6. Screenshot testing
+7. Linting
+8. Architecture structure rules
+9. Proguard/R8
+10. Minify resources
+11. Kotest
+12. Konsist
 
 # Bugs
 
@@ -37,3 +37,4 @@
 3. Preference Inspector
 4. DB Inspector
 5. Public embedded issue tracker
+6. Detekt custom rules
