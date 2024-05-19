@@ -1,30 +1,6 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 
-buildscript {
-    // App version code
-    val appVersionCode = 116
-
-    // App version name
-    val appVersionName = "2024.05.12.0"
-
-    // Compile SDK version
-    val compileSdkVersion: Int = 34
-
-    // Minimum SDK version
-    val minSdkVersion = 27
-
-    // Target SDK version
-    val targetSdkVersion = 34
-
-    // Jetpack compose compiler
-    /**
-     * Map according to to kotlin version from here,
-     * https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-     */
-    val jetpackComposeCompilerVersion = "1.5.12"
-}
-
 // TODO(Abhi): Revisit the "apply"
 plugins {
     alias(libs.plugins.android.application) apply false

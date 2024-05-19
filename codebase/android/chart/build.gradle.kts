@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace = "com.makeappssimple.abhimanyu.financemanager.android.chart"
-    compileSdk = 34 // rootProject.compileSdkVersion
+    compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
-        minSdk = 27 // rootProject.minSdkVersion
-        targetSdk = 34 // rootProject.targetSdkVersion
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
 
         testInstrumentationRunner =
             "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"

@@ -9,10 +9,10 @@ plugins {
 
 android {
     namespace = "com.makeappssimple.abhimanyu.financemanager.android.core.network"
-    compileSdk = 34 // rootProject.compileSdkVersion
+    compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
-        minSdk = 27 // rootProject.minSdkVersion
+        minSdk = libs.versions.min.sdk.get().toInt()
 
         testInstrumentationRunner =
             "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"

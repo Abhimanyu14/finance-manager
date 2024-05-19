@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog"
-    compileSdk = 34 // rootProject.compileSdkVersion
+    compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog"
-        minSdk = 27 // rootProject.minSdkVersion
-        targetSdk = 34 // rootProject.targetSdkVersion
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 

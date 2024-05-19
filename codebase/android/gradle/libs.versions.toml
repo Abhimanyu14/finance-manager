@@ -1,4 +1,15 @@
 [versions]
+app-version-code = "116"
+app-version-name = "2024.05.12.0"
+
+compile-sdk = "34"
+target-sdk = "34"
+min-sdk = "27"
+
+# Map according to to kotlin version from here,
+# https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+jetpack-compose-compiler = "1.5.12"
+
 androidx-core = "1.13.1"
 lifecycle = "2.7.0"
 coroutines = "1.8.0"

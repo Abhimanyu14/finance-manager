@@ -64,14 +64,14 @@ tasks.koverHtmlReport {
 
 android {
     namespace = "com.makeappssimple.abhimanyu.financemanager.android"
-    compileSdk = 34 // rootProject.compileSdkVersion
+    compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.makeappssimple.abhimanyu.financemanager.android"
-        minSdk = 27 // rootProject.minSdkVersion
-        targetSdk = 34 // targetSdkVersion
-        versionCode = 116 // appVersionCode
-        versionName = "2024.05.12.0" // appVersionName
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
+        versionCode = libs.versions.app.version.code.get().toInt()
+        versionName = libs.versions.app.version.name.get()
 
         testInstrumentationRunner =
             "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
