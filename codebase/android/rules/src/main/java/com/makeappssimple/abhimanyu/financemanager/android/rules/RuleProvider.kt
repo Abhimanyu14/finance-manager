@@ -7,6 +7,7 @@ import io.gitlab.arturbosch.detekt.api.RuleSetProvider
 
 public class RuleProvider : RuleSetProvider {
     override val ruleSetId: String = "extra-rules"
-    override fun instance(config: Config): RuleSet =
-        RuleSet(ruleSetId, listOf(ContextOrder(config)))
+    override fun instance(config: Config): RuleSet {
+        return RuleSet(ruleSetId, listOf(ContextOrder(config)))
+    }
 }

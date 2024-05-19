@@ -923,3 +923,8 @@ Compose:
     active: true
     # -- You can optionally add your own ViewModel factories here
     # viewModelFactories: hiltViewModel,potatoViewModel
+
+MasRuleSet:
+  AvoidFunctionExpression:
+    active: true
+    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
