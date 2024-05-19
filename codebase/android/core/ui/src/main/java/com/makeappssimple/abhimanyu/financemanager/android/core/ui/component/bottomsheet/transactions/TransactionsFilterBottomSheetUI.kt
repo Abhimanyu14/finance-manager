@@ -399,114 +399,6 @@ public fun TransactionsFiltersBottomSheetUI(
 }
 
 @Composable
-private fun TransactionFilterBottomSheetFilterGroup(
-    isExpanded: Boolean,
-    @StringRes headingTextStringResourceId: Int,
-    items: ImmutableList<ChipUIData>,
-    selectedItemsIndices: ImmutableList<Int>,
-    onClearButtonClick: () -> Unit,
-    onExpandButtonClick: () -> Unit,
-    onItemClick: (index: Int) -> Unit,
-) {
-    val chevronDegrees: Float by animateFloatAsState(
-        targetValue = if (isExpanded) {
-            90F
-        } else {
-            0F
-        },
-        label = "chevron_degrees",
-    )
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .animateContentSize(),
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth(),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .clip(
-                        shape = CircleShape,
-                    )
-                    .clickable {
-                        onExpandButtonClick()
-                    }
-                    .weight(
-                        weight = 1F,
-                    ),
-            ) {
-                MyIconButton(
-                    imageVector = MyIcons.ChevronRight,
-                    tint = MaterialTheme.colorScheme.onBackground,
-                    contentDescriptionStringResourceId = if (isExpanded) {
-                        R.string.bottom_sheet_transactions_filter_collapse_group
-                    } else {
-                        R.string.bottom_sheet_transactions_filter_expand_group
-                    },
-                    modifier = Modifier
-                        .graphicsLayer {
-                            rotationZ = chevronDegrees
-                        },
-                    onClick = onExpandButtonClick,
-                )
-                MyText(
-                    modifier = Modifier
-                        .weight(
-                            weight = 1F,
-                        ),
-                    textStringResourceId = headingTextStringResourceId,
-                    style = MaterialTheme.typography.headlineLarge
-                        .copy(
-                            color = MaterialTheme.colorScheme.onBackground,
-                            textAlign = TextAlign.Start,
-                        ),
-                )
-            }
-            TextButton(
-                onClick = {
-                    onClearButtonClick()
-                },
-                modifier = Modifier
-                    .padding(
-                        start = 8.dp,
-                        end = 16.dp,
-                    ),
-            ) {
-                MyText(
-                    textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
-                    style = MaterialTheme.typography.labelLarge,
-                )
-            }
-        }
-        if (isExpanded) {
-            MySelectionGroup(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 16.dp,
-                        vertical = 4.dp,
-                    ),
-                data = MySelectionGroupData(
-                    items = items,
-                    selectedItemsIndices = selectedItemsIndices,
-                ),
-                handleEvent = { event ->
-                    when (event) {
-                        is MySelectionGroupEvent.OnSelectionChange -> {
-                            onItemClick(event.index)
-                        }
-                    }
-                },
-            )
-        }
-    }
-}
-
-@Composable
 public fun TransactionFilterBottomSheetDateFilter(
     modifier: Modifier = Modifier,
     isExpanded: Boolean,
@@ -693,6 +585,114 @@ public fun TransactionFilterBottomSheetDateFilter(
                     },
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun TransactionFilterBottomSheetFilterGroup(
+    isExpanded: Boolean,
+    @StringRes headingTextStringResourceId: Int,
+    items: ImmutableList<ChipUIData>,
+    selectedItemsIndices: ImmutableList<Int>,
+    onClearButtonClick: () -> Unit,
+    onExpandButtonClick: () -> Unit,
+    onItemClick: (index: Int) -> Unit,
+) {
+    val chevronDegrees: Float by animateFloatAsState(
+        targetValue = if (isExpanded) {
+            90F
+        } else {
+            0F
+        },
+        label = "chevron_degrees",
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .clip(
+                        shape = CircleShape,
+                    )
+                    .clickable {
+                        onExpandButtonClick()
+                    }
+                    .weight(
+                        weight = 1F,
+                    ),
+            ) {
+                MyIconButton(
+                    imageVector = MyIcons.ChevronRight,
+                    tint = MaterialTheme.colorScheme.onBackground,
+                    contentDescriptionStringResourceId = if (isExpanded) {
+                        R.string.bottom_sheet_transactions_filter_collapse_group
+                    } else {
+                        R.string.bottom_sheet_transactions_filter_expand_group
+                    },
+                    modifier = Modifier
+                        .graphicsLayer {
+                            rotationZ = chevronDegrees
+                        },
+                    onClick = onExpandButtonClick,
+                )
+                MyText(
+                    modifier = Modifier
+                        .weight(
+                            weight = 1F,
+                        ),
+                    textStringResourceId = headingTextStringResourceId,
+                    style = MaterialTheme.typography.headlineLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Start,
+                        ),
+                )
+            }
+            TextButton(
+                onClick = {
+                    onClearButtonClick()
+                },
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                        end = 16.dp,
+                    ),
+            ) {
+                MyText(
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
+                    style = MaterialTheme.typography.labelLarge,
+                )
+            }
+        }
+        if (isExpanded) {
+            MySelectionGroup(
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+                data = MySelectionGroupData(
+                    items = items,
+                    selectedItemsIndices = selectedItemsIndices,
+                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is MySelectionGroupEvent.OnSelectionChange -> {
+                            onItemClick(event.index)
+                        }
+                    }
+                },
+            )
         }
     }
 }

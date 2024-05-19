@@ -67,6 +67,21 @@ public val myDarkColorScheme: ColorScheme = darkColorScheme(
 )
 
 @Composable
+public fun MyAppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkColorScheme: ColorScheme = myDarkColorScheme,
+    lightColorScheme: ColorScheme = myLightColorScheme,
+    content: ComposableContent,
+) {
+    Material3AppTheme(
+        darkTheme = darkTheme,
+        darkColorScheme = darkColorScheme,
+        lightColorScheme = lightColorScheme,
+        content = content,
+    )
+}
+
+@Composable
 internal fun Material3AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     darkColorScheme: ColorScheme,
@@ -83,21 +98,6 @@ internal fun Material3AppTheme(
         colorScheme = colors,
         shapes = Shapes,
         typography = Typography,
-        content = content,
-    )
-}
-
-@Composable
-public fun MyAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    darkColorScheme: ColorScheme = myDarkColorScheme,
-    lightColorScheme: ColorScheme = myLightColorScheme,
-    content: ComposableContent,
-) {
-    Material3AppTheme(
-        darkTheme = darkTheme,
-        darkColorScheme = darkColorScheme,
-        lightColorScheme = lightColorScheme,
         content = content,
     )
 }

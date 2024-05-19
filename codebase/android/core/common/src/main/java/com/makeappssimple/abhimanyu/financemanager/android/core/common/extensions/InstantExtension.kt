@@ -7,6 +7,30 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 /**
+ * [Instant] to [ZonedDateTime].
+ */
+public fun Instant.toZonedDateTime(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): ZonedDateTime {
+    return this.atZone(zoneId)
+}
+
+/**
+ * [Instant] to [Instant].
+ */
+public fun Instant.atEndOfDay(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): Instant {
+    return this
+        .atZone(zoneId)
+        .toLocalDate()
+        .atEndOfDay()
+        .toInstant(
+            zoneId = zoneId,
+        )
+}
+
+/**
  * Sample format - 30 Mar, 2023.
  */
 internal fun Instant.formattedDate(
@@ -92,15 +116,6 @@ internal fun Instant.formattedTime(
 }
 
 /**
- * [Instant] to [ZonedDateTime].
- */
-public fun Instant.toZonedDateTime(
-    zoneId: ZoneId = getSystemDefaultZoneId(),
-): ZonedDateTime {
-    return this.atZone(zoneId)
-}
-
-/**
  * [Instant] to [Instant].
  */
 internal fun Instant.atStartOfDay(
@@ -110,21 +125,6 @@ internal fun Instant.atStartOfDay(
         .atZone(zoneId)
         .toLocalDate()
         .atStartOfDay()
-        .toInstant(
-            zoneId = zoneId,
-        )
-}
-
-/**
- * [Instant] to [Instant].
- */
-public fun Instant.atEndOfDay(
-    zoneId: ZoneId = getSystemDefaultZoneId(),
-): Instant {
-    return this
-        .atZone(zoneId)
-        .toLocalDate()
-        .atEndOfDay()
         .toInstant(
             zoneId = zoneId,
         )

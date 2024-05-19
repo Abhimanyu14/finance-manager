@@ -5,10 +5,6 @@ import java.time.LocalDate
 import java.time.ZoneId
 
 public interface DateUtil {
-    private fun getCurrentTimeMillis(): Long {
-        return Instant.now().toEpochMilli()
-    }
-
     public fun getCurrentLocalDate(): LocalDate
 
     public fun getLocalDate(
@@ -25,4 +21,8 @@ public interface DateUtil {
         timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): LocalDate
+
+    private fun getCurrentTimeMillis(): Long {
+        return Instant.now().toEpochMilli()
+    }
 }

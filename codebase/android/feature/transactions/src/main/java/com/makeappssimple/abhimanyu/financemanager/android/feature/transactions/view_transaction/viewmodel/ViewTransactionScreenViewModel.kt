@@ -88,32 +88,6 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         getTransactionData()
     }
 
-    private fun getTransactionData() {
-        screenArgs.originalTransactionId?.let { id ->
-            viewModelScope.launch(
-                context = dispatcherProvider.io,
-            ) {
-                getTransactionDataUseCase(
-                    id = id,
-                )?.let { transactionData ->
-                    transactionListItemData.value = getTransactionListItemData(
-                        transactionData = transactionData,
-                    )
-                    transactionData.transaction.originalTransactionId?.let { transactionId ->
-                        updateOriginalTransactionData(
-                            transactionId = transactionId,
-                        )
-                    }
-                    transactionData.transaction.refundTransactionIds?.let { ids ->
-                        updateRefundTransactionData(
-                            ids = ids,
-                        )
-                    }
-                }
-            }
-        }
-    }
-
     public fun deleteTransaction(
         transactionId: Int,
     ) {
@@ -153,6 +127,32 @@ public class ViewTransactionScreenViewModel @Inject constructor(
 
     public fun navigateUp() {
         navigator.navigateUp()
+    }
+
+    private fun getTransactionData() {
+        screenArgs.originalTransactionId?.let { id ->
+            viewModelScope.launch(
+                context = dispatcherProvider.io,
+            ) {
+                getTransactionDataUseCase(
+                    id = id,
+                )?.let { transactionData ->
+                    transactionListItemData.value = getTransactionListItemData(
+                        transactionData = transactionData,
+                    )
+                    transactionData.transaction.originalTransactionId?.let { transactionId ->
+                        updateOriginalTransactionData(
+                            transactionId = transactionId,
+                        )
+                    }
+                    transactionData.transaction.refundTransactionIds?.let { ids ->
+                        updateRefundTransactionData(
+                            ids = ids,
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun getTransactionListItemData(
