@@ -810,13 +810,8 @@ style:
     ignoreLateinitVar: false
   WildcardImport:
     active: true
-    excludeImports:
-      - 'java.util.*'
-
-#formatting:
-#  active: true
-#  IfElseBracing:
-#    active: true
+    # excludeImports:
+    #   - 'java.util.*'
 
 Compose:
   ComposableAnnotationNaming:
