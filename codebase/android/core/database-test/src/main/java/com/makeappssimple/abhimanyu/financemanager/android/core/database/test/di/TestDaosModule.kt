@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.test
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.test.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao

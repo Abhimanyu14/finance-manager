@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen
 
 import android.content.Context
 import androidx.compose.material3.SheetState
