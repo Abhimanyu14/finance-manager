@@ -60,6 +60,7 @@ plugin-ksp = "1.9.23-1.0.20"
 plugin-hilt-android = "2.51.1"
 plugin-google-services = "4.4.1"
 plugin-firebase-crashlytics = "2.9.9"
+plugin-firebase-perf = "1.4.2"
 plugin-detekt = "1.23.6"
 plugin-about-libraries = "11.1.3"
 
@@ -112,6 +113,7 @@ firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref =
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-config = { module = "com.google.firebase:firebase-config" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-perf = { module = "com.google.firebase:firebase-perf" }
 
 compose-emoji-picker = { group = "com.github.Abhimanyu14", name = "compose-emoji-picker", version.ref = "compose-emoji-picker" }
 
@@ -153,6 +155,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "plugin-ksp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "plugin-hilt-android" }
 google-services = { id = "com.google.gms.google-services", version.ref = "plugin-google-services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "plugin-firebase-crashlytics" }
+firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "plugin-firebase-perf" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "plugin-detekt" }
 about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "plugin-about-libraries" }
 

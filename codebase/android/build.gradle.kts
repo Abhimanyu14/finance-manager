@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.firebase.perf) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.about.libraries) apply false
 }
