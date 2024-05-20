@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -37,7 +36,6 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     stringDecoder: StringDecoder,
     private val dateTimeUtil: DateTimeUtil,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
-    private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     @VisibleForTesting internal val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
@@ -91,9 +89,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     public fun deleteTransaction(
         transactionId: Int,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             deleteTransactionUseCase(
                 id = transactionId,
             )
@@ -131,9 +127,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
 
     private fun getTransactionData() {
         screenArgs.originalTransactionId?.let { id ->
-            viewModelScope.launch(
-                context = dispatcherProvider.io,
-            ) {
+            viewModelScope.launch {
                 getTransactionDataUseCase(
                     id = id,
                 )?.let { transactionData ->
@@ -222,9 +216,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private fun updateOriginalTransactionData(
         transactionId: Int,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             getTransactionDataUseCase(
                 id = transactionId,
             )?.let {
@@ -238,9 +230,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private fun updateRefundTransactionData(
         ids: List<Int>,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             refundTransactionListItemData.value = buildList {
                 ids.map {
                     getTransactionDataUseCase(
