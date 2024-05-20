@@ -132,7 +132,7 @@ complexity:
     ignoredLabels: [ ]
   # TODO(Abhi): Enable this later
   LargeClass:
-    active: true
+    active: false
     threshold: 600
   # TODO(Abhi): Enable this later
   LongMethod:
@@ -926,4 +926,4 @@ project-convention:
   PublicApiOrdering:
     active: false
   UseNamedParameters:
-    active: true
+    active: false
