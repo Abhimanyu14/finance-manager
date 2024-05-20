@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
@@ -36,7 +34,6 @@ public class SettingsScreenViewModel @Inject constructor(
     myPreferencesRepository: MyPreferencesRepository,
     private val alarmKit: AlarmKit,
     private val backupDataUseCase: BackupDataUseCase,
-    private val dispatcherProvider: DispatcherProvider,
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
@@ -67,13 +64,9 @@ public class SettingsScreenViewModel @Inject constructor(
     public fun backupDataToDocument(
         uri: Uri,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             isLoading.value = true
-            val isBackupSuccessful = async(
-                context = dispatcherProvider.io,
-            ) {
+            val isBackupSuccessful = async {
                 backupDataUseCase(
                     uri = uri,
                 )
@@ -115,25 +108,15 @@ public class SettingsScreenViewModel @Inject constructor(
     public fun restoreDataFromDocument(
         uri: Uri,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            withContext(
-                context = dispatcherProvider.mainImmediate,
-            ) {
-                isLoading.value = true
-            }
+        viewModelScope.launch {
+            isLoading.value = true
             if (restoreDataUseCase(
                     uri = uri,
                 )
             ) {
                 navigator.navigateUp()
             } else {
-                withContext(
-                    context = dispatcherProvider.mainImmediate,
-                ) {
-                    isLoading.value = false
-                }
+                isLoading.value = false
                 _event.emit(
                     value = SettingsScreenEvent.RestoreDataFailed,
                 )
@@ -142,9 +125,7 @@ public class SettingsScreenViewModel @Inject constructor(
     }
 
     public fun recalculateTotal() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             isLoading.value = true
             recalculateTotalUseCase()
             navigator.navigateUp()
