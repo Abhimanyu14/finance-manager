@@ -76,20 +76,22 @@ public class AccountRepositoryImpl(
     override suspend fun updateAccountBalanceAmount(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
     ): Boolean {
-        val accountIds = accountsBalanceAmountChange.map {
-            it.first
-        }
-        val accounts = getAccounts(
-            ids = accountIds,
-        )
-        val updatedAccounts = accounts.mapIndexed { index, account ->
-            account.updateBalanceAmount(
-                updatedBalanceAmount = account.balanceAmount.value + accountsBalanceAmountChange[index].second,
+        return executeOnIoDispatcher {
+            val accountIds = accountsBalanceAmountChange.map {
+                it.first
+            }
+            val accounts = getAccounts(
+                ids = accountIds,
+            )
+            val updatedAccounts = accounts.mapIndexed { index, account ->
+                account.updateBalanceAmount(
+                    updatedBalanceAmount = account.balanceAmount.value + accountsBalanceAmountChange[index].second,
+                )
+            }
+            updateAccounts(
+                accounts = updatedAccounts.toTypedArray(),
             )
         }
-        return updateAccounts(
-            accounts = updatedAccounts.toTypedArray(),
-        )
     }
 
     override suspend fun updateAccounts(
