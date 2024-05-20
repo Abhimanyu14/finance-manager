@@ -5,6 +5,9 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
+-dontwarn com.google.firebase.perf.network.FirebasePerfOkHttpClient
+-dontwarn com.google.firebase.perf.network.FirebasePerfUrlConnection
+
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
