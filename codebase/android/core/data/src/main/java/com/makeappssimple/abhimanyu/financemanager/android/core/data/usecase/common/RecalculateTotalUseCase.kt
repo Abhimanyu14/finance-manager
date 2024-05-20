@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
@@ -15,7 +14,6 @@ import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 public class RecalculateTotalUseCase @Inject constructor(
-    private val dispatcherProvider: DispatcherProvider,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
@@ -24,14 +22,10 @@ public class RecalculateTotalUseCase @Inject constructor(
     public suspend operator fun invoke() {
         coroutineScope {
             val deferredList = awaitAll(
-                async(
-                    context = dispatcherProvider.io,
-                ) {
+                async {
                     getAllAccountsUseCase()
                 },
-                async(
-                    context = dispatcherProvider.io,
-                ) {
+                async {
                     getAllTransactionDataUseCase()
                 },
             )
