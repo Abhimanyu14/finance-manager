@@ -8,6 +8,7 @@ pluginManagement {
             }
         }
         mavenCentral()
+        mavenLocal()
         maven("https://storage.googleapis.com/r8-releases/raw")
         gradlePluginPortal()
     }
@@ -18,6 +19,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
         maven("https://jitpack.io")
     }
 }
