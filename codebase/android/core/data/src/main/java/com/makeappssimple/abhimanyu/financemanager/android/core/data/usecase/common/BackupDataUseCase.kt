@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common
 
 import android.net.Uri
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
@@ -25,7 +24,6 @@ import javax.inject.Inject
 
 public class BackupDataUseCase @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
-    private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
@@ -54,24 +52,16 @@ public class BackupDataUseCase @Inject constructor(
 
     private suspend fun getDatabaseData(): DatabaseData {
         return coroutineScope {
-            val categories = async(
-                context = dispatcherProvider.io,
-            ) {
+            val categories = async {
                 getAllCategoriesUseCase()
             }
-            val accounts = async(
-                context = dispatcherProvider.io,
-            ) {
+            val accounts = async {
                 getAllAccountsUseCase()
             }
-            val transactionForValues = async(
-                context = dispatcherProvider.io,
-            ) {
+            val transactionForValues = async {
                 getAllTransactionForValuesUseCase()
             }
-            val transactions = async(
-                context = dispatcherProvider.io,
-            ) {
+            val transactions = async {
                 getAllTransactionsUseCase()
             }
 
