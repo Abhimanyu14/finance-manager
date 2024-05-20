@@ -5,7 +5,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -34,7 +33,6 @@ import javax.inject.Inject
 public class AddOrEditTransactionForScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    private val dispatcherProvider: DispatcherProvider,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
@@ -95,18 +93,12 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            getAllTransactionForValues()
-            getOriginalTransactionFor()
-        }
+        getAllTransactionForValues()
+        getOriginalTransactionFor()
     }
 
     public fun insertTransactionFor() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             insertTransactionForUseCase(
                 TransactionFor(
                     title = title.value.text,
@@ -120,9 +112,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
         val updatedTransactionFor = transactionFor.value?.copy(
             title = title.value.text,
         ) ?: return
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             updateTransactionForValuesUseCase(
                 updatedTransactionFor,
             )
@@ -151,9 +141,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
     }
 
     private fun getAllTransactionForValues() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             transactionForValues.clear()
             transactionForValues.addAll(getAllTransactionForValuesUseCase())
         }
@@ -161,9 +149,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
 
     private fun getOriginalTransactionFor() {
         screenArgs.originalTransactionForId?.let { id ->
-            viewModelScope.launch(
-                context = dispatcherProvider.io,
-            ) {
+            viewModelScope.launch {
                 transactionFor.update {
                     getTransactionForUseCase(
                         id = id,
