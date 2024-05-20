@@ -132,7 +132,7 @@ complexity:
     ignoredLabels: [ ]
   # TODO(Abhi): Enable this later
   LargeClass:
-    active: false
+    active: true
     threshold: 600
   # TODO(Abhi): Enable this later
   LongMethod:
