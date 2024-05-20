@@ -5,7 +5,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
@@ -59,7 +58,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -81,7 +79,6 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val dateTimeUtil: DateTimeUtil,
-    private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllAccountsCountUseCase: GetAllAccountsCountUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
@@ -308,17 +305,11 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            fetchData()
-        }
+        fetchData()
     }
 
     public fun insertTransaction() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             val uiStateValue = uiState.value
             selectedTransactionType.value?.let { selectedTransactionTypeValue ->
                 val amountValue = uiStateValue.amount.text.toLongOrZero()
@@ -497,9 +488,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     }
 
     public fun updateTransaction() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             val selectedTransactionTypeValue = selectedTransactionType.value
             val uiStateValue = uiState.value
             selectedTransactionTypeValue?.let {
@@ -804,7 +793,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateAddOrEditTransactionScreenUiState(
+    private fun updateAddOrEditTransactionScreenUiState(
         updatedAddOrEditTransactionScreenUiStateData: AddOrEditTransactionScreenUiStateData,
     ) {
         uiState.update {
@@ -820,9 +809,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     // endregion
 
     private fun fetchData() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             // Initial data setup
 
             // Default data from data store
@@ -850,27 +837,19 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
                 },
             )
             getTransactionTypesForNewTransaction()
-            getOriginalTransactionData(
-                coroutineScope = this,
-            )
+            getOriginalTransactionData()
             setDefaultCategory()
             setDefaultAccount()
             setInitialSelectedTransactionType()
 
             // Observables
-            observeSelectedTransactionType(
-                coroutineScope = this,
-            )
-            observeSelectedCategory(
-                coroutineScope = this,
-            )
+            observeSelectedTransactionType()
+            observeSelectedCategory()
         }
     }
 
-    private fun observeSelectedTransactionType(
-        coroutineScope: CoroutineScope,
-    ) {
-        coroutineScope.launch {
+    private fun observeSelectedTransactionType() {
+        viewModelScope.launch {
             selectedTransactionType.collectLatest { transactionType ->
                 transactionType?.let {
                     handleTransactionTypeChange(
@@ -996,10 +975,8 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         }
     }
 
-    private fun observeSelectedCategory(
-        coroutineScope: CoroutineScope,
-    ) {
-        coroutineScope.launch {
+    private fun observeSelectedCategory() {
+        viewModelScope.launch {
             combine(
                 selectedCategoryId, uiState,
             ) { selectedCategoryId, uiState ->
@@ -1044,13 +1021,9 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getOriginalTransactionData(
-        coroutineScope: CoroutineScope,
-    ) {
+    private suspend fun getOriginalTransactionData() {
         screenArgs.originalTransactionId?.let { id ->
-            coroutineScope.launch(
-                context = dispatcherProvider.io,
-            ) {
+            viewModelScope.launch {
                 launch {
                     getTransactionDataUseCase(
                         id = id,
