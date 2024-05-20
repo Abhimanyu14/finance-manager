@@ -6,7 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -34,7 +33,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,7 +41,6 @@ import javax.inject.Inject
 public class AddOrEditCategoryScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
@@ -97,9 +94,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             title = title.text,
             category = category,
         )
-    }.flowOn(
-        context = dispatcherProvider.io,
-    )
+    }
 
     public val screenUIData: StateFlow<MyResult<AddOrEditCategoryScreenUIData>?> = combine(
         selectedTransactionTypeIndex,
@@ -143,28 +138,22 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            getOriginalCategory()
-            screenArgs.originalTransactionType?.let { originalTransactionType ->
-                updateSelectedTransactionTypeIndex(
-                    updatedIndex = transactionTypes.indexOf(
-                        element = TransactionType.entries.find { transactionType ->
-                            transactionType.title == originalTransactionType
-                        },
-                    )
+        getOriginalCategory()
+        screenArgs.originalTransactionType?.let { originalTransactionType ->
+            updateSelectedTransactionTypeIndex(
+                updatedIndex = transactionTypes.indexOf(
+                    element = TransactionType.entries.find { transactionType ->
+                        transactionType.title == originalTransactionType
+                    },
                 )
-            }
-            fetchData()
+            )
         }
+        fetchData()
     }
 
     public fun insertCategory() {
         val emojiValue = emoji.value ?: return
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             insertCategoriesUseCase(
                 Category(
                     emoji = emojiValue,
@@ -172,7 +161,6 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
                     transactionType = transactionTypes[selectedTransactionTypeIndex.value],
                 ),
             )
-
             navigator.navigateUp()
         }
     }
@@ -185,9 +173,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             title = title.value.text,
             transactionType = transactionTypes[selectedTransactionTypeIndex.value],
         )
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             updateCategoriesUseCase(
                 updatedCategory,
             )
@@ -210,9 +196,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
     public fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.main
-        ) {
+        viewModelScope.launch {
             title.update {
                 updatedTitle
             }
@@ -239,9 +223,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
 
     private fun getOriginalCategory() {
         screenArgs.originalCategoryId?.let { id ->
-            viewModelScope.launch(
-                context = dispatcherProvider.io,
-            ) {
+            viewModelScope.launch {
                 category.update {
                     getCategoryUseCase(
                         id = id,
@@ -259,9 +241,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
                 element = category.transactionType,
             ),
         )
-        viewModelScope.launch(
-            context = dispatcherProvider.main
-        ) {
+        viewModelScope.launch {
             title.update {
                 it.copy(
                     text = category.title,
@@ -275,13 +255,9 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
     }
 
     private fun fetchData() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             awaitAll(
-                async(
-                    context = dispatcherProvider.io,
-                ) {
+                async {
                     categories.clear()
                     categories.addAll(getAllCategoriesUseCase())
                 },
