@@ -441,9 +441,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     public fun updateTransactionForValuesInTransactions(
         transactionForId: Int,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             val updatedTransactions = allTransactionData.value.map { transactionData ->
                 transactionData.transaction
             }.filter {
