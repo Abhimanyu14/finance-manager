@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -40,7 +39,6 @@ public class AccountsScreenViewModel @Inject constructor(
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     private val checkIfAccountIsUsedInTransactionsUseCase: CheckIfAccountIsUsedInTransactionsUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
@@ -133,9 +131,7 @@ public class AccountsScreenViewModel @Inject constructor(
     public fun deleteAccount(
         accountId: Int,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             deleteAccountUseCase(
                 id = accountId,
             )
@@ -161,9 +157,7 @@ public class AccountsScreenViewModel @Inject constructor(
     public fun setDefaultAccountIdInDataStore(
         defaultAccountId: Int,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             @Suppress("UNUSED_VARIABLE")
             val result = myPreferencesRepository.setDefaultAccountId(
                 defaultAccountId = defaultAccountId,
