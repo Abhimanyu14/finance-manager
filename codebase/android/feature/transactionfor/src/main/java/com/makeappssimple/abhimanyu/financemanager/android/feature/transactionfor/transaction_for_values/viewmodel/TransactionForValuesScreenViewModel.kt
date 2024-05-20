@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
@@ -27,7 +26,6 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val checkIfTransactionForIsUsedInTransactionsUseCase: CheckIfTransactionForIsUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
-    private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     private val transactionForValues: StateFlow<List<TransactionFor>> =
@@ -71,9 +69,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     public fun deleteTransactionFor(
         id: Int,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             deleteTransactionForUseCase(
                 id = id,
             )
