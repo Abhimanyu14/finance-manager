@@ -105,13 +105,10 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     )
 
     // region Default data
-    // Default data from data store
     private var defaultAccount: Account? = null
     private var expenseDefaultCategory: Category? = null
     private var incomeDefaultCategory: Category? = null
     private var investmentDefaultCategory: Category? = null
-
-    // Default data from data store
     private var defaultDataIdFromDataStore: DefaultDataId? = null
     // endregion
 
