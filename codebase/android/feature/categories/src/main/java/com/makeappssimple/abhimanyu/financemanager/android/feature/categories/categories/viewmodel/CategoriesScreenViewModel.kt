@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -35,9 +34,7 @@ import javax.inject.Inject
 public class CategoriesScreenViewModel @Inject constructor(
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
-
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
-    private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
@@ -177,9 +174,7 @@ public class CategoriesScreenViewModel @Inject constructor(
     public fun deleteCategory(
         id: Int,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             deleteCategoryUseCase(
                 id = id,
             )
@@ -210,9 +205,7 @@ public class CategoriesScreenViewModel @Inject constructor(
         defaultCategoryId: Int,
         transactionType: TransactionType,
     ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             @Suppress("UNUSED_VARIABLE")
             val result = when (transactionType) {
                 TransactionType.EXPENSE -> {
