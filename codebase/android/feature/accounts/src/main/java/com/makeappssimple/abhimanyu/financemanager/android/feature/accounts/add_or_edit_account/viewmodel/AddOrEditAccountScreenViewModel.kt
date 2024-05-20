@@ -5,7 +5,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
@@ -47,7 +46,6 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val dateTimeUtil: DateTimeUtil,
-    private val dispatcherProvider: DispatcherProvider,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,
     private val insertAccountsUseCase: InsertAccountsUseCase,
@@ -136,12 +134,8 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            getAllAccounts()
-            getOriginalAccount()
-        }
+        getAllAccounts()
+        getOriginalAccount()
     }
 
     public fun updateAccount() {
@@ -175,9 +169,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
                 },
             )
 
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             val accountFromId = if (amountChangeValue < 0L) {
                 updatedAccount.id
             } else {
@@ -214,9 +206,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
     }
 
     public fun insertAccount() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             val accountType = validAccountTypes[selectedAccountTypeIndex.value]
             val minimumAccountBalanceAmount = if (accountType == AccountType.BANK) {
                 Amount(
@@ -303,9 +293,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
     }
 
     private fun getAllAccounts() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
+        viewModelScope.launch {
             accounts.clear()
             accounts.addAll(getAllAccountsUseCase())
         }
@@ -313,9 +301,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
 
     private fun getOriginalAccount() {
         screenArgs.originalAccountId?.let { id ->
-            viewModelScope.launch(
-                context = dispatcherProvider.io,
-            ) {
+            viewModelScope.launch {
                 getAccountUseCase(
                     id = id,
                 )?.let { fetchedOriginalAccount ->
