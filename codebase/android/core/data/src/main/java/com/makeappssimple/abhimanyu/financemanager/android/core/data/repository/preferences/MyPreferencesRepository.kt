@@ -8,13 +8,21 @@ import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
 public interface MyPreferencesRepository {
-    public fun getDataTimestamp(): Flow<DataTimestamp?>
+    public fun getDataTimestampFlow(): Flow<DataTimestamp?>
 
-    public fun getDefaultDataId(): Flow<DefaultDataId?>
+    public fun getDefaultDataIdFlow(): Flow<DefaultDataId?>
 
-    public fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?>
+    public fun getInitialDataVersionNumberFlow(): Flow<InitialDataVersionNumber?>
 
-    public fun getReminder(): Flow<Reminder?>
+    public fun getReminderFlow(): Flow<Reminder?>
+
+    public suspend fun getDataTimestamp(): DataTimestamp?
+
+    public suspend fun getDefaultDataId(): DefaultDataId?
+
+    public suspend fun getInitialDataVersionNumber(): InitialDataVersionNumber?
+
+    public suspend fun getReminder(): Reminder?
 
     public suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,

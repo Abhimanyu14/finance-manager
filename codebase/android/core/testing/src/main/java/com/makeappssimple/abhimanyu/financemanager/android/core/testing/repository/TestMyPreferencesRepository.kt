@@ -24,20 +24,36 @@ public class TestMyPreferencesRepository : MyPreferencesRepository {
         value = Reminder(),
     )
 
-    override fun getDataTimestamp(): Flow<DataTimestamp?> {
+    override fun getDataTimestampFlow(): Flow<DataTimestamp?> {
         return dataTimestamp
     }
 
-    override fun getDefaultDataId(): Flow<DefaultDataId?> {
+    override fun getDefaultDataIdFlow(): Flow<DefaultDataId?> {
         return defaultDataId
     }
 
-    override fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
+    override fun getInitialDataVersionNumberFlow(): Flow<InitialDataVersionNumber?> {
         return initialDataVersionNumber
     }
 
-    override fun getReminder(): Flow<Reminder?> {
+    override fun getReminderFlow(): Flow<Reminder?> {
         return reminder
+    }
+
+    override suspend fun getDataTimestamp(): DataTimestamp? {
+        return null
+    }
+
+    override suspend fun getDefaultDataId(): DefaultDataId? {
+        return null
+    }
+
+    override suspend fun getInitialDataVersionNumber(): InitialDataVersionNumber? {
+        return null
+    }
+
+    override suspend fun getReminder(): Reminder? {
+        return null
     }
 
     override suspend fun setCategoryDataVersionNumber(

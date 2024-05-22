@@ -42,7 +42,7 @@ public class CategoriesScreenViewModel @Inject constructor(
         value = 0,
     )
 
-    private val defaultDataId: Flow<DefaultDataId?> = myPreferencesRepository.getDefaultDataId()
+    private val defaultDataId: Flow<DefaultDataId?> = myPreferencesRepository.getDefaultDataIdFlow()
     private val categoriesTransactionTypeMap: Flow<Map<TransactionType, ImmutableList<Category>>> =
         getAllCategoriesFlowUseCase()
             .map { categories ->

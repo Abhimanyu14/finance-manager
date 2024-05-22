@@ -39,7 +39,7 @@ public class SettingsScreenViewModel @Inject constructor(
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : ScreenViewModel, ViewModel() {
     private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
-    private val reminder = myPreferencesRepository.getReminder()
+    private val reminder = myPreferencesRepository.getReminderFlow()
     private val isLoading = MutableStateFlow(
         value = false,
     )

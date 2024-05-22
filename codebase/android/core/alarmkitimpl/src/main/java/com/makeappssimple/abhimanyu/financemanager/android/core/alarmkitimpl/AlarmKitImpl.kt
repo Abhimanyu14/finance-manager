@@ -15,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.time.TimeChangedReceiver
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 
@@ -32,7 +31,7 @@ public class AlarmKitImpl(
         CoroutineScope(
             context = dispatcherProvider.io,
         ).launch {
-            val reminder = myPreferencesRepository.getReminder().first() ?: Reminder()
+            val reminder = myPreferencesRepository.getReminder() ?: Reminder()
             val initialAlarmTimestamp = dateTimeUtil.getTimestamp(
                 time = LocalTime.of(reminder.hour, reminder.min)
             )

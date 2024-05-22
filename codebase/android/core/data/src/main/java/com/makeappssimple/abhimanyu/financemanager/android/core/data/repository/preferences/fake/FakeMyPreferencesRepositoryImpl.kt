@@ -9,20 +9,36 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 public class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
-    override fun getDataTimestamp(): Flow<DataTimestamp?> {
+    override fun getDataTimestampFlow(): Flow<DataTimestamp?> {
         return emptyFlow()
     }
 
-    override fun getDefaultDataId(): Flow<DefaultDataId?> {
+    override fun getDefaultDataIdFlow(): Flow<DefaultDataId?> {
         return emptyFlow()
     }
 
-    override fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
+    override fun getInitialDataVersionNumberFlow(): Flow<InitialDataVersionNumber?> {
         return emptyFlow()
     }
 
-    override fun getReminder(): Flow<Reminder?> {
+    override fun getReminderFlow(): Flow<Reminder?> {
         return emptyFlow()
+    }
+
+    override suspend fun getDataTimestamp(): DataTimestamp? {
+        return null
+    }
+
+    override suspend fun getDefaultDataId(): DefaultDataId? {
+        return null
+    }
+
+    override suspend fun getInitialDataVersionNumber(): InitialDataVersionNumber? {
+        return null
+    }
+
+    override suspend fun getReminder(): Reminder? {
+        return null
     }
 
     override suspend fun setCategoryDataVersionNumber(

@@ -42,7 +42,7 @@ public class AccountsScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataId().map {
+    private val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataIdFlow().map {
         it?.account
     }
     private val allAccountsFlow: Flow<List<Account>> = getAllAccountsFlowUseCase()

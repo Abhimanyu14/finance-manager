@@ -8,26 +8,51 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDat
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 public class MyPreferencesRepositoryImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesDataSource: MyPreferencesDataSource,
 ) : MyPreferencesRepository {
-    override fun getDataTimestamp(): Flow<DataTimestamp?> {
+    override fun getDataTimestampFlow(): Flow<DataTimestamp?> {
         return myPreferencesDataSource.getDataTimestamp()
     }
 
-    override fun getDefaultDataId(): Flow<DefaultDataId?> {
+    override fun getDefaultDataIdFlow(): Flow<DefaultDataId?> {
         return myPreferencesDataSource.getDefaultDataId()
     }
 
-    override fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
+    override fun getInitialDataVersionNumberFlow(): Flow<InitialDataVersionNumber?> {
         return myPreferencesDataSource.getInitialDataVersionNumber()
     }
 
-    override fun getReminder(): Flow<Reminder?> {
+    override fun getReminderFlow(): Flow<Reminder?> {
         return myPreferencesDataSource.getReminder()
+    }
+
+    override suspend fun getDataTimestamp(): DataTimestamp? {
+        return executeOnIoDispatcher {
+            myPreferencesDataSource.getDataTimestamp().first()
+        }
+    }
+
+    override suspend fun getDefaultDataId(): DefaultDataId? {
+        return executeOnIoDispatcher {
+            myPreferencesDataSource.getDefaultDataId().first()
+        }
+    }
+
+    override suspend fun getInitialDataVersionNumber(): InitialDataVersionNumber? {
+        return executeOnIoDispatcher {
+            myPreferencesDataSource.getInitialDataVersionNumber().first()
+        }
+    }
+
+    override suspend fun getReminder(): Reminder? {
+        return executeOnIoDispatcher {
+            myPreferencesDataSource.getReminder().first()
+        }
     }
 
     override suspend fun setCategoryDataVersionNumber(

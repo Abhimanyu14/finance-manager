@@ -378,7 +378,7 @@ public class HomeScreenViewModel @Inject constructor(
     }
 
     private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
-        return myPreferencesRepository.getDataTimestamp().map {
+        return myPreferencesRepository.getDataTimestampFlow().map {
             it.isNotNull() && (it.lastBackup < it.lastChange)
         }
     }

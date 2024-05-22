@@ -17,7 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDat
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -76,11 +75,13 @@ public class BackupDataUseCase @Inject constructor(
 
     private suspend fun getDatastoreData(): DatastoreData {
         return DatastoreData(
-            defaultDataId = myPreferencesRepository.getDefaultDataId().first() ?: DefaultDataId(),
-            initialDataVersionNumber = myPreferencesRepository.getInitialDataVersionNumber().first()
+            defaultDataId = myPreferencesRepository.getDefaultDataId()
+                ?: DefaultDataId(),
+            initialDataVersionNumber = myPreferencesRepository.getInitialDataVersionNumber()
                 ?: InitialDataVersionNumber(),
-            dataTimestamp = myPreferencesRepository.getDataTimestamp().first() ?: DataTimestamp(),
-            reminder = myPreferencesRepository.getReminder().first() ?: Reminder(),
+            dataTimestamp = myPreferencesRepository.getDataTimestamp()
+                ?: DataTimestamp(),
+            reminder = myPreferencesRepository.getReminder() ?: Reminder(),
         )
     }
 }

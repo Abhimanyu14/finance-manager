@@ -38,7 +38,7 @@ public class NavigatorImpl(
     ) {
         navigate(
             navigationCommand = MyNavigationDirections.AddTransaction(
-                transactionId = transactionId
+                transactionId = transactionId,
             ),
         )
     }

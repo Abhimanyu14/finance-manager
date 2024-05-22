@@ -11,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,7 +37,7 @@ public class TimeChangedReceiver : BroadcastReceiver() {
             CoroutineScope(
                 context = dispatcherProvider.main,
             ).launch {
-                val reminder = myPreferencesRepository.getReminder().first() ?: Reminder()
+                val reminder = myPreferencesRepository.getReminder() ?: Reminder()
                 if (reminder.isEnabled.orFalse()) {
                     alarmKit.enableReminder()
                 }
