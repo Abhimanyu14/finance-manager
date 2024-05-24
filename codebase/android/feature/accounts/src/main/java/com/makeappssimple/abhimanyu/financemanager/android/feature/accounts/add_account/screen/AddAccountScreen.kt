@@ -11,15 +11,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel.AddAccountScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.rememberAddOrEditAccountScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel.AddOrEditAccountScreenViewModel
 
 @Composable
 public fun AddAccountScreen(
-    screenViewModel: AddOrEditAccountScreenViewModel = hiltViewModel(),
+    screenViewModel: AddAccountScreenViewModel = hiltViewModel(),
 ) {
     val viewModel = remember {
         screenViewModel
@@ -47,14 +47,8 @@ public fun AddAccountScreen(
                     viewModel.insertAccount()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {}
-
                 is AddOrEditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
-                    viewModel.clearBalanceAmountValue()
                 }
 
                 is AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
@@ -85,6 +79,10 @@ public fun AddAccountScreen(
                     viewModel.updateSelectedAccountTypeIndex(
                         updatedIndex = uiEvent.updatedIndex,
                     )
+                }
+
+                else -> {
+                    // No-op
                 }
             }
         }
