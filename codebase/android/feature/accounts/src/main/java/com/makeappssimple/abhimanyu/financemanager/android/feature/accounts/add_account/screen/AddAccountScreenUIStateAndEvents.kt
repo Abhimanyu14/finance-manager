@@ -124,7 +124,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
             }
         }
     }
-    val selectedAccountType = remember {
+    val selectedAccountType = remember(selectedAccountTypeIndex) {
         viewModel.validAccountTypes.getOrNull(
             index = selectedAccountTypeIndex,
         )
