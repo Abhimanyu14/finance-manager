@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdec
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
-internal class AddOrEditAccountScreenArgs(
+internal class EditAccountScreenArgs(
     val originalAccountId: Int?,
 ) : ScreenArgs {
     constructor(

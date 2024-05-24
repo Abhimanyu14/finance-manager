@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.viewmodel
 
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -18,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdec
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -32,7 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIErrorData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.AddOrEditAccountScreenArgs
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.EditAccountScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,18 +41,17 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 @HiltViewModel
-public class AddOrEditAccountScreenViewModel @Inject constructor(
+public class EditAccountScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val dateTimeUtil: DateTimeUtil,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,
-    private val insertAccountsUseCase: InsertAccountsUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val navigator: Navigator,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
 ) : ScreenViewModel, ViewModel() {
-    private val screenArgs = AddOrEditAccountScreenArgs(
+    private val screenArgs = EditAccountScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
@@ -200,31 +198,6 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
             }
             updateAccountsUseCase(
                 updatedAccount,
-            )
-            navigator.navigateUp()
-        }
-    }
-
-    public fun insertAccount() {
-        viewModelScope.launch {
-            val accountType = validAccountTypes[selectedAccountTypeIndex.value]
-            val minimumAccountBalanceAmount = if (accountType == AccountType.BANK) {
-                Amount(
-                    value = minimumAccountBalanceAmountValue.value.text.toLongOrZero(),
-                )
-
-            } else {
-                null
-            }
-            insertAccountsUseCase(
-                Account(
-                    balanceAmount = Amount(
-                        value = 0L,
-                    ),
-                    type = accountType,
-                    minimumAccountBalanceAmount = minimumAccountBalanceAmount,
-                    name = name.value.text,
-                ),
             )
             navigator.navigateUp()
         }
