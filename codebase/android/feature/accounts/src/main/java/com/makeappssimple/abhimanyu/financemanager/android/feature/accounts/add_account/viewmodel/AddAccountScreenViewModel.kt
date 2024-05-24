@@ -35,9 +35,12 @@ public class AddAccountScreenViewModel @Inject constructor(
         account: Account,
     ) {
         viewModelScope.launch {
-            insertAccountsUseCase(account)
-            // TODO(Abhi): Use result of InsertAccountsUseCase and navigate back or show error
-            navigator.navigateUp()
+            val result = insertAccountsUseCase(account)
+            if (result.isEmpty() || result.first() == -1L) {
+                // TODO(Abhi): Show error
+            } else {
+                navigator.navigateUp()
+            }
         }
     }
 
