@@ -4,20 +4,21 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel.AddAccountScreenViewModel
 
 @Composable
 public fun AddAccountScreen(
     screenViewModel: AddAccountScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
+    val viewModel: AddAccountScreenViewModel = remember {
         screenViewModel
     }
     val myLogger = LocalMyLogger.current
@@ -28,9 +29,8 @@ public fun AddAccountScreen(
     val focusedView = LocalView.current
     val isKeyboardOpen = WindowInsets.isImeVisible
 
-    val screenUIData: MyResult<AddAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
     val uiStateAndEvents = rememberAddAccountScreenUIStateAndEvents(
-        data = screenUIData,
+        viewModel = viewModel,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -39,7 +39,28 @@ public fun AddAccountScreen(
         { uiEvent: AddAccountScreenUIEvent ->
             when (uiEvent) {
                 is AddAccountScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.insertAccount()
+                    uiStateAndEvents.state.selectedAccountType?.let { accountType ->
+                        val minimumAccountBalanceAmount =
+                            if (accountType == AccountType.BANK) {
+                                Amount(
+                                    value = uiStateAndEvents.state.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
+                                )
+                            } else {
+                                null
+                            }
+
+                        viewModel.insertAccount(
+                            account = Account(
+                                balanceAmount = Amount(
+                                    value = 0L,
+                                ),
+                                type = accountType,
+                                minimumAccountBalanceAmount = minimumAccountBalanceAmount,
+                                name = uiStateAndEvents.state.nameTextFieldValue.text,
+                            ),
+                        )
+                    }
+                    Unit
                 }
 
                 is AddAccountScreenUIEvent.OnNavigationBackButtonClick -> {
@@ -47,11 +68,11 @@ public fun AddAccountScreen(
                 }
 
                 is AddAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                    viewModel.clearMinimumAccountBalanceAmountValue()
+                    uiStateAndEvents.events.clearMinimumAccountBalanceAmountValue()
                 }
 
                 is AddAccountScreenUIEvent.OnClearNameButtonClick -> {
-                    viewModel.clearName()
+                    uiStateAndEvents.events.clearName()
                 }
 
                 is AddAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
@@ -59,20 +80,20 @@ public fun AddAccountScreen(
                 }
 
                 is AddAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                    viewModel.updateMinimumAccountBalanceAmountValue(
-                        updatedMinimumAccountBalanceAmountValue = uiEvent.updatedMinimumAccountBalanceAmountValue,
+                    uiStateAndEvents.events.updateMinimumAccountBalanceAmountValue(
+                        uiEvent.updatedMinimumAccountBalanceAmountValue,
                     )
                 }
 
                 is AddAccountScreenUIEvent.OnNameUpdated -> {
-                    viewModel.updateName(
-                        updatedName = uiEvent.updatedName,
+                    uiStateAndEvents.events.updateName(
+                        uiEvent.updatedName,
                     )
                 }
 
                 is AddAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                    viewModel.updateSelectedAccountTypeIndex(
-                        updatedIndex = uiEvent.updatedIndex,
+                    uiStateAndEvents.events.updateSelectedAccountTypeIndex(
+                        uiEvent.updatedIndex,
                     )
                 }
 

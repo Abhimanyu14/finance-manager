@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 
@@ -13,14 +14,13 @@ internal data class AddAccountScreenUIState(
     val visibilityData: AddAccountScreenUIVisibilityData,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,
-    val balanceAmountTextFieldFocusRequester: FocusRequester,
     val nameTextFieldFocusRequester: FocusRequester,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     @StringRes val nameTextFieldErrorTextStringResourceId: Int?,
     val selectedAccountTypeIndex: Int,
+    val selectedAccountType: AccountType?,
     val accountTypesChipUIDataList: List<ChipUIData>,
-    val balanceAmountValue: TextFieldValue,
-    val minimumBalanceAmountValue: TextFieldValue,
-    val name: TextFieldValue,
+    val minimumAccountBalanceTextFieldValue: TextFieldValue,
+    val nameTextFieldValue: TextFieldValue,
 ) : ScreenUIState

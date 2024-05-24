@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,26 +41,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
-
-public enum class AddAccountScreenUIError(
-    @StringRes public val textStringResourceId: Int,
-) {
-    ACCOUNT_EXISTS(
-        textStringResourceId = R.string.screen_add_or_edit_account_error_account_exists,
-    ),
-}
-
-@Immutable
-public data class AddAccountScreenUIVisibilityData(
-    val minimumBalanceAmountTextField: Boolean = false,
-    val nameTextFieldErrorText: Boolean = false,
-)
-
-@Immutable
-public data class AddAccountScreenUIErrorData(
-    val balanceAmountTextField: AddAccountScreenUIError? = null,
-    val nameTextField: AddAccountScreenUIError? = null,
-)
 
 @Composable
 internal fun AddAccountScreenUI(
@@ -154,7 +132,7 @@ internal fun AddAccountScreenUI(
                 data = MyOutlinedTextFieldData(
                     isError = uiState.visibilityData.nameTextFieldErrorText,
                     isLoading = uiState.isLoading,
-                    textFieldValue = uiState.name,
+                    textFieldValue = uiState.nameTextFieldValue,
                     labelTextStringResourceId = R.string.screen_add_or_edit_account_name,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_account_clear_name,
                     supportingText = if (uiState.visibilityData.nameTextFieldErrorText) {
@@ -216,7 +194,7 @@ internal fun AddAccountScreenUI(
                         ),
                     data = MyOutlinedTextFieldData(
                         isLoading = uiState.isLoading,
-                        textFieldValue = uiState.minimumBalanceAmountValue,
+                        textFieldValue = uiState.minimumAccountBalanceTextFieldValue,
                         labelTextStringResourceId = R.string.screen_add_or_edit_account_minimum_account_balance_amount_value,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_account_clear_minimum_account_balance_amount_value,
                         visualTransformation = AmountCommaVisualTransformation(),
