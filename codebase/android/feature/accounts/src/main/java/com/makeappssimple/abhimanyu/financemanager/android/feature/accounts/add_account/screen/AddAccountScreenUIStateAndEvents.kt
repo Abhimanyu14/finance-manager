@@ -115,7 +115,9 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         ))
     }
 
-    val nameTextFieldErrorTextStringResourceId: Int? by remember(name) {
+    val nameTextFieldErrorTextStringResourceId: Int? by remember(
+        key1 = name,
+    ) {
         derivedStateOf {
             if (name.text.isBlank() || isValidData) {
                 null
@@ -124,7 +126,9 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
             }
         }
     }
-    val selectedAccountType = remember(selectedAccountTypeIndex) {
+    val selectedAccountType = remember(
+        key1 = selectedAccountTypeIndex,
+    ) {
         viewModel.validAccountTypes.getOrNull(
             index = selectedAccountTypeIndex,
         )
