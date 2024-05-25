@@ -6,14 +6,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
 internal class EditTransactionScreenArgs(
-    val isEdit: Boolean?,
     val transactionId: Int?,
 ) : ScreenArgs {
     constructor(
         savedStateHandle: SavedStateHandle,
         stringDecoder: StringDecoder,
     ) : this(
-        isEdit = savedStateHandle.get<Boolean>(NavArgs.EDIT),
         transactionId = savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.let {
             stringDecoder.decodeString(
                 encodedString = it,

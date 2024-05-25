@@ -25,7 +25,6 @@ public fun AddTransactionScreen(
     val screenUIData: MyResult<AddTransactionScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
     val uiStateAndEvents = rememberAddTransactionScreenUIStateAndEvents(
         data = screenUIData,
-        isEdit = false,
     )
     val handleUIEvent = remember(
         key1 = viewModel,

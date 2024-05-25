@@ -36,7 +36,6 @@ internal class AddTransactionScreenUIStateEvents(
 @Composable
 internal fun rememberAddTransactionScreenUIStateAndEvents(
     data: MyResult<AddTransactionScreenUIData>?,
-    isEdit: Boolean,
 ): AddTransactionScreenUIStateAndEvents {
     val (isTransactionDatePickerDialogVisible, setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
@@ -56,7 +55,6 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
 
     return remember(
         data,
-        isEdit,
         screenBottomSheetType,
         isTransactionDatePickerDialogVisible,
         isTransactionTimePickerDialogVisible,
@@ -86,16 +84,8 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 uiVisibilityState = unwrappedData?.uiVisibilityState.orDefault(),
                 isBottomSheetVisible = screenBottomSheetType != AddTransactionScreenBottomSheetType.None,
                 isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),
-                appBarTitleTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_transaction_appbar_title
-                } else {
-                    R.string.screen_add_transaction_appbar_title
-                },
-                ctaButtonLabelTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_transaction_floating_action_button_content_description
-                } else {
-                    R.string.screen_add_transaction_floating_action_button_content_description
-                },
+                appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
+                ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
                 accountFromTextFieldLabelTextStringResourceId = if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
                     R.string.screen_add_or_edit_transaction_account_from
                 } else {

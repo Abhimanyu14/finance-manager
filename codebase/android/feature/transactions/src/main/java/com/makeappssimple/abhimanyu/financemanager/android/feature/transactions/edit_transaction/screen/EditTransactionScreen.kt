@@ -25,7 +25,6 @@ public fun EditTransactionScreen(
     val screenUIData: MyResult<EditTransactionScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
     val uiStateAndEvents = rememberEditTransactionScreenUIStateAndEvents(
         data = screenUIData,
-        isEdit = true,
     )
     val handleUIEvent = remember(
         key1 = viewModel,

@@ -9,12 +9,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isTrue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
@@ -281,185 +279,6 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun initViewModel() {
         fetchData()
         observeData()
-    }
-
-    public fun insertTransaction() {
-        viewModelScope.launch {
-            val uiStateValue = uiState.value
-            selectedTransactionType.value?.let { selectedTransactionTypeValue ->
-                val amountValue = uiStateValue.amount.text.toLongOrZero()
-                val amount = Amount(
-                    value = amountValue,
-                )
-                val categoryId = when (selectedTransactionTypeValue) {
-                    TransactionType.INCOME -> {
-                        uiStateValue.category?.id
-                    }
-
-                    TransactionType.EXPENSE -> {
-                        uiStateValue.category?.id
-                    }
-
-                    TransactionType.TRANSFER -> {
-                        null
-                    }
-
-                    TransactionType.ADJUSTMENT -> {
-                        null
-                    }
-
-                    TransactionType.INVESTMENT -> {
-                        uiStateValue.category?.id
-                    }
-
-                    TransactionType.REFUND -> {
-                        editingTransactionData?.category?.id
-                    }
-                }
-                val accountFromId = when (selectedTransactionTypeValue) {
-                    TransactionType.INCOME -> {
-                        null
-                    }
-
-                    TransactionType.EXPENSE -> {
-                        uiStateValue.accountFrom?.id
-                    }
-
-                    TransactionType.TRANSFER -> {
-                        uiStateValue.accountFrom?.id
-                    }
-
-                    TransactionType.ADJUSTMENT -> {
-                        null
-                    }
-
-                    TransactionType.INVESTMENT -> {
-                        uiStateValue.accountFrom?.id
-                    }
-
-                    TransactionType.REFUND -> {
-                        null
-                    }
-                }
-                val accountToId = when (selectedTransactionTypeValue) {
-                    TransactionType.INCOME -> {
-                        uiStateValue.accountTo?.id
-                    }
-
-                    TransactionType.EXPENSE -> {
-                        null
-                    }
-
-                    TransactionType.TRANSFER -> {
-                        uiStateValue.accountTo?.id
-                    }
-
-                    TransactionType.ADJUSTMENT -> {
-                        null
-                    }
-
-                    TransactionType.INVESTMENT -> {
-                        null
-                    }
-
-                    TransactionType.REFUND -> {
-                        uiStateValue.accountTo?.id
-                    }
-                }
-                val title = when (selectedTransactionTypeValue) {
-                    TransactionType.TRANSFER -> {
-                        TransactionType.TRANSFER.title
-                    }
-
-                    TransactionType.REFUND -> {
-                        TransactionType.REFUND.title
-                    }
-
-                    else -> {
-                        uiStateValue.title.text.capitalizeWords()
-                    }
-                }
-                val transactionForId: Int = when (selectedTransactionTypeValue) {
-                    TransactionType.INCOME -> {
-                        1
-                    }
-
-                    TransactionType.EXPENSE -> {
-                        transactionForValues.getOrNull(uiStateValue.selectedTransactionForIndex)?.id
-                            ?: 1
-                    }
-
-                    TransactionType.TRANSFER -> {
-                        1
-                    }
-
-                    TransactionType.ADJUSTMENT -> {
-                        1
-                    }
-
-                    TransactionType.INVESTMENT -> {
-                        1
-                    }
-
-                    TransactionType.REFUND -> {
-                        1
-                    }
-                }
-                val originalTransactionId =
-                    if (isAddingTransaction() && screenArgs.transactionId.isNotNull() ||
-                        screenArgs.isEdit.isTrue() && editingTransactionData?.transaction?.transactionType == TransactionType.REFUND
-                    ) {
-                        screenArgs.transactionId
-                    } else {
-                        null
-                    }
-
-                val transactionTimestamp = LocalDateTime
-                    .of(uiStateValue.transactionDate, uiStateValue.transactionTime)
-                    .toEpochMilli()
-                val id = insertTransactionUseCase(
-                    amountValue = amountValue,
-                    accountFrom = if (accountFromId.isNotNull()) {
-                        uiStateValue.accountFrom
-                    } else {
-                        null
-                    },
-                    accountTo = if (accountToId.isNotNull()) {
-                        uiStateValue.accountTo
-                    } else {
-                        null
-                    },
-                    transaction = Transaction(
-                        amount = amount,
-                        categoryId = categoryId,
-                        originalTransactionId = originalTransactionId,
-                        accountFromId = accountFromId,
-                        accountToId = accountToId,
-                        description = uiStateValue.description.text,
-                        title = title,
-                        creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
-                        transactionTimestamp = transactionTimestamp,
-                        transactionForId = transactionForId,
-                        transactionType = selectedTransactionTypeValue,
-                    ),
-                )
-
-                // Only for refund transaction
-                editingTransactionData?.transaction?.let { originalTransaction ->
-                    val refundTransactionIds = originalTransaction.refundTransactionIds?.run {
-                        originalTransaction.refundTransactionIds?.toMutableList()
-                    } ?: mutableListOf()
-                    refundTransactionIds.add(id.toInt())
-                    updateTransactionUseCase(
-                        originalTransaction = originalTransaction,
-                        updatedTransaction = originalTransaction.copy(
-                            refundTransactionIds = refundTransactionIds,
-                        ),
-                    )
-                }
-                navigator.navigateUp()
-            }
-        }
     }
 
     public fun updateTransaction() {
@@ -1009,7 +828,6 @@ public class EditTransactionScreenViewModel @Inject constructor(
                     originalTransaction = originalTransactionData.transaction,
                     transactionTypesForNewTransaction = validTransactionTypesForNewTransaction,
                     transactionForValues = transactionForValues,
-                    maxRefundAmount = maxRefundAmount,
                 )
             }
         }
@@ -1017,14 +835,10 @@ public class EditTransactionScreenViewModel @Inject constructor(
 
     private suspend fun calculateMaxRefundAmount() {
         var transactionDataToRefund: TransactionData? = null
-        if (screenArgs.isEdit.isTrue()) {
-            editingTransactionData?.transaction?.originalTransactionId?.let {
-                transactionDataToRefund = getTransactionDataUseCase(
-                    id = it,
-                )
-            }
-        } else {
-            transactionDataToRefund = editingTransactionData
+        editingTransactionData?.transaction?.originalTransactionId?.let {
+            transactionDataToRefund = getTransactionDataUseCase(
+                id = it,
+            )
         }
         if (transactionDataToRefund.isNull()) {
             return
@@ -1055,67 +869,36 @@ public class EditTransactionScreenViewModel @Inject constructor(
         originalTransaction: Transaction,
         transactionTypesForNewTransaction: List<TransactionType>,
         transactionForValues: List<TransactionFor>,
-        maxRefundAmount: Amount?,
     ) {
-        val isAddingRefund = isAddingTransaction() &&
-                screenArgs.transactionId.isNotNull()
-        val initialEditTransactionScreenUiStateData = if (isAddingRefund) {
-            EditTransactionScreenUiStateData(
-                selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
-                    element = TransactionType.REFUND,
-                ),
-                amount = uiState.value.amount.copy(
-                    text = maxRefundAmount?.value.orZero().toString(),
-                    selection = TextRange(maxRefundAmount?.value.orZero().toString().length),
-                ),
-                title = uiState.value.title.copy(
-                    text = TransactionType.REFUND.title,
-                ),
-                description = uiState.value.description.copy(
-                    text = originalTransaction.description,
-                ),
-                category = editingTransactionData?.category,
-                selectedTransactionForIndex = transactionForValues.indexOf(
-                    element = transactionForValues.firstOrNull {
-                        it.id == originalTransaction.transactionForId
-                    },
-                ),
-                accountFrom = editingTransactionData?.accountTo,
-                accountTo = editingTransactionData?.accountFrom,
-                transactionDate = dateTimeUtil.getCurrentLocalDate(),
-                transactionTime = dateTimeUtil.getCurrentLocalTime(),
-            )
-        } else {
-            EditTransactionScreenUiStateData(
-                selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
-                    element = originalTransaction.transactionType,
-                ),
-                amount = uiState.value.amount.copy(
-                    text = abs(originalTransaction.amount.value).toString(),
-                    selection = TextRange(abs(originalTransaction.amount.value).toString().length),
-                ),
-                title = uiState.value.title.copy(
-                    text = originalTransaction.title,
-                ),
-                description = uiState.value.description.copy(
-                    text = originalTransaction.description,
-                ),
-                category = editingTransactionData?.category,
-                selectedTransactionForIndex = transactionForValues.indexOf(
-                    element = transactionForValues.firstOrNull {
-                        it.id == originalTransaction.transactionForId
-                    },
-                ),
-                accountFrom = editingTransactionData?.accountFrom,
-                accountTo = editingTransactionData?.accountTo,
-                transactionDate = dateTimeUtil.getLocalDate(
-                    timestamp = originalTransaction.transactionTimestamp,
-                ),
-                transactionTime = dateTimeUtil.getLocalTime(
-                    timestamp = originalTransaction.transactionTimestamp,
-                ),
-            )
-        }
+        val initialEditTransactionScreenUiStateData = EditTransactionScreenUiStateData(
+            selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
+                element = originalTransaction.transactionType,
+            ),
+            amount = uiState.value.amount.copy(
+                text = abs(originalTransaction.amount.value).toString(),
+                selection = TextRange(abs(originalTransaction.amount.value).toString().length),
+            ),
+            title = uiState.value.title.copy(
+                text = originalTransaction.title,
+            ),
+            description = uiState.value.description.copy(
+                text = originalTransaction.description,
+            ),
+            category = editingTransactionData?.category,
+            selectedTransactionForIndex = transactionForValues.indexOf(
+                element = transactionForValues.firstOrNull {
+                    it.id == originalTransaction.transactionForId
+                },
+            ),
+            accountFrom = editingTransactionData?.accountFrom,
+            accountTo = editingTransactionData?.accountTo,
+            transactionDate = dateTimeUtil.getLocalDate(
+                timestamp = originalTransaction.transactionTimestamp,
+            ),
+            transactionTime = dateTimeUtil.getLocalTime(
+                timestamp = originalTransaction.transactionTimestamp,
+            ),
+        )
         updateEditTransactionScreenUiState(
             updatedEditTransactionScreenUiStateData = initialEditTransactionScreenUiStateData,
         )
@@ -1145,11 +928,6 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 category = category.title,
             )
         }
-        if (screenArgs.isEdit != true) {
-            updateCategory(
-                updatedCategory = defaultExpenseCategory,
-            )
-        }
     }
 
     private fun setDefaultAccount() {
@@ -1160,18 +938,10 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 account = account.name,
             )
         }
-        if (screenArgs.isEdit != true) {
-            updateAccountFrom(
-                updatedAccountFrom = defaultAccount,
-            )
-            updateAccountTo(
-                updatedAccountTo = defaultAccount,
-            )
-        }
     }
 
     private fun setInitialSelectedTransactionType() {
-        selectedTransactionType.value = if (screenArgs.isEdit.isTrue()) {
+        selectedTransactionType.value =
             if (editingTransactionData?.transaction?.transactionType == TransactionType.REFUND) {
                 TransactionType.REFUND
             } else {
@@ -1181,17 +951,6 @@ public class EditTransactionScreenViewModel @Inject constructor(
                     )
                 }
             }
-        } else {
-            if (screenArgs.transactionId.isNotNull()) {
-                TransactionType.REFUND
-            } else {
-                uiState.value.selectedTransactionTypeIndex?.let {
-                    validTransactionTypesForNewTransaction.getOrNull(
-                        index = uiState.value.selectedTransactionTypeIndex.orZero(),
-                    )
-                }
-            }
-        }
     }
 
     private fun getCategory(
@@ -1208,14 +967,6 @@ public class EditTransactionScreenViewModel @Inject constructor(
         return accounts.find { account ->
             account.id == accountId
         }
-    }
-
-    private fun isAddingTransaction(): Boolean {
-        return screenArgs.isEdit.isFalse()
-    }
-
-    private fun isAddingTransactionOtherThanRefund(): Boolean {
-        return screenArgs.transactionId.isNull()
     }
 
     private fun isAddingRefundTransactionOrEditingAnyTransaction(): Boolean {

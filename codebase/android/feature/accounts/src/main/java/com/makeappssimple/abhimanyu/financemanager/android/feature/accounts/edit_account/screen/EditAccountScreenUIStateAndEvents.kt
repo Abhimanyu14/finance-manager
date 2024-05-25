@@ -34,7 +34,6 @@ internal class EditAccountScreenUIStateEvents(
 @Composable
 internal fun rememberEditAccountScreenUIStateAndEvents(
     data: MyResult<EditAccountScreenUIData>?,
-    isEdit: Boolean,
 ): EditAccountScreenUIStateAndEvents {
     val nameTextFieldFocusRequester = remember {
         FocusRequester()
@@ -54,7 +53,6 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
 
     return remember(
         data,
-        isEdit,
         screenBottomSheetType,
         nameTextFieldFocusRequester,
         balanceAmountTextFieldFocusRequester,
@@ -81,16 +79,8 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
                 balanceAmountTextFieldFocusRequester = balanceAmountTextFieldFocusRequester,
                 isLoading = unwrappedData.isNull(),
                 isCtaButtonEnabled = unwrappedData?.isValidAccountData.orFalse(),
-                appBarTitleTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_account_appbar_title
-                } else {
-                    R.string.screen_add_account_appbar_title
-                },
-                ctaButtonLabelTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_account_floating_action_button_content_description
-                } else {
-                    R.string.screen_add_account_floating_action_button_content_description
-                },
+                appBarTitleTextStringResourceId = R.string.screen_edit_account_appbar_title,
+                ctaButtonLabelTextStringResourceId = R.string.screen_edit_account_floating_action_button_content_description,
                 nameTextFieldErrorTextStringResourceId = unwrappedData?.errorData?.nameTextField?.textStringResourceId,
                 selectedAccountTypeIndex = unwrappedData?.selectedAccountTypeIndex.orZero(),
                 accountTypesChipUIDataList = unwrappedData?.accountTypes
@@ -105,19 +95,11 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
                 minimumBalanceAmountValue = unwrappedData?.minimumBalanceAmountValue.orEmpty(),
                 name = unwrappedData?.name.orEmpty(),
                 visibilityData = EditAccountScreenUIVisibilityData(
-                    balanceAmountTextField = isEdit,
+                    balanceAmountTextField = true,
                     minimumBalanceAmountTextField = selectedAccount == AccountType.BANK,
-                    nameTextField = if (isEdit) {
-                        unwrappedData?.accountIsNotCash.orFalse()
-                    } else {
-                        true
-                    },
+                    nameTextField = unwrappedData?.accountIsNotCash.orFalse(),
                     nameTextFieldErrorText = unwrappedData?.errorData?.nameTextField.isNotNull(),
-                    accountTypesRadioGroup = if (isEdit) {
-                        unwrappedData?.accountIsNotCash.orFalse()
-                    } else {
-                        true
-                    },
+                    accountTypesRadioGroup = unwrappedData?.accountIsNotCash.orFalse(),
                 ),
             ),
             events = EditAccountScreenUIStateEvents(
