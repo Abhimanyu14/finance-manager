@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataFlowUseCase
@@ -21,7 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -44,24 +41,24 @@ public class AnalysisScreenViewModel @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
-    private val validTransactionTypes = listOf(
+    public var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
+    public val validTransactionTypes: List<TransactionType> = listOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
         TransactionType.INVESTMENT,
     )
-    private val transactionTypesChipUIData: List<ChipUIData> = validTransactionTypes.map {
+    public val transactionTypesChipUIData: List<ChipUIData> = validTransactionTypes.map {
         ChipUIData(
             text = it.title,
         )
     }
-    private val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
+    public val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
         value = Filter(),
     )
-    private val selectedTransactionTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
+    public val selectedTransactionTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )
-    private val oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
+    public val oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
         dateTimeUtil.getLocalDate(
             timestamp = it.minOfOrNull { transactionData ->
                 transactionData.transaction.transactionTimestamp
@@ -70,8 +67,7 @@ public class AnalysisScreenViewModel @Inject constructor(
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-
-    private val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>> = combine(
+    public val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>> = combine(
         allTransactionData,
         selectedTransactionTypeIndex,
         selectedFilter,
@@ -82,39 +78,6 @@ public class AnalysisScreenViewModel @Inject constructor(
             allTransactionDataValue = allTransactionDataValue
         )
     }.defaultListStateIn(
-        scope = viewModelScope,
-    )
-
-    public val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?> = combine(
-        selectedFilter,
-        selectedTransactionTypeIndex,
-        transactionDataMappedByCategory,
-        oldestTransactionLocalDate,
-    ) {
-            selectedFilter,
-            selectedTransactionTypeIndex,
-            transactionDataMappedByCategory,
-            oldestTransactionLocalDate,
-        ->
-        if (
-            oldestTransactionLocalDate.isNull()
-        ) {
-            MyResult.Loading
-        } else {
-            MyResult.Success(
-                data = AnalysisScreenUIData(
-                    selectedFilter = selectedFilter,
-                    selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                    transactionDataMappedByCategory = transactionDataMappedByCategory,
-                    transactionTypesChipUIData = transactionTypesChipUIData,
-                    currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-                    oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
-                    startOfMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
-                    startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
-                ),
-            )
-        }
-    }.defaultObjectStateIn(
         scope = viewModelScope,
     )
 
