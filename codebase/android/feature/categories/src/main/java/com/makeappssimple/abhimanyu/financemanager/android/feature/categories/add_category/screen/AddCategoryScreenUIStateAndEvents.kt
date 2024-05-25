@@ -31,7 +31,6 @@ internal class AddCategoryScreenUIStateEvents(
 @Composable
 internal fun rememberAddCategoryScreenUIStateAndEvents(
     data: MyResult<AddCategoryScreenUIData>?,
-    isEdit: Boolean,
 ): AddCategoryScreenUIStateAndEvents {
     var screenBottomSheetType: AddCategoryScreenBottomSheetType by remember {
         mutableStateOf(
@@ -45,7 +44,6 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
 
     return remember(
         data,
-        isEdit,
         screenBottomSheetType,
         setScreenBottomSheetType,
     ) {
@@ -77,16 +75,8 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
                 emojiSearchText = unwrappedData?.emojiSearchText.orEmpty(),
                 title = unwrappedData?.title.orEmpty(),
                 titleTextFieldErrorTextStringResourceId = unwrappedData?.titleTextFieldError?.textStringResourceId,
-                appBarTitleTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_category_appbar_title
-                } else {
-                    R.string.screen_add_category_appbar_title
-                },
-                ctaButtonLabelTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_category_floating_action_button_content_description
-                } else {
-                    R.string.screen_add_category_floating_action_button_content_description
-                },
+                appBarTitleTextStringResourceId = R.string.screen_add_category_appbar_title,
+                ctaButtonLabelTextStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
             ),
             events = AddCategoryScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,

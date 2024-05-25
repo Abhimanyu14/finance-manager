@@ -25,7 +25,6 @@ public fun AddCategoryScreen(
     val screenUIData: MyResult<AddCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
     val uiStateAndEvents = rememberAddCategoryScreenUIStateAndEvents(
         data = screenUIData,
-        isEdit = false,
     )
     val handleUIEvent = remember(
         key1 = viewModel,

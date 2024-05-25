@@ -151,20 +151,6 @@ public class EditCategoryScreenViewModel @Inject constructor(
         fetchData()
     }
 
-    public fun insertCategory() {
-        val emojiValue = emoji.value ?: return
-        viewModelScope.launch {
-            insertCategoriesUseCase(
-                Category(
-                    emoji = emojiValue,
-                    title = title.value.text,
-                    transactionType = transactionTypes[selectedTransactionTypeIndex.value],
-                ),
-            )
-            navigator.navigateUp()
-        }
-    }
-
     public fun updateCategory() {
         val emojiValue = emoji.value ?: return
         val categoryValue = category.value ?: return

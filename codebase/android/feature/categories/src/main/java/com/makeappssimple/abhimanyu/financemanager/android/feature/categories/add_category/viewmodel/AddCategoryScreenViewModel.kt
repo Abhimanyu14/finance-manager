@@ -165,22 +165,6 @@ public class AddCategoryScreenViewModel @Inject constructor(
         }
     }
 
-    public fun updateCategory() {
-        val emojiValue = emoji.value ?: return
-        val categoryValue = category.value ?: return
-        val updatedCategory = categoryValue.copy(
-            emoji = emojiValue,
-            title = title.value.text,
-            transactionType = transactionTypes[selectedTransactionTypeIndex.value],
-        )
-        viewModelScope.launch {
-            updateCategoriesUseCase(
-                updatedCategory,
-            )
-            navigator.navigateUp()
-        }
-    }
-
     public fun clearTitle() {
         updateTitle(
             updatedTitle = title.value.copy(

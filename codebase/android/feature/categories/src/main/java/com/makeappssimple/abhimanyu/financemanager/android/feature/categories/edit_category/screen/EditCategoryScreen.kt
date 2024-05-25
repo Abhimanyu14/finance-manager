@@ -25,7 +25,6 @@ public fun EditCategoryScreen(
     val screenUIData: MyResult<EditCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
     val uiStateAndEvents = rememberEditCategoryScreenUIStateAndEvents(
         data = screenUIData,
-        isEdit = true,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
