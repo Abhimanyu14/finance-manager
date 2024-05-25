@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -96,7 +97,9 @@ public fun AccountsListItemContent(
                     },
                 ),
         )
-        if (data.isDefault) {
+        AnimatedVisibility(
+            visible = data.isDefault,
+        ) {
             MyDefaultTag()
         }
         Spacer(

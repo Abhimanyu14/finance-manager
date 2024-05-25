@@ -44,31 +44,39 @@ internal fun rememberAccountsScreenUIStateAndEvents(
     accountsTotalBalanceAmountValue: Long,
     accountsTotalMinimumBalanceAmountValue: Long,
 ): AccountsScreenUIStateAndEvents {
+    // region clicked item id
     var clickedItemId: Int? by remember {
         mutableStateOf(
             value = null,
         )
     }
+    val setClickedItemId = { updatedClickedItemId: Int? ->
+        clickedItemId = updatedClickedItemId
+    }
+    // endregion
+
+    // region account id to delete
     var accountIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
         )
     }
+    val setAccountIdToDelete = { updatedAccountIdToDelete: Int? ->
+        accountIdToDelete = updatedAccountIdToDelete
+    }
+    // endregion
+
+    // region screen bottom sheet type
     var screenBottomSheetType: AccountsScreenBottomSheetType by remember {
         mutableStateOf(
             value = AccountsScreenBottomSheetType.None,
         )
     }
-    val setClickedItemId = { updatedClickedItemId: Int? ->
-        clickedItemId = updatedClickedItemId
-    }
-    val setAccountIdToDelete = { updatedAccountIdToDelete: Int? ->
-        accountIdToDelete = updatedAccountIdToDelete
-    }
     val setScreenBottomSheetType =
         { updatedAccountsBottomSheetType: AccountsScreenBottomSheetType ->
             screenBottomSheetType = updatedAccountsBottomSheetType
         }
+    // endregion
 
     return remember(
         clickedItemId,
@@ -77,9 +85,11 @@ internal fun rememberAccountsScreenUIStateAndEvents(
         setClickedItemId,
         setAccountIdToDelete,
         setScreenBottomSheetType,
+        defaultAccountId,
+        allAccounts,
+        isAccountUsedInTransactions,
         accountsTotalBalanceAmountValue,
         accountsTotalMinimumBalanceAmountValue,
-        allAccounts,
     ) {
         val accountTypes = AccountType.entries.sortedBy {
             it.sortOrder
