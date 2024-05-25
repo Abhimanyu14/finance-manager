@@ -1,13 +1,16 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun CategoriesScreen(
@@ -21,9 +24,10 @@ public fun CategoriesScreen(
         message = "Inside CategoriesScreen",
     )
 
-    val screenUIData: MyResult<CategoriesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val categoriesGridItemDataMap: Map<TransactionType, ImmutableList<CategoriesGridItemData>> by viewModel.categoriesGridItemDataMap.collectAsStateWithLifecycle()
+
     val uiStateAndEvents = rememberCategoriesScreenUIStateAndEvents(
-        data = screenUIData,
+        categoriesGridItemDataMap = categoriesGridItemDataMap,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -63,8 +67,8 @@ public fun CategoriesScreen(
                 }
 
                 is CategoriesScreenUIEvent.OnSelectedTabIndexUpdated -> {
-                    viewModel.updateSelectedTabIndex(
-                        updatedSelectedTabIndex = uiEvent.updatedSelectedTabIndex,
+                    uiStateAndEvents.events.setSelectedCategoryTypeIndex(
+                        uiEvent.updatedSelectedTabIndex,
                     )
                 }
 
@@ -121,6 +125,12 @@ public fun CategoriesScreen(
                 }
             }
         }
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        viewModel.initViewModel()
     }
 
     CategoriesScreenUI(

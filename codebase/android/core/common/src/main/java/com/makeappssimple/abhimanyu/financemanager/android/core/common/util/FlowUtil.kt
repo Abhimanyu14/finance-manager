@@ -60,4 +60,3 @@ public fun <T> Flow<T>.defaultObjectStateIn(
         initialValue = initialValue,
     )
 }
-

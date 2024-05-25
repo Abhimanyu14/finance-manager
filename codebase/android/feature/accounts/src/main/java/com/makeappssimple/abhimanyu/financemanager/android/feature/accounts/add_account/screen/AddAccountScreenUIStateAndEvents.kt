@@ -56,7 +56,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         }
     // endregion
 
-    // region selected account type
+    // region selected account type index
     var selectedAccountTypeIndex: Int by remember {
         mutableIntStateOf(
             value = validAccountTypes.indexOf(

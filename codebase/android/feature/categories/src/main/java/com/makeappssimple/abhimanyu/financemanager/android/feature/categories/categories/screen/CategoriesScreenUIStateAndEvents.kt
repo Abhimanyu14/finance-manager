@@ -5,15 +5,16 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
@@ -26,46 +27,66 @@ internal class CategoriesScreenUIStateAndEvents(
 @Stable
 internal class CategoriesScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
-    val setCategoryIdToDelete: (Int?) -> Unit,
-    val setClickedItemId: (Int?) -> Unit,
-    val setScreenBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
+    val setCategoryIdToDelete: (updatedCategoryIdToDelete: Int?) -> Unit,
+    val setClickedItemId: (updatedClickedItemId: Int?) -> Unit,
+    val setScreenBottomSheetType: (updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType) -> Unit,
+    val setSelectedCategoryTypeIndex: (updatedSelectedCategoryTypeIndex: Int) -> Unit,
 ) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberCategoriesScreenUIStateAndEvents(
-    data: MyResult<CategoriesScreenUIData>?,
+    categoriesGridItemDataMap: Map<TransactionType, ImmutableList<CategoriesGridItemData>>,
 ): CategoriesScreenUIStateAndEvents {
+    // region screen bottom sheet type
     var screenBottomSheetType: CategoriesScreenBottomSheetType by remember {
         mutableStateOf(
             value = CategoriesScreenBottomSheetType.None,
         )
     }
+    val setScreenBottomSheetType =
+        { updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType ->
+            screenBottomSheetType = updatedCategoriesBottomSheetType
+        }
+    // endregion
+
+    // region category id to delete
     var categoryIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
         )
     }
+    val setCategoryIdToDelete = { updatedCategoryIdToDelete: Int? ->
+        categoryIdToDelete = updatedCategoryIdToDelete
+    }
+    // endregion
+
+    // region clicked item id
     var clickedItemId: Int? by remember {
         mutableStateOf(
             value = null,
         )
     }
-    val pagerState: PagerState = rememberPagerState(
-        pageCount = { 3 },
-    )
-    val setScreenBottomSheetType =
-        { updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType ->
-            screenBottomSheetType = updatedCategoriesBottomSheetType
-        }
-    val setCategoryIdToDelete = { updatedCategoryIdToDelete: Int? ->
-        categoryIdToDelete = updatedCategoryIdToDelete
-    }
     val setClickedItemId = { updatedClickedItemId: Int? ->
         clickedItemId = updatedClickedItemId
     }
+    // endregion
+
+    // region selected category type index
+    var selectedCategoryTypeIndex: Int by remember {
+        mutableIntStateOf(
+            value = 0,
+        )
+    }
+    val setSelectedCategoryTypeIndex = { updatedSelectedCategoryTypeIndex: Int ->
+        selectedCategoryTypeIndex = updatedSelectedCategoryTypeIndex
+    }
+    // endregion
+
+    val pagerState: PagerState = rememberPagerState(
+        pageCount = { 3 },
+    )
 
     return remember(
-        data,
         screenBottomSheetType,
         categoryIdToDelete,
         clickedItemId,
@@ -73,17 +94,11 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
         setScreenBottomSheetType,
         setCategoryIdToDelete,
         setClickedItemId,
+        selectedCategoryTypeIndex,
+        setSelectedCategoryTypeIndex,
+        categoriesGridItemDataMap,
     ) {
-        val unwrappedData: CategoriesScreenUIData? = when (data) {
-            is MyResult.Success -> {
-                data.data
-            }
-
-            else -> {
-                null
-            }
-        }
-        val validTransactionTypes = listOf(
+        val validTransactionTypes = persistentListOf(
             TransactionType.EXPENSE,
             TransactionType.INCOME,
             TransactionType.INVESTMENT,
@@ -96,19 +111,14 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
                 screenBottomSheetType = screenBottomSheetType,
                 categoryIdToDelete = categoryIdToDelete,
                 clickedItemId = clickedItemId,
-                selectedTabIndex = unwrappedData?.selectedTabIndex.orZero(),
+                selectedTabIndex = selectedCategoryTypeIndex,
                 tabData = validTransactionTypes.map {
                     MyTabData(
                         title = it.title,
                     )
                 }.toImmutableList(),
-                validTransactionTypes = persistentListOf(
-                    TransactionType.EXPENSE,
-                    TransactionType.INCOME,
-                    TransactionType.INVESTMENT,
-                ),
-                categoriesGridItemDataMap =
-                unwrappedData?.categoriesGridItemDataMap.orEmpty(),
+                validTransactionTypes = validTransactionTypes,
+                categoriesGridItemDataMap = categoriesGridItemDataMap,
                 pagerState = pagerState,
             ),
             events = CategoriesScreenUIStateEvents(
@@ -118,6 +128,7 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
                 setCategoryIdToDelete = setCategoryIdToDelete,
                 setClickedItemId = setClickedItemId,
                 setScreenBottomSheetType = setScreenBottomSheetType,
+                setSelectedCategoryTypeIndex = setSelectedCategoryTypeIndex,
             ),
         )
     }
