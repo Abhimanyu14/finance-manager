@@ -118,31 +118,30 @@ internal fun CategoriesScreenUI(
                 }
 
                 is CategoriesScreenBottomSheetType.Menu -> {
-                    val bottomSheetData = uiState.screenBottomSheetType
                     CategoryMenuBottomSheet(
                         data = CategoryMenuBottomSheetData(
-                            isDeleteVisible = bottomSheetData.isDeleteVisible,
-                            isEditVisible = bottomSheetData.isEditVisible,
-                            isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
+                            isDeleteVisible = uiState.screenBottomSheetType.isDeleteVisible,
+                            isEditVisible = uiState.screenBottomSheetType.isEditVisible,
+                            isSetAsDefaultVisible = uiState.screenBottomSheetType.isSetAsDefaultVisible,
                         ),
                         onDeleteClick = {
                             handleUIEvent(
                                 CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.DeleteButtonClick(
-                                    categoryId = bottomSheetData.categoryId,
+                                    categoryId = uiState.screenBottomSheetType.categoryId,
                                 )
                             )
                         },
                         onEditClick = {
                             handleUIEvent(
                                 CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.EditButtonClick(
-                                    categoryId = bottomSheetData.categoryId,
+                                    categoryId = uiState.screenBottomSheetType.categoryId,
                                 )
                             )
                         },
                         onSetAsDefaultClick = {
                             handleUIEvent(
                                 CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.SetAsDefaultButtonClick(
-                                    categoryId = bottomSheetData.categoryId,
+                                    categoryId = uiState.screenBottomSheetType.categoryId,
                                 )
                             )
                         },

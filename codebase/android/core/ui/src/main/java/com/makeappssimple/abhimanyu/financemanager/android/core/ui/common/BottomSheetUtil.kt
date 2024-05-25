@@ -20,10 +20,10 @@ public fun BottomSheetHandler(
     keyboardController: SoftwareKeyboardController?,
     resetBottomSheetType: () -> Unit,
 ) {
-    BottomSheetDisposeHandler(
-        modalBottomSheetState = modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
-    )
+//    BottomSheetDisposeHandler(
+//        modalBottomSheetState = modalBottomSheetState,
+//        resetBottomSheetType = resetBottomSheetType,
+//    )
 
     BottomSheetTypeChangeHandler(
         showModalBottomSheet = showModalBottomSheet,
