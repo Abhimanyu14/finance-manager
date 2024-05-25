@@ -20,9 +20,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 import kotlinx.coroutines.launch
@@ -70,9 +70,18 @@ public fun SettingsScreen(
         },
     )
 
-    val screenUIData: MyResult<SettingsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val reminder: Reminder? by viewModel.reminder.collectAsStateWithLifecycle(
+        initialValue = null,
+    )
+    val isLoading: Boolean by viewModel.isLoading.collectAsStateWithLifecycle()
+    val appVersionName: String = viewModel.appVersionName
+    // endregion
+
     val uiStateAndEvents = rememberSettingsScreenUIStateAndEvents(
-        data = screenUIData,
+        isLoading = isLoading,
+        reminder = reminder,
+        appVersionName = appVersionName,
     )
     val handleUIEvent = remember(
         viewModel,
@@ -104,10 +113,10 @@ public fun SettingsScreen(
                                 context,
                                 Manifest.permission.POST_NOTIFICATIONS
                             ) == PackageManager.PERMISSION_GRANTED
-                            if (!hasNotificationPermission) {
-                                notificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            } else {
+                            if (hasNotificationPermission) {
                                 viewModel.enableReminder()
+                            } else {
+                                notificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                             }
                         } else {
                             viewModel.enableReminder()

@@ -8,8 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
@@ -26,7 +26,9 @@ internal data class SettingsScreenUIStateEvents(
 
 @Composable
 internal fun rememberSettingsScreenUIStateAndEvents(
-    data: MyResult<SettingsScreenUIData>?,
+    isLoading: Boolean,
+    reminder: Reminder?,
+    appVersionName: String,
 ): SettingsScreenUIStateAndEvents {
     val snackbarHostState: SnackbarHostState = remember {
         SnackbarHostState()
@@ -42,29 +44,19 @@ internal fun rememberSettingsScreenUIStateAndEvents(
         }
 
     return remember(
-        data,
         screenBottomSheetType,
         snackbarHostState,
         setScreenBottomSheetType,
+        reminder,
+        isLoading,
     ) {
-        val unwrappedData: SettingsScreenUIData? = when (data) {
-            is MyResult.Success -> {
-                data.data
-            }
-
-            else -> {
-                null
-            }
-        }
-
-        // TODO(Abhi): Can be reordered to match the class ordering
         SettingsScreenUIStateAndEvents(
             state = SettingsScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 snackbarHostState = snackbarHostState,
-                isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
-                isReminderEnabled = unwrappedData?.isReminderEnabled,
-                appVersion = unwrappedData?.appVersion,
+                isLoading = isLoading,
+                isReminderEnabled = reminder?.isEnabled.orFalse(),
+                appVersion = appVersionName,
             ),
             events = SettingsScreenUIStateEvents(
                 resetScreenBottomSheetType = {
