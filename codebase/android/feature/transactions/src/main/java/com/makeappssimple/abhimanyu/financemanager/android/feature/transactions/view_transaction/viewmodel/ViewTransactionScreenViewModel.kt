@@ -83,7 +83,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        getTransactionData()
+        fetchData()
     }
 
     public fun deleteTransaction(
@@ -123,6 +123,10 @@ public class ViewTransactionScreenViewModel @Inject constructor(
 
     public fun navigateUp() {
         navigator.navigateUp()
+    }
+
+    private fun fetchData() {
+        getTransactionData()
     }
 
     private fun getTransactionData() {

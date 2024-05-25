@@ -138,16 +138,6 @@ public class EditCategoryScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        getOriginalCategory()
-        screenArgs.originalTransactionType?.let { originalTransactionType ->
-            updateSelectedTransactionTypeIndex(
-                updatedIndex = transactionTypes.indexOf(
-                    element = TransactionType.entries.find { transactionType ->
-                        transactionType.title == originalTransactionType
-                    },
-                )
-            )
-        }
         fetchData()
     }
 
@@ -207,6 +197,27 @@ public class EditCategoryScreenViewModel @Inject constructor(
         searchText.value = updatedSearchText
     }
 
+    private fun fetchData() {
+        getOriginalCategory()
+        screenArgs.originalTransactionType?.let { originalTransactionType ->
+            updateSelectedTransactionTypeIndex(
+                updatedIndex = transactionTypes.indexOf(
+                    element = TransactionType.entries.find { transactionType ->
+                        transactionType.title == originalTransactionType
+                    },
+                )
+            )
+        }
+        viewModelScope.launch {
+            awaitAll(
+                async {
+                    categories.clear()
+                    categories.addAll(getAllCategoriesUseCase())
+                },
+            )
+        }
+    }
+
     private fun getOriginalCategory() {
         screenArgs.originalCategoryId?.let { id ->
             viewModelScope.launch {
@@ -238,17 +249,6 @@ public class EditCategoryScreenViewModel @Inject constructor(
         updateEmoji(
             updatedEmoji = category.emoji,
         )
-    }
-
-    private fun fetchData() {
-        viewModelScope.launch {
-            awaitAll(
-                async {
-                    categories.clear()
-                    categories.addAll(getAllCategoriesUseCase())
-                },
-            )
-        }
     }
 
     private fun checkIfCategoryDataIsValid(

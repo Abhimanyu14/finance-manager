@@ -138,16 +138,6 @@ public class AddCategoryScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        getOriginalCategory()
-        screenArgs.originalTransactionType?.let { originalTransactionType ->
-            updateSelectedTransactionTypeIndex(
-                updatedIndex = transactionTypes.indexOf(
-                    element = TransactionType.entries.find { transactionType ->
-                        transactionType.title == originalTransactionType
-                    },
-                )
-            )
-        }
         fetchData()
     }
 
@@ -239,6 +229,16 @@ public class AddCategoryScreenViewModel @Inject constructor(
     }
 
     private fun fetchData() {
+        getOriginalCategory()
+        screenArgs.originalTransactionType?.let { originalTransactionType ->
+            updateSelectedTransactionTypeIndex(
+                updatedIndex = transactionTypes.indexOf(
+                    element = TransactionType.entries.find { transactionType ->
+                        transactionType.title == originalTransactionType
+                    },
+                )
+            )
+        }
         viewModelScope.launch {
             awaitAll(
                 async {

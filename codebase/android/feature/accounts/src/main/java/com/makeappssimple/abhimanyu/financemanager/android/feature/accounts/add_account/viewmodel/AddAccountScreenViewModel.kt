@@ -28,7 +28,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     }
 
     public fun initViewModel() {
-        getAllAccounts()
+        fetchData()
     }
 
     public fun insertAccount(
@@ -46,6 +46,10 @@ public class AddAccountScreenViewModel @Inject constructor(
 
     public fun navigateUp() {
         navigator.navigateUp()
+    }
+
+    private fun fetchData() {
+        getAllAccounts()
     }
 
     private fun getAllAccounts() {

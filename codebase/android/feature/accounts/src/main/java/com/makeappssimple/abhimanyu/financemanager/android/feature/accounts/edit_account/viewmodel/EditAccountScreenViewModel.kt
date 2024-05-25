@@ -132,8 +132,7 @@ public class EditAccountScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        getAllAccounts()
-        getOriginalAccount()
+        fetchData()
     }
 
     public fun updateAccount() {
@@ -263,6 +262,11 @@ public class EditAccountScreenViewModel @Inject constructor(
         selectedAccountTypeIndex.update {
             updatedIndex
         }
+    }
+
+    private fun fetchData() {
+        getAllAccounts()
+        getOriginalAccount()
     }
 
     private fun getAllAccounts() {

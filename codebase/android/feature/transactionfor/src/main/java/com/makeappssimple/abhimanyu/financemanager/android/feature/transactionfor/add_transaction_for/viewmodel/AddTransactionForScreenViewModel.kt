@@ -93,8 +93,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     )
 
     public fun initViewModel() {
-        getAllTransactionForValues()
-        getOriginalTransactionFor()
+        fetchData()
     }
 
     public fun insertTransactionFor() {
@@ -126,6 +125,11 @@ public class AddTransactionForScreenViewModel @Inject constructor(
         title.update {
             updatedTitle
         }
+    }
+
+    private fun fetchData() {
+        getAllTransactionForValues()
+        getOriginalTransactionFor()
     }
 
     private fun getAllTransactionForValues() {
