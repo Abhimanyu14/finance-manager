@@ -22,7 +22,7 @@ public fun AccountsScreen(
         message = "Inside AccountsScreen",
     )
 
-    // region ViewModel data
+    // region view model data
     val defaultAccountId: Int? by viewModel.defaultAccountId.collectAsStateWithLifecycle(
         initialValue = null,
     )
@@ -39,7 +39,7 @@ public fun AccountsScreen(
         initialValue = 0L,
     )
     // endregion
-    
+
     val uiStateAndEvents = rememberAccountsScreenUIStateAndEvents(
         defaultAccountId = defaultAccountId,
         allAccounts = allAccounts,

@@ -31,7 +31,7 @@ public fun AddAccountScreen(
     val focusedView = LocalView.current
     val isKeyboardOpen = WindowInsets.isImeVisible
 
-    // region ViewModel data
+    // region view model data
     val validAccountTypes: List<AccountType> = viewModel.validAccountTypes
     val accounts: List<Account> by viewModel.accounts.collectAsStateWithLifecycle()
     // endregion
