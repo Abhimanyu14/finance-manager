@@ -15,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 
 public fun NavGraphBuilder.transactionsNavGraph() {
     composable(
-        route = "${Screen.AddTransaction.route}/{${NavArgs.TRANSACTION_ID}",
+        route = "${Screen.AddTransaction.route}/{${NavArgs.TRANSACTION_ID}}",
         arguments = listOf(
             navArgument(NavArgs.TRANSACTION_ID) {
                 type = NavType.StringType
