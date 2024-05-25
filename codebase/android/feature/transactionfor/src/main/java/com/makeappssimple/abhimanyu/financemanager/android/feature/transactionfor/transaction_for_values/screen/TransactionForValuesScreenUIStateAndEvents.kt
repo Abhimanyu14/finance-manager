@@ -54,9 +54,11 @@ internal fun rememberTransactionForValuesScreenUIStateAndEvents(
 
     return remember(
         screenBottomSheetType,
+        setScreenBottomSheetType,
         transactionForIdToDelete,
         setTransactionForIdToDelete,
-        setScreenBottomSheetType,
+        transactionForValues,
+        transactionForValuesIsUsedInTransactions,
     ) {
         TransactionForValuesScreenUIStateAndEvents(
             state = TransactionForValuesScreenUIState(
