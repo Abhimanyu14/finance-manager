@@ -6,9 +6,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.viewmodel.AddTransactionForScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun AddTransactionForScreen(
@@ -22,9 +23,12 @@ public fun AddTransactionForScreen(
         message = "Inside AddTransactionForScreen",
     )
 
-    val screenUIData: MyResult<AddTransactionForScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
+    // endregion
+
     val uiStateAndEvents = rememberAddTransactionForScreenUIStateAndEvents(
-        data = screenUIData,
+        transactionForValues = transactionForValues,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -41,11 +45,22 @@ public fun AddTransactionForScreen(
                 }
 
                 is AddTransactionForScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.insertTransactionFor()
+                    viewModel.insertTransactionFor(
+                        TransactionFor(
+                            title = uiStateAndEvents.state.title?.text.orEmpty(),
+                        )
+                    )
                 }
 
                 is AddTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                    viewModel.clearTitle()
+                    uiStateAndEvents.state.title?.let { title ->
+                        uiStateAndEvents.events.setTitle(
+                            title.copy(
+                                text = "",
+                            )
+                        )
+                    }
+                    Unit
                 }
 
                 is AddTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
@@ -53,9 +68,7 @@ public fun AddTransactionForScreen(
                 }
 
                 is AddTransactionForScreenUIEvent.OnTitleUpdated -> {
-                    viewModel.updateTitle(
-                        updatedTitle = uiEvent.updatedTitle,
-                    )
+                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
                 }
             }
         }
