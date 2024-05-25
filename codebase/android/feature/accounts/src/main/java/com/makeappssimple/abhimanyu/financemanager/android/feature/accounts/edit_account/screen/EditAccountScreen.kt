@@ -8,10 +8,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUI
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.rememberAddOrEditAccountScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.viewmodel.EditAccountScreenViewModel
 
 @Composable
@@ -26,8 +22,8 @@ public fun EditAccountScreen(
         message = "Inside EditAccountScreen",
     )
 
-    val screenUIData: MyResult<AddOrEditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberAddOrEditAccountScreenUIStateAndEvents(
+    val screenUIData: MyResult<EditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberEditAccountScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = true,
     )
@@ -35,51 +31,51 @@ public fun EditAccountScreen(
         key1 = viewModel,
         key2 = uiState,
     ) {
-        { uiEvent: AddOrEditAccountScreenUIEvent ->
+        { uiEvent: EditAccountScreenUIEvent ->
             when (uiEvent) {
-                is AddOrEditAccountScreenUIEvent.OnCtaButtonClick -> {
+                is EditAccountScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateAccount()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
+                is EditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
                     viewModel.updateBalanceAmountValue(
                         updatedBalanceAmountValue = uiEvent.updatedBalanceAmountValue,
                     )
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
+                is EditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
                     uiState.events.resetScreenBottomSheetType()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
+                is EditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
                     viewModel.clearBalanceAmountValue()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
+                is EditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
                     viewModel.clearMinimumAccountBalanceAmountValue()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnClearNameButtonClick -> {
+                is EditAccountScreenUIEvent.OnClearNameButtonClick -> {
                     viewModel.clearName()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                is EditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
+                is EditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
                     viewModel.updateMinimumAccountBalanceAmountValue(
                         updatedMinimumAccountBalanceAmountValue = uiEvent.updatedMinimumAccountBalanceAmountValue,
                     )
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnNameUpdated -> {
+                is EditAccountScreenUIEvent.OnNameUpdated -> {
                     viewModel.updateName(
                         updatedName = uiEvent.updatedName,
                     )
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
+                is EditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
                     viewModel.updateSelectedAccountTypeIndex(
                         updatedIndex = uiEvent.updatedIndex,
                     )
@@ -94,7 +90,7 @@ public fun EditAccountScreen(
         viewModel.initViewModel()
     }
 
-    AddOrEditAccountScreenUI(
+    EditAccountScreenUI(
         uiState = uiState.state,
         handleUIEvent = handleUIEvent,
     )

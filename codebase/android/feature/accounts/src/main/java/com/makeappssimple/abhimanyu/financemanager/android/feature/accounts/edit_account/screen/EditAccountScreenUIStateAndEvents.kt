@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -21,35 +21,35 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
 @Stable
-internal class AddOrEditAccountScreenUIStateAndEvents(
-    val state: AddOrEditAccountScreenUIState,
-    val events: AddOrEditAccountScreenUIStateEvents,
+internal class EditAccountScreenUIStateAndEvents(
+    val state: EditAccountScreenUIState,
+    val events: EditAccountScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
 
 @Stable
-internal class AddOrEditAccountScreenUIStateEvents(
+internal class EditAccountScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIStateEvents
 
 @Composable
-internal fun rememberAddOrEditAccountScreenUIStateAndEvents(
-    data: MyResult<AddOrEditAccountScreenUIData>?,
+internal fun rememberEditAccountScreenUIStateAndEvents(
+    data: MyResult<EditAccountScreenUIData>?,
     isEdit: Boolean,
-): AddOrEditAccountScreenUIStateAndEvents {
+): EditAccountScreenUIStateAndEvents {
     val nameTextFieldFocusRequester = remember {
         FocusRequester()
     }
     val balanceAmountTextFieldFocusRequester = remember {
         FocusRequester()
     }
-    var screenBottomSheetType: AddOrEditAccountScreenBottomSheetType by remember {
+    var screenBottomSheetType: EditAccountScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AddOrEditAccountScreenBottomSheetType.None,
+            value = EditAccountScreenBottomSheetType.None,
         )
     }
     val setScreenBottomSheetType =
-        { updatedAddOrEditAccountScreenBottomSheetType: AddOrEditAccountScreenBottomSheetType ->
-            screenBottomSheetType = updatedAddOrEditAccountScreenBottomSheetType
+        { updatedEditAccountScreenBottomSheetType: EditAccountScreenBottomSheetType ->
+            screenBottomSheetType = updatedEditAccountScreenBottomSheetType
         }
 
     return remember(
@@ -59,7 +59,7 @@ internal fun rememberAddOrEditAccountScreenUIStateAndEvents(
         nameTextFieldFocusRequester,
         balanceAmountTextFieldFocusRequester,
     ) {
-        val unwrappedData: AddOrEditAccountScreenUIData? = when (data) {
+        val unwrappedData: EditAccountScreenUIData? = when (data) {
             is MyResult.Success -> {
                 data.data
             }
@@ -74,8 +74,8 @@ internal fun rememberAddOrEditAccountScreenUIStateAndEvents(
         )
 
         // TODO(Abhi): Can be reordered to match the class ordering
-        AddOrEditAccountScreenUIStateAndEvents(
-            state = AddOrEditAccountScreenUIState(
+        EditAccountScreenUIStateAndEvents(
+            state = EditAccountScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 nameTextFieldFocusRequester = nameTextFieldFocusRequester,
                 balanceAmountTextFieldFocusRequester = balanceAmountTextFieldFocusRequester,
@@ -104,7 +104,7 @@ internal fun rememberAddOrEditAccountScreenUIStateAndEvents(
                 balanceAmountValue = unwrappedData?.balanceAmountValue.orEmpty(),
                 minimumBalanceAmountValue = unwrappedData?.minimumBalanceAmountValue.orEmpty(),
                 name = unwrappedData?.name.orEmpty(),
-                visibilityData = AddOrEditAccountScreenUIVisibilityData(
+                visibilityData = EditAccountScreenUIVisibilityData(
                     balanceAmountTextField = isEdit,
                     minimumBalanceAmountTextField = selectedAccount == AccountType.BANK,
                     nameTextField = if (isEdit) {
@@ -120,9 +120,9 @@ internal fun rememberAddOrEditAccountScreenUIStateAndEvents(
                     },
                 ),
             ),
-            events = AddOrEditAccountScreenUIStateEvents(
+            events = EditAccountScreenUIStateEvents(
                 resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddOrEditAccountScreenBottomSheetType.None)
+                    setScreenBottomSheetType(EditAccountScreenBottomSheetType.None)
                 },
             ),
         )

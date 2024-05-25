@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
@@ -6,8 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 
 @Immutable
-public data class AddOrEditAccountScreenUIData(
-    val errorData: AddOrEditAccountScreenUIErrorData = AddOrEditAccountScreenUIErrorData(),
+public data class EditAccountScreenUIData(
+    val errorData: EditAccountScreenUIErrorData = EditAccountScreenUIErrorData(),
     val isValidAccountData: Boolean = false,
     val accountIsNotCash: Boolean = false,
     val selectedAccountTypeIndex: Int = 0,

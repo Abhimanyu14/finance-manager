@@ -28,9 +28,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIError
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIErrorData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIError
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIErrorData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.EditAccountScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,8 +63,8 @@ public class EditAccountScreenViewModel @Inject constructor(
     private val validAccountTypes: List<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
     }
-    private val errorData: MutableStateFlow<AddOrEditAccountScreenUIErrorData> = MutableStateFlow(
-        value = AddOrEditAccountScreenUIErrorData(),
+    private val errorData: MutableStateFlow<EditAccountScreenUIErrorData> = MutableStateFlow(
+        value = EditAccountScreenUIErrorData(),
     )
     private val selectedAccountTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = validAccountTypes.indexOf(
@@ -82,7 +82,7 @@ public class EditAccountScreenViewModel @Inject constructor(
             value = TextFieldValue(),
         )
 
-    public val screenUIData: StateFlow<MyResult<AddOrEditAccountScreenUIData>?> = combine(
+    public val screenUIData: StateFlow<MyResult<EditAccountScreenUIData>?> = combine(
         errorData,
         selectedAccountTypeIndex,
         balanceAmountValue,
@@ -115,7 +115,7 @@ public class EditAccountScreenViewModel @Inject constructor(
             MyResult.Loading
         } else {
             MyResult.Success(
-                data = AddOrEditAccountScreenUIData(
+                data = EditAccountScreenUIData(
                     errorData = errorData,
                     isValidAccountData = isValidAccountData,
                     accountIsNotCash = accountIsNotCash,
@@ -337,7 +337,7 @@ public class EditAccountScreenViewModel @Inject constructor(
         ) {
             errorData.update {
                 errorData.value.copy(
-                    nameTextField = AddOrEditAccountScreenUIError.ACCOUNT_EXISTS
+                    nameTextField = EditAccountScreenUIError.ACCOUNT_EXISTS
                 )
             }
             return false
@@ -352,10 +352,10 @@ public class EditAccountScreenViewModel @Inject constructor(
         val isValidData = name.trim() == originalAccount?.name?.trim() || doesNotExist
         errorData.update {
             if (isValidData) {
-                AddOrEditAccountScreenUIErrorData()
+                EditAccountScreenUIErrorData()
             } else {
                 errorData.value.copy(
-                    nameTextField = AddOrEditAccountScreenUIError.ACCOUNT_EXISTS
+                    nameTextField = EditAccountScreenUIError.ACCOUNT_EXISTS
                 )
             }
         }

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
@@ -8,9 +8,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 
 @Stable
-internal data class AddOrEditAccountScreenUIState(
-    val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
-    val visibilityData: AddOrEditAccountScreenUIVisibilityData,
+internal data class EditAccountScreenUIState(
+    val screenBottomSheetType: EditAccountScreenBottomSheetType,
+    val visibilityData: EditAccountScreenUIVisibilityData,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,
     val balanceAmountTextFieldFocusRequester: FocusRequester,

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
@@ -43,7 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
-public enum class AddOrEditAccountScreenUIError(
+public enum class EditAccountScreenUIError(
     @StringRes public val textStringResourceId: Int,
 ) {
     ACCOUNT_EXISTS(
@@ -52,7 +52,7 @@ public enum class AddOrEditAccountScreenUIError(
 }
 
 @Immutable
-public data class AddOrEditAccountScreenUIVisibilityData(
+public data class EditAccountScreenUIVisibilityData(
     val balanceAmountTextField: Boolean = false,
     val minimumBalanceAmountTextField: Boolean = false,
     val nameTextField: Boolean = false,
@@ -61,16 +61,16 @@ public data class AddOrEditAccountScreenUIVisibilityData(
 )
 
 @Immutable
-public data class AddOrEditAccountScreenUIErrorData(
-    val balanceAmountTextField: AddOrEditAccountScreenUIError? = null,
-    val nameTextField: AddOrEditAccountScreenUIError? = null,
+public data class EditAccountScreenUIErrorData(
+    val balanceAmountTextField: EditAccountScreenUIError? = null,
+    val nameTextField: EditAccountScreenUIError? = null,
 )
 
 @Composable
-internal fun AddOrEditAccountScreenUI(
-    uiState: AddOrEditAccountScreenUIState,
+internal fun EditAccountScreenUI(
+    uiState: EditAccountScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvent: (uiEvent: AddOrEditAccountScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: EditAccountScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -94,7 +94,7 @@ internal fun AddOrEditAccountScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                is AddOrEditAccountScreenBottomSheetType.None -> {
+                is EditAccountScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }
@@ -104,14 +104,14 @@ internal fun AddOrEditAccountScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvent(AddOrEditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(EditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
         onNavigationBackButtonClick = {
-            handleUIEvent(AddOrEditAccountScreenUIEvent.OnNavigationBackButtonClick)
+            handleUIEvent(EditAccountScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
         Column(
@@ -141,7 +141,7 @@ internal fun AddOrEditAccountScreenUI(
                         when (event) {
                             is MyRadioGroupEvent.OnSelectionChange -> {
                                 handleUIEvent(
-                                    AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated(
+                                    EditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated(
                                         updatedIndex = event.index,
                                     )
                                 )
@@ -205,12 +205,12 @@ internal fun AddOrEditAccountScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                                handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearNameButtonClick)
+                                handleUIEvent(EditAccountScreenUIEvent.OnClearNameButtonClick)
                             }
 
                             is MyOutlinedTextFieldEvent.OnValueChange -> {
                                 handleUIEvent(
-                                    AddOrEditAccountScreenUIEvent.OnNameUpdated(
+                                    EditAccountScreenUIEvent.OnNameUpdated(
                                         updatedName = event.updatedValue,
                                     )
                                 )
@@ -254,12 +254,12 @@ internal fun AddOrEditAccountScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                                handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick)
+                                handleUIEvent(EditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick)
                             }
 
                             is MyOutlinedTextFieldEvent.OnValueChange -> {
                                 handleUIEvent(
-                                    AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated(
+                                    EditAccountScreenUIEvent.OnBalanceAmountValueUpdated(
                                         updatedBalanceAmountValue = event.updatedValue,
                                     )
                                 )
@@ -295,12 +295,12 @@ internal fun AddOrEditAccountScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                                handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick)
+                                handleUIEvent(EditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick)
                             }
 
                             is MyOutlinedTextFieldEvent.OnValueChange -> {
                                 handleUIEvent(
-                                    AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated(
+                                    EditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated(
                                         updatedMinimumAccountBalanceAmountValue = event.updatedValue,
                                     )
                                 )
@@ -322,7 +322,7 @@ internal fun AddOrEditAccountScreenUI(
                 handleEvent = { event ->
                     when (event) {
                         is SaveButtonEvent.OnClick -> {
-                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnCtaButtonClick)
+                            handleUIEvent(EditAccountScreenUIEvent.OnCtaButtonClick)
                         }
                     }
                 },
