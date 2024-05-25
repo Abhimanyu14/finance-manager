@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdec
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
-internal class AddOrEditTransactionScreenArgs(
+internal class EditTransactionScreenArgs(
     val isEdit: Boolean?,
     val transactionId: Int?,
 ) : ScreenArgs {
