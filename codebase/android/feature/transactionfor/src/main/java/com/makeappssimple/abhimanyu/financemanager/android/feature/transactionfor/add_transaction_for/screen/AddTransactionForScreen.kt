@@ -8,15 +8,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUI
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.rememberAddOrEditTransactionForScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel.AddOrEditTransactionForScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.viewmodel.AddTransactionForScreenViewModel
 
 @Composable
 public fun AddTransactionForScreen(
-    screenViewModel: AddOrEditTransactionForScreenViewModel = hiltViewModel(),
+    screenViewModel: AddTransactionForScreenViewModel = hiltViewModel(),
 ) {
     val viewModel = remember {
         screenViewModel
@@ -26,8 +22,8 @@ public fun AddTransactionForScreen(
         message = "Inside AddTransactionForScreen",
     )
 
-    val screenUIData: MyResult<AddOrEditTransactionForScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiStateAndEvents = rememberAddOrEditTransactionForScreenUIStateAndEvents(
+    val screenUIData: MyResult<AddTransactionForScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiStateAndEvents = rememberAddTransactionForScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = false,
     )
@@ -35,29 +31,29 @@ public fun AddTransactionForScreen(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: AddOrEditTransactionForScreenUIEvent ->
+        { uiEvent: AddTransactionForScreenUIEvent ->
             when (uiEvent) {
-                is AddOrEditTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
+                is AddTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
+                is AddTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick -> {
+                is AddTransactionForScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.insertTransactionFor()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
+                is AddTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
                     viewModel.clearTitle()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                is AddTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnTitleUpdated -> {
+                is AddTransactionForScreenUIEvent.OnTitleUpdated -> {
                     viewModel.updateTitle(
                         updatedTitle = uiEvent.updatedTitle,
                     )
@@ -72,7 +68,7 @@ public fun AddTransactionForScreen(
         viewModel.initViewModel()
     }
 
-    AddOrEditTransactionForScreenUI(
+    AddTransactionForScreenUI(
         uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
