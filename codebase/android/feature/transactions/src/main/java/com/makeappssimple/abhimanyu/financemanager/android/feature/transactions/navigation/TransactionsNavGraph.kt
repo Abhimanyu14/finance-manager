@@ -15,25 +15,21 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 
 public fun NavGraphBuilder.transactionsNavGraph() {
     composable(
-        route = "${Screen.AddTransaction.route}/{${NavArgs.TRANSACTION_ID}}?${NavArgs.EDIT}={${NavArgs.EDIT}}",
+        route = "${Screen.AddTransaction.route}/{${NavArgs.TRANSACTION_ID}",
         arguments = listOf(
             navArgument(NavArgs.TRANSACTION_ID) {
                 type = NavType.StringType
                 nullable = true
             },
-            navArgument(NavArgs.EDIT) {
-                type = NavType.BoolType
-                defaultValue = false
-            },
         ),
         deepLinks = listOf(
             navDeepLink {
                 uriPattern =
-                    "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}?${NavArgs.EDIT}={${NavArgs.EDIT}}"
+                    "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}"
             },
             navDeepLink {
                 uriPattern =
-                    "${DeeplinkUrl.BASE_URL}/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}?${NavArgs.EDIT}={${NavArgs.EDIT}}"
+                    "${DeeplinkUrl.BASE_URL}/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}"
             },
         ),
     ) {
@@ -41,15 +37,11 @@ public fun NavGraphBuilder.transactionsNavGraph() {
     }
 
     composable(
-        route = "${Screen.EditTransaction.route}/{${NavArgs.TRANSACTION_ID}}?${NavArgs.EDIT}={${NavArgs.EDIT}}",
+        route = "${Screen.EditTransaction.route}/{${NavArgs.TRANSACTION_ID}}",
         arguments = listOf(
             navArgument(NavArgs.TRANSACTION_ID) {
                 type = NavType.StringType
                 nullable = true
-            },
-            navArgument(NavArgs.EDIT) {
-                type = NavType.BoolType
-                defaultValue = true
             },
         ),
     ) {
