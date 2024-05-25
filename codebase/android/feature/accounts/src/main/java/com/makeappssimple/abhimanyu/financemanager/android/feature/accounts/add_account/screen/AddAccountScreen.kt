@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -29,8 +31,14 @@ public fun AddAccountScreen(
     val focusedView = LocalView.current
     val isKeyboardOpen = WindowInsets.isImeVisible
 
+    // region ViewModel data
+    val validAccountTypes: List<AccountType> = viewModel.validAccountTypes
+    val accounts: List<Account> by viewModel.accounts.collectAsStateWithLifecycle()
+    // endregion
+
     val uiStateAndEvents = rememberAddAccountScreenUIStateAndEvents(
-        viewModel = viewModel,
+        accounts = accounts,
+        validAccountTypes = validAccountTypes,
     )
     val handleUIEvent = remember(
         key1 = viewModel,

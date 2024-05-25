@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -23,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel.AddAccountScreenViewModel
 
 @Stable
 internal class AddAccountScreenUIStateAndEvents(
@@ -43,7 +41,8 @@ internal class AddAccountScreenUIStateEvents(
 
 @Composable
 internal fun rememberAddAccountScreenUIStateAndEvents(
-    viewModel: AddAccountScreenViewModel,
+    accounts: List<Account>,
+    validAccountTypes: List<AccountType>,
 ): AddAccountScreenUIStateAndEvents {
     // region screen bottom sheet type
     var screenBottomSheetType: AddAccountScreenBottomSheetType by remember {
@@ -60,7 +59,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
     // region selected account type
     var selectedAccountTypeIndex: Int by remember {
         mutableIntStateOf(
-            value = viewModel.validAccountTypes.indexOf(
+            value = validAccountTypes.indexOf(
                 element = AccountType.BANK,
             ),
         )
@@ -96,8 +95,6 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         }
     // endregion
 
-    val accounts: List<Account> by viewModel.accounts.collectAsStateWithLifecycle()
-
     val isLoading by remember {
         derivedStateOf {
             accounts.isEmpty()
@@ -129,7 +126,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
     val selectedAccountType = remember(
         key1 = selectedAccountTypeIndex,
     ) {
-        viewModel.validAccountTypes.getOrNull(
+        validAccountTypes.getOrNull(
             index = selectedAccountTypeIndex,
         )
     }
@@ -160,7 +157,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
                 nameTextFieldErrorTextStringResourceId = nameTextFieldErrorTextStringResourceId,
                 selectedAccountTypeIndex = selectedAccountTypeIndex,
                 selectedAccountType = selectedAccountType,
-                accountTypesChipUIDataList = viewModel.validAccountTypes
+                accountTypesChipUIDataList = validAccountTypes
                     .map { accountType ->
                         ChipUIData(
                             text = accountType.title,
