@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -53,10 +53,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.delay
 
 @Composable
-internal fun AddOrEditCategoryScreenUI(
-    uiState: AddOrEditCategoryScreenUIState,
+internal fun EditCategoryScreenUI(
+    uiState: EditCategoryScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvent: (uiEvent: AddOrEditCategoryScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: EditCategoryScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -74,7 +74,7 @@ internal fun AddOrEditCategoryScreenUI(
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
         resetBottomSheetType = {
-            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnBottomSheetDismissed)
+            handleUIEvent(EditCategoryScreenUIEvent.OnBottomSheetDismissed)
         },
     )
 
@@ -86,26 +86,26 @@ internal fun AddOrEditCategoryScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AddOrEditCategoryScreenBottomSheetType.None -> {
+                EditCategoryScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditCategoryScreenBottomSheetType.SelectEmoji -> {
+                EditCategoryScreenBottomSheetType.SelectEmoji -> {
                     AddOrEditCategorySelectEmojiBottomSheet(
                         searchText = uiState.emojiSearchText,
                         resetBottomSheetType = {
-                            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnBottomSheetDismissed)
+                            handleUIEvent(EditCategoryScreenUIEvent.OnBottomSheetDismissed)
                         },
                         updateEmoji = { updatedEmoji ->
                             handleUIEvent(
-                                AddOrEditCategoryScreenUIEvent.OnEmojiUpdated(
+                                EditCategoryScreenUIEvent.OnEmojiUpdated(
                                     updatedEmoji = updatedEmoji,
                                 )
                             )
                         },
                         updateSearchText = { updatedSearchText ->
                             handleUIEvent(
-                                AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated(
+                                EditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated(
                                     updatedSearchText = updatedSearchText,
                                 )
                             )
@@ -116,11 +116,11 @@ internal fun AddOrEditCategoryScreenUI(
         },
         sheetState = state.modalBottomSheetState,
         sheetShape = when (uiState.screenBottomSheetType) {
-            is AddOrEditCategoryScreenBottomSheetType.None -> {
+            is EditCategoryScreenBottomSheetType.None -> {
                 BottomSheetShape
             }
 
-            is AddOrEditCategoryScreenBottomSheetType.SelectEmoji -> {
+            is EditCategoryScreenBottomSheetType.SelectEmoji -> {
                 BottomSheetExpandedShape
             }
         },
@@ -128,16 +128,16 @@ internal fun AddOrEditCategoryScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvent(AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(EditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
         onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
-        isBackHandlerEnabled = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != EditCategoryScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onNavigationBackButtonClick = {
-            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnNavigationBackButtonClick)
+            handleUIEvent(EditCategoryScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
         Column(
@@ -162,7 +162,7 @@ internal fun AddOrEditCategoryScreenUI(
                     when (event) {
                         is MyRadioGroupEvent.OnSelectionChange -> {
                             handleUIEvent(
-                                AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
+                                EditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
                                     updatedIndex = event.index,
                                 )
                             )
@@ -193,7 +193,7 @@ internal fun AddOrEditCategoryScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is MyEmojiCircleEvent.OnClick -> {
-                                handleUIEvent(AddOrEditCategoryScreenUIEvent.OnEmojiCircleClick)
+                                handleUIEvent(EditCategoryScreenUIEvent.OnEmojiCircleClick)
                             }
                         }
                     },
@@ -246,12 +246,12 @@ internal fun AddOrEditCategoryScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                                handleUIEvent(AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick)
+                                handleUIEvent(EditCategoryScreenUIEvent.OnClearTitleButtonClick)
                             }
 
                             is MyOutlinedTextFieldEvent.OnValueChange -> {
                                 handleUIEvent(
-                                    AddOrEditCategoryScreenUIEvent.OnTitleUpdated(
+                                    EditCategoryScreenUIEvent.OnTitleUpdated(
                                         updatedTitle = event.updatedValue,
                                     )
                                 )
@@ -273,7 +273,7 @@ internal fun AddOrEditCategoryScreenUI(
                 handleEvent = { event ->
                     when (event) {
                         is SaveButtonEvent.OnClick -> {
-                            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnCtaButtonClick)
+                            handleUIEvent(EditCategoryScreenUIEvent.OnCtaButtonClick)
                         }
                     }
                 },

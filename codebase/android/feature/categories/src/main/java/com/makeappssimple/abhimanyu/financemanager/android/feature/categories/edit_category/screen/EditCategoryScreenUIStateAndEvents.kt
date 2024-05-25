@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -17,30 +17,30 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable
-internal class AddOrEditCategoryScreenUIStateAndEvents(
-    val state: AddOrEditCategoryScreenUIState,
-    val events: AddOrEditCategoryScreenUIStateEvents,
+internal class EditCategoryScreenUIStateAndEvents(
+    val state: EditCategoryScreenUIState,
+    val events: EditCategoryScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
 
 @Stable
-internal class AddOrEditCategoryScreenUIStateEvents(
+internal class EditCategoryScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
-    val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (EditCategoryScreenBottomSheetType) -> Unit,
 ) : ScreenUIStateEvents
 
 @Composable
-internal fun rememberAddOrEditCategoryScreenUIStateAndEvents(
-    data: MyResult<AddOrEditCategoryScreenUIData>?,
+internal fun rememberEditCategoryScreenUIStateAndEvents(
+    data: MyResult<EditCategoryScreenUIData>?,
     isEdit: Boolean,
-): AddOrEditCategoryScreenUIStateAndEvents {
-    var screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType by remember {
+): EditCategoryScreenUIStateAndEvents {
+    var screenBottomSheetType: EditCategoryScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AddOrEditCategoryScreenBottomSheetType.None,
+            value = EditCategoryScreenBottomSheetType.None,
         )
     }
     val setScreenBottomSheetType =
-        { updatedAddOrEditCategoryScreenBottomSheetType: AddOrEditCategoryScreenBottomSheetType ->
-            screenBottomSheetType = updatedAddOrEditCategoryScreenBottomSheetType
+        { updatedEditCategoryScreenBottomSheetType: EditCategoryScreenBottomSheetType ->
+            screenBottomSheetType = updatedEditCategoryScreenBottomSheetType
         }
 
     return remember(
@@ -49,7 +49,7 @@ internal fun rememberAddOrEditCategoryScreenUIStateAndEvents(
         screenBottomSheetType,
         setScreenBottomSheetType,
     ) {
-        val unwrappedData: AddOrEditCategoryScreenUIData? = when (data) {
+        val unwrappedData: EditCategoryScreenUIData? = when (data) {
             is MyResult.Success -> {
                 data.data
             }
@@ -60,10 +60,10 @@ internal fun rememberAddOrEditCategoryScreenUIStateAndEvents(
         }
 
         // TODO(Abhi): Can be reordered to match the class ordering
-        AddOrEditCategoryScreenUIStateAndEvents(
-            state = AddOrEditCategoryScreenUIState(
+        EditCategoryScreenUIStateAndEvents(
+            state = EditCategoryScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
-                isBottomSheetVisible = screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
+                isBottomSheetVisible = screenBottomSheetType != EditCategoryScreenBottomSheetType.None,
                 isLoading = unwrappedData.isNull(),
                 isSupportingTextVisible = unwrappedData?.titleTextFieldError?.textStringResourceId.isNotNull(),
                 isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),
@@ -88,10 +88,10 @@ internal fun rememberAddOrEditCategoryScreenUIStateAndEvents(
                     R.string.screen_add_category_floating_action_button_content_description
                 },
             ),
-            events = AddOrEditCategoryScreenUIStateEvents(
+            events = EditCategoryScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddOrEditCategoryScreenBottomSheetType.None)
+                    setScreenBottomSheetType(EditCategoryScreenBottomSheetType.None)
                 },
             ),
         )

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
@@ -7,8 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 
 @Stable
-internal data class AddOrEditCategoryScreenUIState(
-    val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
+internal data class EditCategoryScreenUIState(
+    val screenBottomSheetType: EditCategoryScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,

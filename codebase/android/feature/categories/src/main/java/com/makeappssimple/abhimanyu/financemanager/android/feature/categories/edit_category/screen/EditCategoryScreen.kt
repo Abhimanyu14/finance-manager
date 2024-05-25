@@ -8,16 +8,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUI
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.rememberAddOrEditCategoryScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModel
 
 @Composable
 public fun EditCategoryScreen(
-    screenViewModel: AddOrEditCategoryScreenViewModel = hiltViewModel(),
+    screenViewModel: EditCategoryScreenViewModel = hiltViewModel(),
 ) {
     val viewModel = remember {
         screenViewModel
@@ -27,8 +22,8 @@ public fun EditCategoryScreen(
         message = "Inside EditCategoryScreen",
     )
 
-    val screenUIData: MyResult<AddOrEditCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiStateAndEvents = rememberAddOrEditCategoryScreenUIStateAndEvents(
+    val screenUIData: MyResult<EditCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiStateAndEvents = rememberEditCategoryScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = true,
     )
@@ -36,56 +31,56 @@ public fun EditCategoryScreen(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: AddOrEditCategoryScreenUIEvent ->
+        { uiEvent: EditCategoryScreenUIEvent ->
             when (uiEvent) {
-                is AddOrEditCategoryScreenUIEvent.OnBottomSheetDismissed -> {
+                is EditCategoryScreenUIEvent.OnBottomSheetDismissed -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                     viewModel.updateSearchText(
                         updatedSearchText = "",
                     )
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
+                is EditCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnCtaButtonClick -> {
+                is EditCategoryScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateCategory()
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
+                is EditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
                     viewModel.clearTitle()
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnEmojiCircleClick -> {
+                is EditCategoryScreenUIEvent.OnEmojiCircleClick -> {
                     uiStateAndEvents.events.setScreenBottomSheetType(
-                        AddOrEditCategoryScreenBottomSheetType.SelectEmoji
+                        EditCategoryScreenBottomSheetType.SelectEmoji
                     )
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                is EditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnEmojiUpdated -> {
+                is EditCategoryScreenUIEvent.OnEmojiUpdated -> {
                     viewModel.updateEmoji(
                         updatedEmoji = uiEvent.updatedEmoji,
                     )
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
+                is EditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
                     viewModel.updateSearchText(
                         updatedSearchText = uiEvent.updatedSearchText,
                     )
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
+                is EditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
                     viewModel.updateSelectedTransactionTypeIndex(
                         updatedIndex = uiEvent.updatedIndex,
                     )
                 }
 
-                is AddOrEditCategoryScreenUIEvent.OnTitleUpdated -> {
+                is EditCategoryScreenUIEvent.OnTitleUpdated -> {
                     viewModel.updateTitle(
                         updatedTitle = uiEvent.updatedTitle,
                     )
@@ -100,7 +95,7 @@ public fun EditCategoryScreen(
         viewModel.initViewModel()
     }
 
-    AddOrEditCategoryScreenUI(
+    EditCategoryScreenUI(
         uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )

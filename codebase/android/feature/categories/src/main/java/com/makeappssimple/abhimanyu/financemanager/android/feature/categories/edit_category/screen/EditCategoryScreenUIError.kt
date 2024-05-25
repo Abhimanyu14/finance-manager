@@ -1,9 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen
 
 import androidx.annotation.StringRes
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
-public enum class AddOrEditCategoryScreenUIError(
+public enum class EditCategoryScreenUIError(
     @StringRes public val textStringResourceId: Int,
 ) {
     CATEGORY_EXISTS(

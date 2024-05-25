@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel
 
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -24,9 +24,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIError
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddOrEditCategoryScreenArgs
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen.EditCategoryScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen.EditCategoryScreenUIError
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.EditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-public class AddOrEditCategoryScreenViewModel @Inject constructor(
+public class EditCategoryScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -47,7 +47,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : ScreenViewModel, ViewModel() {
-    private val screenArgs = AddOrEditCategoryScreenArgs(
+    private val screenArgs = EditCategoryScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
@@ -63,7 +63,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(),
     )
-    private val titleTextFieldError: MutableStateFlow<AddOrEditCategoryScreenUIError?> =
+    private val titleTextFieldError: MutableStateFlow<EditCategoryScreenUIError?> =
         MutableStateFlow(
             value = null,
         )
@@ -96,7 +96,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         )
     }
 
-    public val screenUIData: StateFlow<MyResult<AddOrEditCategoryScreenUIData>?> = combine(
+    public val screenUIData: StateFlow<MyResult<EditCategoryScreenUIData>?> = combine(
         selectedTransactionTypeIndex,
         emoji,
         searchText,
@@ -122,7 +122,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             MyResult.Loading
         } else {
             MyResult.Success(
-                data = AddOrEditCategoryScreenUIData(
+                data = EditCategoryScreenUIData(
                     isCtaButtonEnabled = isValidCategoryData,
                     selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                     validTransactionTypes = transactionTypes,
@@ -282,7 +282,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             )
         ) {
             titleTextFieldError.update {
-                AddOrEditCategoryScreenUIError.CATEGORY_EXISTS
+                EditCategoryScreenUIError.CATEGORY_EXISTS
             }
             return false
         }
@@ -292,7 +292,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             )
         ) {
             titleTextFieldError.update {
-                AddOrEditCategoryScreenUIError.CATEGORY_EXISTS
+                EditCategoryScreenUIError.CATEGORY_EXISTS
             }
             return false
         }
@@ -302,7 +302,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
             )
         ) {
             titleTextFieldError.update {
-                AddOrEditCategoryScreenUIError.CATEGORY_EXISTS
+                EditCategoryScreenUIError.CATEGORY_EXISTS
             }
             return false
         }
@@ -313,7 +313,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
                 )
             }.isNotNull())) {
             titleTextFieldError.update {
-                AddOrEditCategoryScreenUIError.CATEGORY_EXISTS
+                EditCategoryScreenUIError.CATEGORY_EXISTS
             }
             false
         } else {
