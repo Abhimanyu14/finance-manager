@@ -1,9 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen
 
 import androidx.annotation.StringRes
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
-public enum class AddOrEditTransactionForScreenUIError(
+public enum class EditTransactionForScreenUIError(
     @StringRes public val textStringResourceId: Int,
 ) {
     EXISTS(

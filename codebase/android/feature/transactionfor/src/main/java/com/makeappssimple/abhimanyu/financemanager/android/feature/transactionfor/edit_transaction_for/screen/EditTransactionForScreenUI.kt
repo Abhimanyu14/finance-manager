@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,10 +42,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import kotlinx.coroutines.delay
 
 @Composable
-internal fun AddOrEditTransactionForScreenUI(
-    uiState: AddOrEditTransactionForScreenUIState,
+internal fun EditTransactionForScreenUI(
+    uiState: EditTransactionForScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvent: (uiEvent: AddOrEditTransactionForScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: EditTransactionForScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -63,7 +63,7 @@ internal fun AddOrEditTransactionForScreenUI(
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
         resetBottomSheetType = {
-            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnBottomSheetDismissed)
+            handleUIEvent(EditTransactionForScreenUIEvent.OnBottomSheetDismissed)
         },
     )
 
@@ -75,15 +75,15 @@ internal fun AddOrEditTransactionForScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                is AddOrEditTransactionForScreenBottomSheetType.Delete -> {
+                is EditTransactionForScreenBottomSheetType.Delete -> {
                     VerticalSpacer()
                 }
 
-                is AddOrEditTransactionForScreenBottomSheetType.Edit -> {
+                is EditTransactionForScreenBottomSheetType.Edit -> {
                     VerticalSpacer()
                 }
 
-                is AddOrEditTransactionForScreenBottomSheetType.None -> {
+                is EditTransactionForScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }
@@ -93,16 +93,16 @@ internal fun AddOrEditTransactionForScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
         onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
-        isBackHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onNavigationBackButtonClick = {
-            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnNavigationBackButtonClick)
+            handleUIEvent(EditTransactionForScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
         Column(
@@ -140,7 +140,7 @@ internal fun AddOrEditTransactionForScreenUI(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             state.focusManager.clearFocus()
-                            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
+                            handleUIEvent(EditTransactionForScreenUIEvent.OnCtaButtonClick)
                         },
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -151,12 +151,12 @@ internal fun AddOrEditTransactionForScreenUI(
                 handleEvent = { event ->
                     when (event) {
                         is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick)
+                            handleUIEvent(EditTransactionForScreenUIEvent.OnClearTitleButtonClick)
                         }
 
                         is MyOutlinedTextFieldEvent.OnValueChange -> {
                             handleUIEvent(
-                                AddOrEditTransactionForScreenUIEvent.OnTitleUpdated(
+                                EditTransactionForScreenUIEvent.OnTitleUpdated(
                                     updatedTitle = event.updatedValue,
                                 )
                             )
@@ -182,7 +182,7 @@ internal fun AddOrEditTransactionForScreenUI(
                 handleEvent = { event ->
                     when (event) {
                         is SaveButtonEvent.OnClick -> {
-                            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
+                            handleUIEvent(EditTransactionForScreenUIEvent.OnCtaButtonClick)
                         }
                     }
                 },

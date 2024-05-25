@@ -8,15 +8,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUI
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.rememberAddOrEditTransactionForScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel.AddOrEditTransactionForScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.viewmodel.EditTransactionForScreenViewModel
 
 @Composable
 public fun EditTransactionForScreen(
-    screenViewModel: AddOrEditTransactionForScreenViewModel = hiltViewModel(),
+    screenViewModel: EditTransactionForScreenViewModel = hiltViewModel(),
 ) {
     val viewModel = remember {
         screenViewModel
@@ -26,8 +22,8 @@ public fun EditTransactionForScreen(
         message = "Inside EditTransactionForScreen",
     )
 
-    val screenUIData: MyResult<AddOrEditTransactionForScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiStateAndEvents = rememberAddOrEditTransactionForScreenUIStateAndEvents(
+    val screenUIData: MyResult<EditTransactionForScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiStateAndEvents = rememberEditTransactionForScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = true,
     )
@@ -35,29 +31,29 @@ public fun EditTransactionForScreen(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: AddOrEditTransactionForScreenUIEvent ->
+        { uiEvent: EditTransactionForScreenUIEvent ->
             when (uiEvent) {
-                is AddOrEditTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
+                is EditTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
+                is EditTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick -> {
+                is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateTransactionFor()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
+                is EditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
                     viewModel.clearTitle()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                is EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }
 
-                is AddOrEditTransactionForScreenUIEvent.OnTitleUpdated -> {
+                is EditTransactionForScreenUIEvent.OnTitleUpdated -> {
                     viewModel.updateTitle(
                         updatedTitle = uiEvent.updatedTitle,
                     )
@@ -72,7 +68,7 @@ public fun EditTransactionForScreen(
         viewModel.initViewModel()
     }
 
-    AddOrEditTransactionForScreenUI(
+    EditTransactionForScreenUI(
         uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )

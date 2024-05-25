@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
@@ -6,8 +6,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-internal data class AddOrEditTransactionForScreenUIState(
-    val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
+internal data class EditTransactionForScreenUIState(
+    val screenBottomSheetType: EditTransactionForScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean?,
     val isLoading: Boolean,

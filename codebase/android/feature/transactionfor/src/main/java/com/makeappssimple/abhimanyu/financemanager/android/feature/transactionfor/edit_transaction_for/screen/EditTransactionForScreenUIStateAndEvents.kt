@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -13,29 +13,29 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 @Stable
-internal class AddOrEditTransactionForScreenUIStateAndEvents(
-    val state: AddOrEditTransactionForScreenUIState,
-    val events: AddOrEditTransactionForScreenUIStateEvents,
+internal class EditTransactionForScreenUIStateAndEvents(
+    val state: EditTransactionForScreenUIState,
+    val events: EditTransactionForScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
 
 @Stable
-internal class AddOrEditTransactionForScreenUIStateEvents(
+internal class EditTransactionForScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIStateEvents
 
 @Composable
-internal fun rememberAddOrEditTransactionForScreenUIStateAndEvents(
-    data: MyResult<AddOrEditTransactionForScreenUIData>?,
+internal fun rememberEditTransactionForScreenUIStateAndEvents(
+    data: MyResult<EditTransactionForScreenUIData>?,
     isEdit: Boolean,
-): AddOrEditTransactionForScreenUIStateAndEvents {
-    var screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType by remember {
+): EditTransactionForScreenUIStateAndEvents {
+    var screenBottomSheetType: EditTransactionForScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AddOrEditTransactionForScreenBottomSheetType.None,
+            value = EditTransactionForScreenBottomSheetType.None,
         )
     }
     val setScreenBottomSheetType =
-        { updatedAddOrEditTransactionForScreenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType ->
-            screenBottomSheetType = updatedAddOrEditTransactionForScreenBottomSheetType
+        { updatedEditTransactionForScreenBottomSheetType: EditTransactionForScreenBottomSheetType ->
+            screenBottomSheetType = updatedEditTransactionForScreenBottomSheetType
         }
 
     return remember(
@@ -43,7 +43,7 @@ internal fun rememberAddOrEditTransactionForScreenUIStateAndEvents(
         isEdit,
         screenBottomSheetType,
     ) {
-        val unwrappedData: AddOrEditTransactionForScreenUIData? = when (data) {
+        val unwrappedData: EditTransactionForScreenUIData? = when (data) {
             is MyResult.Success -> {
                 data.data
             }
@@ -54,10 +54,10 @@ internal fun rememberAddOrEditTransactionForScreenUIStateAndEvents(
         }
 
         // TODO(Abhi): Can be reordered to match the class ordering
-        AddOrEditTransactionForScreenUIStateAndEvents(
-            state = AddOrEditTransactionForScreenUIState(
+        EditTransactionForScreenUIStateAndEvents(
+            state = EditTransactionForScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
-                isBottomSheetVisible = screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
+                isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
                 isLoading = unwrappedData.isNull(),
                 isCtaButtonEnabled = unwrappedData?.isValidTransactionForData,
                 appBarTitleTextStringResourceId = if (isEdit) {
@@ -73,9 +73,9 @@ internal fun rememberAddOrEditTransactionForScreenUIStateAndEvents(
                 title = unwrappedData?.title,
                 titleTextFieldErrorTextStringResourceId = unwrappedData?.titleTextFieldError?.textStringResourceId,
             ),
-            events = AddOrEditTransactionForScreenUIStateEvents(
+            events = EditTransactionForScreenUIStateEvents(
                 resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.None)
+                    setScreenBottomSheetType(EditTransactionForScreenBottomSheetType.None)
                 },
             ),
         )

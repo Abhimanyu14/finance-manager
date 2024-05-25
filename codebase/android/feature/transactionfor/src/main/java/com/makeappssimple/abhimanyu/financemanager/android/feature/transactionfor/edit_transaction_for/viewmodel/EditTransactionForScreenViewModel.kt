@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.viewmodel
 
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -18,9 +18,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIError
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.AddOrEditTransactionForScreenArgs
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen.EditTransactionForScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen.EditTransactionForScreenUIError
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.EditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-public class AddOrEditTransactionForScreenViewModel @Inject constructor(
+public class EditTransactionForScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
@@ -39,7 +39,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : ScreenViewModel, ViewModel() {
-    private val screenArgs = AddOrEditTransactionForScreenArgs(
+    private val screenArgs = EditTransactionForScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
@@ -63,12 +63,12 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
             transactionFor = transactionFor,
         )
     }
-    private val titleTextFieldError: MutableStateFlow<AddOrEditTransactionForScreenUIError?> =
+    private val titleTextFieldError: MutableStateFlow<EditTransactionForScreenUIError?> =
         MutableStateFlow(
             value = null,
         )
 
-    public val screenUIData: StateFlow<MyResult<AddOrEditTransactionForScreenUIData>?> = combine(
+    public val screenUIData: StateFlow<MyResult<EditTransactionForScreenUIData>?> = combine(
         title,
         isValidTransactionForData,
         titleTextFieldError,
@@ -81,7 +81,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
             MyResult.Loading
         } else {
             MyResult.Success(
-                data = AddOrEditTransactionForScreenUIData(
+                data = EditTransactionForScreenUIData(
                     isValidTransactionForData = isValidTransactionForData,
                     title = title,
                     titleTextFieldError = titleTextFieldError,
@@ -187,7 +187,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
             }.isNotNull()
         ) {
             titleTextFieldError.update {
-                AddOrEditTransactionForScreenUIError.EXISTS
+                EditTransactionForScreenUIError.EXISTS
             }
             false
         } else {
