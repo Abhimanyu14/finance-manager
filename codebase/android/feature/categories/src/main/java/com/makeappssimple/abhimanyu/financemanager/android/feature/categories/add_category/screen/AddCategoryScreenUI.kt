@@ -33,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.rememberCommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.AddOrEditCategorySelectEmojiBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.AddCategorySelectEmojiBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
@@ -91,7 +91,7 @@ internal fun AddCategoryScreenUI(
                 }
 
                 AddCategoryScreenBottomSheetType.SelectEmoji -> {
-                    AddOrEditCategorySelectEmojiBottomSheet(
+                    AddCategorySelectEmojiBottomSheet(
                         searchText = uiState.emojiSearchText,
                         resetBottomSheetType = {
                             handleUIEvent(AddCategoryScreenUIEvent.OnBottomSheetDismissed)

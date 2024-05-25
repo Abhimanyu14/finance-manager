@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.composeemojipicker.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 
 @Composable
-public fun AddOrEditCategorySelectEmojiBottomSheet(
+public fun AddCategorySelectEmojiBottomSheet(
     searchText: String,
     resetBottomSheetType: () -> Unit,
     updateEmoji: (updatedEmoji: String) -> Unit,
