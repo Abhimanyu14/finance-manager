@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
@@ -21,11 +18,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.ViewTransactionScreenArgs
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen.ViewTransactionScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
@@ -43,44 +37,18 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
-    private var originalTransactionListItemData: MutableStateFlow<TransactionListItemData?> =
+    public var originalTransactionListItemData: MutableStateFlow<TransactionListItemData?> =
         MutableStateFlow(
             value = null,
         )
-    private var refundTransactionListItemData: MutableStateFlow<List<TransactionListItemData>> =
+    public var refundTransactionListItemData: MutableStateFlow<List<TransactionListItemData>> =
         MutableStateFlow(
             value = emptyList(),
         )
-    private var transactionListItemData: MutableStateFlow<TransactionListItemData?> =
+    public var transactionListItemData: MutableStateFlow<TransactionListItemData?> =
         MutableStateFlow(
             value = null,
         )
-
-    public val screenUIData: StateFlow<MyResult<ViewTransactionScreenUIData>?> = combine(
-        originalTransactionListItemData,
-        refundTransactionListItemData,
-        transactionListItemData,
-    ) {
-            originalTransactionListItemData,
-            refundTransactionListItemData,
-            transactionListItemData,
-        ->
-        if (
-            transactionListItemData.isNull()
-        ) {
-            MyResult.Loading
-        } else {
-            MyResult.Success(
-                data = ViewTransactionScreenUIData(
-                    originalTransactionListItemData = originalTransactionListItemData,
-                    refundTransactionListItemData = refundTransactionListItemData,
-                    transactionListItemData = transactionListItemData,
-                ),
-            )
-        }
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
-    )
 
     public fun initViewModel() {
         fetchData()

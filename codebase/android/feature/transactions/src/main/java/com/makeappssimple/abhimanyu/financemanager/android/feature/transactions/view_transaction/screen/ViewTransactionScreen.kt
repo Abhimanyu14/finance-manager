@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
 
 @Composable
@@ -22,9 +22,16 @@ public fun ViewTransactionScreen(
         message = "Inside ViewTransactionScreen",
     )
 
-    val screenUIData: MyResult<ViewTransactionScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val originalTransactionListItemData: TransactionListItemData? by viewModel.originalTransactionListItemData.collectAsStateWithLifecycle()
+    val refundTransactionListItemData: List<TransactionListItemData> by viewModel.refundTransactionListItemData.collectAsStateWithLifecycle()
+    val transactionListItemData: TransactionListItemData? by viewModel.transactionListItemData.collectAsStateWithLifecycle()
+    // endregion
+
     val uiStateAndEvents = rememberViewTransactionScreenUIStateAndEvents(
-        data = screenUIData,
+        originalTransactionListItemData = originalTransactionListItemData,
+        refundTransactionListItemData = refundTransactionListItemData,
+        transactionListItemData = transactionListItemData,
     )
     val handleUIEvent = remember(
         key1 = viewModel,

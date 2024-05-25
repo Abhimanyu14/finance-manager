@@ -6,9 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 
 @Stable
 internal class ViewTransactionScreenUIStateAndEvents(
@@ -25,8 +25,11 @@ internal class ViewTransactionScreenUIStateEvents(
 
 @Composable
 internal fun rememberViewTransactionScreenUIStateAndEvents(
-    data: MyResult<ViewTransactionScreenUIData>?,
+    originalTransactionListItemData: TransactionListItemData?,
+    refundTransactionListItemData: List<TransactionListItemData>,
+    transactionListItemData: TransactionListItemData?,
 ): ViewTransactionScreenUIStateAndEvents {
+    // region transaction id to delete
     var transactionIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
@@ -35,6 +38,9 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
     val setTransactionIdToDelete = { updatedTransactionIdToDelete: Int? ->
         transactionIdToDelete = updatedTransactionIdToDelete
     }
+    // endregion
+
+    // region
     var screenBottomSheetType: ViewTransactionScreenBottomSheetType by remember {
         mutableStateOf(
             value = ViewTransactionScreenBottomSheetType.None,
@@ -46,30 +52,21 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
         }
 
     return remember(
-        data,
         transactionIdToDelete,
         screenBottomSheetType,
         setTransactionIdToDelete,
         setScreenBottomSheetType,
+        originalTransactionListItemData,
+        refundTransactionListItemData,
+        transactionListItemData,
     ) {
-        val unwrappedData: ViewTransactionScreenUIData? = when (data) {
-            is MyResult.Success -> {
-                data.data
-            }
-
-            else -> {
-                null
-            }
-        }
-
-        // TODO(Abhi): Can be reordered to match the class ordering
         ViewTransactionScreenUIStateAndEvents(
             state = ViewTransactionScreenUIState(
                 isBottomSheetVisible = screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
                 transactionIdToDelete = transactionIdToDelete,
-                refundTransactionListItemData = unwrappedData?.refundTransactionListItemData,
-                originalTransactionListItemData = unwrappedData?.originalTransactionListItemData,
-                transactionListItemData = unwrappedData?.transactionListItemData,
+                refundTransactionListItemData = refundTransactionListItemData,
+                originalTransactionListItemData = originalTransactionListItemData,
+                transactionListItemData = transactionListItemData,
                 screenBottomSheetType = screenBottomSheetType,
             ),
             events = ViewTransactionScreenUIStateEvents(
