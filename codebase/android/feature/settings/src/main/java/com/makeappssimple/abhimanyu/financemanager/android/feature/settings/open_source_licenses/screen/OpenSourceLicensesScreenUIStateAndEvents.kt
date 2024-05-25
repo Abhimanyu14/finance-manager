@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
@@ -23,8 +22,8 @@ internal class OpenSourceLicensesScreenUIStateEvents(
 
 @Composable
 internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(
-    data: MyResult<OpenSourceLicensesScreenUIData>?,
 ): OpenSourceLicensesScreenUIStateAndEvents {
+    // region screen bottom sheet type
     var screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType by remember {
         mutableStateOf(
             value = OpenSourceLicensesScreenBottomSheetType.None,
@@ -34,9 +33,9 @@ internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(
         { updatedOpenSourceLicensesScreenBottomSheetType: OpenSourceLicensesScreenBottomSheetType ->
             screenBottomSheetType = updatedOpenSourceLicensesScreenBottomSheetType
         }
+    // endregion
 
     return remember(
-        data,
         screenBottomSheetType,
         setScreenBottomSheetType,
     ) {
