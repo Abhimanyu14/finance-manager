@@ -108,18 +108,6 @@ public class AddTransactionForScreenViewModel @Inject constructor(
         }
     }
 
-    public fun updateTransactionFor() {
-        val updatedTransactionFor = transactionFor.value?.copy(
-            title = title.value.text,
-        ) ?: return
-        viewModelScope.launch {
-            updateTransactionForValuesUseCase(
-                updatedTransactionFor,
-            )
-            navigator.navigateUp()
-        }
-    }
-
     public fun clearTitle() {
         updateTitle(
             updatedTitle = title.value.copy(

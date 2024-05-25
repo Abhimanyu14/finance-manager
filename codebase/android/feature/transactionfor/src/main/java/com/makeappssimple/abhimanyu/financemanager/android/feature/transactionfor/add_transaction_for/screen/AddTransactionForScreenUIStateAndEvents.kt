@@ -26,7 +26,6 @@ internal class AddTransactionForScreenUIStateEvents(
 @Composable
 internal fun rememberAddTransactionForScreenUIStateAndEvents(
     data: MyResult<AddTransactionForScreenUIData>?,
-    isEdit: Boolean,
 ): AddTransactionForScreenUIStateAndEvents {
     var screenBottomSheetType: AddTransactionForScreenBottomSheetType by remember {
         mutableStateOf(
@@ -40,7 +39,6 @@ internal fun rememberAddTransactionForScreenUIStateAndEvents(
 
     return remember(
         data,
-        isEdit,
         screenBottomSheetType,
     ) {
         val unwrappedData: AddTransactionForScreenUIData? = when (data) {
@@ -60,16 +58,8 @@ internal fun rememberAddTransactionForScreenUIStateAndEvents(
                 isBottomSheetVisible = screenBottomSheetType != AddTransactionForScreenBottomSheetType.None,
                 isLoading = unwrappedData.isNull(),
                 isCtaButtonEnabled = unwrappedData?.isValidTransactionForData,
-                appBarTitleTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_transaction_for_appbar_title
-                } else {
-                    R.string.screen_add_transaction_for_appbar_title
-                },
-                ctaButtonLabelTextStringResourceId = if (isEdit) {
-                    R.string.screen_edit_transaction_for_floating_action_button_content_description
-                } else {
-                    R.string.screen_add_transaction_for_floating_action_button_content_description
-                },
+                appBarTitleTextStringResourceId = R.string.screen_add_transaction_for_appbar_title,
+                ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_for_floating_action_button_content_description,
                 title = unwrappedData?.title,
                 titleTextFieldErrorTextStringResourceId = unwrappedData?.titleTextFieldError?.textStringResourceId,
             ),

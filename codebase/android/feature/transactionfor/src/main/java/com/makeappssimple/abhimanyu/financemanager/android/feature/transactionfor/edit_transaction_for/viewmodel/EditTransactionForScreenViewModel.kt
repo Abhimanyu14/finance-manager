@@ -97,17 +97,6 @@ public class EditTransactionForScreenViewModel @Inject constructor(
         getOriginalTransactionFor()
     }
 
-    public fun insertTransactionFor() {
-        viewModelScope.launch {
-            insertTransactionForUseCase(
-                TransactionFor(
-                    title = title.value.text,
-                )
-            )
-            navigator.navigateUp()
-        }
-    }
-
     public fun updateTransactionFor() {
         val updatedTransactionFor = transactionFor.value?.copy(
             title = title.value.text,
