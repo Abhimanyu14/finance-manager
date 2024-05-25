@@ -9,9 +9,10 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
 
 @Composable
@@ -36,9 +37,30 @@ public fun HomeScreen(
             }
         }
 
-    val screenUIData: MyResult<HomeScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val overviewCardData: OverviewCardViewModelData? by viewModel.overviewCardData.collectAsStateWithLifecycle()
+    val homeListItemViewData: List<TransactionListItemData> by viewModel.homeListItemViewData.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
+    )
+    val isBackupCardVisible: Boolean by viewModel.isBackupCardVisible.collectAsStateWithLifecycle(
+        initialValue = false,
+    )
+    val overviewTabSelectionIndex: Int by viewModel.overviewTabSelectionIndex.collectAsStateWithLifecycle()
+    val accountsTotalBalanceAmountValue: Long by viewModel.accountsTotalBalanceAmountValue.collectAsStateWithLifecycle(
+        initialValue = 0L,
+    )
+    val accountsTotalMinimumBalanceAmountValue: Long by viewModel.accountsTotalMinimumBalanceAmountValue.collectAsStateWithLifecycle(
+        initialValue = 0L,
+    )
+    // endregion
+
     val uiStateAndEvents = rememberHomeScreenUIStateAndEvents(
-        data = screenUIData,
+        overviewCardData = overviewCardData,
+        homeListItemViewData = homeListItemViewData,
+        isBackupCardVisible = isBackupCardVisible,
+        overviewTabSelectionIndex = overviewTabSelectionIndex,
+        accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
+        accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue,
     )
     val handleUIEvent = remember(
         key1 = viewModel,

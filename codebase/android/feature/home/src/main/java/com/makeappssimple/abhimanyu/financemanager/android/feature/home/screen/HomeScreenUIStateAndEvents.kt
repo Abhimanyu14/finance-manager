@@ -8,15 +8,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toNonSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
 
 @Stable
@@ -33,13 +33,22 @@ internal class HomeScreenUIStateEvents(
 
 @Composable
 internal fun rememberHomeScreenUIStateAndEvents(
-    data: MyResult<HomeScreenUIData>?,
+    overviewCardData: OverviewCardViewModelData?,
+    homeListItemViewData: List<TransactionListItemData>,
+    isBackupCardVisible: Boolean,
+    overviewTabSelectionIndex: Int,
+    accountsTotalBalanceAmountValue: Long,
+    accountsTotalMinimumBalanceAmountValue: Long,
 ): HomeScreenUIStateAndEvents {
+    // region is balance visible
     val (isBalanceVisible: Boolean, setBalanceVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(
             value = false,
         )
     }
+    // endregion
+
+    // region bottom sheet type
     var screenBottomSheetType: HomeScreenBottomSheetType by remember {
         mutableStateOf(
             value = HomeScreenBottomSheetType.None,
@@ -49,53 +58,44 @@ internal fun rememberHomeScreenUIStateAndEvents(
         { updatedHomeScreenBottomSheetType: HomeScreenBottomSheetType ->
             screenBottomSheetType = updatedHomeScreenBottomSheetType
         }
+    // endregion
 
     return remember(
-        data,
         isBalanceVisible,
         screenBottomSheetType,
         setBalanceVisible,
         setScreenBottomSheetType,
     ) {
-        val unwrappedData: HomeScreenUIData? = when (data) {
-            is MyResult.Success -> {
-                data.data
-            }
-
-            else -> {
-                null
-            }
-        }
         val totalIncomeAmount = Amount(
-            value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
+            value = overviewCardData?.income?.toLong().orZero(),
         )
         val totalExpenseAmount = Amount(
-            value = unwrappedData?.overviewCardData?.expense?.toLong().orZero(),
+            value = overviewCardData?.expense?.toLong().orZero(),
         )
 
         // TODO(Abhi): Can be reordered to match the class ordering
         HomeScreenUIStateAndEvents(
             HomeScreenUIState(
-                isBackupCardVisible = unwrappedData?.isBackupCardVisible.orFalse(),
+                isBackupCardVisible = isBackupCardVisible.orFalse(),
                 isBalanceVisible = isBalanceVisible,
-                isLoading = unwrappedData.isNull(),
-                isRecentTransactionsTrailingTextVisible = unwrappedData?.transactionListItemDataList.orEmpty()
+                isLoading = false,
+                isRecentTransactionsTrailingTextVisible = homeListItemViewData
                     .isNotEmpty(),
                 screenBottomSheetType = screenBottomSheetType,
-                overviewTabSelectionIndex = unwrappedData?.overviewTabSelectionIndex.orZero(),
-                transactionListItemDataList = unwrappedData?.transactionListItemDataList.orEmpty(),
-                accountsTotalBalanceAmountValue = unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
-                accountsTotalMinimumBalanceAmountValue = unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
-                overviewCardData = unwrappedData?.overviewCardData.orDefault(),
+                overviewTabSelectionIndex = overviewTabSelectionIndex.orZero(),
+                transactionListItemDataList = homeListItemViewData,
+                accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
+                accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
+                overviewCardData = overviewCardData.orDefault(),
                 pieChartData = PieChartData(
                     items = listOf(
                         PieChartItemData(
-                            value = unwrappedData?.overviewCardData?.income.orZero(),
+                            value = overviewCardData?.income.orZero(),
                             text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources
                             color = MyColor.TERTIARY,
                         ),
                         PieChartItemData(
-                            value = unwrappedData?.overviewCardData?.expense.orZero(),
+                            value = overviewCardData?.expense.orZero(),
                             text = "Expense : ${totalExpenseAmount.toNonSignedString()}", // TODO(Abhi): Move to string resources
                             color = MyColor.ERROR,
                         ),

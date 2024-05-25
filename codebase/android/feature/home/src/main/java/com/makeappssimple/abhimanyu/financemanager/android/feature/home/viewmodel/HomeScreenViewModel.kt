@@ -5,12 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
@@ -29,7 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,11 +53,11 @@ public class HomeScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val homeListItemViewData: Flow<List<TransactionListItemData>> =
+    public val homeListItemViewData: Flow<List<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
-    private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
+    public val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
 
-    private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
+    public val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = HomeScreenViewModelConstant.DEFAULT_OVERVIEW_TAB_SELECTION,
     )
 
@@ -69,7 +65,7 @@ public class HomeScreenViewModel @Inject constructor(
         value = dateTimeUtil.getCurrentTimeMillis(),
     )
 
-    private val overviewCardData: StateFlow<OverviewCardViewModelData?> = combine(
+    public val overviewCardData: StateFlow<OverviewCardViewModelData?> = combine(
         flow = overviewTabSelectionIndex,
         flow2 = timestamp,
     ) { overviewTabSelectionIndex, timestamp ->
@@ -167,50 +163,10 @@ public class HomeScreenViewModel @Inject constructor(
         scope = viewModelScope,
     )
 
-    private val accountsTotalBalanceAmountValue: Flow<Long> =
+    public val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
-    private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
+    public val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
-
-    public val screenUIData: StateFlow<MyResult<HomeScreenUIData>?> = combine(
-        isBackupCardVisible,
-        homeListItemViewData,
-        overviewTabSelectionIndex,
-        overviewCardData,
-        accountsTotalBalanceAmountValue,
-        accountsTotalMinimumBalanceAmountValue,
-    ) {
-            isBackupCardVisible,
-            homeListItemViewData,
-            overviewTabSelectionIndex,
-            overviewCardData,
-            accountsTotalBalanceAmountValue,
-            accountsTotalMinimumBalanceAmountValue,
-        ->
-
-        if (
-            isBackupCardVisible.isNull() ||
-            homeListItemViewData.isNull() ||
-            overviewTabSelectionIndex.isNull() ||
-            accountsTotalBalanceAmountValue.isNull() ||
-            accountsTotalMinimumBalanceAmountValue.isNull()
-        ) {
-            MyResult.Loading
-        } else {
-            MyResult.Success(
-                data = HomeScreenUIData(
-                    isBackupCardVisible = isBackupCardVisible,
-                    overviewTabSelectionIndex = overviewTabSelectionIndex,
-                    transactionListItemDataList = homeListItemViewData,
-                    accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
-                    accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue,
-                    overviewCardData = overviewCardData,
-                ),
-            )
-        }
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
-    )
 
     public fun backupDataToDocument(
         uri: Uri,
