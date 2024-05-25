@@ -6,9 +6,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun AddCategoryScreen(
@@ -22,9 +24,15 @@ public fun AddCategoryScreen(
         message = "Inside AddCategoryScreen",
     )
 
-    val screenUIData: MyResult<AddCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val categories: ImmutableList<Category> by viewModel.categories.collectAsStateWithLifecycle()
+    val validTransactionTypes: ImmutableList<TransactionType> = viewModel.validTransactionTypes
+    val originalTransactionType: String? = viewModel.originalTransactionType
+    // endregion
+
     val uiStateAndEvents = rememberAddCategoryScreenUIStateAndEvents(
-        data = screenUIData,
+        categories = categories,
+        validTransactionTypes = validTransactionTypes,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -34,9 +42,7 @@ public fun AddCategoryScreen(
             when (uiEvent) {
                 is AddCategoryScreenUIEvent.OnBottomSheetDismissed -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
-                    viewModel.updateSearchText(
-                        updatedSearchText = "",
-                    )
+                    uiStateAndEvents.events.setSearchText("")
                 }
 
                 is AddCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
@@ -44,11 +50,21 @@ public fun AddCategoryScreen(
                 }
 
                 is AddCategoryScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.insertCategory()
+                    uiStateAndEvents.state.selectedTransactionTypeIndex?.let { selectedTransactionTypeIndex ->
+                        val transactionType = validTransactionTypes[selectedTransactionTypeIndex]
+                        viewModel.insertCategory(
+                            category = Category(
+                                emoji = uiStateAndEvents.state.emoji,
+                                title = uiStateAndEvents.state.title.text,
+                                transactionType = transactionType,
+                            ),
+                        )
+                    }
+                    Unit
                 }
 
                 is AddCategoryScreenUIEvent.OnClearTitleButtonClick -> {
-                    viewModel.clearTitle()
+                    uiStateAndEvents.events.clearTitle()
                 }
 
                 is AddCategoryScreenUIEvent.OnEmojiCircleClick -> {
@@ -62,27 +78,19 @@ public fun AddCategoryScreen(
                 }
 
                 is AddCategoryScreenUIEvent.OnEmojiUpdated -> {
-                    viewModel.updateEmoji(
-                        updatedEmoji = uiEvent.updatedEmoji,
-                    )
+                    uiStateAndEvents.events.setEmoji(uiEvent.updatedEmoji)
                 }
 
                 is AddCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                    viewModel.updateSearchText(
-                        updatedSearchText = uiEvent.updatedSearchText,
-                    )
+                    uiStateAndEvents.events.setSearchText(uiEvent.updatedSearchText)
                 }
 
                 is AddCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                    viewModel.updateSelectedTransactionTypeIndex(
-                        updatedIndex = uiEvent.updatedIndex,
-                    )
+                    uiStateAndEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
                 }
 
                 is AddCategoryScreenUIEvent.OnTitleUpdated -> {
-                    viewModel.updateTitle(
-                        updatedTitle = uiEvent.updatedTitle,
-                    )
+                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
                 }
             }
         }
@@ -92,6 +100,15 @@ public fun AddCategoryScreen(
         key1 = Unit,
     ) {
         viewModel.initViewModel()
+        originalTransactionType?.let { originalTransactionType ->
+            uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+                validTransactionTypes.indexOf(
+                    element = TransactionType.entries.find { transactionType ->
+                        transactionType.title == originalTransactionType
+                    },
+                )
+            )
+        }
     }
 
     AddCategoryScreenUI(
