@@ -95,11 +95,6 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         }
     // endregion
 
-    val isLoading by remember {
-        derivedStateOf {
-            accounts.isEmpty()
-        }
-    }
     val isValidData: Boolean = remember(
         key1 = name,
     ) {
@@ -141,16 +136,17 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         nameTextFieldFocusRequester,
         minimumAccountBalanceAmountValue,
         setMinimumAccountBalanceAmountValue,
-        isLoading,
         isValidData,
         nameTextFieldErrorTextStringResourceId,
         selectedAccountType,
+        accounts,
+        validAccountTypes,
     ) {
         AddAccountScreenUIStateAndEvents(
             state = AddAccountScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 nameTextFieldFocusRequester = nameTextFieldFocusRequester,
-                isLoading = isLoading,
+                isLoading = false,
                 isCtaButtonEnabled = isValidData,
                 appBarTitleTextStringResourceId = R.string.screen_add_account_appbar_title,
                 ctaButtonLabelTextStringResourceId = R.string.screen_add_account_floating_action_button_content_description,

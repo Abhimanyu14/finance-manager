@@ -2,10 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
@@ -13,21 +9,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.CheckIfAccountIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,91 +27,21 @@ public class AccountsScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataIdFlow().map {
+    public val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataIdFlow().map {
         it?.account
     }
-    private val allAccountsFlow: Flow<List<Account>> = getAllAccountsFlowUseCase()
-    private val accountsTotalBalanceAmountValue: Flow<Long> =
-        getAccountsTotalBalanceAmountValueUseCase()
-    private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
-        getAccountsTotalMinimumBalanceAmountValueUseCase()
-
-    public val screenUIData: StateFlow<MyResult<AccountsScreenUIData>?> = combine(
-        defaultAccountId,
-        allAccountsFlow,
-        accountsTotalBalanceAmountValue,
-        accountsTotalMinimumBalanceAmountValue,
-    ) {
-            defaultAccountId,
-            allAccountsFlow,
-            accountsTotalBalanceAmountValue,
-            accountsTotalMinimumBalanceAmountValue,
-        ->
-        val accountTypes = AccountType.entries.sortedBy {
-            it.sortOrder
-        }
-        val groupedAccounts = allAccountsFlow.groupBy {
-            it.type
-        }
-        val accountsListItemDataList = mutableListOf<AccountsListItemData>()
-        accountTypes.forEach { accountType ->
-            if (groupedAccounts[accountType].isNotNull()) {
-                accountsListItemDataList.add(
-                    AccountsListItemHeaderData(
-                        isHeading = true,
-                        balance = "",
-                        name = accountType.title,
-                    )
-                )
-                accountsListItemDataList.addAll(
-                    groupedAccounts[accountType]?.sortedByDescending { account ->
-                        account.balanceAmount.value
-                    }?.map { account ->
-                        val deleteEnabled = !checkIfAccountIsUsedInTransactionsUseCase(
-                            accountId = account.id,
-                        )
-                        val isDefault = if (defaultAccountId.isNull()) {
-                            isDefaultAccount(
-                                account = account.name,
-                            )
-                        } else {
-                            defaultAccountId == account.id
-                        }
-
-                        AccountsListItemContentData(
-                            isDefault = isDefault,
-                            isDeleteEnabled = !isDefaultAccount(
-                                account = account.name,
-                            ) && deleteEnabled,
-                            isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
-                            isMoreOptionsIconButtonVisible = true,
-                            icon = account.type.icon,
-                            accountId = account.id,
-                            balance = account.balanceAmount.toString(),
-                            name = account.name,
-                        )
-                    }.orEmpty()
-                )
-            }
-        }
-
-        if (
-            accountsListItemDataList.isNull() ||
-            accountsTotalMinimumBalanceAmountValue.isNull()
-        ) {
-            MyResult.Loading
-        } else {
-            MyResult.Success(
-                data = AccountsScreenUIData(
-                    accountsListItemDataList = accountsListItemDataList,
-                    accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
-                    accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue,
-                ),
+    public val allAccounts: Flow<List<Account>> = getAllAccountsFlowUseCase()
+    public val isAccountUsedInTransactions: Flow<Map<Int, Boolean>> = allAccounts.map { accounts ->
+        accounts.associate { account ->
+            account.id to checkIfAccountIsUsedInTransactionsUseCase(
+                accountId = account.id,
             )
         }
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
-    )
+    }
+    public val accountsTotalBalanceAmountValue: Flow<Long> =
+        getAccountsTotalBalanceAmountValueUseCase()
+    public val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
+        getAccountsTotalMinimumBalanceAmountValueUseCase()
 
     public fun deleteAccount(
         accountId: Int,
@@ -136,6 +51,10 @@ public class AccountsScreenViewModel @Inject constructor(
                 id = accountId,
             )
         }
+    }
+
+    public fun initViewModel() {
+        fetchData()
     }
 
     public fun navigateToAddAccountScreen() {
@@ -164,5 +83,9 @@ public class AccountsScreenViewModel @Inject constructor(
             )
             // TODO(Abhi): Use the result to show snackbar
         }
+    }
+
+    private fun fetchData() {
+        // TODO(Abhi): Move data fetching here
     }
 }

@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel.AccountsScreenViewModel
 
 @Composable
@@ -21,9 +22,30 @@ public fun AccountsScreen(
         message = "Inside AccountsScreen",
     )
 
-    val screenUIData: MyResult<AccountsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region ViewModel data
+    val defaultAccountId: Int? by viewModel.defaultAccountId.collectAsStateWithLifecycle(
+        initialValue = null,
+    )
+    val allAccounts: List<Account> by viewModel.allAccounts.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
+    )
+    val isAccountUsedInTransactions: Map<Int, Boolean> by viewModel.isAccountUsedInTransactions.collectAsStateWithLifecycle(
+        initialValue = emptyMap(),
+    )
+    val accountsTotalBalanceAmountValue: Long by viewModel.accountsTotalBalanceAmountValue.collectAsStateWithLifecycle(
+        initialValue = 0L,
+    )
+    val accountsTotalMinimumBalanceAmountValue: Long by viewModel.accountsTotalMinimumBalanceAmountValue.collectAsStateWithLifecycle(
+        initialValue = 0L,
+    )
+    // endregion
+    
     val uiStateAndEvents = rememberAccountsScreenUIStateAndEvents(
-        data = screenUIData,
+        defaultAccountId = defaultAccountId,
+        allAccounts = allAccounts,
+        isAccountUsedInTransactions = isAccountUsedInTransactions,
+        accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
+        accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -109,6 +131,12 @@ public fun AccountsScreen(
                 }
             }
         }
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        viewModel.initViewModel()
     }
 
     AccountsScreenUI(
