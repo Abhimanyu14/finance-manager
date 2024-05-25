@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
@@ -6,16 +6,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiStateData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Stable
-internal data class AddOrEditTransactionScreenUIState(
-    val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
-    val uiState: AddOrEditTransactionScreenUiStateData,
-    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
+internal data class EditTransactionScreenUIState(
+    val screenBottomSheetType: EditTransactionScreenBottomSheetType,
+    val uiState: EditTransactionScreenUiStateData,
+    val uiVisibilityState: EditTransactionScreenUiVisibilityState,
     val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,

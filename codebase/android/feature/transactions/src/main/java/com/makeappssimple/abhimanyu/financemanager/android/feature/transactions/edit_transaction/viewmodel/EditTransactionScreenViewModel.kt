@@ -50,9 +50,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.screen.EditTransactionScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.EditTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -119,8 +117,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     )
     // endregion
 
-    private val uiState: MutableStateFlow<AddOrEditTransactionScreenUiStateData> = MutableStateFlow(
-        value = AddOrEditTransactionScreenUiStateData(
+    private val uiState: MutableStateFlow<EditTransactionScreenUiStateData> = MutableStateFlow(
+        value = EditTransactionScreenUiStateData(
             selectedTransactionTypeIndex = null,
             amount = TextFieldValue(),
             title = TextFieldValue(),
@@ -133,9 +131,9 @@ public class EditTransactionScreenViewModel @Inject constructor(
             transactionTime = dateTimeUtil.getCurrentLocalTime(),
         ),
     )
-    private val uiVisibilityState: MutableStateFlow<AddOrEditTransactionScreenUiVisibilityState> =
+    private val uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
         MutableStateFlow(
-            value = AddOrEditTransactionScreenUiVisibilityState.Expense,
+            value = EditTransactionScreenUiVisibilityState.Expense,
         )
 
     // Dependant data
@@ -198,8 +196,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 if (uiState.amountErrorText.isNull() &&
                     (uiState.amount.text.toLongOrZero() > maxRefundAmountValue)
                 ) {
-                    updateAddOrEditTransactionScreenUiState(
-                        updatedAddOrEditTransactionScreenUiStateData = uiState.copy(
+                    updateEditTransactionScreenUiState(
+                        updatedEditTransactionScreenUiStateData = uiState.copy(
                             amountErrorText = maxRefundAmount?.run {
                                 this.toString()
                             },
@@ -209,8 +207,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 } else if (uiState.amountErrorText.isNotNull() &&
                     (uiState.amount.text.toLongOrZero() <= maxRefundAmountValue)
                 ) {
-                    updateAddOrEditTransactionScreenUiState(
-                        updatedAddOrEditTransactionScreenUiStateData = uiState.copy(
+                    updateEditTransactionScreenUiState(
+                        updatedEditTransactionScreenUiStateData = uiState.copy(
                             amountErrorText = null,
                         )
                     )
@@ -233,7 +231,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         value = false,
     )
 
-    public val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?> = combine(
+    public val screenUIData: StateFlow<MyResult<EditTransactionScreenUIData>?> = combine(
         uiState,
         uiVisibilityState,
         isCtaButtonEnabled,
@@ -262,7 +260,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
             MyResult.Loading
         } else {
             MyResult.Success(
-                data = AddOrEditTransactionScreenUIData(
+                data = EditTransactionScreenUIData(
                     uiState = uiState,
                     uiVisibilityState = uiVisibilityState,
                     isCtaButtonEnabled = isCtaButtonEnabled,
@@ -640,8 +638,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
         )
@@ -653,8 +651,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateAmount(
         updatedAmount: TextFieldValue,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 amount = updatedAmount.copy(
                     updatedAmount.text.filterDigits(),
                 ),
@@ -677,8 +675,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 title = updatedTitle,
             ),
         )
@@ -695,8 +693,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateDescription(
         updatedDescription: TextFieldValue,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 description = updatedDescription,
             ),
         )
@@ -713,8 +711,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateCategory(
         updatedCategory: Category?,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 category = updatedCategory,
             ),
         )
@@ -723,8 +721,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 selectedTransactionForIndex = updatedSelectedTransactionForIndex,
             ),
         )
@@ -733,8 +731,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateAccountFrom(
         updatedAccountFrom: Account?,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 accountFrom = updatedAccountFrom,
             ),
         )
@@ -743,8 +741,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateAccountTo(
         updatedAccountTo: Account?,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 accountTo = updatedAccountTo,
             ),
         )
@@ -753,8 +751,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateTransactionDate(
         updatedTransactionDate: LocalDate,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 transactionDate = updatedTransactionDate,
             ),
         )
@@ -763,25 +761,25 @@ public class EditTransactionScreenViewModel @Inject constructor(
     public fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
     ) {
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = uiState.value.copy(
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = uiState.value.copy(
                 transactionTime = updatedTransactionTime,
             ),
         )
     }
 
-    private fun updateAddOrEditTransactionScreenUiState(
-        updatedAddOrEditTransactionScreenUiStateData: AddOrEditTransactionScreenUiStateData,
+    private fun updateEditTransactionScreenUiState(
+        updatedEditTransactionScreenUiStateData: EditTransactionScreenUiStateData,
     ) {
         uiState.update {
-            updatedAddOrEditTransactionScreenUiStateData
+            updatedEditTransactionScreenUiStateData
         }
     }
 
-    private fun updateAddOrEditTransactionScreenUiVisibilityState(
-        updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
+    private fun updateEditTransactionScreenUiVisibilityState(
+        updatedEditTransactionScreenUiVisibilityState: EditTransactionScreenUiVisibilityState,
     ) {
-        uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState
+        uiVisibilityState.value = updatedEditTransactionScreenUiVisibilityState
     }
     // endregion
 
@@ -842,18 +840,18 @@ public class EditTransactionScreenViewModel @Inject constructor(
     private fun handleTransactionTypeChange(
         transactionType: TransactionType,
     ) {
-        val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
+        val uiVisibilityState: EditTransactionScreenUiVisibilityState? =
             when (transactionType) {
                 TransactionType.INCOME -> {
-                    AddOrEditTransactionScreenUiVisibilityState.Income
+                    EditTransactionScreenUiVisibilityState.Income
                 }
 
                 TransactionType.EXPENSE -> {
-                    AddOrEditTransactionScreenUiVisibilityState.Expense
+                    EditTransactionScreenUiVisibilityState.Expense
                 }
 
                 TransactionType.TRANSFER -> {
-                    AddOrEditTransactionScreenUiVisibilityState.Transfer
+                    EditTransactionScreenUiVisibilityState.Transfer
                 }
 
                 TransactionType.ADJUSTMENT -> {
@@ -861,16 +859,16 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 }
 
                 TransactionType.INVESTMENT -> {
-                    AddOrEditTransactionScreenUiVisibilityState.Investment
+                    EditTransactionScreenUiVisibilityState.Investment
                 }
 
                 TransactionType.REFUND -> {
-                    AddOrEditTransactionScreenUiVisibilityState.Refund
+                    EditTransactionScreenUiVisibilityState.Refund
                 }
             }
         uiVisibilityState?.let {
-            updateAddOrEditTransactionScreenUiVisibilityState(
-                updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
+            updateEditTransactionScreenUiVisibilityState(
+                updatedEditTransactionScreenUiVisibilityState = uiVisibilityState,
             )
         }
 
@@ -1007,7 +1005,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 if (originalTransactionData.transaction.transactionType == TransactionType.REFUND) {
                     calculateMaxRefundAmount()
                 }
-                updateAddOrEditTransactionScreenUiStateWithOriginalTransactionData(
+                updateEditTransactionScreenUiStateWithOriginalTransactionData(
                     originalTransaction = originalTransactionData.transaction,
                     transactionTypesForNewTransaction = validTransactionTypesForNewTransaction,
                     transactionForValues = transactionForValues,
@@ -1053,7 +1051,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         }
     }
 
-    private fun updateAddOrEditTransactionScreenUiStateWithOriginalTransactionData(
+    private fun updateEditTransactionScreenUiStateWithOriginalTransactionData(
         originalTransaction: Transaction,
         transactionTypesForNewTransaction: List<TransactionType>,
         transactionForValues: List<TransactionFor>,
@@ -1061,8 +1059,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
     ) {
         val isAddingRefund = isAddingTransaction() &&
                 screenArgs.transactionId.isNotNull()
-        val initialAddOrEditTransactionScreenUiStateData = if (isAddingRefund) {
-            AddOrEditTransactionScreenUiStateData(
+        val initialEditTransactionScreenUiStateData = if (isAddingRefund) {
+            EditTransactionScreenUiStateData(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = TransactionType.REFUND,
                 ),
@@ -1088,7 +1086,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 transactionTime = dateTimeUtil.getCurrentLocalTime(),
             )
         } else {
-            AddOrEditTransactionScreenUiStateData(
+            EditTransactionScreenUiStateData(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = originalTransaction.transactionType,
                 ),
@@ -1118,8 +1116,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 ),
             )
         }
-        updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiStateData = initialAddOrEditTransactionScreenUiStateData,
+        updateEditTransactionScreenUiState(
+            updatedEditTransactionScreenUiStateData = initialEditTransactionScreenUiStateData,
         )
 
         setInitialSelectedTransactionType()

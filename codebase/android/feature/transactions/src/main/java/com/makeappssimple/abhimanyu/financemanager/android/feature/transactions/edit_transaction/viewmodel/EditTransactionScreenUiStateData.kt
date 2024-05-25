@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Immutable
-public data class AddOrEditTransactionScreenUiStateData(
+public data class EditTransactionScreenUiStateData(
     val selectedTransactionTypeIndex: Int? = null,
     val amount: TextFieldValue = TextFieldValue(),
     val title: TextFieldValue = TextFieldValue(),
@@ -23,9 +23,9 @@ public data class AddOrEditTransactionScreenUiStateData(
     val amountErrorText: String? = null,
 )
 
-public fun AddOrEditTransactionScreenUiStateData?.orDefault(): AddOrEditTransactionScreenUiStateData {
+public fun EditTransactionScreenUiStateData?.orDefault(): EditTransactionScreenUiStateData {
     return if (this.isNull()) {
-        AddOrEditTransactionScreenUiStateData()
+        EditTransactionScreenUiStateData()
     } else {
         this
     }

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -67,10 +67,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import kotlinx.coroutines.delay
 
 @Composable
-internal fun AddOrEditTransactionScreenUI(
-    uiState: AddOrEditTransactionScreenUIState,
+internal fun EditTransactionScreenUI(
+    uiState: EditTransactionScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvent: (uiEvent: AddOrEditTransactionScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: EditTransactionScreenUIEvent) -> Unit = {},
 ) {
     val clearFocus = {
         state.focusManager.clearFocus()
@@ -92,7 +92,7 @@ internal fun AddOrEditTransactionScreenUI(
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
         resetBottomSheetType = {
-            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
+            handleUIEvent(EditTransactionScreenUIEvent.OnBottomSheetDismissed)
         },
     )
 
@@ -104,11 +104,11 @@ internal fun AddOrEditTransactionScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                is AddOrEditTransactionScreenBottomSheetType.None -> {
+                is EditTransactionScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
 
-                is AddOrEditTransactionScreenBottomSheetType.SelectCategory -> {
+                is EditTransactionScreenBottomSheetType.SelectCategory -> {
                     SelectCategoryBottomSheet(
                         data = SelectCategoryBottomSheetData(
                             filteredCategories = uiState.filteredCategories,
@@ -117,12 +117,12 @@ internal fun AddOrEditTransactionScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is SelectCategoryBottomSheetEvent.ResetBottomSheetType -> {
-                                    handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
+                                    handleUIEvent(EditTransactionScreenUIEvent.OnBottomSheetDismissed)
                                 }
 
                                 is SelectCategoryBottomSheetEvent.UpdateCategory -> {
                                     handleUIEvent(
-                                        AddOrEditTransactionScreenUIEvent.OnCategoryUpdated(
+                                        EditTransactionScreenUIEvent.OnCategoryUpdated(
                                             updatedCategory = event.updatedCategory,
                                         )
                                     )
@@ -132,7 +132,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                is AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom -> {
+                is EditTransactionScreenBottomSheetType.SelectAccountFrom -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
@@ -141,12 +141,12 @@ internal fun AddOrEditTransactionScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is SelectAccountBottomSheetEvent.ResetBottomSheetType -> {
-                                    handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
+                                    handleUIEvent(EditTransactionScreenUIEvent.OnBottomSheetDismissed)
                                 }
 
                                 is SelectAccountBottomSheetEvent.UpdateAccount -> {
                                     handleUIEvent(
-                                        AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated(
+                                        EditTransactionScreenUIEvent.OnAccountFromUpdated(
                                             updatedAccountFrom = event.updatedAccount,
                                         )
                                     )
@@ -156,7 +156,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                is AddOrEditTransactionScreenBottomSheetType.SelectAccountTo -> {
+                is EditTransactionScreenBottomSheetType.SelectAccountTo -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
@@ -165,12 +165,12 @@ internal fun AddOrEditTransactionScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is SelectAccountBottomSheetEvent.ResetBottomSheetType -> {
-                                    handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
+                                    handleUIEvent(EditTransactionScreenUIEvent.OnBottomSheetDismissed)
                                 }
 
                                 is SelectAccountBottomSheetEvent.UpdateAccount -> {
                                     handleUIEvent(
-                                        AddOrEditTransactionScreenUIEvent.OnAccountToUpdated(
+                                        EditTransactionScreenUIEvent.OnAccountToUpdated(
                                             updatedAccountTo = event.updatedAccount,
                                         )
                                     )
@@ -186,16 +186,16 @@ internal fun AddOrEditTransactionScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(EditTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
         onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
-        isBackHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != EditTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onNavigationBackButtonClick = {
-            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnNavigationBackButtonClick)
+            handleUIEvent(EditTransactionScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
         MyDatePicker(
@@ -207,12 +207,12 @@ internal fun AddOrEditTransactionScreenUI(
             handleEvent = { event ->
                 when (event) {
                     is MyDatePickerEvent.OnNegativeButtonClick -> {
-                        handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionDatePickerDismissed)
+                        handleUIEvent(EditTransactionScreenUIEvent.OnTransactionDatePickerDismissed)
                     }
 
                     is MyDatePickerEvent.OnPositiveButtonClick -> {
                         handleUIEvent(
-                            AddOrEditTransactionScreenUIEvent.OnTransactionDateUpdated(
+                            EditTransactionScreenUIEvent.OnTransactionDateUpdated(
                                 updatedTransactionDate = event.selectedDate,
                             )
                         )
@@ -228,12 +228,12 @@ internal fun AddOrEditTransactionScreenUI(
             handleEvent = { event ->
                 when (event) {
                     is MyTimePickerEvent.OnNegativeButtonClick -> {
-                        handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionTimePickerDismissed)
+                        handleUIEvent(EditTransactionScreenUIEvent.OnTransactionTimePickerDismissed)
                     }
 
                     is MyTimePickerEvent.OnPositiveButtonClick -> {
                         handleUIEvent(
-                            AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated(
+                            EditTransactionScreenUIEvent.OnTransactionTimeUpdated(
                                 updatedTransactionTime = event.selectedTime,
                             )
                         )
@@ -271,7 +271,7 @@ internal fun AddOrEditTransactionScreenUI(
                         when (event) {
                             is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
                                 handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
+                                    EditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
                                         updatedSelectedTransactionTypeIndex = event.index,
                                     )
                                 )
@@ -329,12 +329,12 @@ internal fun AddOrEditTransactionScreenUI(
                 handleEvent = { event ->
                     when (event) {
                         is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearAmountButtonClick)
+                            handleUIEvent(EditTransactionScreenUIEvent.OnClearAmountButtonClick)
                         }
 
                         is MyOutlinedTextFieldEvent.OnValueChange -> {
                             handleUIEvent(
-                                AddOrEditTransactionScreenUIEvent.OnAmountUpdated(
+                                EditTransactionScreenUIEvent.OnAmountUpdated(
                                     updatedAmount = event.updatedValue,
                                 )
                             )
@@ -361,7 +361,7 @@ internal fun AddOrEditTransactionScreenUI(
                         when (event) {
                             is MyReadOnlyTextFieldEvent.OnClick -> {
                                 clearFocus()
-                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnCategoryTextFieldClick)
+                                handleUIEvent(EditTransactionScreenUIEvent.OnCategoryTextFieldClick)
                             }
                         }
                     },
@@ -395,12 +395,12 @@ internal fun AddOrEditTransactionScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearTitleButtonClick)
+                                handleUIEvent(EditTransactionScreenUIEvent.OnClearTitleButtonClick)
                             }
 
                             is MyOutlinedTextFieldEvent.OnValueChange -> {
                                 handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
+                                    EditTransactionScreenUIEvent.OnTitleUpdated(
                                         updatedTitle = event.updatedValue,
                                     ),
                                 )
@@ -429,7 +429,7 @@ internal fun AddOrEditTransactionScreenUI(
                             is MyHorizontalScrollingSelectionGroupEvent.OnSelectionChange -> {
                                 clearFocus()
                                 handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
+                                    EditTransactionScreenUIEvent.OnTitleUpdated(
                                         updatedTitle = uiState.uiState.title.copy(
                                             text = uiState.titleSuggestions[event.index],
                                         ),
@@ -461,7 +461,7 @@ internal fun AddOrEditTransactionScreenUI(
                             is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
                                 clearFocus()
                                 handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated(
+                                    EditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated(
                                         updatedSelectedTransactionForIndex = event.index,
                                     )
                                 )
@@ -498,12 +498,12 @@ internal fun AddOrEditTransactionScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearDescriptionButtonClick)
+                                handleUIEvent(EditTransactionScreenUIEvent.OnClearDescriptionButtonClick)
                             }
 
                             is MyOutlinedTextFieldEvent.OnValueChange -> {
                                 handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnDescriptionUpdated(
+                                    EditTransactionScreenUIEvent.OnDescriptionUpdated(
                                         updatedDescription = event.updatedValue,
                                     )
                                 )
@@ -531,7 +531,7 @@ internal fun AddOrEditTransactionScreenUI(
                         when (event) {
                             is MyReadOnlyTextFieldEvent.OnClick -> {
                                 clearFocus()
-                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnAccountFromTextFieldClick)
+                                handleUIEvent(EditTransactionScreenUIEvent.OnAccountFromTextFieldClick)
                             }
                         }
                     },
@@ -556,7 +556,7 @@ internal fun AddOrEditTransactionScreenUI(
                         when (event) {
                             is MyReadOnlyTextFieldEvent.OnClick -> {
                                 clearFocus()
-                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnAccountToTextFieldClick)
+                                handleUIEvent(EditTransactionScreenUIEvent.OnAccountToTextFieldClick)
                             }
                         }
                     },
@@ -578,7 +578,7 @@ internal fun AddOrEditTransactionScreenUI(
                     when (event) {
                         is MyReadOnlyTextFieldEvent.OnClick -> {
                             clearFocus()
-                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionDateTextFieldClick)
+                            handleUIEvent(EditTransactionScreenUIEvent.OnTransactionDateTextFieldClick)
                         }
                     }
                 },
@@ -599,7 +599,7 @@ internal fun AddOrEditTransactionScreenUI(
                     when (event) {
                         MyReadOnlyTextFieldEvent.OnClick -> {
                             clearFocus()
-                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionTimeTextFieldClick)
+                            handleUIEvent(EditTransactionScreenUIEvent.OnTransactionTimeTextFieldClick)
                         }
                     }
                 },
@@ -617,7 +617,7 @@ internal fun AddOrEditTransactionScreenUI(
                 handleEvent = { event ->
                     when (event) {
                         is SaveButtonEvent.OnClick -> {
-                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnCtaButtonClick)
+                            handleUIEvent(EditTransactionScreenUIEvent.OnCtaButtonClick)
                         }
                     }
                 },

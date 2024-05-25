@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -16,42 +16,42 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.orDefault
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.orDefault
 import kotlinx.collections.immutable.toImmutableList
 
 @Stable
-internal class AddOrEditTransactionScreenUIStateAndEvents(
-    val state: AddOrEditTransactionScreenUIState,
-    val events: AddOrEditTransactionScreenUIStateEvents,
+internal class EditTransactionScreenUIStateAndEvents(
+    val state: EditTransactionScreenUIState,
+    val events: EditTransactionScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
 
 @Stable
-internal class AddOrEditTransactionScreenUIStateEvents(
+internal class EditTransactionScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
     val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
     val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
-    val setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (EditTransactionScreenBottomSheetType) -> Unit,
 ) : ScreenUIStateEvents
 
 @Composable
-internal fun rememberAddOrEditTransactionScreenUIStateAndEvents(
-    data: MyResult<AddOrEditTransactionScreenUIData>?,
+internal fun rememberEditTransactionScreenUIStateAndEvents(
+    data: MyResult<EditTransactionScreenUIData>?,
     isEdit: Boolean,
-): AddOrEditTransactionScreenUIStateAndEvents {
+): EditTransactionScreenUIStateAndEvents {
     val (isTransactionDatePickerDialogVisible, setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
     val (isTransactionTimePickerDialogVisible, setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
-    var screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType by remember {
+    var screenBottomSheetType: EditTransactionScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AddOrEditTransactionScreenBottomSheetType.None,
+            value = EditTransactionScreenBottomSheetType.None,
         )
     }
     val setScreenBottomSheetType =
-        { updatedAddOrEditTransactionScreenBottomSheetType: AddOrEditTransactionScreenBottomSheetType ->
-            screenBottomSheetType = updatedAddOrEditTransactionScreenBottomSheetType
+        { updatedEditTransactionScreenBottomSheetType: EditTransactionScreenBottomSheetType ->
+            screenBottomSheetType = updatedEditTransactionScreenBottomSheetType
         }
 
     return remember(
@@ -64,7 +64,7 @@ internal fun rememberAddOrEditTransactionScreenUIStateAndEvents(
         setIsTransactionDatePickerDialogVisible,
         setIsTransactionTimePickerDialogVisible,
     ) {
-        val unwrappedData: AddOrEditTransactionScreenUIData? = when (data) {
+        val unwrappedData: EditTransactionScreenUIData? = when (data) {
             is MyResult.Success -> {
                 data.data
             }
@@ -76,15 +76,15 @@ internal fun rememberAddOrEditTransactionScreenUIStateAndEvents(
         val titleSuggestions = unwrappedData?.titleSuggestions.orEmpty()
 
         // TODO(Abhi): Can be reordered to match the class ordering
-        AddOrEditTransactionScreenUIStateAndEvents(
-            state = AddOrEditTransactionScreenUIState(
+        EditTransactionScreenUIStateAndEvents(
+            state = EditTransactionScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
                 isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
                 isLoading = unwrappedData.isNull(),
                 uiState = unwrappedData?.uiState.orDefault(),
                 uiVisibilityState = unwrappedData?.uiVisibilityState.orDefault(),
-                isBottomSheetVisible = screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
+                isBottomSheetVisible = screenBottomSheetType != EditTransactionScreenBottomSheetType.None,
                 isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),
                 appBarTitleTextStringResourceId = if (isEdit) {
                     R.string.screen_edit_transaction_appbar_title
@@ -126,12 +126,12 @@ internal fun rememberAddOrEditTransactionScreenUIStateAndEvents(
                 }?.toImmutableList().orEmpty(),
                 currentLocalDate = unwrappedData?.currentLocalDate.orMin(),
             ),
-            events = AddOrEditTransactionScreenUIStateEvents(
+            events = EditTransactionScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
                 setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
                 resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddOrEditTransactionScreenBottomSheetType.None)
+                    setScreenBottomSheetType(EditTransactionScreenBottomSheetType.None)
                 },
             )
         )
