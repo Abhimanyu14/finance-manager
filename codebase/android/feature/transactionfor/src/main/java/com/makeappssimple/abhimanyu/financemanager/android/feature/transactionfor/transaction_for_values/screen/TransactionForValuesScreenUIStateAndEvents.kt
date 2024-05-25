@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
@@ -26,50 +26,44 @@ internal class TransactionForValuesScreenUIStateEvents(
 
 @Composable
 internal fun rememberTransactionForValuesScreenUIStateAndEvents(
-    data: MyResult<TransactionForValuesScreenUIData>?,
+    transactionForValues: List<TransactionFor>,
+    transactionForValuesIsUsedInTransactions: List<Boolean>,
 ): TransactionForValuesScreenUIStateAndEvents {
+    // region transaction for id to delete
     var transactionForIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
         )
     }
+    val setTransactionForIdToDelete: (Int?) -> Unit = { updatedTransactionForIdToDelete: Int? ->
+        transactionForIdToDelete = updatedTransactionForIdToDelete
+    }
+    // endregion
+
+    // region screen bottom sheet type
     var screenBottomSheetType: TransactionForValuesScreenBottomSheetType by remember {
         mutableStateOf(
             value = TransactionForValuesScreenBottomSheetType.None,
         )
     }
-    val setTransactionForIdToDelete: (Int?) -> Unit = { updatedTransactionForIdToDelete: Int? ->
-        transactionForIdToDelete = updatedTransactionForIdToDelete
-    }
     val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit =
         { updatedTransactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType ->
             screenBottomSheetType = updatedTransactionForValuesBottomSheetType
         }
+    // endregion
 
     return remember(
-        data,
         screenBottomSheetType,
         transactionForIdToDelete,
         setTransactionForIdToDelete,
         setScreenBottomSheetType,
     ) {
-        val unwrappedData: TransactionForValuesScreenUIData? = when (data) {
-            is MyResult.Success -> {
-                data.data
-            }
-
-            else -> {
-                null
-            }
-        }
-
-        // TODO(Abhi): Can be reordered to match the class ordering
         TransactionForValuesScreenUIStateAndEvents(
             state = TransactionForValuesScreenUIState(
                 isBottomSheetVisible = screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
                 transactionForIdToDelete = transactionForIdToDelete,
-                transactionForValuesIsUsedInTransactions = unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty(),
-                transactionForValues = unwrappedData?.transactionForValues.orEmpty(),
+                transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
+                transactionForValues = transactionForValues,
                 screenBottomSheetType = screenBottomSheetType,
             ),
             events = TransactionForValuesScreenUIStateEvents(
