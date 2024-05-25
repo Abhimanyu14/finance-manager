@@ -5,10 +5,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
+import java.time.LocalDate
 
 @Composable
 public fun TransactionsScreen(
@@ -22,9 +29,30 @@ public fun TransactionsScreen(
         message = "Inside TransactionsScreen",
     )
 
-    val screenUIData: MyResult<TransactionsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val allTransactionData: ImmutableList<TransactionData> by viewModel.allTransactionData.collectAsStateWithLifecycle()
+    val expenseCategories: ImmutableList<Category>? by viewModel.expenseCategories.collectAsStateWithLifecycle()
+    val incomeCategories: ImmutableList<Category>? by viewModel.incomeCategories.collectAsStateWithLifecycle()
+    val investmentCategories: ImmutableList<Category>? by viewModel.investmentCategories.collectAsStateWithLifecycle()
+    val accounts: ImmutableList<Account>? by viewModel.accounts.collectAsStateWithLifecycle()
+    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
+    val transactionTypes: ImmutableList<TransactionType> = viewModel.transactionTypes
+    val oldestTransactionLocalDate: LocalDate? by viewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle()
+    val sortOptions: ImmutableList<SortOption> = viewModel.sortOptions
+    val currentLocalDate: LocalDate = viewModel.currentLocalDate
+    // endregion
+
     val uiStateAndEvents = rememberTransactionsScreenUIStateAndEvents(
-        data = screenUIData,
+        allTransactionData = allTransactionData,
+        expenseCategories = expenseCategories,
+        incomeCategories = incomeCategories,
+        investmentCategories = investmentCategories,
+        accounts = accounts,
+        transactionForValues = transactionForValues,
+        transactionTypes = transactionTypes,
+        oldestTransactionLocalDate = oldestTransactionLocalDate,
+        sortOptions = sortOptions,
+        currentLocalDate = currentLocalDate,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -44,7 +72,7 @@ public fun TransactionsScreen(
 
                 is TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick -> {
                     uiStateAndEvents.events.setIsInSelectionMode(false)
-                    viewModel.clearSelectedTransactions()
+                    uiStateAndEvents.events.clearSelectedTransactions()
                 }
 
                 is TransactionsScreenUIEvent.OnFilterActionButtonClick -> {
@@ -60,27 +88,19 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnNavigationBackButtonClick -> {
-                    viewModel.updateSearchText(
-                        updatedSearchText = "",
-                    )
-                    viewModel.updateSelectedFilter(
-                        updatedSelectedFilter = Filter(),
-                    )
+                    uiStateAndEvents.events.setSearchText("")
+                    uiStateAndEvents.events.setSelectedFilter(Filter())
                     uiStateAndEvents.events.setIsInSelectionMode(false)
-                    viewModel.clearSelectedTransactions()
+                    uiStateAndEvents.events.clearSelectedTransactions()
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is TransactionsScreenUIEvent.OnTransactionListItem.Click -> {
                     if (uiEvent.isInSelectionMode) {
                         if (uiEvent.isSelected) {
-                            viewModel.removeFromSelectedTransactions(
-                                transactionId = uiEvent.transactionId,
-                            )
+                            uiStateAndEvents.events.removeFromSelectedTransactions(uiEvent.transactionId)
                         } else {
-                            viewModel.addToSelectedTransactions(
-                                transactionId = uiEvent.transactionId,
-                            )
+                            uiStateAndEvents.events.addToSelectedTransactions(uiEvent.transactionId)
                         }
                     } else {
                         viewModel.navigateToViewTransactionScreen(
@@ -92,19 +112,13 @@ public fun TransactionsScreen(
                 is TransactionsScreenUIEvent.OnTransactionListItem.LongClick -> {
                     if (uiEvent.isInSelectionMode) {
                         if (uiEvent.isSelected) {
-                            viewModel.removeFromSelectedTransactions(
-                                transactionId = uiEvent.transactionId,
-                            )
+                            uiStateAndEvents.events.removeFromSelectedTransactions(uiEvent.transactionId)
                         } else {
-                            viewModel.addToSelectedTransactions(
-                                transactionId = uiEvent.transactionId,
-                            )
+                            uiStateAndEvents.events.addToSelectedTransactions(uiEvent.transactionId)
                         }
                     } else {
                         uiStateAndEvents.events.setIsInSelectionMode(true)
-                        viewModel.addToSelectedTransactions(
-                            transactionId = uiEvent.transactionId,
-                        )
+                        uiStateAndEvents.events.addToSelectedTransactions(uiEvent.transactionId)
                     }
                 }
 
@@ -118,7 +132,7 @@ public fun TransactionsScreen(
 
                 is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
-                    viewModel.selectAllTransactions()
+                    uiStateAndEvents.events.selectAllTransactions()
                 }
 
                 is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.UpdateTransactionForButtonClick -> {
@@ -128,29 +142,25 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
-                    viewModel.updateSearchText(
-                        updatedSearchText = uiEvent.updatedSearchText,
-                    )
+                    uiStateAndEvents.events.setSearchText(uiEvent.updatedSearchText)
                 }
 
                 is TransactionsScreenUIEvent.OnSelectedFilterUpdated -> {
-                    viewModel.updateSelectedFilter(
-                        updatedSelectedFilter = uiEvent.updatedSelectedFilter,
-                    )
+                    uiStateAndEvents.events.setSelectedFilter(uiEvent.updatedSelectedFilter)
                 }
 
                 is TransactionsScreenUIEvent.OnSelectedSortOptionUpdated -> {
-                    viewModel.updateSelectedSortOption(
-                        updatedSelectedSortOption = uiEvent.updatedSelectedSortOption,
-                    )
+                    uiStateAndEvents.events.setSelectedSortOption(uiEvent.updatedSelectedSortOption)
                 }
 
                 is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
                     uiStateAndEvents.events.setIsInSelectionMode(false)
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                     viewModel.updateTransactionForValuesInTransactions(
+                        selectedTransactions = uiStateAndEvents.state.selectedTransactions,
                         transactionForId = uiEvent.updatedTransactionForValues,
                     )
+                    uiStateAndEvents.events.clearSelectedTransactions()
                 }
             }
         }
