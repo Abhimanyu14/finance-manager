@@ -248,7 +248,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
         value = false,
     )
 
-    public val screenUIData: StateFlow<MyResult<AddTransactionScreenUIData>?> = combine(
+    private val screenUIData: StateFlow<MyResult<AddTransactionScreenUIData>?> = combine(
         uiState,
         uiVisibilityState,
         isCtaButtonEnabled,

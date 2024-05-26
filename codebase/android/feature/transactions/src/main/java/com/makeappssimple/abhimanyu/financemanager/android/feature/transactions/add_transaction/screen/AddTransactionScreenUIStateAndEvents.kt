@@ -87,6 +87,17 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
         setIsTransactionDatePickerDialogVisible,
         isTransactionTimePickerDialogVisible,
         setIsTransactionTimePickerDialogVisible,
+        uiState,
+        uiVisibilityState,
+        isCtaButtonEnabled,
+        filteredCategories,
+        titleSuggestions,
+        selectedTransactionType,
+        isDataFetchCompleted,
+        validTransactionTypesForNewTransaction,
+        currentLocalDate,
+        transactionForValues,
+        accounts,
     ) {
         AddTransactionScreenUIStateAndEvents(
             state = AddTransactionScreenUIState(
