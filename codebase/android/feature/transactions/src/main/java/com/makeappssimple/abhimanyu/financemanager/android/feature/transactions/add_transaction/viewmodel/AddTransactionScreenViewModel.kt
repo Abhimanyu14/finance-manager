@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
@@ -18,10 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
@@ -47,7 +44,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.screen.AddTransactionScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -246,53 +242,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     public val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
-    )
-
-    private val screenUIData: StateFlow<MyResult<AddTransactionScreenUIData>?> = combine(
-        uiState,
-        uiVisibilityState,
-        isCtaButtonEnabled,
-        filteredCategories,
-        titleSuggestions,
-        selectedTransactionType,
-        isDataFetchCompleted,
-    ) {
-            uiState,
-            uiVisibilityState,
-            isCtaButtonEnabled,
-            filteredCategories,
-            titleSuggestions,
-            selectedTransactionType,
-            isDataFetchCompleted,
-        ->
-        if (
-            isCtaButtonEnabled.isNull() ||
-            filteredCategories.isNull() ||
-            accounts.value.isEmpty() ||
-            validTransactionTypesForNewTransaction.value.isEmpty() ||
-            transactionForValues.value.isEmpty() ||
-            selectedTransactionType.isNull() ||
-            isDataFetchCompleted.not()
-        ) {
-            MyResult.Loading
-        } else {
-            MyResult.Success(
-                data = AddTransactionScreenUIData(
-                    uiState = uiState,
-                    uiVisibilityState = uiVisibilityState,
-                    isCtaButtonEnabled = isCtaButtonEnabled,
-                    filteredCategories = filteredCategories,
-                    accounts = accounts.value.toImmutableList(),
-                    titleSuggestions = titleSuggestions.orEmpty(),
-                    transactionTypesForNewTransaction = validTransactionTypesForNewTransaction.value.toImmutableList(),
-                    transactionForValues = transactionForValues.value.toImmutableList(),
-                    currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-                    selectedTransactionType = selectedTransactionType,
-                ),
-            )
-        }
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
     )
 
     public fun initViewModel() {
