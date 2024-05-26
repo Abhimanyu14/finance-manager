@@ -51,6 +51,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -89,31 +90,51 @@ public class AddTransactionScreenViewModel @Inject constructor(
     )
 
     // region Transaction data
-    private var originalTransactionData: TransactionData? = null
-    private var maxRefundAmount: Amount? = null
+    public var originalTransactionData: TransactionData? = null
+    public var maxRefundAmount: Amount? = null
     // endregion
 
     // region Default data
-    private var defaultAccount: Account? = null
-    private var defaultExpenseCategory: Category? = null
-    private var defaultIncomeCategory: Category? = null
-    private var defaultInvestmentCategory: Category? = null
-    private var defaultDataIdFromDataStore: DefaultDataId? = null
+    public var defaultAccount: Account? = null
+    public var defaultExpenseCategory: Category? = null
+    public var defaultIncomeCategory: Category? = null
+    public var defaultInvestmentCategory: Category? = null
+    public var defaultDataIdFromDataStore: DefaultDataId? = null
     // endregion
 
-    // region Data source
-    private var validTransactionTypesForNewTransaction: MutableList<TransactionType> =
-        mutableListOf()
-    private var categories: MutableList<Category> = mutableListOf()
-    private var transactionForValues: MutableList<TransactionFor> = mutableListOf()
-    private var accounts: MutableList<Account> = mutableListOf()
+    // region valid transaction types for new transaction
+    private val _validTransactionTypesForNewTransaction: MutableStateFlow<ImmutableList<TransactionType>> =
+        MutableStateFlow(
+            value = persistentListOf(),
+        )
+    public var validTransactionTypesForNewTransaction: StateFlow<ImmutableList<TransactionType>> =
+        _validTransactionTypesForNewTransaction
+    // endregion
 
-    private val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
+    // region transaction for values
+    private val _transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>> =
+        MutableStateFlow(
+            value = persistentListOf(),
+        )
+    public var transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
+        _transactionForValues
+    // endregion
+
+    // region accounts
+    private val _accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
+        value = persistentListOf(),
+    )
+    public var accounts: StateFlow<ImmutableList<Account>> = _accounts
+    // endregion
+
+    public var categories: MutableList<Category> = mutableListOf()
+
+    public val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
         value = null,
     )
-    // endregion
+    public val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
 
-    private val uiState: MutableStateFlow<AddTransactionScreenUiStateData> = MutableStateFlow(
+    public val uiState: MutableStateFlow<AddTransactionScreenUiStateData> = MutableStateFlow(
         value = AddTransactionScreenUiStateData(
             selectedTransactionTypeIndex = null,
             amount = TextFieldValue(),
@@ -127,17 +148,17 @@ public class AddTransactionScreenViewModel @Inject constructor(
             transactionTime = dateTimeUtil.getCurrentLocalTime(),
         ),
     )
-    private val uiVisibilityState: MutableStateFlow<AddTransactionScreenUiVisibilityState> =
+    public val uiVisibilityState: MutableStateFlow<AddTransactionScreenUiVisibilityState> =
         MutableStateFlow(
             value = AddTransactionScreenUiVisibilityState.Expense,
         )
 
     // Dependant data
-    private val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
+    public val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
         value = null,
     )
 
-    private val filteredCategories: StateFlow<ImmutableList<Category>> =
+    public val filteredCategories: StateFlow<ImmutableList<Category>> =
         selectedTransactionType.map { selectedTransactionType ->
             categories.filter { category ->
                 category.transactionType == selectedTransactionType
@@ -146,11 +167,11 @@ public class AddTransactionScreenViewModel @Inject constructor(
             scope = viewModelScope,
         )
 
-    private val selectedCategoryId: Flow<Int?> = uiState.map {
+    public val selectedCategoryId: Flow<Int?> = uiState.map {
         it.category?.id
     }
 
-    private val isCtaButtonEnabled: Flow<Boolean> = combine(
+    public val isCtaButtonEnabled: Flow<Boolean> = combine(
         flow = uiState,
         flow2 = selectedTransactionType,
     ) { uiState, selectedTransactionType ->
@@ -223,7 +244,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
         }
     }
 
-    private val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
+    public val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
     )
 
@@ -247,9 +268,9 @@ public class AddTransactionScreenViewModel @Inject constructor(
         if (
             isCtaButtonEnabled.isNull() ||
             filteredCategories.isNull() ||
-            accounts.isEmpty() ||
-            validTransactionTypesForNewTransaction.isEmpty() ||
-            transactionForValues.isEmpty() ||
+            accounts.value.isEmpty() ||
+            validTransactionTypesForNewTransaction.value.isEmpty() ||
+            transactionForValues.value.isEmpty() ||
             selectedTransactionType.isNull() ||
             isDataFetchCompleted.not()
         ) {
@@ -261,10 +282,10 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     uiVisibilityState = uiVisibilityState,
                     isCtaButtonEnabled = isCtaButtonEnabled,
                     filteredCategories = filteredCategories,
-                    accounts = accounts.toImmutableList(),
+                    accounts = accounts.value.toImmutableList(),
                     titleSuggestions = titleSuggestions.orEmpty(),
-                    transactionTypesForNewTransaction = validTransactionTypesForNewTransaction.toImmutableList(),
-                    transactionForValues = transactionForValues.toImmutableList(),
+                    transactionTypesForNewTransaction = validTransactionTypesForNewTransaction.value.toImmutableList(),
+                    transactionForValues = transactionForValues.value.toImmutableList(),
                     currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
                     selectedTransactionType = selectedTransactionType,
                 ),
@@ -381,7 +402,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     }
 
                     TransactionType.EXPENSE -> {
-                        transactionForValues.getOrNull(uiStateValue.selectedTransactionForIndex)?.id
+                        transactionForValues.value.getOrNull(uiStateValue.selectedTransactionForIndex)?.id
                             ?: 1
                     }
 
@@ -459,7 +480,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
         )
-        selectedTransactionType.value = validTransactionTypesForNewTransaction.getOrNull(
+        selectedTransactionType.value = validTransactionTypesForNewTransaction.value.getOrNull(
             index = updatedSelectedTransactionTypeIndex,
         )
     }
@@ -609,17 +630,21 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     categories.addAll(getAllCategoriesUseCase())
                 },
                 async {
-                    accounts.addAll(getAllAccountsUseCase()
-                        .sortedWith(
-                            comparator = compareBy<Account> {
-                                it.type.sortOrder
-                            }.thenByDescending {
-                                it.balanceAmount.value
-                            }
-                        ))
+                    _accounts.update {
+                        getAllAccountsUseCase()
+                            .sortedWith(
+                                comparator = compareBy<Account> {
+                                    it.type.sortOrder
+                                }.thenByDescending {
+                                    it.balanceAmount.value
+                                }
+                            ).toImmutableList()
+                    }
                 },
                 async {
-                    transactionForValues.addAll(getAllTransactionForValuesUseCase())
+                    _transactionForValues.update {
+                        getAllTransactionForValuesUseCase().toImmutableList()
+                    }
                 },
             )
             calculateValidTransactionTypesForNewTransaction()
@@ -797,13 +822,15 @@ public class AddTransactionScreenViewModel @Inject constructor(
             TransactionType.REFUND
         )
         // Cannot create transfer with single account
-        if (accounts.size <= 1) {
+        if (accounts.value.size <= 1) {
             excludedTransactionTypes.add(TransactionType.TRANSFER)
         }
 
         val transactionTypesRemainingAfterExclusion =
             (TransactionType.entries.toSet() - excludedTransactionTypes).toList()
-        validTransactionTypesForNewTransaction.addAll(transactionTypesRemainingAfterExclusion)
+        _validTransactionTypesForNewTransaction.update {
+            transactionTypesRemainingAfterExclusion.toImmutableList()
+        }
 
         updateSelectedTransactionTypeIndex(
             updatedSelectedTransactionTypeIndex = transactionTypesRemainingAfterExclusion.indexOf(
@@ -823,8 +850,8 @@ public class AddTransactionScreenViewModel @Inject constructor(
         }
         updateAddTransactionScreenUiStateWithOriginalTransactionData(
             originalTransaction = originalTransactionData.transaction,
-            transactionTypesForNewTransaction = validTransactionTypesForNewTransaction,
-            transactionForValues = transactionForValues,
+            transactionTypesForNewTransaction = validTransactionTypesForNewTransaction.value,
+            transactionForValues = transactionForValues.value,
             maxRefundAmount = maxRefundAmount,
         )
     }
@@ -952,7 +979,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun setDefaultAccount() {
         defaultAccount = getAccount(
             accountId = defaultDataIdFromDataStore?.account,
-        ) ?: accounts.firstOrNull { account ->
+        ) ?: accounts.value.firstOrNull { account ->
             isDefaultAccount(
                 account = account.name,
             )
@@ -970,7 +997,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
             TransactionType.REFUND
         } else {
             uiState.value.selectedTransactionTypeIndex?.let {
-                validTransactionTypesForNewTransaction.getOrNull(
+                validTransactionTypesForNewTransaction.value.getOrNull(
                     index = uiState.value.selectedTransactionTypeIndex.orZero(),
                 )
             }
@@ -988,7 +1015,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun getAccount(
         accountId: Int?,
     ): Account? {
-        return accounts.find { account ->
+        return accounts.value.find { account ->
             account.id == accountId
         }
     }
