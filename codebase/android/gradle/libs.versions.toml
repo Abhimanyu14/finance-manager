@@ -11,7 +11,7 @@ min-sdk = "27"
 jetpack-compose-compiler = "1.5.12"
 
 androidx-core = "1.13.1"
-lifecycle = "2.7.0"
+lifecycle = "2.8.0"
 coroutines = "1.8.0"
 serialization = "1.6.3"
 collections-immutable = "0.3.7"
