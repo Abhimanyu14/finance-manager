@@ -4,11 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.viewmodel.EditAccountScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun EditAccountScreen(
@@ -22,9 +27,16 @@ public fun EditAccountScreen(
         message = "Inside EditAccountScreen",
     )
 
-    val screenUIData: MyResult<EditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val accounts: ImmutableList<Account> by viewModel.accounts.collectAsStateWithLifecycle()
+    val originalAccount: Account? by viewModel.originalAccount.collectAsStateWithLifecycle()
+    val validAccountTypes: List<AccountType> = viewModel.validAccountTypes
+    // endregion
+
     val uiState = rememberEditAccountScreenUIStateAndEvents(
-        data = screenUIData,
+        accounts = accounts,
+        originalAccount = originalAccount,
+        validAccountTypes = validAccountTypes,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -33,12 +45,19 @@ public fun EditAccountScreen(
         { uiEvent: EditAccountScreenUIEvent ->
             when (uiEvent) {
                 is EditAccountScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.updateAccount()
+                    viewModel.updateAccount(
+                        selectedAccountTypeIndex = uiState.state.selectedAccountTypeIndex,
+                        name = uiState.state.name.text,
+                        balanceAmountValue = uiState.state.balanceAmountValue.text,
+                        minimumAccountBalanceAmountValue = uiState.state.minimumBalanceAmountValue.text,
+                    )
                 }
 
                 is EditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
-                    viewModel.updateBalanceAmountValue(
-                        updatedBalanceAmountValue = uiEvent.updatedBalanceAmountValue,
+                    uiState.events.setBalanceAmountValue(
+                        uiEvent.updatedBalanceAmountValue.copy(
+                            text = uiEvent.updatedBalanceAmountValue.text.filterDigits(),
+                        )
                     )
                 }
 
@@ -47,15 +66,27 @@ public fun EditAccountScreen(
                 }
 
                 is EditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
-                    viewModel.clearBalanceAmountValue()
+                    uiState.events.setBalanceAmountValue(
+                        uiState.state.balanceAmountValue.copy(
+                            text = "",
+                        )
+                    )
                 }
 
                 is EditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                    viewModel.clearMinimumAccountBalanceAmountValue()
+                    uiState.events.setMinimumAccountBalanceAmountValue(
+                        uiState.state.minimumBalanceAmountValue.copy(
+                            text = "",
+                        )
+                    )
                 }
 
                 is EditAccountScreenUIEvent.OnClearNameButtonClick -> {
-                    viewModel.clearName()
+                    uiState.events.setName(
+                        uiState.state.name.copy(
+                            text = "",
+                        )
+                    )
                 }
 
                 is EditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
@@ -63,21 +94,15 @@ public fun EditAccountScreen(
                 }
 
                 is EditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                    viewModel.updateMinimumAccountBalanceAmountValue(
-                        updatedMinimumAccountBalanceAmountValue = uiEvent.updatedMinimumAccountBalanceAmountValue,
-                    )
+                    uiState.events.setMinimumAccountBalanceAmountValue(uiEvent.updatedMinimumAccountBalanceAmountValue)
                 }
 
                 is EditAccountScreenUIEvent.OnNameUpdated -> {
-                    viewModel.updateName(
-                        updatedName = uiEvent.updatedName,
-                    )
+                    uiState.events.setName(uiEvent.updatedName)
                 }
 
                 is EditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                    viewModel.updateSelectedAccountTypeIndex(
-                        updatedIndex = uiEvent.updatedIndex,
-                    )
+                    uiState.events.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
                 }
             }
         }
@@ -87,6 +112,37 @@ public fun EditAccountScreen(
         key1 = Unit,
     ) {
         viewModel.initViewModel()
+    }
+
+    LaunchedEffect(
+        originalAccount,
+    ) {
+        originalAccount?.let { originalAccount ->
+            uiState.events.setSelectedAccountTypeIndex(
+                validAccountTypes.indexOf(
+                    element = originalAccount.type,
+                )
+            )
+            uiState.events.setName(
+                uiState.state.name.copy(
+                    text = originalAccount.name,
+                )
+            )
+            uiState.events.setBalanceAmountValue(
+                TextFieldValue(
+                    text = originalAccount.balanceAmount.value.toString(),
+                    selection = TextRange(originalAccount.balanceAmount.value.toString().length),
+                )
+            )
+            originalAccount.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
+                uiState.events.setMinimumAccountBalanceAmountValue(
+                    TextFieldValue(
+                        text = minimumAccountBalanceAmount.value.toString(),
+                        selection = TextRange(minimumAccountBalanceAmount.value.toString().length),
+                    )
+                )
+            }
+        }
     }
 
     EditAccountScreenUI(
