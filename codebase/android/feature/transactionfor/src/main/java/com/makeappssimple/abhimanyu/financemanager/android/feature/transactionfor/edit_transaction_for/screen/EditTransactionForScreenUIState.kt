@@ -14,5 +14,5 @@ internal data class EditTransactionForScreenUIState(
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     @StringRes val titleTextFieldErrorTextStringResourceId: Int?,
-    val title: TextFieldValue?,
+    val title: TextFieldValue,
 ) : ScreenUIState

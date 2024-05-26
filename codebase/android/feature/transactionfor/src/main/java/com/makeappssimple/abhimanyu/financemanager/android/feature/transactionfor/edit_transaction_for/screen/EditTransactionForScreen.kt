@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.TextRange
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.viewmodel.EditTransactionForScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun EditTransactionForScreen(
@@ -22,9 +24,14 @@ public fun EditTransactionForScreen(
         message = "Inside EditTransactionForScreen",
     )
 
-    val screenUIData: MyResult<EditTransactionForScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
+    val transactionFor: TransactionFor? by viewModel.transactionFor.collectAsStateWithLifecycle()
+    // endregion
+
     val uiStateAndEvents = rememberEditTransactionForScreenUIStateAndEvents(
-        data = screenUIData,
+        transactionForValues = transactionForValues,
+        transactionFor = transactionFor,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -41,11 +48,17 @@ public fun EditTransactionForScreen(
                 }
 
                 is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.updateTransactionFor()
+                    viewModel.updateTransactionFor(
+                        title = uiStateAndEvents.state.title.text,
+                    )
                 }
 
                 is EditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                    viewModel.clearTitle()
+                    uiStateAndEvents.events.setTitle(
+                        uiStateAndEvents.state.title.copy(
+                            text = "",
+                        )
+                    )
                 }
 
                 is EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
@@ -53,9 +66,7 @@ public fun EditTransactionForScreen(
                 }
 
                 is EditTransactionForScreenUIEvent.OnTitleUpdated -> {
-                    viewModel.updateTitle(
-                        updatedTitle = uiEvent.updatedTitle,
-                    )
+                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
                 }
             }
         }
@@ -65,6 +76,17 @@ public fun EditTransactionForScreen(
         key1 = Unit,
     ) {
         viewModel.initViewModel()
+    }
+
+    LaunchedEffect(transactionFor) {
+        transactionFor?.let { transactionFor ->
+            uiStateAndEvents.events.setTitle(
+                uiStateAndEvents.state.title.copy(
+                    text = transactionFor.title,
+                    selection = TextRange(transactionFor.title.length),
+                )
+            )
+        }
     }
 
     EditTransactionForScreenUI(

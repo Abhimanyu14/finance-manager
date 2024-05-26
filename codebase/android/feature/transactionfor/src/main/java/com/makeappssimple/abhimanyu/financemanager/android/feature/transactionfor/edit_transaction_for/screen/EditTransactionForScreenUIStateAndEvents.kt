@@ -6,11 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class EditTransactionForScreenUIStateAndEvents(
@@ -21,12 +24,15 @@ internal class EditTransactionForScreenUIStateAndEvents(
 @Stable
 internal class EditTransactionForScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
+    val setTitle: (updatedTitle: TextFieldValue) -> Unit,
 ) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberEditTransactionForScreenUIStateAndEvents(
-    data: MyResult<EditTransactionForScreenUIData>?,
+    transactionForValues: ImmutableList<TransactionFor>,
+    transactionFor: TransactionFor?,
 ): EditTransactionForScreenUIStateAndEvents {
+    // region screen bottom sheet type
     var screenBottomSheetType: EditTransactionForScreenBottomSheetType by remember {
         mutableStateOf(
             value = EditTransactionForScreenBottomSheetType.None,
@@ -36,37 +42,69 @@ internal fun rememberEditTransactionForScreenUIStateAndEvents(
         { updatedEditTransactionForScreenBottomSheetType: EditTransactionForScreenBottomSheetType ->
             screenBottomSheetType = updatedEditTransactionForScreenBottomSheetType
         }
+    // endregion
+
+    // region title
+    var title: TextFieldValue by remember {
+        mutableStateOf(
+            value = TextFieldValue(),
+        )
+    }
+    val setTitle = { updatedTitle: TextFieldValue ->
+        title = updatedTitle
+    }
+    // endregion
+
+    // region
+    var titleTextFieldErrorTextStringResourceId: Int? by remember {
+        mutableStateOf(
+            value = null,
+        )
+    }
+    // endregion
 
     return remember(
-        data,
         screenBottomSheetType,
+        setScreenBottomSheetType,
+        title,
+        setTitle,
+        titleTextFieldErrorTextStringResourceId,
+        transactionForValues,
+        transactionFor,
     ) {
-        val unwrappedData: EditTransactionForScreenUIData? = when (data) {
-            is MyResult.Success -> {
-                data.data
-            }
 
-            else -> {
-                null
-            }
+        titleTextFieldErrorTextStringResourceId = null
+        val isCtaButtonEnabled = if (title.text.isBlank()) {
+            false
+        } else if (title.text != transactionFor?.title && transactionForValues.find { transactionForValue ->
+                transactionForValue.title.equalsIgnoringCase(
+                    other = title.text,
+                )
+            }.isNotNull()
+        ) {
+            titleTextFieldErrorTextStringResourceId =
+                R.string.screen_add_or_edit_transaction_for_error_exists
+            false
+        } else {
+            true
         }
 
-        // TODO(Abhi): Can be reordered to match the class ordering
         EditTransactionForScreenUIStateAndEvents(
             state = EditTransactionForScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
-                isLoading = unwrappedData.isNull(),
-                isCtaButtonEnabled = unwrappedData?.isValidTransactionForData,
+                isLoading = false,
+                isCtaButtonEnabled = isCtaButtonEnabled,
                 appBarTitleTextStringResourceId = R.string.screen_edit_transaction_for_appbar_title,
                 ctaButtonLabelTextStringResourceId = R.string.screen_edit_transaction_for_floating_action_button_content_description,
-                title = unwrappedData?.title,
-                titleTextFieldErrorTextStringResourceId = unwrappedData?.titleTextFieldError?.textStringResourceId,
+                title = title,
+                titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
             ),
             events = EditTransactionForScreenUIStateEvents(
                 resetScreenBottomSheetType = {
                     setScreenBottomSheetType(EditTransactionForScreenBottomSheetType.None)
                 },
+                setTitle = setTitle,
             ),
         )
     }
