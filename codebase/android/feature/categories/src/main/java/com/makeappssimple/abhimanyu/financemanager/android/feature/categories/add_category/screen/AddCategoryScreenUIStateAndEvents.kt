@@ -84,7 +84,7 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
         }
     // endregion
 
-    // region title text field error
+    // region selected transaction type index
     var selectedTransactionTypeIndex: Int by remember {
         mutableIntStateOf(
             value = validTransactionTypes.indexOf(
@@ -97,7 +97,7 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
     }
     // endregion
 
-    // region title text field error
+    // region search text
     var searchText: String by remember {
         mutableStateOf(
             value = "",
@@ -108,7 +108,7 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
     }
     // endregion
 
-    // region title text field error
+    // region emoji
     var emoji: String by remember {
         mutableStateOf(
             value = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,

@@ -4,11 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.TextRange
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun EditCategoryScreen(
@@ -22,9 +25,17 @@ public fun EditCategoryScreen(
         message = "Inside EditCategoryScreen",
     )
 
-    val screenUIData: MyResult<EditCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    // region view model data
+    val categories: ImmutableList<Category> by viewModel.categories.collectAsStateWithLifecycle()
+    val category: Category? by viewModel.category.collectAsStateWithLifecycle()
+    val validTransactionTypes = viewModel.validTransactionTypes
+    val originalTransactionType: String? = viewModel.originalTransactionType
+    // endregion
+
     val uiStateAndEvents = rememberEditCategoryScreenUIStateAndEvents(
-        data = screenUIData,
+        categories = categories,
+        category = category,
+        validTransactionTypes = validTransactionTypes,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -34,9 +45,7 @@ public fun EditCategoryScreen(
             when (uiEvent) {
                 is EditCategoryScreenUIEvent.OnBottomSheetDismissed -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
-                    viewModel.updateSearchText(
-                        updatedSearchText = "",
-                    )
+                    uiStateAndEvents.events.setSearchText("")
                 }
 
                 is EditCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
@@ -44,11 +53,22 @@ public fun EditCategoryScreen(
                 }
 
                 is EditCategoryScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.updateCategory()
+                    category?.let { category ->
+                        uiStateAndEvents.state.selectedTransactionTypeIndex?.let { selectedTransactionTypeIndex ->
+                            viewModel.updateCategory(
+                                category = category.copy(
+                                    emoji = uiStateAndEvents.state.emoji,
+                                    title = uiStateAndEvents.state.title.text,
+                                    transactionType = validTransactionTypes[selectedTransactionTypeIndex],
+                                ),
+                            )
+                        }
+                    }
+                    Unit
                 }
 
                 is EditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
-                    viewModel.clearTitle()
+                    uiStateAndEvents.events.clearTitle()
                 }
 
                 is EditCategoryScreenUIEvent.OnEmojiCircleClick -> {
@@ -62,27 +82,19 @@ public fun EditCategoryScreen(
                 }
 
                 is EditCategoryScreenUIEvent.OnEmojiUpdated -> {
-                    viewModel.updateEmoji(
-                        updatedEmoji = uiEvent.updatedEmoji,
-                    )
+                    uiStateAndEvents.events.setEmoji(uiEvent.updatedEmoji)
                 }
 
                 is EditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                    viewModel.updateSearchText(
-                        updatedSearchText = uiEvent.updatedSearchText,
-                    )
+                    uiStateAndEvents.events.setSearchText(uiEvent.updatedSearchText)
                 }
 
                 is EditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                    viewModel.updateSelectedTransactionTypeIndex(
-                        updatedIndex = uiEvent.updatedIndex,
-                    )
+                    uiStateAndEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
                 }
 
                 is EditCategoryScreenUIEvent.OnTitleUpdated -> {
-                    viewModel.updateTitle(
-                        updatedTitle = uiEvent.updatedTitle,
-                    )
+                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
                 }
             }
         }
@@ -92,6 +104,32 @@ public fun EditCategoryScreen(
         key1 = Unit,
     ) {
         viewModel.initViewModel()
+        originalTransactionType?.let { originalTransactionType ->
+            uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+                validTransactionTypes.indexOf(
+                    element = TransactionType.entries.find { transactionType ->
+                        transactionType.title == originalTransactionType
+                    },
+                )
+            )
+        }
+    }
+
+    LaunchedEffect(category) {
+        category?.let { category ->
+            uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+                validTransactionTypes.indexOf(
+                    element = category.transactionType,
+                )
+            )
+            uiStateAndEvents.events.setTitle(
+                uiStateAndEvents.state.title.copy(
+                    text = category.title,
+                    selection = TextRange(category.title.length),
+                )
+            )
+            uiStateAndEvents.events.setEmoji(category.emoji)
+        }
     }
 
     EditCategoryScreenUI(
