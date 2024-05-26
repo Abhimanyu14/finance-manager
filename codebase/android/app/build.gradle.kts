@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
-    alias(libs.plugins.firebase.perf)
+    // alias(libs.plugins.firebase.perf)
     alias(libs.plugins.about.libraries)
 }
 
