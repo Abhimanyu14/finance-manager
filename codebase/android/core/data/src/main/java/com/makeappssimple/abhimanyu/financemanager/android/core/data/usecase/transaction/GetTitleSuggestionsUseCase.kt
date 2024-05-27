@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import javax.inject.Inject
 
-private object GetTitleSuggestionsUseCaseConstant {
+private object GetTitleSuggestionsUseCaseConstants {
     const val DEFAULT_NUMBER_OF_TITLE_SUGGESTIONS = 5
 }
 
@@ -12,7 +12,7 @@ public class GetTitleSuggestionsUseCase @Inject constructor(
 ) {
     public suspend operator fun invoke(
         categoryId: Int,
-        numberOfSuggestions: Int = GetTitleSuggestionsUseCaseConstant.DEFAULT_NUMBER_OF_TITLE_SUGGESTIONS,
+        numberOfSuggestions: Int = GetTitleSuggestionsUseCaseConstants.DEFAULT_NUMBER_OF_TITLE_SUGGESTIONS,
         enteredTitle: String,
     ): List<String> {
         return transactionRepository.getTitleSuggestions(

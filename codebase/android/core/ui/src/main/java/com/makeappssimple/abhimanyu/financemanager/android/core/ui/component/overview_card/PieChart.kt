@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer
 
-private object PieChartConstant {
+private object PieChartConstants {
     const val SLICE_THICKNESS = 30F
 }
 /*
@@ -43,7 +43,7 @@ public fun PieChart(
         com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChart(
             pieChartData = pieChartData,
             sliceDrawer = SimpleSliceDrawer(
-                sliceThickness = PieChartConstant.SLICE_THICKNESS,
+                sliceThickness = PieChartConstants.SLICE_THICKNESS,
             ),
         )
     }

@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.ReminderConstant
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.ReminderConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -344,7 +344,7 @@ public class MyPreferencesDataSourceTest {
         val result = myPreferencesDataSource.getReminder().first()?.hour
 
         Assert.assertEquals(
-            ReminderConstant.DEFAULT_REMINDER_HOUR,
+            ReminderConstants.DEFAULT_REMINDER_HOUR,
             result,
         )
     }
@@ -354,7 +354,7 @@ public class MyPreferencesDataSourceTest {
         val result = myPreferencesDataSource.getReminder().first()?.min
 
         Assert.assertEquals(
-            ReminderConstant.DEFAULT_REMINDER_MIN,
+            ReminderConstants.DEFAULT_REMINDER_MIN,
             result,
         )
     }

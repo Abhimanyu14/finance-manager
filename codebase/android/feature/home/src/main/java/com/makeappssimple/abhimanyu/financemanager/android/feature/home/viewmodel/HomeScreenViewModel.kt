@@ -37,7 +37,7 @@ import java.time.Instant
 import javax.inject.Inject
 import kotlin.math.abs
 
-private object HomeScreenViewModelConstant {
+private object HomeScreenViewModelConstants {
     const val DEFAULT_OVERVIEW_TAB_SELECTION = 1
 }
 
@@ -58,7 +58,7 @@ public class HomeScreenViewModel @Inject constructor(
     public val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
 
     public val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = HomeScreenViewModelConstant.DEFAULT_OVERVIEW_TAB_SELECTION,
+        value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
     )
 
     private val timestamp: MutableStateFlow<Long> = MutableStateFlow(

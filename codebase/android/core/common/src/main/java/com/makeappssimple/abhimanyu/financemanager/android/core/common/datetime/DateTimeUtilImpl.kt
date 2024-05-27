@@ -17,7 +17,7 @@ import java.time.YearMonth
 import java.time.ZoneId
 import javax.inject.Inject
 
-private object DateTimeUtilImplConstant {
+private object DateTimeUtilImplConstants {
     const val LAST_MONTH_OF_YEAR = 12
 }
 
@@ -288,7 +288,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
                 zoneId = zoneId,
             )
             .toLocalDate()
-            .withMonth(DateTimeUtilImplConstant.LAST_MONTH_OF_YEAR)
+            .withMonth(DateTimeUtilImplConstants.LAST_MONTH_OF_YEAR)
         val localDate: LocalDate = YearMonth
             .from(localDateTime)
             .atEndOfMonth()

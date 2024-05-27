@@ -6,7 +6,7 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 
-private object MyJsonWriterImplConstant {
+private object MyJsonWriterImplConstants {
     const val WRITE_MODE = "w"
 }
 
@@ -20,7 +20,7 @@ public class MyJsonWriterImpl(
         return try {
             context.contentResolver.openFileDescriptor(
                 uri,
-                MyJsonWriterImplConstant.WRITE_MODE,
+                MyJsonWriterImplConstants.WRITE_MODE,
             )?.use {
                 FileOutputStream(it.fileDescriptor).use { fileOutputStream ->
                     fileOutputStream.write(jsonString.toByteArray())

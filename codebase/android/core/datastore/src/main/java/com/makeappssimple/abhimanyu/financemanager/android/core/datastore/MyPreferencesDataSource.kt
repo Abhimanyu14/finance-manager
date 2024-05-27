@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimest
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.ReminderConstant
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.ReminderConstants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -67,8 +67,8 @@ public class MyPreferencesDataSource(
             Reminder(
                 isEnabled = it[DataStoreConstants.Reminder.IS_REMINDER_ENABLED].orFalse(),
                 hour = it[DataStoreConstants.Reminder.HOUR]
-                    ?: ReminderConstant.DEFAULT_REMINDER_HOUR,
-                min = it[DataStoreConstants.Reminder.MIN] ?: ReminderConstant.DEFAULT_REMINDER_MIN,
+                    ?: ReminderConstants.DEFAULT_REMINDER_HOUR,
+                min = it[DataStoreConstants.Reminder.MIN] ?: ReminderConstants.DEFAULT_REMINDER_MIN,
             )
         }
     }

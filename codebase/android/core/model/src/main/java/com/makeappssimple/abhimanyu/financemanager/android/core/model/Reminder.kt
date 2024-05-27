@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 /**
  * Daily 09:30 PM.
  */
-public object ReminderConstant {
+public object ReminderConstants {
     public const val DEFAULT_REMINDER_HOUR: Int = 21
     public const val DEFAULT_REMINDER_MIN: Int = 30
 }
@@ -17,8 +17,8 @@ public data class Reminder(
     val isEnabled: Boolean = false,
 
     @SerialName(value = "hour")
-    val hour: Int = ReminderConstant.DEFAULT_REMINDER_HOUR,
+    val hour: Int = ReminderConstants.DEFAULT_REMINDER_HOUR,
 
     @SerialName(value = "min")
-    val min: Int = ReminderConstant.DEFAULT_REMINDER_MIN,
+    val min: Int = ReminderConstants.DEFAULT_REMINDER_MIN,
 )
