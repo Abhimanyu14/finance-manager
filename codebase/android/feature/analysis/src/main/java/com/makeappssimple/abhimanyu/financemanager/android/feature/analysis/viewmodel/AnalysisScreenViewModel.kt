@@ -22,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -41,7 +40,13 @@ public class AnalysisScreenViewModel @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    public var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
+    public var allTransactionData: StateFlow<ImmutableList<TransactionData>> =
+        getAllTransactionDataFlowUseCase()
+            .map {
+                it.toImmutableList()
+            }.defaultListStateIn(
+                scope = viewModelScope,
+            )
     public val validTransactionTypes: List<TransactionType> = listOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,

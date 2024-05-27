@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
@@ -16,10 +17,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
@@ -35,7 +36,10 @@ public class SettingsScreenViewModel @Inject constructor(
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : ScreenViewModel, ViewModel() {
     public val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
-    public val reminder: Flow<Reminder?> = myPreferencesRepository.getReminderFlow()
+    public val reminder: StateFlow<Reminder?> = myPreferencesRepository.getReminderFlow()
+        .defaultObjectStateIn(
+            scope = viewModelScope,
+        )
     public val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
     )

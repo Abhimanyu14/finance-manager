@@ -2,6 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultLongStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
@@ -12,7 +15,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,10 +33,17 @@ public class AccountsScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    public val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataIdFlow().map {
-        it?.account
-    }
-    public val allAccounts: Flow<List<Account>> = getAllAccountsFlowUseCase()
+    public val defaultAccountId: StateFlow<Int?> =
+        myPreferencesRepository.getDefaultDataIdFlow().map {
+            it?.account
+        }.defaultObjectStateIn(
+            scope = viewModelScope,
+        )
+    public val allAccounts: StateFlow<ImmutableList<Account>> = getAllAccountsFlowUseCase().map {
+        it.toImmutableList()
+    }.defaultListStateIn(
+        scope = viewModelScope,
+    )
     public val isAccountUsedInTransactions: Flow<Map<Int, Boolean>> = allAccounts.map { accounts ->
         accounts.associate { account ->
             account.id to checkIfAccountIsUsedInTransactionsUseCase(
@@ -38,10 +51,14 @@ public class AccountsScreenViewModel @Inject constructor(
             )
         }
     }
-    public val accountsTotalBalanceAmountValue: Flow<Long> =
-        getAccountsTotalBalanceAmountValueUseCase()
-    public val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
-        getAccountsTotalMinimumBalanceAmountValueUseCase()
+    public val accountsTotalBalanceAmountValue: StateFlow<Long> =
+        getAccountsTotalBalanceAmountValueUseCase().defaultLongStateIn(
+            scope = viewModelScope,
+        )
+    public val accountsTotalMinimumBalanceAmountValue: StateFlow<Long> =
+        getAccountsTotalMinimumBalanceAmountValueUseCase().defaultLongStateIn(
+            scope = viewModelScope,
+        )
 
     public fun deleteAccount(
         accountId: Int,

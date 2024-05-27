@@ -32,9 +32,7 @@ public fun EditTransactionScreen(
     // region view model data
     val uiState: EditTransactionScreenUiStateData by viewModel.uiState.collectAsStateWithLifecycle()
     val uiVisibilityState: EditTransactionScreenUiVisibilityState by viewModel.uiVisibilityState.collectAsStateWithLifecycle()
-    val isCtaButtonEnabled: Boolean by viewModel.isCtaButtonEnabled.collectAsStateWithLifecycle(
-        initialValue = false,
-    )
+    val isCtaButtonEnabled: Boolean by viewModel.isCtaButtonEnabled.collectAsStateWithLifecycle()
     val filteredCategories: ImmutableList<Category> by viewModel.filteredCategories.collectAsStateWithLifecycle()
     val titleSuggestions: ImmutableList<String>? by viewModel.titleSuggestions.collectAsStateWithLifecycle()
     val selectedTransactionType: TransactionType? by viewModel.selectedTransactionType.collectAsStateWithLifecycle()

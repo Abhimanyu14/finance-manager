@@ -31,9 +31,7 @@ public fun AnalysisScreen(
     val oldestTransactionLocalDate: LocalDate? by viewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle()
     val transactionDataMappedByCategory: List<AnalysisListItemData> by viewModel.transactionDataMappedByCategory.collectAsStateWithLifecycle()
     val selectedFilter: Filter by viewModel.selectedFilter.collectAsStateWithLifecycle()
-    val allTransactionData: List<TransactionData> by viewModel.allTransactionData.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
+    val allTransactionData: List<TransactionData> by viewModel.allTransactionData.collectAsStateWithLifecycle()
     val validTransactionTypes: List<TransactionType> = viewModel.validTransactionTypes
     val transactionTypesChipUIData: List<ChipUIData> = viewModel.transactionTypesChipUIData
     // endregion

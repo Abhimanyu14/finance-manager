@@ -14,7 +14,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartUti
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SliceDrawer
 
-public fun simpleChartAnimation(): TweenSpec<Float> = TweenSpec<Float>(durationMillis = 500)
+public fun simpleChartAnimation(): TweenSpec<Float> = TweenSpec(
+    durationMillis = 500,
+)
 
 @Composable
 public fun PieChart(
@@ -23,7 +25,13 @@ public fun PieChart(
     animation: AnimationSpec<Float> = simpleChartAnimation(),
     sliceDrawer: SliceDrawer = SimpleSliceDrawer(),
 ) {
-    val transitionProgress = remember(pieChartData.items) { Animatable(initialValue = 0F) }
+    val transitionProgress = remember(
+        key1 = pieChartData.items,
+    ) {
+        Animatable(
+            initialValue = 0F,
+        )
+    }
 
     // When slices value changes we want to re-animated the chart.
     LaunchedEffect(
@@ -53,7 +61,9 @@ private fun DrawChart(
 ) {
     val slices = pieChartData.items
 
-    Canvas(modifier = modifier) {
+    Canvas(
+        modifier = modifier,
+    ) {
         drawIntoCanvas {
             var startArc = 0F
 
@@ -61,7 +71,7 @@ private fun DrawChart(
                 val arc = calculateAngle(
                     sliceLength = slice.value,
                     totalLength = pieChartData.totalSize,
-                    progress = progress
+                    progress = progress,
                 )
 
                 sliceDrawer.drawSlice(
@@ -70,7 +80,7 @@ private fun DrawChart(
                     area = size,
                     startAngle = startArc,
                     sweepAngle = arc,
-                    slice = slice
+                    slice = slice,
                 )
 
                 startArc += arc

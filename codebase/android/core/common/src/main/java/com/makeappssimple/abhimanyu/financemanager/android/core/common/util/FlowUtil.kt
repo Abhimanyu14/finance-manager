@@ -21,18 +21,18 @@ public fun Flow<Boolean>.defaultBooleanStateIn(
     )
 }
 
-//public fun <T> Flow<List<T>>.defaultListStateIn(
-//    scope: CoroutineScope,
-//    started: SharingStarted = SharingStarted.WhileSubscribed(
-//        stopTimeoutMillis = 5000,
-//    ),
-//): StateFlow<List<T>> {
-//    return this.stateIn(
-//        scope = scope,
-//        started = started,
-//        initialValue = emptyList(),
-//    )
-//}
+public fun Flow<Long>.defaultLongStateIn(
+    scope: CoroutineScope,
+    started: SharingStarted = SharingStarted.WhileSubscribed(
+        stopTimeoutMillis = 5000,
+    ),
+): StateFlow<Long> {
+    return this.stateIn(
+        scope = scope,
+        started = started,
+        initialValue = 0L,
+    )
+}
 
 public fun <T> Flow<ImmutableList<T>>.defaultListStateIn(
     scope: CoroutineScope,

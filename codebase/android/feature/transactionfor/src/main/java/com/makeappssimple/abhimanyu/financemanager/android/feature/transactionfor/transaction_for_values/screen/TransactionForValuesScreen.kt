@@ -23,9 +23,7 @@ public fun TransactionForValuesScreen(
 
     // region view model data
     val transactionForValues: List<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
-    val transactionForValuesIsUsedInTransactions: List<Boolean> by viewModel.transactionForValuesIsUsedInTransactions.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
+    val transactionForValuesIsUsedInTransactions: List<Boolean> by viewModel.transactionForValuesIsUsedInTransactions.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberTransactionForValuesScreenUIStateAndEvents(

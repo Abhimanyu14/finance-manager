@@ -23,21 +23,13 @@ public fun AccountsScreen(
     )
 
     // region view model data
-    val defaultAccountId: Int? by viewModel.defaultAccountId.collectAsStateWithLifecycle(
-        initialValue = null,
-    )
-    val allAccounts: List<Account> by viewModel.allAccounts.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
+    val defaultAccountId: Int? by viewModel.defaultAccountId.collectAsStateWithLifecycle()
+    val allAccounts: List<Account> by viewModel.allAccounts.collectAsStateWithLifecycle()
     val isAccountUsedInTransactions: Map<Int, Boolean> by viewModel.isAccountUsedInTransactions.collectAsStateWithLifecycle(
         initialValue = emptyMap(),
     )
-    val accountsTotalBalanceAmountValue: Long by viewModel.accountsTotalBalanceAmountValue.collectAsStateWithLifecycle(
-        initialValue = 0L,
-    )
-    val accountsTotalMinimumBalanceAmountValue: Long by viewModel.accountsTotalMinimumBalanceAmountValue.collectAsStateWithLifecycle(
-        initialValue = 0L,
-    )
+    val accountsTotalBalanceAmountValue: Long by viewModel.accountsTotalBalanceAmountValue.collectAsStateWithLifecycle()
+    val accountsTotalMinimumBalanceAmountValue: Long by viewModel.accountsTotalMinimumBalanceAmountValue.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberAccountsScreenUIStateAndEvents(

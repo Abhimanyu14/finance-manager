@@ -71,9 +71,7 @@ public fun SettingsScreen(
     )
 
     // region view model data
-    val reminder: Reminder? by viewModel.reminder.collectAsStateWithLifecycle(
-        initialValue = null,
-    )
+    val reminder: Reminder? by viewModel.reminder.collectAsStateWithLifecycle()
     val isLoading: Boolean by viewModel.isLoading.collectAsStateWithLifecycle()
     val appVersionName: String = viewModel.appVersionName
     // endregion

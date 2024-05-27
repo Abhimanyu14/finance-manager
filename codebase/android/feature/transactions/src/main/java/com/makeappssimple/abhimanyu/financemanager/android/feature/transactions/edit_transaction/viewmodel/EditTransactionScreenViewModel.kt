@@ -18,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
@@ -170,7 +171,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         it.category?.id
     }
 
-    public val isCtaButtonEnabled: Flow<Boolean> = combine(
+    public val isCtaButtonEnabled: StateFlow<Boolean> = combine(
         flow = uiState,
         flow2 = selectedTransactionType,
     ) { uiState, selectedTransactionType ->
@@ -241,7 +242,9 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 false
             }
         }
-    }
+    }.defaultBooleanStateIn(
+        scope = viewModelScope,
+    )
 
     public val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,

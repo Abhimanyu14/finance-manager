@@ -10,7 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -24,17 +25,20 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     public val transactionForValues: StateFlow<List<TransactionFor>> =
-        getAllTransactionForValuesFlowUseCase().defaultListStateIn(
-            scope = viewModelScope,
-        )
-    public val transactionForValuesIsUsedInTransactions: Flow<List<Boolean>> =
+        getAllTransactionForValuesFlowUseCase()
+            .defaultListStateIn(
+                scope = viewModelScope,
+            )
+    public val transactionForValuesIsUsedInTransactions: StateFlow<ImmutableList<Boolean>> =
         transactionForValues.map {
             it.map { transactionFor ->
                 checkIfTransactionForIsUsedInTransactionsUseCase(
                     transactionForId = transactionFor.id,
                 )
-            }
-        }
+            }.toImmutableList()
+        }.defaultListStateIn(
+            scope = viewModelScope,
+        )
 
     public fun deleteTransactionFor(
         id: Int,

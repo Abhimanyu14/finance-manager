@@ -39,19 +39,11 @@ public fun HomeScreen(
 
     // region view model data
     val overviewCardData: OverviewCardViewModelData? by viewModel.overviewCardData.collectAsStateWithLifecycle()
-    val homeListItemViewData: List<TransactionListItemData> by viewModel.homeListItemViewData.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
-    val isBackupCardVisible: Boolean by viewModel.isBackupCardVisible.collectAsStateWithLifecycle(
-        initialValue = false,
-    )
+    val homeListItemViewData: List<TransactionListItemData> by viewModel.homeListItemViewData.collectAsStateWithLifecycle()
+    val isBackupCardVisible: Boolean by viewModel.isBackupCardVisible.collectAsStateWithLifecycle()
     val overviewTabSelectionIndex: Int by viewModel.overviewTabSelectionIndex.collectAsStateWithLifecycle()
-    val accountsTotalBalanceAmountValue: Long by viewModel.accountsTotalBalanceAmountValue.collectAsStateWithLifecycle(
-        initialValue = 0L,
-    )
-    val accountsTotalMinimumBalanceAmountValue: Long by viewModel.accountsTotalMinimumBalanceAmountValue.collectAsStateWithLifecycle(
-        initialValue = 0L,
-    )
+    val accountsTotalBalanceAmountValue: Long by viewModel.accountsTotalBalanceAmountValue.collectAsStateWithLifecycle()
+    val accountsTotalMinimumBalanceAmountValue: Long by viewModel.accountsTotalMinimumBalanceAmountValue.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberHomeScreenUIStateAndEvents(
