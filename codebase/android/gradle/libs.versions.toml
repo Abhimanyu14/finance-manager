@@ -6,10 +6,6 @@ compile-sdk = "34"
 target-sdk = "34"
 min-sdk = "27"
 
-# Map according to to kotlin version from here,
-# https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-jetpack-compose-compiler = "1.5.12"
-
 androidx-core = "1.13.1"
 lifecycle = "2.7.0"
 coroutines = "1.8.0"
@@ -28,7 +24,7 @@ detekt-rules-compose-nlopez = "0.3.21"
 detekt-rules = "1.0.0"
 hilt-android = "2.51.1"
 hilt-android-compiler = "2.51.1"
-ksp = "1.9.23-1.0.20"
+ksp = "2.0.0-1.0.21"
 jdk-desugaring = "2.0.4"
 datastore = "1.1.1"
 room = "2.6.1"
@@ -52,11 +48,11 @@ konsist = "0.15.1"
 # Plugins
 agp = "8.4.0"
 plugin-android-library = "8.4.0"
-plugin-kotlin-android = "1.9.23"
-plugin-kotlin-jvm = "1.9.23"
-plugin-kotlin-serialization = "1.9.23"
+plugin-kotlin-android = "2.0.0"
+plugin-kotlin-jvm = "2.0.0"
+plugin-kotlin-serialization = "2.0.0"
 plugin-kotlin-kover = "0.6.1"
-plugin-ksp = "1.9.23-1.0.20"
+plugin-ksp = "2.0.0-1.0.21"
 plugin-hilt-android = "2.51.1"
 plugin-google-services = "4.4.1"
 plugin-firebase-crashlytics = "2.9.9"
@@ -149,6 +145,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-kotlin-android" }
 android-library = { id = "com.android.library", version.ref = "plugin-android-library" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "plugin-kotlin-android" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-kotlin-serialization" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "plugin-kotlin-kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "plugin-ksp" }

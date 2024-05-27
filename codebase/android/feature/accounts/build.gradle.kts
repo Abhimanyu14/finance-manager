@@ -4,6 +4,7 @@ plugins {
 
     // Kotlin android
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
@@ -73,10 +74,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.12" // jetpackComposeCompilerVersion
     }
 }
 
