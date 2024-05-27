@@ -27,6 +27,12 @@ internal class CategoriesScreenUIStateAndEvents(
 internal fun rememberCategoriesScreenUIStateAndEvents(
     categoriesGridItemDataMap: Map<TransactionType, ImmutableList<CategoriesGridItemData>>,
 ): CategoriesScreenUIStateAndEvents {
+    // region pager state
+    val pagerState: PagerState = rememberPagerState(
+        pageCount = { 3 },
+    )
+    // endregion
+
     // region screen bottom sheet type
     var screenBottomSheetType: CategoriesScreenBottomSheetType by remember {
         mutableStateOf(
@@ -72,17 +78,13 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
     }
     // endregion
 
-    val pagerState: PagerState = rememberPagerState(
-        pageCount = { 3 },
-    )
-
     return remember(
-        screenBottomSheetType,
-        categoryIdToDelete,
-        clickedItemId,
         pagerState,
+        screenBottomSheetType,
         setScreenBottomSheetType,
+        categoryIdToDelete,
         setCategoryIdToDelete,
+        clickedItemId,
         setClickedItemId,
         selectedCategoryTypeIndex,
         setSelectedCategoryTypeIndex,

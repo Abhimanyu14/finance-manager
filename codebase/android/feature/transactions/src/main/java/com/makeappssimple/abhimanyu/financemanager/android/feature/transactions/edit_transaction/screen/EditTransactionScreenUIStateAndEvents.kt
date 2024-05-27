@@ -43,6 +43,7 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
     transactionForValues: ImmutableList<TransactionFor>,
     accounts: ImmutableList<Account>,
 ): EditTransactionScreenUIStateAndEvents {
+    // region screen bottom sheet type
     var screenBottomSheetType: EditTransactionScreenBottomSheetType by remember {
         mutableStateOf(
             value = EditTransactionScreenBottomSheetType.None,
@@ -52,15 +53,20 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
         { updatedEditTransactionScreenBottomSheetType: EditTransactionScreenBottomSheetType ->
             screenBottomSheetType = updatedEditTransactionScreenBottomSheetType
         }
+    // endregion
 
+    // region is transaction date picker dialog visible
     val (isTransactionDatePickerDialogVisible, setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
+    // endregion
 
+    // region is transaction time picker dialog visible
     val (isTransactionTimePickerDialogVisible, setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
-
+    // endregion
+    
     return remember(
         screenBottomSheetType,
         setScreenBottomSheetType,

@@ -36,6 +36,11 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
     transactionTypesChipUIData: List<ChipUIData>,
 ): AnalysisScreenUIStateAndEvents {
     val textMeasurer: TextMeasurer = rememberTextMeasurer()
+    val dateTimeUtil = remember {
+        DateTimeUtilImpl()
+    }
+
+    // region screen bottom sheet type
     var screenBottomSheetType: AnalysisScreenBottomSheetType by remember {
         mutableStateOf(
             value = AnalysisScreenBottomSheetType.None,
@@ -45,13 +50,12 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
         { updatedAnalysisScreenBottomSheetType: AnalysisScreenBottomSheetType ->
             screenBottomSheetType = updatedAnalysisScreenBottomSheetType
         }
-    val dateTimeUtil = remember {
-        DateTimeUtilImpl()
-    }
+    // endregion
 
     return remember(
-        screenBottomSheetType,
         textMeasurer,
+        dateTimeUtil,
+        screenBottomSheetType,
         setScreenBottomSheetType,
         selectedTransactionTypeIndex,
         oldestTransactionLocalDate,

@@ -15,8 +15,7 @@ internal class OpenSourceLicensesScreenUIStateAndEvents(
 ) : ScreenUIStateAndEvents
 
 @Composable
-internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(
-): OpenSourceLicensesScreenUIStateAndEvents {
+internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(): OpenSourceLicensesScreenUIStateAndEvents {
     // region screen bottom sheet type
     var screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType by remember {
         mutableStateOf(

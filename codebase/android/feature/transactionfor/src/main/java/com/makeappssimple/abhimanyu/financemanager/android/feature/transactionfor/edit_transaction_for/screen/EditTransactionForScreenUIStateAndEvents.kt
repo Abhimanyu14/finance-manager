@@ -48,7 +48,7 @@ internal fun rememberEditTransactionForScreenUIStateAndEvents(
     }
     // endregion
 
-    // region
+    // region title text field error text string resource id
     var titleTextFieldErrorTextStringResourceId: Int? by remember {
         mutableStateOf(
             value = null,

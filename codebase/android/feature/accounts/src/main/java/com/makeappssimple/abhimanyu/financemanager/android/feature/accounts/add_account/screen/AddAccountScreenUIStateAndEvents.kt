@@ -67,10 +67,13 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
     val setName = { updatedName: TextFieldValue ->
         name = updatedName
     }
+    // endregion
+
+    // region name text field focus requester
     val nameTextFieldFocusRequester = remember {
         FocusRequester()
     }
-    // endregion
+    // region
 
     // region minimum account balance amount value
     var minimumAccountBalanceAmountValue: TextFieldValue by remember {
@@ -84,6 +87,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         }
     // endregion
 
+    // region is valid data
     val isValidData: Boolean = remember(
         key1 = name,
     ) {
@@ -95,7 +99,9 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
             account = name.text.trim(),
         ))
     }
+    // endregion
 
+    // region name text field error text string resource id
     val nameTextFieldErrorTextStringResourceId: Int? by remember(
         key1 = name,
     ) {
@@ -107,6 +113,9 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
             }
         }
     }
+    // endregion
+
+    // selected account type
     val selectedAccountType = remember(
         key1 = selectedAccountTypeIndex,
     ) {
@@ -114,6 +123,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
             index = selectedAccountTypeIndex,
         )
     }
+    // endregion
 
     return remember(
         screenBottomSheetType,

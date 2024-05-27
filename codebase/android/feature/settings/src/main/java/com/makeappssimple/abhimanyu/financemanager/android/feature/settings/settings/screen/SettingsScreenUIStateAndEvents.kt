@@ -26,6 +26,8 @@ internal fun rememberSettingsScreenUIStateAndEvents(
     val snackbarHostState: SnackbarHostState = remember {
         SnackbarHostState()
     }
+
+    // region screen bottom sheet type
     var screenBottomSheetType: SettingsScreenBottomSheetType by remember {
         mutableStateOf(
             value = SettingsScreenBottomSheetType.None,
@@ -35,13 +37,15 @@ internal fun rememberSettingsScreenUIStateAndEvents(
         { updatedSettingsScreenBottomSheetType: SettingsScreenBottomSheetType ->
             screenBottomSheetType = updatedSettingsScreenBottomSheetType
         }
+    // endregion
 
     return remember(
-        screenBottomSheetType,
         snackbarHostState,
+        screenBottomSheetType,
         setScreenBottomSheetType,
-        reminder,
         isLoading,
+        reminder,
+        appVersionName,
     ) {
         SettingsScreenUIStateAndEvents(
             state = SettingsScreenUIState(

@@ -107,7 +107,7 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
     }
     // endregion
 
-    // region error data
+    // region name text field error text string resource id
     var nameTextFieldErrorTextStringResourceId: Int? by remember {
         mutableStateOf(
             value = null,
@@ -124,6 +124,9 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
         minimumAccountBalanceAmountValue,
         selectedAccountTypeIndex,
         nameTextFieldErrorTextStringResourceId,
+        accounts,
+        originalAccount,
+        validAccountTypes,
     ) {
         val selectedAccount = validAccountTypes.getOrNull(
             selectedAccountTypeIndex

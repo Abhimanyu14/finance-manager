@@ -55,9 +55,15 @@ internal fun rememberHomeScreenUIStateAndEvents(
 
     return remember(
         isBalanceVisible,
-        screenBottomSheetType,
         setBalanceVisible,
+        screenBottomSheetType,
         setScreenBottomSheetType,
+        overviewCardData,
+        homeListItemViewData,
+        isBackupCardVisible,
+        overviewTabSelectionIndex,
+        accountsTotalBalanceAmountValue,
+        accountsTotalMinimumBalanceAmountValue,
     ) {
         val totalIncomeAmount = Amount(
             value = overviewCardData?.income?.toLong().orZero(),

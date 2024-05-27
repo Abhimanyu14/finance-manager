@@ -32,7 +32,7 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
     }
     // endregion
 
-    // region
+    // region screen bottom sheet type
     var screenBottomSheetType: ViewTransactionScreenBottomSheetType by remember {
         mutableStateOf(
             value = ViewTransactionScreenBottomSheetType.None,
@@ -42,11 +42,12 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
         { updatedViewTransactionScreenBottomSheetType: ViewTransactionScreenBottomSheetType ->
             screenBottomSheetType = updatedViewTransactionScreenBottomSheetType
         }
+    // endregion
 
     return remember(
         transactionIdToDelete,
-        screenBottomSheetType,
         setTransactionIdToDelete,
+        screenBottomSheetType,
         setScreenBottomSheetType,
         originalTransactionListItemData,
         refundTransactionListItemData,

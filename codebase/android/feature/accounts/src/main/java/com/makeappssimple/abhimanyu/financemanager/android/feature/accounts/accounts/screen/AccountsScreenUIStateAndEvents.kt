@@ -70,10 +70,10 @@ internal fun rememberAccountsScreenUIStateAndEvents(
 
     return remember(
         clickedItemId,
-        accountIdToDelete,
-        screenBottomSheetType,
         setClickedItemId,
+        accountIdToDelete,
         setAccountIdToDelete,
+        screenBottomSheetType,
         setScreenBottomSheetType,
         defaultAccountId,
         allAccounts,
