@@ -11,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import kotlinx.collections.immutable.ImmutableList
 
@@ -20,12 +19,6 @@ internal class EditTransactionForScreenUIStateAndEvents(
     val state: EditTransactionForScreenUIState,
     val events: EditTransactionForScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class EditTransactionForScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setTitle: (updatedTitle: TextFieldValue) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberEditTransactionForScreenUIStateAndEvents(

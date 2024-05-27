@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
@@ -27,14 +25,6 @@ internal class AccountsScreenUIStateAndEvents(
     val state: AccountsScreenUIState,
     val events: AccountsScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Immutable
-internal data class AccountsScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setAccountIdToDelete: (Int?) -> Unit,
-    val setClickedItemId: (Int?) -> Unit,
-    val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberAccountsScreenUIStateAndEvents(

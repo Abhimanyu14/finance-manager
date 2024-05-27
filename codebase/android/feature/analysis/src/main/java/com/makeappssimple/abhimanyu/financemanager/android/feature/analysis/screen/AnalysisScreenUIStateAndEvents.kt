@@ -15,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
 import java.time.LocalDate
@@ -25,12 +24,6 @@ internal class AnalysisScreenUIStateAndEvents(
     val state: AnalysisScreenUIState,
     val events: AnalysisScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class AnalysisScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberAnalysisScreenUIStateAndEvents(

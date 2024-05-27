@@ -14,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
@@ -28,17 +27,6 @@ internal class EditCategoryScreenUIStateAndEvents(
     val state: EditCategoryScreenUIState,
     val events: EditCategoryScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class EditCategoryScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setScreenBottomSheetType: (EditCategoryScreenBottomSheetType) -> Unit,
-    val setTitle: (updatedTitle: TextFieldValue) -> Unit,
-    val clearTitle: () -> Unit,
-    val setSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
-    val setSearchText: (updatedSearchText: String) -> Unit,
-    val setEmoji: (updatedEmoji: String) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberEditCategoryScreenUIStateAndEvents(

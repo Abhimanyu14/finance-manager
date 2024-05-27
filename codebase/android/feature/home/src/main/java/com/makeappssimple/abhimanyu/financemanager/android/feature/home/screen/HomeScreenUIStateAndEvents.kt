@@ -14,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toNonSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
@@ -24,12 +23,6 @@ internal class HomeScreenUIStateAndEvents(
     val state: HomeScreenUIState,
     val events: HomeScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class HomeScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setBalanceVisible: (Boolean) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberHomeScreenUIStateAndEvents(

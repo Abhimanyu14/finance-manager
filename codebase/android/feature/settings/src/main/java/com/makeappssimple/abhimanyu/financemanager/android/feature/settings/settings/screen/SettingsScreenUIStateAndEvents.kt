@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,18 +10,12 @@ import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
 @Stable
 internal class SettingsScreenUIStateAndEvents(
     val state: SettingsScreenUIState,
     val events: SettingsScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Immutable
-internal data class SettingsScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberSettingsScreenUIStateAndEvents(

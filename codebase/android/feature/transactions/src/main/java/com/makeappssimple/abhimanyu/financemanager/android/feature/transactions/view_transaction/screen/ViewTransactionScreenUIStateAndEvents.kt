@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 
 @Stable
@@ -15,13 +14,6 @@ internal class ViewTransactionScreenUIStateAndEvents(
     val state: ViewTransactionScreenUIState,
     val events: ViewTransactionScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class ViewTransactionScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
-    val setTransactionIdToDelete: (Int?) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberViewTransactionScreenUIStateAndEvents(

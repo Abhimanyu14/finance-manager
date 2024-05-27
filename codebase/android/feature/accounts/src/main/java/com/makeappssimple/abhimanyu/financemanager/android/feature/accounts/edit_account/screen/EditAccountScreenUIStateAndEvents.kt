@@ -17,7 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
@@ -30,15 +29,6 @@ internal class EditAccountScreenUIStateAndEvents(
     val state: EditAccountScreenUIState,
     val events: EditAccountScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class EditAccountScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setName: (updatedName: TextFieldValue) -> Unit,
-    val setBalanceAmountValue: (updatedBalanceAmountValue: TextFieldValue) -> Unit,
-    val setMinimumAccountBalanceAmountValue: (updatedMinimumAccountBalanceAmountValue: TextFieldValue) -> Unit,
-    val setSelectedAccountTypeIndex: (updatedSelectedAccountTypeIndex: Int) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberEditAccountScreenUIStateAndEvents(

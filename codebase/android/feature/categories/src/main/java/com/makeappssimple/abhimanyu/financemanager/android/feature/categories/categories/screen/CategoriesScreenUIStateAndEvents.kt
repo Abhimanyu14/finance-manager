@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -23,15 +22,6 @@ internal class CategoriesScreenUIStateAndEvents(
     val state: CategoriesScreenUIState,
     val events: CategoriesScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class CategoriesScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setCategoryIdToDelete: (updatedCategoryIdToDelete: Int?) -> Unit,
-    val setClickedItemId: (updatedClickedItemId: Int?) -> Unit,
-    val setScreenBottomSheetType: (updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType) -> Unit,
-    val setSelectedCategoryTypeIndex: (updatedSelectedCategoryTypeIndex: Int) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberCategoriesScreenUIStateAndEvents(

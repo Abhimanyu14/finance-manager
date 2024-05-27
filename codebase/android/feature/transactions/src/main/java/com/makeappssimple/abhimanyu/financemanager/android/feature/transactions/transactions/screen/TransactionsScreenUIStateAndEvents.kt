@@ -29,7 +29,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.or
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import kotlinx.collections.immutable.ImmutableList
@@ -41,20 +40,6 @@ internal class TransactionsScreenUIStateAndEvents(
     val state: TransactionsScreenUIState,
     val events: TransactionsScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class TransactionsScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setIsInSelectionMode: (Boolean) -> Unit,
-    val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
-    val setSearchText: (updatedSearchText: String) -> Unit,
-    val setSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
-    val setSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit,
-    val addToSelectedTransactions: (transactionId: Int) -> Unit,
-    val removeFromSelectedTransactions: (transactionId: Int) -> Unit,
-    val clearSelectedTransactions: () -> Unit,
-    val selectAllTransactions: () -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberTransactionsScreenUIStateAndEvents(

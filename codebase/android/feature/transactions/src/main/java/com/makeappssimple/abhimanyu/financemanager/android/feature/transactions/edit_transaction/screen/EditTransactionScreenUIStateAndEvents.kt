@@ -14,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiStateData
@@ -29,14 +28,6 @@ internal class EditTransactionScreenUIStateAndEvents(
     val state: EditTransactionScreenUIState,
     val events: EditTransactionScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
-
-@Stable
-internal class EditTransactionScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
-    val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
-    val setScreenBottomSheetType: (EditTransactionScreenBottomSheetType) -> Unit,
-) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberEditTransactionScreenUIStateAndEvents(
