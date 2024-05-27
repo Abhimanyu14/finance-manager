@@ -101,11 +101,11 @@ public class TestMyPreferencesRepository : MyPreferencesRepository {
     }
 
     override suspend fun setDefaultAccountId(
-        defaultAccountId: Int,
+        accountId: Int,
     ): Boolean {
         defaultDataId.update {
             it?.copy(
-                account = defaultAccountId,
+                account = accountId,
             )
         }
         return true

@@ -91,12 +91,12 @@ public class AccountsScreenViewModel @Inject constructor(
     }
 
     public fun setDefaultAccountIdInDataStore(
-        defaultAccountId: Int,
+        accountId: Int,
     ) {
         viewModelScope.launch {
             @Suppress("UNUSED_VARIABLE")
             val result = myPreferencesRepository.setDefaultAccountId(
-                defaultAccountId = defaultAccountId,
+                accountId = accountId,
             )
             // TODO(Abhi): Use the result to show snackbar
         }

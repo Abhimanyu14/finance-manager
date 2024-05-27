@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 @Immutable
 internal data class AccountsScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
-    val setAccountIdToDelete: (Int?) -> Unit,
     val setClickedItemId: (Int?) -> Unit,
     val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
 ) : ScreenUIStateEvents

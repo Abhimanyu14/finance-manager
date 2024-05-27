@@ -9,7 +9,6 @@ internal data class AccountsScreenUIState(
     val screenBottomSheetType: AccountsScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
     val isLoading: Boolean,
-    val accountIdToDelete: Int?,
     val clickedItemId: Int?,
     val accountsListItemDataList: List<AccountsListItemData>,
     val accountsTotalBalanceAmountValue: Long,

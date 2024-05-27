@@ -45,16 +45,22 @@ public fun AccountsScreen(
     ) {
         { uiEvent: AccountsScreenUIEvent ->
             when (uiEvent) {
-                is AccountsScreenUIEvent.OnBottomSheetDismissed -> {
+                is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.setClickedItemId(null)
                 }
 
-                is AccountsScreenUIEvent.OnNavigationBackButtonClick -> {
+                is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick -> {
+                    uiStateAndEvents.state.clickedItemId?.let { accountId ->
+                        viewModel.deleteAccount(
+                            accountId = accountId,
+                        )
+                        uiStateAndEvents.events.setClickedItemId(null)
+                    }
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.DeleteButtonClick -> {
-                    uiStateAndEvents.events.setAccountIdToDelete(uiEvent.accountId)
                     uiStateAndEvents.events.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
                 }
 
@@ -66,28 +72,22 @@ public fun AccountsScreen(
                 }
 
                 is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.SetAsDefaultButtonClick -> {
-                    uiStateAndEvents.events.setClickedItemId(uiEvent.accountId)
                     uiStateAndEvents.events.setScreenBottomSheetType(AccountsScreenBottomSheetType.SetAsDefaultConfirmation)
-                }
-
-                is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                    uiStateAndEvents.events.setAccountIdToDelete(null)
-                }
-
-                is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick -> {
-                    uiStateAndEvents.state.accountIdToDelete?.let { accountId ->
-                        viewModel.deleteAccount(
-                            accountId = accountId,
-                        )
-                        uiStateAndEvents.events.setAccountIdToDelete(null)
-                    }
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
                     uiStateAndEvents.events.setClickedItemId(null)
+                }
+
+                is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick -> {
+                    uiStateAndEvents.state.clickedItemId?.let { accountId ->
+                        viewModel.setDefaultAccountIdInDataStore(
+                            accountId = accountId,
+                        )
+                        uiStateAndEvents.events.setClickedItemId(null)
+                    }
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AccountsScreenUIEvent.OnAccountsListItemContent.Click -> {
@@ -104,18 +104,17 @@ public fun AccountsScreen(
                     uiStateAndEvents.events.setClickedItemId(uiEvent.accountId)
                 }
 
-                is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick -> {
-                    uiStateAndEvents.state.clickedItemId?.let { clickedItemIdValue ->
-                        viewModel.setDefaultAccountIdInDataStore(
-                            defaultAccountId = clickedItemIdValue,
-                        )
-                        uiStateAndEvents.events.setClickedItemId(null)
-                    }
+                is AccountsScreenUIEvent.OnBottomSheetDismissed -> {
                     uiStateAndEvents.events.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.setClickedItemId(null)
                 }
 
                 is AccountsScreenUIEvent.OnFloatingActionButtonClick -> {
                     viewModel.navigateToAddAccountScreen()
+                }
+
+                is AccountsScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AccountsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

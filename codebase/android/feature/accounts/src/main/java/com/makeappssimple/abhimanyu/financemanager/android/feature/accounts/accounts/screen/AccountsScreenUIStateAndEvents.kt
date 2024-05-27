@@ -45,17 +45,6 @@ internal fun rememberAccountsScreenUIStateAndEvents(
     }
     // endregion
 
-    // region account id to delete
-    var accountIdToDelete: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
-    val setAccountIdToDelete = { updatedAccountIdToDelete: Int? ->
-        accountIdToDelete = updatedAccountIdToDelete
-    }
-    // endregion
-
     // region screen bottom sheet type
     var screenBottomSheetType: AccountsScreenBottomSheetType by remember {
         mutableStateOf(
@@ -71,8 +60,6 @@ internal fun rememberAccountsScreenUIStateAndEvents(
     return remember(
         clickedItemId,
         setClickedItemId,
-        accountIdToDelete,
-        setAccountIdToDelete,
         screenBottomSheetType,
         setScreenBottomSheetType,
         defaultAccountId,
@@ -132,7 +119,6 @@ internal fun rememberAccountsScreenUIStateAndEvents(
                 screenBottomSheetType = screenBottomSheetType,
                 isBottomSheetVisible = screenBottomSheetType != AccountsScreenBottomSheetType.None,
                 clickedItemId = clickedItemId,
-                accountIdToDelete = accountIdToDelete,
                 isLoading = allAccounts.isEmpty(),
                 accountsListItemDataList = accountsListItemDataList.orEmpty(),
                 accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
@@ -141,7 +127,6 @@ internal fun rememberAccountsScreenUIStateAndEvents(
             events = AccountsScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setClickedItemId = setClickedItemId,
-                setAccountIdToDelete = setAccountIdToDelete,
                 resetScreenBottomSheetType = {
                     setScreenBottomSheetType(AccountsScreenBottomSheetType.None)
                 },

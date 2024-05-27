@@ -66,7 +66,7 @@ public class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
     }
 
     override suspend fun setDefaultAccountId(
-        defaultAccountId: Int,
+        accountId: Int,
     ): Boolean {
         return true
     }

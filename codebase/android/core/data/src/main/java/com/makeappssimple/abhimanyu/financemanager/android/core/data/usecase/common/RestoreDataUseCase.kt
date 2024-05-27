@@ -122,7 +122,7 @@ public class RestoreDataUseCase @Inject constructor(
                     },
                     async {
                         setDefaultAccountId(
-                            defaultAccountId = datastoreData.defaultDataId.account,
+                            accountId = datastoreData.defaultDataId.account,
                         )
                     },
                     async {

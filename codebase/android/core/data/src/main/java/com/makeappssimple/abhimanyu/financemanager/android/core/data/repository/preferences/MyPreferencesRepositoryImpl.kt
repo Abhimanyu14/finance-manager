@@ -96,11 +96,11 @@ public class MyPreferencesRepositoryImpl(
     }
 
     override suspend fun setDefaultAccountId(
-        defaultAccountId: Int,
+        accountId: Int,
     ): Boolean {
         return executeOnIoDispatcher {
             myPreferencesDataSource.setDefaultAccountId(
-                defaultAccountId = defaultAccountId,
+                defaultAccountId = accountId,
             )
         }
     }

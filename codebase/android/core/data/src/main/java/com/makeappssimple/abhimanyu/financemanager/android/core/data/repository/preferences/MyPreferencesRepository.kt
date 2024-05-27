@@ -41,7 +41,7 @@ public interface MyPreferencesRepository {
     ): Boolean
 
     public suspend fun setDefaultAccountId(
-        defaultAccountId: Int,
+        accountId: Int,
     ): Boolean
 
     public suspend fun setIsReminderEnabled(
