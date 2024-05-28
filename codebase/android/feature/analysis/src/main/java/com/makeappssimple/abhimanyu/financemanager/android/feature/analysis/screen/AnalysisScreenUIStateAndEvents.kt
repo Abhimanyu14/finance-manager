@@ -52,15 +52,29 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
         }
     // endregion
 
+    // region selected filter
+    /*
+    var selectedFilter: Filter by remember {
+        mutableStateOf(
+            value = Filter(),
+        )
+    }
+    val setSelectedFilter = { updatedSelectedFilter: Filter ->
+        selectedFilter = updatedSelectedFilter
+    }
+    */
+    // endregion
+
     return remember(
         textMeasurer,
         dateTimeUtil,
         screenBottomSheetType,
         setScreenBottomSheetType,
+        selectedFilter,
+        // setSelectedFilter,
         selectedTransactionTypeIndex,
         oldestTransactionLocalDate,
         transactionDataMappedByCategory,
-        selectedFilter,
         allTransactionData,
         validTransactionTypes,
         transactionTypesChipUIData,
@@ -90,6 +104,7 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
                     setScreenBottomSheetType(AnalysisScreenBottomSheetType.None)
                 },
                 setScreenBottomSheetType = setScreenBottomSheetType,
+                // setSelectedFilter = setSelectedFilter,
             ),
         )
     }
