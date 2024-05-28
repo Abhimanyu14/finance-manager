@@ -41,7 +41,6 @@ public fun NavGraphBuilder.transactionsNavGraph() {
         arguments = listOf(
             navArgument(NavArgs.TRANSACTION_ID) {
                 type = NavType.StringType
-                nullable = true
             },
         ),
     ) {
@@ -62,13 +61,11 @@ public fun NavGraphBuilder.transactionsNavGraph() {
         TransactionsScreen()
     }
 
-    // TODO(Abhi): View transaction can not have a nullable transaction id
     composable(
         route = "${Screen.ViewTransaction.route}/{${NavArgs.TRANSACTION_ID}}",
         arguments = listOf(
             navArgument(NavArgs.TRANSACTION_ID) {
                 type = NavType.StringType
-                nullable = true
             },
         ),
     ) {
