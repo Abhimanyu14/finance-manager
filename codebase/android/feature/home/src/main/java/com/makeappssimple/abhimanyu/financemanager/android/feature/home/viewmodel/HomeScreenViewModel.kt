@@ -32,7 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.ge
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -60,15 +59,7 @@ public class HomeScreenViewModel @Inject constructor(
 ) : ScreenViewModel, ViewModel() {
     public val homeListItemViewData: StateFlow<ImmutableList<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
-            .map {
-                it.toImmutableList()
-            }.defaultListStateIn(
-                scope = viewModelScope,
-            )
     public val isBackupCardVisible: StateFlow<Boolean> = getIsBackupCardVisibleFromData()
-        .defaultBooleanStateIn(
-            scope = viewModelScope,
-        )
 
     public val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
@@ -298,7 +289,7 @@ public class HomeScreenViewModel @Inject constructor(
         overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
     }
 
-    private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
+    private fun getHomeListItemViewDataFromData(): StateFlow<ImmutableList<TransactionListItemData>> {
         return getRecentTransactionDataFlowUseCase().map {
             it.map { listItem ->
                 val amountColor: MyColor = listItem.transaction.getAmountTextColor()
@@ -349,12 +340,16 @@ public class HomeScreenViewModel @Inject constructor(
                     transactionForText = transactionForText,
                 )
             }.toImmutableList()
-        }
+        }.defaultListStateIn(
+            scope = viewModelScope,
+        )
     }
 
-    private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
+    private fun getIsBackupCardVisibleFromData(): StateFlow<Boolean> {
         return myPreferencesRepository.getDataTimestampFlow().map {
             it.isNotNull() && (it.lastBackup < it.lastChange)
-        }
+        }.defaultBooleanStateIn(
+            scope = viewModelScope,
+        )
     }
 }
