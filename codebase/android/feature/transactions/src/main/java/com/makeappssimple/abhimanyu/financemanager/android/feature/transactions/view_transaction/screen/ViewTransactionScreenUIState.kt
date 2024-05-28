@@ -3,12 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.compose.runtime.Stable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal data class ViewTransactionScreenUIState(
     val isBottomSheetVisible: Boolean,
     val transactionIdToDelete: Int?,
-    val refundTransactionListItemData: List<TransactionListItemData>?,
+    val refundTransactionListItemData: ImmutableList<TransactionListItemData>?,
     val originalTransactionListItemData: TransactionListItemData?,
     val transactionListItemData: TransactionListItemData?,
     val screenBottomSheetType: ViewTransactionScreenBottomSheetType,

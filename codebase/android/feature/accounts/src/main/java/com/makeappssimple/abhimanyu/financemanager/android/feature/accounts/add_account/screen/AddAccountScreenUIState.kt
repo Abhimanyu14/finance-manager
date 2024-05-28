@@ -7,6 +7,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal data class AddAccountScreenUIState(
@@ -20,7 +21,7 @@ internal data class AddAccountScreenUIState(
     @StringRes val nameTextFieldErrorTextStringResourceId: Int?,
     val selectedAccountTypeIndex: Int,
     val selectedAccountType: AccountType?,
-    val accountTypesChipUIDataList: List<ChipUIData>,
+    val accountTypesChipUIDataList: ImmutableList<ChipUIData>,
     val minimumAccountBalanceTextFieldValue: TextFieldValue,
     val nameTextFieldValue: TextFieldValue,
 ) : ScreenUIState

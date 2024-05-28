@@ -17,6 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 internal class HomeScreenUIStateAndEvents(
@@ -27,7 +29,7 @@ internal class HomeScreenUIStateAndEvents(
 @Composable
 internal fun rememberHomeScreenUIStateAndEvents(
     overviewCardData: OverviewCardViewModelData?,
-    homeListItemViewData: List<TransactionListItemData>,
+    homeListItemViewData: ImmutableList<TransactionListItemData>,
     isBackupCardVisible: Boolean,
     overviewTabSelectionIndex: Int,
     accountsTotalBalanceAmountValue: Long,
@@ -87,7 +89,7 @@ internal fun rememberHomeScreenUIStateAndEvents(
                 accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
                 overviewCardData = overviewCardData.orDefault(),
                 pieChartData = PieChartData(
-                    items = listOf(
+                    items = persistentListOf(
                         PieChartItemData(
                             value = overviewCardData?.income.orZero(),
                             text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources

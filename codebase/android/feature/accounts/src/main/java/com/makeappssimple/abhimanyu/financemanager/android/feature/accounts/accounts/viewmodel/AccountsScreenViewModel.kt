@@ -38,11 +38,10 @@ public class AccountsScreenViewModel @Inject constructor(
         }.defaultObjectStateIn(
             scope = viewModelScope,
         )
-    public val allAccounts: StateFlow<ImmutableList<Account>> = getAllAccountsFlowUseCase().map {
-        it
-    }.defaultListStateIn(
-        scope = viewModelScope,
-    )
+    public val allAccounts: StateFlow<ImmutableList<Account>> =
+        getAllAccountsFlowUseCase().defaultListStateIn(
+            scope = viewModelScope,
+        )
     public val isAccountUsedInTransactions: Flow<Map<Int, Boolean>> = allAccounts.map { accounts ->
         accounts.associate { account ->
             account.id to checkIfAccountIsUsedInTransactionsUseCase(

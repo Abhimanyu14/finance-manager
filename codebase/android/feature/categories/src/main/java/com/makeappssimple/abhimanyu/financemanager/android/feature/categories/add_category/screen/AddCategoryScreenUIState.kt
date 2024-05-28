@@ -5,6 +5,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal data class AddCategoryScreenUIState(
@@ -17,7 +18,7 @@ internal data class AddCategoryScreenUIState(
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     @StringRes val titleTextFieldErrorTextStringResourceId: Int?,
     val selectedTransactionTypeIndex: Int?,
-    val transactionTypesChipUIData: List<ChipUIData>,
+    val transactionTypesChipUIData: ImmutableList<ChipUIData>,
     val emoji: String,
     val emojiSearchText: String,
     val title: TextFieldValue,

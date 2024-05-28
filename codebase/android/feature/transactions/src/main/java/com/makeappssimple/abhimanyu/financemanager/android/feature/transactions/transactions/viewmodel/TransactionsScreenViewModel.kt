@@ -111,7 +111,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     }
 
     public fun updateTransactionForValuesInTransactions(
-        selectedTransactions: List<Int>,
+        selectedTransactions: ImmutableList<Int>,
         transactionForId: Int,
     ) {
         viewModelScope.launch {

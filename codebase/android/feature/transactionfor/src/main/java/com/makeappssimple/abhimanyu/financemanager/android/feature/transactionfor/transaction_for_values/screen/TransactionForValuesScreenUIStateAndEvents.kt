@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class TransactionForValuesScreenUIStateAndEvents(
@@ -17,8 +18,8 @@ internal class TransactionForValuesScreenUIStateAndEvents(
 
 @Composable
 internal fun rememberTransactionForValuesScreenUIStateAndEvents(
-    transactionForValues: List<TransactionFor>,
-    transactionForValuesIsUsedInTransactions: List<Boolean>,
+    transactionForValues: ImmutableList<TransactionFor>,
+    transactionForValuesIsUsedInTransactions: ImmutableList<Boolean>,
 ): TransactionForValuesScreenUIStateAndEvents {
     // region transaction for id to delete
     var transactionForIdToDelete: Int? by remember {

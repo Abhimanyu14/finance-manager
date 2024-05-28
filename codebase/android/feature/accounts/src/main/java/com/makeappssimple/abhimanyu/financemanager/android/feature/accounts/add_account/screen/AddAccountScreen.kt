@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel.AddAccountScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun AddAccountScreen(
@@ -32,8 +33,8 @@ public fun AddAccountScreen(
     val isKeyboardOpen = WindowInsets.isImeVisible
 
     // region view model data
-    val validAccountTypes: List<AccountType> = viewModel.validAccountTypes
-    val accounts: List<Account> by viewModel.accounts.collectAsStateWithLifecycle()
+    val accounts: ImmutableList<Account> by viewModel.accounts.collectAsStateWithLifecycle()
+    val validAccountTypes: ImmutableList<AccountType> = viewModel.validAccountTypes
     // endregion
 
     val uiStateAndEvents = rememberAddAccountScreenUIStateAndEvents(

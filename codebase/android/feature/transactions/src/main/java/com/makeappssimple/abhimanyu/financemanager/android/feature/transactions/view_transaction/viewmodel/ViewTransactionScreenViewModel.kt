@@ -122,7 +122,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
                     }
                     transactionData.transaction.refundTransactionIds?.let { transactionIds ->
                         getRefundTransactionsData(
-                            transactionIds = transactionIds,
+                            transactionIds = transactionIds.toImmutableList(),
                         )
                     }
                 }
@@ -143,7 +143,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     }
 
     private suspend fun getRefundTransactionsData(
-        transactionIds: List<Int>,
+        transactionIds: ImmutableList<Int>,
     ) {
         val transactionListItemData = mutableListOf<TransactionListItemData>()
         transactionIds.forEach { transactionId ->

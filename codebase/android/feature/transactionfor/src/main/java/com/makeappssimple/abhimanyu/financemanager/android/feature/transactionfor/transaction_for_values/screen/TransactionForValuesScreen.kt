@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel.TransactionForValuesScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun TransactionForValuesScreen(
@@ -22,8 +23,8 @@ public fun TransactionForValuesScreen(
     )
 
     // region view model data
-    val transactionForValues: List<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
-    val transactionForValuesIsUsedInTransactions: List<Boolean> by viewModel.transactionForValuesIsUsedInTransactions.collectAsStateWithLifecycle()
+    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
+    val transactionForValuesIsUsedInTransactions: ImmutableList<Boolean> by viewModel.transactionForValuesIsUsedInTransactions.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberTransactionForValuesScreenUIStateAndEvents(

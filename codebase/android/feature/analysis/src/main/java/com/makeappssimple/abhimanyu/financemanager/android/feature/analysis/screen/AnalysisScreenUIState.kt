@@ -5,6 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.an
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
+import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Stable
@@ -14,8 +15,8 @@ internal data class AnalysisScreenUIState(
     val selectedFilter: Filter,
     val maxAmountTextWidth: Int,
     val selectedTransactionTypeIndex: Int?,
-    val transactionDataMappedByCategory: List<AnalysisListItemData>,
-    val transactionTypesChipUIData: List<ChipUIData>,
+    val transactionDataMappedByCategory: ImmutableList<AnalysisListItemData>,
+    val transactionTypesChipUIData: ImmutableList<ChipUIData>,
     val defaultStartLocalDate: LocalDate,
     val defaultEndLocalDate: LocalDate,
     val startOfMonthLocalDate: LocalDate,

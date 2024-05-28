@@ -34,6 +34,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 // TODO(Abhi): To Fix - StringLiteralDuplication
 @Suppress("StringLiteralDuplication")
@@ -43,7 +45,7 @@ internal fun SettingsScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: SettingsScreenUIEvent) -> Unit = {},
 ) {
-    val listItemsData: List<SettingsScreenListItemData> = getSettingsListItemData(
+    val listItemsData: ImmutableList<SettingsScreenListItemData> = getSettingsListItemData(
         uiState = uiState,
         handleUIEvent = handleUIEvent,
     )
@@ -155,9 +157,9 @@ internal fun SettingsScreenUI(
 private fun getSettingsListItemData(
     uiState: SettingsScreenUIState,
     handleUIEvent: (uiEvent: SettingsScreenUIEvent) -> Unit,
-): List<SettingsScreenListItemData> {
+): ImmutableList<SettingsScreenListItemData> {
     val context = LocalContext.current
-    return listOf(
+    return persistentListOf(
         SettingsScreenListItemData(
             data = SettingsListItemHeaderData(
                 textStringResourceId = R.string.screen_settings_data,

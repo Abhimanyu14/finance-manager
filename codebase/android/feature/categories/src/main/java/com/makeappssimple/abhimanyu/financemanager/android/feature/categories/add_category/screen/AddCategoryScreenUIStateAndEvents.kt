@@ -20,6 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class AddCategoryScreenUIStateAndEvents(
@@ -158,7 +159,7 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
                     ChipUIData(
                         text = transactionType.title,
                     )
-                },
+                }.toImmutableList(),
                 emoji = emoji,
                 emojiSearchText = searchText,
                 title = title,

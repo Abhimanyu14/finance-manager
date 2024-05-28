@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.an
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
+import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Stable
@@ -29,11 +30,11 @@ internal class AnalysisScreenUIStateAndEvents(
 internal fun rememberAnalysisScreenUIStateAndEvents(
     selectedTransactionTypeIndex: Int,
     oldestTransactionLocalDate: LocalDate?,
-    transactionDataMappedByCategory: List<AnalysisListItemData>,
+    transactionDataMappedByCategory: ImmutableList<AnalysisListItemData>,
     selectedFilter: Filter,
-    allTransactionData: List<TransactionData>,
-    validTransactionTypes: List<TransactionType>,
-    transactionTypesChipUIData: List<ChipUIData>,
+    allTransactionData: ImmutableList<TransactionData>,
+    validTransactionTypes: ImmutableList<TransactionType>,
+    transactionTypesChipUIData: ImmutableList<ChipUIData>,
 ): AnalysisScreenUIStateAndEvents {
     val textMeasurer: TextMeasurer = rememberTextMeasurer()
     val dateTimeUtil = remember {

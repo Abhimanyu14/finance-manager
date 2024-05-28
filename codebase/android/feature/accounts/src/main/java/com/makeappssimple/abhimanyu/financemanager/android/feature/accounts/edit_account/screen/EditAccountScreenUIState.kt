@@ -6,6 +6,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal data class EditAccountScreenUIState(
@@ -19,7 +20,7 @@ internal data class EditAccountScreenUIState(
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     @StringRes val nameTextFieldErrorTextStringResourceId: Int?,
     val selectedAccountTypeIndex: Int,
-    val accountTypesChipUIDataList: List<ChipUIData>,
+    val accountTypesChipUIDataList: ImmutableList<ChipUIData>,
     val balanceAmountValue: TextFieldValue,
     val minimumBalanceAmountValue: TextFieldValue,
     val name: TextFieldValue,

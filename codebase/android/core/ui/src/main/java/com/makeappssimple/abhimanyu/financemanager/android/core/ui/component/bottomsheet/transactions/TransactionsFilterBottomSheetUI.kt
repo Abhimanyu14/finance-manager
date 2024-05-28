@@ -372,12 +372,12 @@ public fun TransactionsFiltersBottomSheetUI(
                             isToDateSameAsCurrentDayDate
                     onPositiveButtonClick(
                         Filter(
-                            selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
-                            selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
-                            selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,
-                            selectedAccountsIndices = selectedAccountIndicesValue,
-                            selectedTransactionForValuesIndices = selectedTransactionForValuesIndicesValue,
-                            selectedTransactionTypeIndices = selectedTransactionTypeIndicesValue,
+                            selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue.toImmutableList(),
+                            selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue.toImmutableList(),
+                            selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue.toImmutableList(),
+                            selectedAccountsIndices = selectedAccountIndicesValue.toImmutableList(),
+                            selectedTransactionForValuesIndices = selectedTransactionForValuesIndicesValue.toImmutableList(),
+                            selectedTransactionTypeIndices = selectedTransactionTypeIndicesValue.toImmutableList(),
                             fromDate = fromDate,
                             toDate = if (isDateFilterCleared) {
                                 null

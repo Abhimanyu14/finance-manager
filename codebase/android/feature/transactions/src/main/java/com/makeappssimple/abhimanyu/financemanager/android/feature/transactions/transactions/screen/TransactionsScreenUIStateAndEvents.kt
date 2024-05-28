@@ -386,9 +386,9 @@ public fun isAvailableAfterDateFilter(
 }
 
 public fun isAvailableAfterTransactionForFilter(
-    selectedTransactionForValuesIndices: List<Int>,
+    selectedTransactionForValuesIndices: ImmutableList<Int>,
     transactionData: TransactionData,
-    transactionForValuesValue: List<TransactionFor>,
+    transactionForValuesValue: ImmutableList<TransactionFor>,
 ): Boolean {
     if (selectedTransactionForValuesIndices.isEmpty()) {
         return true
@@ -402,7 +402,7 @@ public fun isAvailableAfterTransactionForFilter(
 
 public fun isAvailableAfterTransactionTypeFilter(
     transactionTypes: ImmutableList<TransactionType>,
-    selectedTransactionTypesIndicesValue: List<Int>,
+    selectedTransactionTypesIndicesValue: ImmutableList<Int>,
     transactionData: TransactionData,
 ): Boolean {
     if (selectedTransactionTypesIndicesValue.isEmpty()) {
@@ -416,8 +416,8 @@ public fun isAvailableAfterTransactionTypeFilter(
 }
 
 public fun isAvailableAfterAccountFilter(
-    selectedAccountsIndicesValue: List<Int>,
-    accountsValue: List<Account>,
+    selectedAccountsIndicesValue: ImmutableList<Int>,
+    accountsValue: ImmutableList<Account>,
     transactionData: TransactionData,
 ): Boolean {
     if (selectedAccountsIndicesValue.isEmpty()) {
@@ -435,12 +435,12 @@ public fun isAvailableAfterAccountFilter(
 }
 
 public fun isAvailableAfterCategoryFilter(
-    expenseCategoriesValue: List<Category>,
-    incomeCategoriesValue: List<Category>,
-    investmentCategoriesValue: List<Category>,
-    selectedExpenseCategoryIndicesValue: List<Int>,
-    selectedIncomeCategoryIndicesValue: List<Int>,
-    selectedInvestmentCategoryIndicesValue: List<Int>,
+    expenseCategoriesValue: ImmutableList<Category>,
+    incomeCategoriesValue: ImmutableList<Category>,
+    investmentCategoriesValue: ImmutableList<Category>,
+    selectedExpenseCategoryIndicesValue: ImmutableList<Int>,
+    selectedIncomeCategoryIndicesValue: ImmutableList<Int>,
+    selectedInvestmentCategoryIndicesValue: ImmutableList<Int>,
     transactionData: TransactionData,
 ): Boolean {
     if (selectedExpenseCategoryIndicesValue.isEmpty() &&

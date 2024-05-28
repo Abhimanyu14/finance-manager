@@ -9,7 +9,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,12 +24,13 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val insertAccountsUseCase: InsertAccountsUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    public val accounts: MutableStateFlow<List<Account>> = MutableStateFlow(
-        value = emptyList(),
+    private val _accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
+        value = persistentListOf(),
     )
-    public val validAccountTypes: List<AccountType> = AccountType.entries.filter {
+    public val accounts: StateFlow<ImmutableList<Account>> = _accounts
+    public val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
-    }
+    }.toImmutableList()
 
     public fun initViewModel() {
         fetchData()
@@ -35,8 +40,8 @@ public class AddAccountScreenViewModel @Inject constructor(
         account: Account,
     ) {
         viewModelScope.launch {
-            val result = insertAccountsUseCase(account)
-            if (result.isEmpty() || result.first() == -1L) {
+            val isAccountInserted = insertAccountsUseCase(account)
+            if (isAccountInserted.isEmpty() || isAccountInserted.first() == -1L) {
                 // TODO(Abhi): Show error
             } else {
                 navigator.navigateUp()
@@ -54,7 +59,7 @@ public class AddAccountScreenViewModel @Inject constructor(
 
     private fun getAllAccounts() {
         viewModelScope.launch {
-            accounts.update {
+            _accounts.update {
                 getAllAccountsUseCase()
             }
         }

@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,16 +48,16 @@ public class AnalysisScreenViewModel @Inject constructor(
             }.defaultListStateIn(
                 scope = viewModelScope,
             )
-    public val validTransactionTypes: List<TransactionType> = listOf(
+    public val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
         TransactionType.INVESTMENT,
     )
-    public val transactionTypesChipUIData: List<ChipUIData> = validTransactionTypes.map {
+    public val transactionTypesChipUIData: ImmutableList<ChipUIData> = validTransactionTypes.map {
         ChipUIData(
             text = it.title,
         )
-    }
+    }.toImmutableList()
     public val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
         value = Filter(),
     )
@@ -72,19 +73,20 @@ public class AnalysisScreenViewModel @Inject constructor(
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-    public val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>> = combine(
-        allTransactionData,
-        selectedTransactionTypeIndex,
-        selectedFilter,
-    ) { allTransactionDataValue, selectedTransactionTypeIndexValue, selectedFilterValue ->
-        getAnalysisListItemData(
-            selectedFilterValue = selectedFilterValue,
-            selectedTransactionTypeIndexValue = selectedTransactionTypeIndexValue,
-            allTransactionDataValue = allTransactionDataValue
+    public val transactionDataMappedByCategory: StateFlow<ImmutableList<AnalysisListItemData>> =
+        combine(
+            allTransactionData,
+            selectedTransactionTypeIndex,
+            selectedFilter,
+        ) { allTransactionDataValue, selectedTransactionTypeIndexValue, selectedFilterValue ->
+            getAnalysisListItemData(
+                selectedFilterValue = selectedFilterValue,
+                selectedTransactionTypeIndexValue = selectedTransactionTypeIndexValue,
+                allTransactionDataValue = allTransactionDataValue
+            )
+        }.defaultListStateIn(
+            scope = viewModelScope,
         )
-    }.defaultListStateIn(
-        scope = viewModelScope,
-    )
 
     public fun navigateUp() {
         navigator.navigateUp()
@@ -109,7 +111,7 @@ public class AnalysisScreenViewModel @Inject constructor(
     private fun getAnalysisListItemData(
         selectedFilterValue: Filter,
         selectedTransactionTypeIndexValue: Int,
-        allTransactionDataValue: List<TransactionData>,
+        allTransactionDataValue: ImmutableList<TransactionData>,
     ): ImmutableList<AnalysisListItemData> {
         val selectedTransactionType = validTransactionTypes[selectedTransactionTypeIndexValue]
         val result = allTransactionDataValue

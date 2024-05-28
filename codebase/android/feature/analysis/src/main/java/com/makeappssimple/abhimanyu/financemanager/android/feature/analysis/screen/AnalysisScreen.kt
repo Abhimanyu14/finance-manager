@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.an
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.AnalysisScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Composable
@@ -29,11 +30,11 @@ public fun AnalysisScreen(
     // region view model data
     val selectedTransactionTypeIndex: Int by viewModel.selectedTransactionTypeIndex.collectAsStateWithLifecycle()
     val oldestTransactionLocalDate: LocalDate? by viewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle()
-    val transactionDataMappedByCategory: List<AnalysisListItemData> by viewModel.transactionDataMappedByCategory.collectAsStateWithLifecycle()
+    val transactionDataMappedByCategory: ImmutableList<AnalysisListItemData> by viewModel.transactionDataMappedByCategory.collectAsStateWithLifecycle()
     val selectedFilter: Filter by viewModel.selectedFilter.collectAsStateWithLifecycle()
-    val allTransactionData: List<TransactionData> by viewModel.allTransactionData.collectAsStateWithLifecycle()
-    val validTransactionTypes: List<TransactionType> = viewModel.validTransactionTypes
-    val transactionTypesChipUIData: List<ChipUIData> = viewModel.transactionTypesChipUIData
+    val allTransactionData: ImmutableList<TransactionData> by viewModel.allTransactionData.collectAsStateWithLifecycle()
+    val validTransactionTypes: ImmutableList<TransactionType> = viewModel.validTransactionTypes
+    val transactionTypesChipUIData: ImmutableList<ChipUIData> = viewModel.transactionTypesChipUIData
     // endregion
 
     val uiStateAndEvents = rememberAnalysisScreenUIStateAndEvents(

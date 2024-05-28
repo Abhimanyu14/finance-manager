@@ -21,6 +21,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class AddAccountScreenUIStateAndEvents(
@@ -30,8 +32,8 @@ internal class AddAccountScreenUIStateAndEvents(
 
 @Composable
 internal fun rememberAddAccountScreenUIStateAndEvents(
-    accounts: List<Account>,
-    validAccountTypes: List<AccountType>,
+    accounts: ImmutableList<Account>,
+    validAccountTypes: ImmutableList<AccountType>,
 ): AddAccountScreenUIStateAndEvents {
     // region screen bottom sheet type
     var screenBottomSheetType: AddAccountScreenBottomSheetType by remember {
@@ -158,7 +160,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
                             text = accountType.title,
                             icon = accountType.icon,
                         )
-                    },
+                    }.toImmutableList(),
                 minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
                 nameTextFieldValue = name,
                 visibilityData = AddAccountScreenUIVisibilityData(

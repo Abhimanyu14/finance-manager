@@ -847,8 +847,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
 
     private fun updateEditTransactionScreenUiStateWithOriginalTransactionData(
         originalTransaction: Transaction,
-        transactionTypesForNewTransaction: List<TransactionType>,
-        transactionForValues: List<TransactionFor>,
+        transactionTypesForNewTransaction: ImmutableList<TransactionType>,
+        transactionForValues: ImmutableList<TransactionFor>,
     ) {
         val initialEditTransactionScreenUiStateData = EditTransactionScreenUiStateData(
             selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(

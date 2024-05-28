@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun HomeScreen(
@@ -39,7 +40,7 @@ public fun HomeScreen(
 
     // region view model data
     val overviewCardData: OverviewCardViewModelData? by viewModel.overviewCardData.collectAsStateWithLifecycle()
-    val homeListItemViewData: List<TransactionListItemData> by viewModel.homeListItemViewData.collectAsStateWithLifecycle()
+    val homeListItemViewData: ImmutableList<TransactionListItemData> by viewModel.homeListItemViewData.collectAsStateWithLifecycle()
     val isBackupCardVisible: Boolean by viewModel.isBackupCardVisible.collectAsStateWithLifecycle()
     val overviewTabSelectionIndex: Int by viewModel.overviewTabSelectionIndex.collectAsStateWithLifecycle()
     val accountsTotalBalanceAmountValue: Long by viewModel.accountsTotalBalanceAmountValue.collectAsStateWithLifecycle()

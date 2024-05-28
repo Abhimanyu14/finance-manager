@@ -22,6 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -50,9 +51,9 @@ public class EditAccountScreenViewModel @Inject constructor(
     public val originalAccount: MutableStateFlow<Account?> = MutableStateFlow(
         value = null,
     )
-    public val validAccountTypes: List<AccountType> = AccountType.entries.filter {
+    public val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
-    }
+    }.toImmutableList()
 
     public fun initViewModel() {
         fetchData()

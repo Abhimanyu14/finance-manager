@@ -30,7 +30,7 @@ public fun EditAccountScreen(
     // region view model data
     val accounts: ImmutableList<Account> by viewModel.accounts.collectAsStateWithLifecycle()
     val originalAccount: Account? by viewModel.originalAccount.collectAsStateWithLifecycle()
-    val validAccountTypes: List<AccountType> = viewModel.validAccountTypes
+    val validAccountTypes: ImmutableList<AccountType> = viewModel.validAccountTypes
     // endregion
 
     val uiState = rememberEditAccountScreenUIStateAndEvents(

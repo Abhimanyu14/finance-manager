@@ -23,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class EditAccountScreenUIStateAndEvents(
@@ -34,7 +35,7 @@ internal class EditAccountScreenUIStateAndEvents(
 internal fun rememberEditAccountScreenUIStateAndEvents(
     accounts: ImmutableList<Account>,
     originalAccount: Account?,
-    validAccountTypes: List<AccountType>,
+    validAccountTypes: ImmutableList<AccountType>,
 ): EditAccountScreenUIStateAndEvents {
     // region name text field focus requester
     val nameTextFieldFocusRequester = remember {
@@ -176,7 +177,7 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
                             text = accountType.title,
                             icon = accountType.icon,
                         )
-                    },
+                    }.toImmutableList(),
                 balanceAmountValue = balanceAmountValue.orEmpty(),
                 minimumBalanceAmountValue = minimumAccountBalanceAmountValue.orEmpty(),
                 name = name.orEmpty(),

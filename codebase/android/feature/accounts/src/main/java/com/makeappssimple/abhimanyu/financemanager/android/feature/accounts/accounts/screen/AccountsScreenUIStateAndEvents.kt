@@ -19,6 +19,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class AccountsScreenUIStateAndEvents(
@@ -29,7 +31,7 @@ internal class AccountsScreenUIStateAndEvents(
 @Composable
 internal fun rememberAccountsScreenUIStateAndEvents(
     defaultAccountId: Int?,
-    allAccounts: List<Account>,
+    allAccounts: ImmutableList<Account>,
     isAccountUsedInTransactions: Map<Int, Boolean>,
     accountsTotalBalanceAmountValue: Long,
     accountsTotalMinimumBalanceAmountValue: Long,
@@ -120,7 +122,7 @@ internal fun rememberAccountsScreenUIStateAndEvents(
                 isBottomSheetVisible = screenBottomSheetType != AccountsScreenBottomSheetType.None,
                 clickedItemId = clickedItemId,
                 isLoading = allAccounts.isEmpty(),
-                accountsListItemDataList = accountsListItemDataList.orEmpty(),
+                accountsListItemDataList = accountsListItemDataList.toImmutableList(),
                 accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
                 accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
             ),

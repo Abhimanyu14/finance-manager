@@ -24,7 +24,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    public val transactionForValues: StateFlow<List<TransactionFor>> =
+    public val transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase()
             .defaultListStateIn(
                 scope = viewModelScope,

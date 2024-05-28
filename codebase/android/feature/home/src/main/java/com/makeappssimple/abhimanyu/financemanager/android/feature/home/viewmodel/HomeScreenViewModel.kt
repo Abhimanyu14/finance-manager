@@ -298,7 +298,7 @@ public class HomeScreenViewModel @Inject constructor(
         overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
     }
 
-    private fun getHomeListItemViewDataFromData(): Flow<List<TransactionListItemData>> {
+    private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
         return getRecentTransactionDataFlowUseCase().map {
             it.map { listItem ->
                 val amountColor: MyColor = listItem.transaction.getAmountTextColor()
@@ -348,7 +348,7 @@ public class HomeScreenViewModel @Inject constructor(
                     title = title,
                     transactionForText = transactionForText,
                 )
-            }
+            }.toImmutableList()
         }
     }
 

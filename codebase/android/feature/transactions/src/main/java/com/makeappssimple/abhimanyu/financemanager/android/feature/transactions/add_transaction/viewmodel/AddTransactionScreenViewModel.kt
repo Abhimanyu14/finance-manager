@@ -833,8 +833,8 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     private fun updateAddTransactionScreenUiStateWithOriginalTransactionData(
         originalTransaction: Transaction,
-        transactionTypesForNewTransaction: List<TransactionType>,
-        transactionForValues: List<TransactionFor>,
+        transactionTypesForNewTransaction: ImmutableList<TransactionType>,
+        transactionForValues: ImmutableList<TransactionFor>,
         maxRefundAmount: Amount?,
     ) {
         val initialAddTransactionScreenUiStateData = if (isAddingRefundTransaction()) {

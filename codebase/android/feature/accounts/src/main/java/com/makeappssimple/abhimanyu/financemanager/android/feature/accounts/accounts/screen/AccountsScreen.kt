@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel.AccountsScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun AccountsScreen(
@@ -24,7 +25,7 @@ public fun AccountsScreen(
 
     // region view model data
     val defaultAccountId: Int? by viewModel.defaultAccountId.collectAsStateWithLifecycle()
-    val allAccounts: List<Account> by viewModel.allAccounts.collectAsStateWithLifecycle()
+    val allAccounts: ImmutableList<Account> by viewModel.allAccounts.collectAsStateWithLifecycle()
     val isAccountUsedInTransactions: Map<Int, Boolean> by viewModel.isAccountUsedInTransactions.collectAsStateWithLifecycle(
         initialValue = emptyMap(),
     )
