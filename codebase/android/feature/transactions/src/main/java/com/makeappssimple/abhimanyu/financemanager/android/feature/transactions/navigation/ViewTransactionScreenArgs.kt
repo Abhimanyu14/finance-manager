@@ -6,13 +6,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
 internal class ViewTransactionScreenArgs(
-    val originalTransactionId: Int?,
+    val currentTransactionId: Int?,
 ) : ScreenArgs {
     constructor(
         savedStateHandle: SavedStateHandle,
         stringDecoder: StringDecoder,
     ) : this(
-        originalTransactionId = stringDecoder.decodeString(
+        currentTransactionId = stringDecoder.decodeString(
             encodedString = checkNotNull(
                 value = savedStateHandle.get<String>(NavArgs.TRANSACTION_ID),
             ),

@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class ViewTransactionScreenUIStateAndEvents(
@@ -17,9 +18,9 @@ internal class ViewTransactionScreenUIStateAndEvents(
 
 @Composable
 internal fun rememberViewTransactionScreenUIStateAndEvents(
+    currentTransactionListItemData: TransactionListItemData?,
     originalTransactionListItemData: TransactionListItemData?,
-    refundTransactionListItemData: List<TransactionListItemData>,
-    transactionListItemData: TransactionListItemData?,
+    refundTransactionListItemData: ImmutableList<TransactionListItemData>,
 ): ViewTransactionScreenUIStateAndEvents {
     // region transaction id to delete
     var transactionIdToDelete: Int? by remember {
@@ -51,7 +52,7 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
         setScreenBottomSheetType,
         originalTransactionListItemData,
         refundTransactionListItemData,
-        transactionListItemData,
+        currentTransactionListItemData,
     ) {
         ViewTransactionScreenUIStateAndEvents(
             state = ViewTransactionScreenUIState(
@@ -59,7 +60,7 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
                 transactionIdToDelete = transactionIdToDelete,
                 refundTransactionListItemData = refundTransactionListItemData,
                 originalTransactionListItemData = originalTransactionListItemData,
-                transactionListItemData = transactionListItemData,
+                transactionListItemData = currentTransactionListItemData,
                 screenBottomSheetType = screenBottomSheetType,
             ),
             events = ViewTransactionScreenUIStateEvents(

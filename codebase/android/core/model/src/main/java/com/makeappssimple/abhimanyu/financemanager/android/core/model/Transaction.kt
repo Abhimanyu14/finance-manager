@@ -12,6 +12,7 @@ public data class Transaction(
 
     val id: Int = 0,
 
+    // The transaction id of the transaction that was refunded.
     @SerialName(value = "original_transaction_id")
     val originalTransactionId: Int? = null,
 

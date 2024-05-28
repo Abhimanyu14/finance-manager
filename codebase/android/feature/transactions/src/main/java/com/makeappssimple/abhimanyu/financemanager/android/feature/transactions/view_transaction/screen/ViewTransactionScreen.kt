@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun ViewTransactionScreen(
@@ -23,15 +24,15 @@ public fun ViewTransactionScreen(
     )
 
     // region view model data
+    val currentTransactionListItemData: TransactionListItemData? by viewModel.currentTransactionListItemData.collectAsStateWithLifecycle()
     val originalTransactionListItemData: TransactionListItemData? by viewModel.originalTransactionListItemData.collectAsStateWithLifecycle()
-    val refundTransactionListItemData: List<TransactionListItemData> by viewModel.refundTransactionListItemData.collectAsStateWithLifecycle()
-    val transactionListItemData: TransactionListItemData? by viewModel.transactionListItemData.collectAsStateWithLifecycle()
+    val refundTransactionListItemData: ImmutableList<TransactionListItemData> by viewModel.refundTransactionListItemData.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberViewTransactionScreenUIStateAndEvents(
+        currentTransactionListItemData = currentTransactionListItemData,
         originalTransactionListItemData = originalTransactionListItemData,
         refundTransactionListItemData = refundTransactionListItemData,
-        transactionListItemData = transactionListItemData,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
