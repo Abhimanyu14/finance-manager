@@ -13,18 +13,23 @@
 
 # Tech Debt
 
-1. Android ViewModel to ViewModel
-2. Throttle all clicks
-3. Process death
-4. Unit testing
-5. UI Testing
-6. Screenshot testing
-7. Linting
-8. Architecture structure rules
-9. Proguard/R8
-10. Minify resources
-11. Kotest
-12. Konsist
+1. Create event handler interfaces and implementations
+2. Move UI state out of View model
+3. Fix UI components
+4. Linting
+5. Detekt checks
+6. Kotest
+7. Konsist
+8. Throttle all clicks
+9. Android ViewModel to ViewModel
+10. Process death
+11. Unit testing
+12. UI Testing
+13. Screenshot testing
+14. Architecture structure rules
+15. Proguard/R8
+16. Minify resources
+17. Multi platform
 
 # Bugs
 
