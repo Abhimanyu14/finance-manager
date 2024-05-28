@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -39,29 +40,29 @@ public class TransactionsScreenViewModel @Inject constructor(
         getAllTransactionDataFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
         )
-    private val categoriesMap: Flow<Map<TransactionType, List<Category>>> =
+    private val categoriesMap: Flow<Map<TransactionType, ImmutableList<Category>>> =
         allTransactionData.map {
             it.mapNotNull { transactionData ->
                 transactionData.category
             }.groupBy { category ->
                 category.transactionType
             }.mapValues { (_, categories) ->
-                categories.distinct()
+                categories.distinct().toImmutableList()
             }.toMap()
         }
 
     public val expenseCategories: StateFlow<ImmutableList<Category>?> = categoriesMap.map {
-        it[TransactionType.EXPENSE].orEmpty().toImmutableList()
+        it[TransactionType.EXPENSE].orEmpty()
     }.defaultListStateIn(
         scope = viewModelScope,
     )
     public val incomeCategories: StateFlow<ImmutableList<Category>?> = categoriesMap.map {
-        it[TransactionType.INCOME].orEmpty().toImmutableList()
+        it[TransactionType.INCOME].orEmpty()
     }.defaultListStateIn(
         scope = viewModelScope,
     )
     public val investmentCategories: StateFlow<ImmutableList<Category>?> = categoriesMap.map {
-        it[TransactionType.INVESTMENT].orEmpty().toImmutableList()
+        it[TransactionType.INVESTMENT].orEmpty()
     }.defaultListStateIn(
         scope = viewModelScope,
     )

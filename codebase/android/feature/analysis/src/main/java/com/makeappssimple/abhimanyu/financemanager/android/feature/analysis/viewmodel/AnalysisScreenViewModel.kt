@@ -43,7 +43,7 @@ public class AnalysisScreenViewModel @Inject constructor(
     public var allTransactionData: StateFlow<ImmutableList<TransactionData>> =
         getAllTransactionDataFlowUseCase()
             .map {
-                it.toImmutableList()
+                it
             }.defaultListStateIn(
                 scope = viewModelScope,
             )

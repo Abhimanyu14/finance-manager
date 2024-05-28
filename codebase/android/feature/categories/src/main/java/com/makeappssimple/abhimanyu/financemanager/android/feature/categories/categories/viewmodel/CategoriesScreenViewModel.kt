@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesFlowUseCase
@@ -171,6 +172,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                                 category = category,
                             )
                         }
+                        ?.toImmutableList()
                         .orEmpty()
                 val incomeCategoriesGridItemDataList =
                     categoriesTransactionTypeMap[TransactionType.INCOME]
@@ -197,6 +199,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                                 category = category,
                             )
                         }
+                        ?.toImmutableList()
                         .orEmpty()
                 val investmentCategoriesGridItemDataList =
                     categoriesTransactionTypeMap[TransactionType.INVESTMENT]
@@ -223,12 +226,13 @@ public class CategoriesScreenViewModel @Inject constructor(
                                 category = category,
                             )
                         }
+                        ?.toImmutableList()
                         .orEmpty()
                 _categoriesGridItemDataMap.update {
                     mapOf(
-                        TransactionType.EXPENSE to expenseCategoriesGridItemDataList.toImmutableList(),
-                        TransactionType.INCOME to incomeCategoriesGridItemDataList.toImmutableList(),
-                        TransactionType.INVESTMENT to investmentCategoriesGridItemDataList.toImmutableList(),
+                        TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
+                        TransactionType.INCOME to incomeCategoriesGridItemDataList,
+                        TransactionType.INVESTMENT to investmentCategoriesGridItemDataList,
                     )
                 }
             }

@@ -22,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -142,7 +141,7 @@ public class EditAccountScreenViewModel @Inject constructor(
     private fun getAllAccounts() {
         viewModelScope.launch {
             accounts.update {
-                getAllAccountsUseCase().toImmutableList()
+                getAllAccountsUseCase()
             }
         }
     }

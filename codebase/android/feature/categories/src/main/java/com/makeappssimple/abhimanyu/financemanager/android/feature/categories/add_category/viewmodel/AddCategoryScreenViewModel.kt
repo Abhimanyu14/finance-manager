@@ -15,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.na
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -71,7 +70,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
     private fun fetchCategories() {
         viewModelScope.launch {
             _categories.update {
-                getAllCategoriesUseCase().toImmutableList()
+                getAllCategoriesUseCase()
             }
         }
     }

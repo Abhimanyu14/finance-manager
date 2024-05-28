@@ -113,24 +113,32 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                     R.string.screen_add_or_edit_transaction_account
                 },
                 filteredCategories = filteredCategories.orEmpty(),
-                transactionTypesForNewTransactionChipUIData = validTransactionTypesForNewTransaction.map { transactionType ->
-                    ChipUIData(
-                        text = transactionType.title,
-                    )
-                }.toImmutableList().orEmpty(),
+                transactionTypesForNewTransactionChipUIData = validTransactionTypesForNewTransaction
+                    .map { transactionType ->
+                        ChipUIData(
+                            text = transactionType.title,
+                        )
+                    }
+                    .toImmutableList()
+                    .orEmpty(),
                 titleSuggestions = titleSuggestions.orEmpty(),
-                titleSuggestionsChipUIData = titleSuggestions.orEmpty()
-                    .map { title ->
+                titleSuggestionsChipUIData = titleSuggestions
+                    ?.map { title ->
                         ChipUIData(
                             text = title,
                         )
-                    }.toImmutableList(),
+                    }
+                    ?.toImmutableList()
+                    .orEmpty(),
                 accounts = accounts.orEmpty(),
-                transactionForValuesChipUIData = transactionForValues.map { transactionFor ->
-                    ChipUIData(
-                        text = transactionFor.titleToDisplay,
-                    )
-                }.toImmutableList().orEmpty(),
+                transactionForValuesChipUIData = transactionForValues
+                    .map { transactionFor ->
+                        ChipUIData(
+                            text = transactionFor.titleToDisplay,
+                        )
+                    }
+                    .toImmutableList()
+                    .orEmpty(),
                 currentLocalDate = currentLocalDate.orMin(),
             ),
             events = AddTransactionScreenUIStateEvents(

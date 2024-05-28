@@ -599,7 +599,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 },
                 async {
                     _transactionForValues.update {
-                        getAllTransactionForValuesUseCase().toImmutableList()
+                        getAllTransactionForValuesUseCase()
                     }
                 },
             )
@@ -765,7 +765,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
                         getTitleSuggestionsUseCase(
                             categoryId = selectedCategoryId,
                             enteredTitle = uiState.title.text,
-                        ).toImmutableList()
+                        )
                     }
                 }
             }

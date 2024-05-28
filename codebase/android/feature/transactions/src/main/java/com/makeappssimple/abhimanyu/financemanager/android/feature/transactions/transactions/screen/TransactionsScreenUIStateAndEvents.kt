@@ -197,7 +197,7 @@ internal fun rememberTransactionsScreenUIStateAndEvents(
             }
         }
         .mapValues {
-            val transactionListItemDataList = it.value.map { listItem ->
+            it.value.map { listItem ->
                 val amountColor = listItem.transaction.getAmountTextColor()
                 val amountText =
                     if (listItem.transaction.transactionType == TransactionType.INCOME ||
@@ -249,8 +249,7 @@ internal fun rememberTransactionsScreenUIStateAndEvents(
                     title = title,
                     transactionForText = transactionForText,
                 )
-            }
-            transactionListItemDataList.toImmutableList()
+            }.toImmutableList()
         }
         .also {
             isLoading = false

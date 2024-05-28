@@ -16,7 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -40,7 +39,7 @@ public class AccountsScreenViewModel @Inject constructor(
             scope = viewModelScope,
         )
     public val allAccounts: StateFlow<ImmutableList<Account>> = getAllAccountsFlowUseCase().map {
-        it.toImmutableList()
+        it
     }.defaultListStateIn(
         scope = viewModelScope,
     )
