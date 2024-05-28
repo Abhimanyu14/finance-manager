@@ -9,29 +9,29 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 
 public interface TransactionRepository {
-    public suspend fun getAllTransactions(): List<Transaction>
+    public suspend fun getAllTransactions(): ImmutableList<Transaction>
 
     public fun getAllTransactionDataFlow(): Flow<ImmutableList<TransactionData>>
 
-    public suspend fun getAllTransactionData(): List<TransactionData>
+    public suspend fun getAllTransactionData(): ImmutableList<TransactionData>
 
     public suspend fun getSearchedTransactionData(
         searchText: String,
-    ): List<TransactionData>
+    ): ImmutableList<TransactionData>
 
     public fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
-    ): Flow<List<TransactionData>>
+    ): Flow<ImmutableList<TransactionData>>
 
     public fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): Flow<List<Transaction>>
+    ): Flow<ImmutableList<Transaction>>
 
     public suspend fun getTransactionsBetweenTimestamps(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): List<Transaction>
+    ): ImmutableList<Transaction>
 
     public suspend fun getTransactionsCount(): Int
 
@@ -39,7 +39,7 @@ public interface TransactionRepository {
         categoryId: Int,
         numberOfSuggestions: Int,
         enteredTitle: String,
-    ): List<String>
+    ): ImmutableList<String>
 
     public suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
@@ -70,7 +70,7 @@ public interface TransactionRepository {
 
     public suspend fun insertTransactions(
         vararg transactions: Transaction,
-    ): List<Long>
+    ): ImmutableList<Long>
 
     public suspend fun updateTransaction(
         transaction: Transaction,
@@ -87,9 +87,9 @@ public interface TransactionRepository {
     public suspend fun deleteAllTransactions(): Boolean
 
     public suspend fun restoreData(
-        categories: List<Category>,
-        accounts: List<Account>,
-        transactions: List<Transaction>,
-        transactionForValues: List<TransactionFor>,
+        categories: ImmutableList<Category>,
+        accounts: ImmutableList<Account>,
+        transactions: ImmutableList<Transaction>,
+        transactionForValues: ImmutableList<TransactionFor>,
     ): Boolean
 }

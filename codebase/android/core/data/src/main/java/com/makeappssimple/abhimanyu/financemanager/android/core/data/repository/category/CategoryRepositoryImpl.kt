@@ -6,6 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,19 +17,19 @@ public class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
     private val dispatcherProvider: DispatcherProvider,
 ) : CategoryRepository {
-    override fun getAllCategoriesFlow(): Flow<List<Category>> {
+    override fun getAllCategoriesFlow(): Flow<ImmutableList<Category>> {
         return categoryDao.getAllCategoriesFlow().map {
             it.map(
                 transform = CategoryEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
-    override suspend fun getAllCategories(): List<Category> {
+    override suspend fun getAllCategories(): ImmutableList<Category> {
         return executeOnIoDispatcher {
             categoryDao.getAllCategories().map(
                 transform = CategoryEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
@@ -49,13 +51,13 @@ public class CategoryRepositoryImpl(
 
     override suspend fun insertCategories(
         vararg categories: Category,
-    ): List<Long> {
+    ): ImmutableList<Long> {
         return executeOnIoDispatcher {
             categoryDao.insertCategories(
                 categories = categories.map(
                     transform = Category::asEntity,
                 ).toTypedArray(),
-            )
+            ).toImmutableList()
         }
     }
 

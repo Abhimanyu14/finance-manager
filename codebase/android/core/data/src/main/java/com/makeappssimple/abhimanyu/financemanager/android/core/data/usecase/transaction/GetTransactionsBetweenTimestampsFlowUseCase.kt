@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -11,7 +12,7 @@ public class GetTransactionsBetweenTimestampsFlowUseCase @Inject constructor(
     public operator fun invoke(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): Flow<List<Transaction>> {
+    ): Flow<ImmutableList<Transaction>> {
         return transactionRepository.getTransactionsBetweenTimestampsFlow(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,

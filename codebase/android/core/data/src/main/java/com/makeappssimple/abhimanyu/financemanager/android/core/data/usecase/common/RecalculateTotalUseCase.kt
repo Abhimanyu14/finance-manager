@@ -8,6 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -30,9 +32,10 @@ public class RecalculateTotalUseCase @Inject constructor(
                 },
             )
 
-            val allAccounts: List<Account> = deferredList[0].filterIsInstance<Account>()
-            val allTransactionData: List<TransactionData> =
-                deferredList[1].filterIsInstance<TransactionData>()
+            val allAccounts: ImmutableList<Account> =
+                deferredList[0].filterIsInstance<Account>().toImmutableList()
+            val allTransactionData: ImmutableList<TransactionData> =
+                deferredList[1].filterIsInstance<TransactionData>().toImmutableList()
 
             myPreferencesRepository.setLastDataChangeTimestamp()
             val accountBalances = hashMapOf<Int, Long>()

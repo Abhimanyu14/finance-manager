@@ -3,6 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionDataMappedByCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
 public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
@@ -10,7 +12,7 @@ public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
 ) {
     public suspend operator fun invoke(
         transactionType: TransactionType,
-    ): List<TransactionDataMappedByCategory> {
+    ): ImmutableList<TransactionDataMappedByCategory> {
         // TODO(Abhi): To handle refunds
         val result = transactionRepository.getAllTransactionData()
             .filter {
@@ -40,6 +42,6 @@ public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
             it.copy(
                 percentage = (it.amountValue.toDouble() / sum) * 100,
             )
-        }
+        }.toImmutableList()
     }
 }

@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.collections.immutable.ImmutableList
 import javax.inject.Inject
 
 public class InsertTransactionForValuesUseCase @Inject constructor(
@@ -11,7 +12,7 @@ public class InsertTransactionForValuesUseCase @Inject constructor(
 ) {
     public suspend operator fun invoke(
         vararg transactionForValues: TransactionFor,
-    ): List<Long> {
+    ): ImmutableList<Long> {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return transactionForRepository.insertTransactionForValues(
             transactionForValues = transactionForValues,

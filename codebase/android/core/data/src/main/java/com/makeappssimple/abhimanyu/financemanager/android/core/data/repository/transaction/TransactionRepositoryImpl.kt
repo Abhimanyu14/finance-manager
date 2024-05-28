@@ -24,11 +24,11 @@ public class TransactionRepositoryImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
-    override suspend fun getAllTransactions(): List<Transaction> {
+    override suspend fun getAllTransactions(): ImmutableList<Transaction> {
         return executeOnIoDispatcher {
             transactionDao.getAllTransactions().map(
                 transform = TransactionEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
@@ -40,63 +40,63 @@ public class TransactionRepositoryImpl(
         }
     }
 
-    override suspend fun getAllTransactionData(): List<TransactionData> {
+    override suspend fun getAllTransactionData(): ImmutableList<TransactionData> {
         return executeOnIoDispatcher {
             transactionDao.getAllTransactionData().map(
                 transform = TransactionDataEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
     override suspend fun getSearchedTransactionData(
         searchText: String,
-    ): List<TransactionData> {
+    ): ImmutableList<TransactionData> {
         return executeOnIoDispatcher {
             transactionDao.getSearchedTransactionData(
                 searchText = searchText,
             ).map(
                 transform = TransactionDataEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
     override fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
-    ): Flow<List<TransactionData>> {
+    ): Flow<ImmutableList<TransactionData>> {
         return transactionDao.getRecentTransactionDataFlow(
             numberOfTransactions = numberOfTransactions,
         ).map {
             it.map(
                 transform = TransactionDataEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
     override fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): Flow<List<Transaction>> {
+    ): Flow<ImmutableList<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestampsFlow(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,
         ).map {
             it.map(
                 transform = TransactionEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
     override suspend fun getTransactionsBetweenTimestamps(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): List<Transaction> {
+    ): ImmutableList<Transaction> {
         return executeOnIoDispatcher {
             transactionDao.getTransactionsBetweenTimestamps(
                 startingTimestamp = startingTimestamp,
                 endingTimestamp = endingTimestamp,
             ).map(
                 transform = TransactionEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
@@ -110,13 +110,13 @@ public class TransactionRepositoryImpl(
         categoryId: Int,
         numberOfSuggestions: Int,
         enteredTitle: String,
-    ): List<String> {
+    ): ImmutableList<String> {
         return executeOnIoDispatcher {
             transactionDao.getTitleSuggestions(
                 categoryId = categoryId,
                 numberOfSuggestions = numberOfSuggestions,
                 enteredTitle = enteredTitle,
-            )
+            ).toImmutableList()
         }
     }
 
@@ -188,13 +188,13 @@ public class TransactionRepositoryImpl(
 
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
-    ): List<Long> {
+    ): ImmutableList<Long> {
         return executeOnIoDispatcher {
             transactionDao.insertTransactions(
                 transactions = transactions.map(
                     transform = Transaction::asEntity,
                 ).toTypedArray(),
-            )
+            ).toImmutableList()
         }
     }
 
@@ -237,10 +237,10 @@ public class TransactionRepositoryImpl(
     }
 
     override suspend fun restoreData(
-        categories: List<Category>,
-        accounts: List<Account>,
-        transactions: List<Transaction>,
-        transactionForValues: List<TransactionFor>,
+        categories: ImmutableList<Category>,
+        accounts: ImmutableList<Account>,
+        transactions: ImmutableList<Transaction>,
+        transactionForValues: ImmutableList<TransactionFor>,
     ): Boolean {
         return executeOnIoDispatcher {
             commonDataSource.restoreData(

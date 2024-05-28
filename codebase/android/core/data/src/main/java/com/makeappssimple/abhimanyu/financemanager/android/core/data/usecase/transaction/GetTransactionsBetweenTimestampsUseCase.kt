@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import kotlinx.collections.immutable.ImmutableList
 import javax.inject.Inject
 
 public class GetTransactionsBetweenTimestampsUseCase @Inject constructor(
@@ -10,7 +11,7 @@ public class GetTransactionsBetweenTimestampsUseCase @Inject constructor(
     public suspend operator fun invoke(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): List<Transaction> {
+    ): ImmutableList<Transaction> {
         return transactionRepository.getTransactionsBetweenTimestamps(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,

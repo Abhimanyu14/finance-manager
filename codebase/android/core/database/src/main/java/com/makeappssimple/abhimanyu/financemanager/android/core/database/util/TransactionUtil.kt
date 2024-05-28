@@ -2,11 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.abs
 
 public fun sanitizeTransactions(
-    transactions: List<TransactionEntity>,
-): List<TransactionEntity> {
+    transactions: ImmutableList<TransactionEntity>,
+): ImmutableList<TransactionEntity> {
     return transactions.map { transaction ->
         when (transaction.transactionType) {
             TransactionType.INCOME -> {
@@ -62,5 +64,5 @@ public fun sanitizeTransactions(
                 )
             }
         }
-    }
+    }.toImmutableList()
 }

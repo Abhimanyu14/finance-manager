@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 
 public interface AccountRepository {
-    public fun getAllAccountsFlow(): Flow<List<Account>>
+    public fun getAllAccountsFlow(): Flow<ImmutableList<Account>>
 
-    public suspend fun getAllAccounts(): List<Account>
+    public suspend fun getAllAccounts(): ImmutableList<Account>
 
     public suspend fun getAllAccountsCount(): Int
 
@@ -15,15 +16,15 @@ public interface AccountRepository {
     ): Account?
 
     public suspend fun getAccounts(
-        ids: List<Int>,
-    ): List<Account>?
+        ids: ImmutableList<Int>,
+    ): ImmutableList<Account>?
 
     public suspend fun insertAccounts(
         vararg accounts: Account,
-    ): List<Long>
+    ): ImmutableList<Long>
 
     public suspend fun updateAccountBalanceAmount(
-        accountsBalanceAmountChange: List<Pair<Int, Long>>,
+        accountsBalanceAmountChange: ImmutableList<Pair<Int, Long>>,
     ): Boolean
 
     public suspend fun updateAccounts(

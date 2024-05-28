@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ca
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import kotlinx.collections.immutable.ImmutableList
 import javax.inject.Inject
 
 public class InsertCategoriesUseCase @Inject constructor(
@@ -11,7 +12,7 @@ public class InsertCategoriesUseCase @Inject constructor(
 ) {
     public suspend operator fun invoke(
         vararg categories: Category,
-    ): List<Long> {
+    ): ImmutableList<Long> {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return categoryRepository.insertCategories(
             categories = categories,

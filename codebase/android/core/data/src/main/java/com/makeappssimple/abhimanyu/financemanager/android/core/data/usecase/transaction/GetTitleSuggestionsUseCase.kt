@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
+import kotlinx.collections.immutable.ImmutableList
 import javax.inject.Inject
 
 private object GetTitleSuggestionsUseCaseConstants {
@@ -14,7 +15,7 @@ public class GetTitleSuggestionsUseCase @Inject constructor(
         categoryId: Int,
         numberOfSuggestions: Int = GetTitleSuggestionsUseCaseConstants.DEFAULT_NUMBER_OF_TITLE_SUGGESTIONS,
         enteredTitle: String,
-    ): List<String> {
+    ): ImmutableList<String> {
         return transactionRepository.getTitleSuggestions(
             categoryId = categoryId,
             numberOfSuggestions = numberOfSuggestions,

@@ -2,18 +2,20 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 public class FakeAccountRepositoryImpl : AccountRepository {
-    override fun getAllAccountsFlow(): Flow<List<Account>> {
+    override fun getAllAccountsFlow(): Flow<ImmutableList<Account>> {
         return flow {
-            emptyList<Account>()
+            persistentListOf<Account>()
         }
     }
 
-    override suspend fun getAllAccounts(): List<Account> {
-        return emptyList()
+    override suspend fun getAllAccounts(): ImmutableList<Account> {
+        return persistentListOf()
     }
 
     override suspend fun getAllAccountsCount(): Int {
@@ -27,20 +29,20 @@ public class FakeAccountRepositoryImpl : AccountRepository {
     }
 
     override suspend fun getAccounts(
-        ids: List<Int>,
-    ): List<Account> {
-        return emptyList()
+        ids: ImmutableList<Int>,
+    ): ImmutableList<Account> {
+        return persistentListOf()
     }
 
     override suspend fun insertAccounts(
         vararg accounts: Account,
-    ): List<Long> {
-        return emptyList()
+    ): ImmutableList<Long> {
+        return persistentListOf()
     }
 
     @androidx.room.Transaction
     override suspend fun updateAccountBalanceAmount(
-        accountsBalanceAmountChange: List<Pair<Int, Long>>,
+        accountsBalanceAmountChange: ImmutableList<Pair<Int, Long>>,
     ): Boolean {
         return false
     }

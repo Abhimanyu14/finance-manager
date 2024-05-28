@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.I
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPreferencesDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
@@ -163,7 +164,7 @@ public class InitialDatabasePopulatorImpl(
         val currentTransactionsDataVersion = 1
         if (transactionsInitialDataVersionNumber < currentTransactionsDataVersion) {
             val transactionDao = myRoomDatabase.transactionDao()
-            val transactions = transactionDao.getAllTransactionsFlow().first()
+            val transactions = transactionDao.getAllTransactionsFlow().first().toImmutableList()
             transactionDao.deleteAllTransactions()
             transactionDao.insertTransactions(
                 transactions = sanitizeTransactions(

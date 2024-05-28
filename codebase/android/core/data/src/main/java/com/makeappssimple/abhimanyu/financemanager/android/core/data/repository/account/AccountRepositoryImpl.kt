@@ -7,6 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.A
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -16,19 +18,19 @@ public class AccountRepositoryImpl(
     private val accountDao: AccountDao,
     private val dispatcherProvider: DispatcherProvider,
 ) : AccountRepository {
-    override fun getAllAccountsFlow(): Flow<List<Account>> {
+    override fun getAllAccountsFlow(): Flow<ImmutableList<Account>> {
         return accountDao.getAllAccountsFlow().map {
             it.map(
                 transform = AccountEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
-    override suspend fun getAllAccounts(): List<Account> {
+    override suspend fun getAllAccounts(): ImmutableList<Account> {
         return executeOnIoDispatcher {
             accountDao.getAllAccounts().map(
                 transform = AccountEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
@@ -49,37 +51,37 @@ public class AccountRepositoryImpl(
     }
 
     override suspend fun getAccounts(
-        ids: List<Int>,
-    ): List<Account> {
+        ids: ImmutableList<Int>,
+    ): ImmutableList<Account> {
         return executeOnIoDispatcher {
             accountDao.getAccounts(
                 ids = ids,
             ).map(
                 transform = AccountEntity::asExternalModel,
-            )
+            ).toImmutableList()
         }
     }
 
     override suspend fun insertAccounts(
         vararg accounts: Account,
-    ): List<Long> {
+    ): ImmutableList<Long> {
         return executeOnIoDispatcher {
             accountDao.insertAccounts(
                 accounts = accounts.map(
                     transform = Account::asEntity,
                 ).toTypedArray(),
-            )
+            ).toImmutableList()
         }
     }
 
     @androidx.room.Transaction
     override suspend fun updateAccountBalanceAmount(
-        accountsBalanceAmountChange: List<Pair<Int, Long>>,
+        accountsBalanceAmountChange: ImmutableList<Pair<Int, Long>>,
     ): Boolean {
         return executeOnIoDispatcher {
             val accountIds = accountsBalanceAmountChange.map {
                 it.first
-            }
+            }.toImmutableList()
             val accounts = getAccounts(
                 ids = accountIds,
             )

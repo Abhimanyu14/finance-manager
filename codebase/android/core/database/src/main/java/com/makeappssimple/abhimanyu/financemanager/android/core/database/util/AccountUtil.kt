@@ -4,10 +4,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 public fun sanitizeAccounts(
-    accounts: List<AccountEntity>,
-): List<AccountEntity> {
+    accounts: ImmutableList<AccountEntity>,
+): ImmutableList<AccountEntity> {
     return accounts.map {
         if (it.type == AccountType.BANK && it.minimumAccountBalanceAmount.isNull()) {
             it.copy(
@@ -18,5 +20,5 @@ public fun sanitizeAccounts(
         } else {
             it
         }
-    }
+    }.toImmutableList()
 }

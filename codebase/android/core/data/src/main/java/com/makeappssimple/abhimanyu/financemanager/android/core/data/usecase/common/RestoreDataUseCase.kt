@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sa
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -71,17 +72,17 @@ public class RestoreDataUseCase @Inject constructor(
         val accounts = sanitizeAccounts(
             accounts = databaseData.accounts.map(
                 transform = Account::asEntity,
-            ),
+            ).toImmutableList(),
         ).map(
             transform = AccountEntity::asExternalModel,
-        )
+        ).toImmutableList()
         val transactions = sanitizeTransactions(
             transactions = databaseData.transactions.map(
                 transform = Transaction::asEntity,
-            ),
+            ).toImmutableList(),
         ).map(
             transform = TransactionEntity::asExternalModel,
-        )
+        ).toImmutableList()
         transactionRepository.restoreData(
             categories = databaseData.categories,
             accounts = accounts,

@@ -417,10 +417,10 @@ public class EditTransactionScreenViewModel @Inject constructor(
                             accountBalanceAmountChangeMap[accountTo.id].orZero() + uiState.value.amount.text.toLongOrZero()
                     }
                     updateAccountBalanceAmountUseCase(
-                        accountsBalanceAmountChange = accountBalanceAmountChangeMap.toList(),
+                        accountsBalanceAmountChange = accountBalanceAmountChangeMap.toList()
+                            .toImmutableList(),
                     )
                     // endregion
-
                 }
             }
             navigator.navigateUp()

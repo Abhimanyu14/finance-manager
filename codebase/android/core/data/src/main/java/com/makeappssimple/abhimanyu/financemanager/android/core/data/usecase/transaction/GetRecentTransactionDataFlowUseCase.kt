@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ public class GetRecentTransactionDataFlowUseCase @Inject constructor(
 ) {
     public operator fun invoke(
         numberOfTransactions: Int = GetRecentTransactionDataFlowUseCaseConstants.DEFAULT_NUMBER_OF_RECENT_TRANSACTIONS,
-    ): Flow<List<TransactionData>> {
+    ): Flow<ImmutableList<TransactionData>> {
         return transactionRepository.getRecentTransactionDataFlow(
             numberOfTransactions = numberOfTransactions,
         )

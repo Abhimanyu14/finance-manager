@@ -7,52 +7,53 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 public class FakeTransactionRepositoryImpl : TransactionRepository {
-    override suspend fun getAllTransactions(): List<Transaction> {
-        return emptyList()
+    override suspend fun getAllTransactions(): ImmutableList<Transaction> {
+        return persistentListOf()
     }
 
     override fun getAllTransactionDataFlow(): Flow<ImmutableList<TransactionData>> {
         return flow {
-            emptyList<TransactionData>()
+            persistentListOf<TransactionData>()
         }
     }
 
-    override suspend fun getAllTransactionData(): List<TransactionData> {
-        return emptyList()
+    override suspend fun getAllTransactionData(): ImmutableList<TransactionData> {
+        return persistentListOf()
     }
 
     override suspend fun getSearchedTransactionData(
         searchText: String,
-    ): List<TransactionData> {
-        return emptyList()
+    ): ImmutableList<TransactionData> {
+        return persistentListOf()
     }
 
     override fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
-    ): Flow<List<TransactionData>> {
+    ): Flow<ImmutableList<TransactionData>> {
         return flow {
-            emptyList<TransactionData>()
+            persistentListOf<TransactionData>()
         }
     }
 
     override fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): Flow<List<Transaction>> {
+    ): Flow<ImmutableList<Transaction>> {
         return flow {
-            emptyList<TransactionData>()
+            persistentListOf<TransactionData>()
         }
     }
 
     override suspend fun getTransactionsBetweenTimestamps(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): List<Transaction> {
-        return emptyList()
+    ): ImmutableList<Transaction> {
+        return persistentListOf()
     }
 
     override suspend fun getTransactionsCount(): Int {
@@ -63,8 +64,8 @@ public class FakeTransactionRepositoryImpl : TransactionRepository {
         categoryId: Int,
         numberOfSuggestions: Int,
         enteredTitle: String,
-    ): List<String> {
-        return emptyList()
+    ): ImmutableList<String> {
+        return persistentListOf()
     }
 
     override suspend fun checkIfCategoryIsUsedInTransactions(
@@ -108,8 +109,8 @@ public class FakeTransactionRepositoryImpl : TransactionRepository {
 
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
-    ): List<Long> {
-        return emptyList()
+    ): ImmutableList<Long> {
+        return persistentListOf()
     }
 
     override suspend fun updateTransaction(
@@ -135,10 +136,10 @@ public class FakeTransactionRepositoryImpl : TransactionRepository {
     }
 
     override suspend fun restoreData(
-        categories: List<Category>,
-        accounts: List<Account>,
-        transactions: List<Transaction>,
-        transactionForValues: List<TransactionFor>,
+        categories: ImmutableList<Category>,
+        accounts: ImmutableList<Account>,
+        transactions: ImmutableList<Transaction>,
+        transactionForValues: ImmutableList<TransactionFor>,
     ): Boolean {
         return false
     }

@@ -2,18 +2,20 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 public class FakeCategoryRepositoryImpl : CategoryRepository {
-    override fun getAllCategoriesFlow(): Flow<List<Category>> {
+    override fun getAllCategoriesFlow(): Flow<ImmutableList<Category>> {
         return flow {
-            emptyList<Category>()
+            persistentListOf<Category>()
         }
     }
 
-    override suspend fun getAllCategories(): List<Category> {
-        return emptyList()
+    override suspend fun getAllCategories(): ImmutableList<Category> {
+        return persistentListOf()
     }
 
     override suspend fun getAllCategoriesCount(): Int {
@@ -28,8 +30,8 @@ public class FakeCategoryRepositoryImpl : CategoryRepository {
 
     override suspend fun insertCategories(
         vararg categories: Category,
-    ): List<Long> {
-        return emptyList()
+    ): ImmutableList<Long> {
+        return persistentListOf()
     }
 
     override suspend fun updateCategories(

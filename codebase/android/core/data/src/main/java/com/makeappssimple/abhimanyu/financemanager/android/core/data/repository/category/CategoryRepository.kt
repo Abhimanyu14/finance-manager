@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 
 public interface CategoryRepository {
-    public fun getAllCategoriesFlow(): Flow<List<Category>>
+    public fun getAllCategoriesFlow(): Flow<ImmutableList<Category>>
 
-    public suspend fun getAllCategories(): List<Category>
+    public suspend fun getAllCategories(): ImmutableList<Category>
 
     public suspend fun getAllCategoriesCount(): Int
 
@@ -16,7 +17,7 @@ public interface CategoryRepository {
 
     public suspend fun insertCategories(
         vararg categories: Category,
-    ): List<Long>
+    ): ImmutableList<Long>
 
     public suspend fun updateCategories(
         vararg categories: Category,
