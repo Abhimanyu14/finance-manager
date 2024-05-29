@@ -1,7 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,6 +46,19 @@ public fun <T> Flow<ImmutableList<T>>.defaultListStateIn(
         scope = scope,
         started = started,
         initialValue = persistentListOf(),
+    )
+}
+
+public fun <K, V> Flow<ImmutableMap<K, V>>.defaultMapStateIn(
+    scope: CoroutineScope,
+    started: SharingStarted = SharingStarted.WhileSubscribed(
+        stopTimeoutMillis = 5000,
+    ),
+): StateFlow<ImmutableMap<K, V>> {
+    return this.stateIn(
+        scope = scope,
+        started = started,
+        initialValue = persistentMapOf(),
     )
 }
 

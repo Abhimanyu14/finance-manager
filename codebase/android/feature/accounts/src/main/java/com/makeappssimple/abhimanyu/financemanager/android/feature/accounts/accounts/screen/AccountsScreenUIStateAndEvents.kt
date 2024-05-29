@@ -20,6 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableList
 
 @Stable
@@ -32,7 +33,7 @@ internal class AccountsScreenUIStateAndEvents(
 internal fun rememberAccountsScreenUIStateAndEvents(
     defaultAccountId: Int?,
     allAccounts: ImmutableList<Account>,
-    isAccountUsedInTransactions: Map<Int, Boolean>,
+    isAccountUsedInTransactions: ImmutableMap<Int, Boolean>,
     accountsTotalBalanceAmountValue: Long,
     accountsTotalMinimumBalanceAmountValue: Long,
 ): AccountsScreenUIStateAndEvents {

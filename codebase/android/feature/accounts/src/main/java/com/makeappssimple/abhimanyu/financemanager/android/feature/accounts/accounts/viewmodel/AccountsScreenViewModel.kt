@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultLongStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultMapStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
@@ -16,7 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.Flow
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -42,13 +44,16 @@ public class AccountsScreenViewModel @Inject constructor(
         getAllAccountsFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
         )
-    public val isAccountUsedInTransactions: Flow<Map<Int, Boolean>> = allAccounts.map { accounts ->
-        accounts.associate { account ->
-            account.id to checkIfAccountIsUsedInTransactionsUseCase(
-                accountId = account.id,
-            )
-        }
-    }
+    public val isAccountUsedInTransactions: StateFlow<ImmutableMap<Int, Boolean>> =
+        allAccounts.map { accounts ->
+            accounts.associate { account ->
+                account.id to checkIfAccountIsUsedInTransactionsUseCase(
+                    accountId = account.id,
+                )
+            }.toImmutableMap()
+        }.defaultMapStateIn(
+            scope = viewModelScope,
+        )
     public val accountsTotalBalanceAmountValue: StateFlow<Long> =
         getAccountsTotalBalanceAmountValueUseCase().defaultLongStateIn(
             scope = viewModelScope,
