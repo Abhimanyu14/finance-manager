@@ -84,10 +84,10 @@ public class RestoreDataUseCase @Inject constructor(
             transform = TransactionEntity::asExternalModel,
         ).toImmutableList()
         transactionRepository.restoreData(
-            categories = databaseData.categories,
+            categories = databaseData.categories.toImmutableList(),
             accounts = accounts,
             transactions = transactions,
-            transactionForValues = databaseData.transactionForValues,
+            transactionForValues = databaseData.transactionForValues.toImmutableList(),
         )
         // TODO(Abhi): Add return value for database methods and propagate them to the usages.
         return true

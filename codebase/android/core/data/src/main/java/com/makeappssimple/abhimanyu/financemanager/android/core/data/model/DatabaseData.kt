@@ -4,19 +4,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 public data class DatabaseData(
-    val categories: ImmutableList<Category> = persistentListOf(),
+    val categories: List<Category> = listOf(),
 
-    val accounts: ImmutableList<Account> = persistentListOf(),
+    val accounts: List<Account> = listOf(),
 
     @SerialName(value = "transaction_for_values")
-    val transactionForValues: ImmutableList<TransactionFor> = persistentListOf(),
+    val transactionForValues: List<TransactionFor> = listOf(),
 
-    val transactions: ImmutableList<Transaction> = persistentListOf(),
+    val transactions: List<Transaction> = listOf(),
 )
