@@ -42,6 +42,9 @@ internal fun rememberTransactionForValuesScreenUIStateAndEvents(
         { updatedTransactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType ->
             screenBottomSheetType = updatedTransactionForValuesBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
+    }
     // endregion
 
     return remember(
@@ -61,9 +64,7 @@ internal fun rememberTransactionForValuesScreenUIStateAndEvents(
                 screenBottomSheetType = screenBottomSheetType,
             ),
             events = TransactionForValuesScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setTransactionForIdToDelete = setTransactionForIdToDelete,
             ),

@@ -57,6 +57,9 @@ internal fun rememberAccountsScreenUIStateAndEvents(
         { updatedAccountsBottomSheetType: AccountsScreenBottomSheetType ->
             screenBottomSheetType = updatedAccountsBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(AccountsScreenBottomSheetType.None)
+    }
     // endregion
 
     return remember(
@@ -129,9 +132,7 @@ internal fun rememberAccountsScreenUIStateAndEvents(
             events = AccountsScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setClickedItemId = setClickedItemId,
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AccountsScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
             ),
         )
     }

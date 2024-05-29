@@ -53,6 +53,9 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
         { updatedAddTransactionScreenBottomSheetType: AddTransactionScreenBottomSheetType ->
             screenBottomSheetType = updatedAddTransactionScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(AddTransactionScreenBottomSheetType.None)
+    }
     // endregion
 
     // region is transaction date picker dialog visible
@@ -145,9 +148,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
                 setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddTransactionScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
             )
         )
     }

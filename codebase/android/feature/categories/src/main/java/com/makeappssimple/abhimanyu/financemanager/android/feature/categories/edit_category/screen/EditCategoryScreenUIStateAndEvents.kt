@@ -45,6 +45,9 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
         { updatedEditCategoryScreenBottomSheetType: EditCategoryScreenBottomSheetType ->
             screenBottomSheetType = updatedEditCategoryScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(EditCategoryScreenBottomSheetType.None)
+    }
     // endregion
 
     // region title
@@ -167,9 +170,7 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
             ),
             events = EditCategoryScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(EditCategoryScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setTitle = setTitle,
                 clearTitle = clearTitle,
                 setSelectedTransactionTypeIndex = setSelectedTransactionTypeIndex,

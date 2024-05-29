@@ -53,6 +53,9 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
         { updatedEditTransactionScreenBottomSheetType: EditTransactionScreenBottomSheetType ->
             screenBottomSheetType = updatedEditTransactionScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(EditTransactionScreenBottomSheetType.None)
+    }
     // endregion
 
     // region is transaction date picker dialog visible
@@ -66,7 +69,7 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
         mutableStateOf(false)
     }
     // endregion
-    
+
     return remember(
         screenBottomSheetType,
         setScreenBottomSheetType,
@@ -132,9 +135,7 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
                 setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(EditTransactionScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
             )
         )
     }

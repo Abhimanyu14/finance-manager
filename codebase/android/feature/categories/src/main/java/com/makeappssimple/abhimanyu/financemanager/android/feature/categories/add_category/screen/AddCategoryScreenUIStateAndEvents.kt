@@ -43,6 +43,9 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
         { updatedAddCategoryScreenBottomSheetType: AddCategoryScreenBottomSheetType ->
             screenBottomSheetType = updatedAddCategoryScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(AddCategoryScreenBottomSheetType.None)
+    }
     // endregion
 
     // region title
@@ -169,9 +172,7 @@ internal fun rememberAddCategoryScreenUIStateAndEvents(
             ),
             events = AddCategoryScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddCategoryScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setTitle = setTitle,
                 clearTitle = clearTitle,
                 setSelectedTransactionTypeIndex = setSelectedTransactionTypeIndex,

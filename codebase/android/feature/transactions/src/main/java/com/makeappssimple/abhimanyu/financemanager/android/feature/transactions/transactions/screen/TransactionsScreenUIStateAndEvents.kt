@@ -86,6 +86,9 @@ internal fun rememberTransactionsScreenUIStateAndEvents(
         { updatedTransactionsScreenBottomSheetType: TransactionsScreenBottomSheetType ->
             screenBottomSheetType = updatedTransactionsScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(TransactionsScreenBottomSheetType.None)
+    }
     // endregion
 
     // region search text
@@ -335,9 +338,7 @@ internal fun rememberTransactionsScreenUIStateAndEvents(
                 screenBottomSheetType = screenBottomSheetType,
             ),
             events = TransactionsScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(TransactionsScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setIsInSelectionMode = setIsInSelectionMode,
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setSearchText = setSearchText,

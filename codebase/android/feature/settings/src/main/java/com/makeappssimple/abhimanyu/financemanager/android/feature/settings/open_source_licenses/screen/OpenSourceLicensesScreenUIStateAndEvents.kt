@@ -26,6 +26,9 @@ internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(): OpenSourceLicen
         { updatedOpenSourceLicensesScreenBottomSheetType: OpenSourceLicensesScreenBottomSheetType ->
             screenBottomSheetType = updatedOpenSourceLicensesScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.None)
+    }
     // endregion
 
     return remember(
@@ -37,9 +40,7 @@ internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(): OpenSourceLicen
                 screenBottomSheetType = screenBottomSheetType,
             ),
             events = OpenSourceLicensesScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
             )
         )
     }

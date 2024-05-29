@@ -45,6 +45,9 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         { updatedAddAccountScreenBottomSheetType: AddAccountScreenBottomSheetType ->
             screenBottomSheetType = updatedAddAccountScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(AddAccountScreenBottomSheetType.None)
+    }
     // endregion
 
     // region selected account type index
@@ -169,9 +172,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
                 ),
             ),
             events = AddAccountScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddAccountScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 clearMinimumAccountBalanceAmountValue = {
                     setMinimumAccountBalanceAmountValue(
                         minimumAccountBalanceAmountValue.copy(

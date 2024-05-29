@@ -43,6 +43,9 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
         { updatedViewTransactionScreenBottomSheetType: ViewTransactionScreenBottomSheetType ->
             screenBottomSheetType = updatedViewTransactionScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.None)
+    }
     // endregion
 
     return remember(
@@ -64,9 +67,7 @@ internal fun rememberViewTransactionScreenUIStateAndEvents(
                 screenBottomSheetType = screenBottomSheetType,
             ),
             events = ViewTransactionScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 setTransactionIdToDelete = setTransactionIdToDelete,
             ),

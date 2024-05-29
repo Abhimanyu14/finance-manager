@@ -41,6 +41,9 @@ internal fun rememberAddTransactionForScreenUIStateAndEvents(
         { updatedAddTransactionForScreenBottomSheetType: AddTransactionForScreenBottomSheetType ->
             screenBottomSheetType = updatedAddTransactionForScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(AddTransactionForScreenBottomSheetType.None)
+    }
     // endregion
 
     // region title
@@ -95,9 +98,7 @@ internal fun rememberAddTransactionForScreenUIStateAndEvents(
                 titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
             ),
             events = AddTransactionForScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AddTransactionForScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setTitle = setTitle,
             ),
         )

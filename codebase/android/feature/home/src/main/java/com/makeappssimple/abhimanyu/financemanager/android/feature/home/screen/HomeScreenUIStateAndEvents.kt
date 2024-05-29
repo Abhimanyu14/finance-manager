@@ -53,6 +53,9 @@ internal fun rememberHomeScreenUIStateAndEvents(
         { updatedHomeScreenBottomSheetType: HomeScreenBottomSheetType ->
             screenBottomSheetType = updatedHomeScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(HomeScreenBottomSheetType.None)
+    }
     // endregion
 
     return remember(
@@ -104,9 +107,7 @@ internal fun rememberHomeScreenUIStateAndEvents(
                 ),
             ),
             HomeScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(HomeScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setBalanceVisible = setBalanceVisible,
             )
         )

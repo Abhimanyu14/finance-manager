@@ -43,6 +43,9 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
         { updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType ->
             screenBottomSheetType = updatedCategoriesBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(CategoriesScreenBottomSheetType.None)
+    }
     // endregion
 
     // region category id to delete
@@ -114,9 +117,7 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
                 pagerState = pagerState,
             ),
             events = CategoriesScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(CategoriesScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setCategoryIdToDelete = setCategoryIdToDelete,
                 setClickedItemId = setClickedItemId,
                 setScreenBottomSheetType = setScreenBottomSheetType,

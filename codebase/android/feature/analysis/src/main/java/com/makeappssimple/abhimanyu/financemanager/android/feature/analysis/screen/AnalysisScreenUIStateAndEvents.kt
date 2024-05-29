@@ -51,6 +51,9 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
         { updatedAnalysisScreenBottomSheetType: AnalysisScreenBottomSheetType ->
             screenBottomSheetType = updatedAnalysisScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(AnalysisScreenBottomSheetType.None)
+    }
     // endregion
 
     // region selected filter
@@ -101,9 +104,7 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
                 startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
             ),
             events = AnalysisScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(AnalysisScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 // setSelectedFilter = setSelectedFilter,
             ),

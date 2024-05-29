@@ -59,6 +59,9 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
         { updatedEditAccountScreenBottomSheetType: EditAccountScreenBottomSheetType ->
             screenBottomSheetType = updatedEditAccountScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(EditAccountScreenBottomSheetType.None)
+    }
     // endregion
 
     // region name
@@ -190,9 +193,7 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
                 ),
             ),
             events = EditAccountScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(EditAccountScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setName = setName,
                 setBalanceAmountValue = setBalanceAmountValue,
                 setMinimumAccountBalanceAmountValue = setMinimumAccountBalanceAmountValue,

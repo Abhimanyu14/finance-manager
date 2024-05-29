@@ -37,6 +37,9 @@ internal fun rememberSettingsScreenUIStateAndEvents(
         { updatedSettingsScreenBottomSheetType: SettingsScreenBottomSheetType ->
             screenBottomSheetType = updatedSettingsScreenBottomSheetType
         }
+    val resetScreenBottomSheetType = {
+        setScreenBottomSheetType(SettingsScreenBottomSheetType.None)
+    }
     // endregion
 
     return remember(
@@ -56,9 +59,7 @@ internal fun rememberSettingsScreenUIStateAndEvents(
                 appVersion = appVersionName,
             ),
             events = SettingsScreenUIStateEvents(
-                resetScreenBottomSheetType = {
-                    setScreenBottomSheetType(SettingsScreenBottomSheetType.None)
-                },
+                resetScreenBottomSheetType = resetScreenBottomSheetType,
             ),
         )
     }
