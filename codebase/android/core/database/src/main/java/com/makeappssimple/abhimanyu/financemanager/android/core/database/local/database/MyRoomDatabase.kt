@@ -91,7 +91,12 @@ public abstract class MyRoomDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(
                 lock = this,
             ) {
-                INSTANCE ?: buildDatabase(context, initialDatabasePopulator).also { INSTANCE = it }
+                INSTANCE ?: buildDatabase(
+                    context = context,
+                    initialDatabasePopulator = initialDatabasePopulator
+                ).also {
+                    INSTANCE = it
+                }
             }
         }
 

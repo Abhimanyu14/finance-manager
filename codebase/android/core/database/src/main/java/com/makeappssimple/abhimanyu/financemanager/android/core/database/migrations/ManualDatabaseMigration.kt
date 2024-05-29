@@ -6,6 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 internal val manualDatabaseMigrations = arrayOf(
+    ManualDatabaseMigration.MIGRATION_21_22,
     ManualDatabaseMigration.MIGRATION_19_20,
     ManualDatabaseMigration.MIGRATION_18_19,
     ManualDatabaseMigration.MIGRATION_17_18,
@@ -24,6 +25,25 @@ internal val manualDatabaseMigrations = arrayOf(
 )
 
 private object ManualDatabaseMigration {
+    /**
+     * New Column added
+     *
+     * 1. In account_table -> is_archived
+     */
+    val MIGRATION_21_22 = object : Migration(21, 22) {
+        override fun migrate(
+            db: SupportSQLiteDatabase,
+        ) {
+            // Add column with a default value
+            db.execSQL(
+                """
+                    ALTER TABLE account_table 
+                    ADD COLUMN `is_archived` INTEGER NOT NULL DEFAULT(0)
+                """.trimIndent()
+            )
+        }
+    }
+
     /**
      * New Column added
      * Adding a new column

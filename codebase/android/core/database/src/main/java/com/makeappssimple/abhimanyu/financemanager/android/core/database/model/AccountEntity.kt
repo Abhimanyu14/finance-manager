@@ -20,6 +20,11 @@ public data class AccountEntity(
     ),
 
     @EncodeDefault
+    @ColumnInfo(name = "is_archived", defaultValue = "0")
+    @SerialName(value = "is_archived")
+    val isArchived: Boolean = false,
+
+    @EncodeDefault
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
