@@ -52,10 +52,10 @@ internal fun rememberSettingsScreenUIStateAndEvents(
     ) {
         SettingsScreenUIStateAndEvents(
             state = SettingsScreenUIState(
-                screenBottomSheetType = screenBottomSheetType,
-                snackbarHostState = snackbarHostState,
                 isLoading = isLoading,
                 isReminderEnabled = reminder?.isEnabled.orFalse(),
+                screenBottomSheetType = screenBottomSheetType,
+                snackbarHostState = snackbarHostState,
                 appVersion = appVersionName,
             ),
             events = SettingsScreenUIStateEvents(

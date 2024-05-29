@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
@@ -45,10 +46,11 @@ internal fun SettingsScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: SettingsScreenUIEvent) -> Unit = {},
 ) {
-    val listItemsData: ImmutableList<SettingsScreenListItemData> = getSettingsListItemData(
-        uiState = uiState,
-        handleUIEvent = handleUIEvent,
-    )
+    val settingsScreenListItemData: ImmutableList<SettingsScreenListItemData> =
+        getSettingsListItemData(
+            uiState = uiState,
+            handleUIEvent = handleUIEvent,
+        )
 
     MyScaffold(
         modifier = Modifier
@@ -90,66 +92,82 @@ internal fun SettingsScreenUI(
                     state = rememberScrollState(),
                 ),
         ) {
-            AnimatedVisibility(
-                visible = uiState.isLoading,
-            ) {
-                MyLinearProgressIndicator(
+            SettingsScreenLoader(
+                isLoading = uiState.isLoading,
+            )
+            SettingsScreenContent(
+                settingsScreenListItemData = settingsScreenListItemData,
+            )
+            NavigationBarsAndImeSpacer()
+        }
+    }
+}
+
+@Composable
+private fun SettingsScreenContent(
+    settingsScreenListItemData: ImmutableList<SettingsScreenListItemData>,
+) {
+    settingsScreenListItemData.mapIndexed { index, listItemData ->
+        when (listItemData.data) {
+            is SettingsListItemAppVersionData -> {
+                SettingsListItemAppVersion(
+                    data = SettingsListItemAppVersionData(
+                        appVersionText = stringResource(
+                            id = R.string.screen_settings_app_version,
+                            listItemData.data.appVersionText,
+                        ),
+                    ),
+                )
+            }
+
+            is SettingsListItemDividerData -> {
+                SettingsListItemDivider(
                     modifier = Modifier
                         .testTag(
-                            tag = stringResource(
-                                id = R.string.screen_settings_linear_progress_indicator_test_tag,
-                            ),
+                            tag = "Item $index",
                         ),
                 )
             }
-            listItemsData.mapIndexed { index, settingsScreenListItemData ->
-                when (settingsScreenListItemData.data) {
-                    is SettingsListItemAppVersionData -> {
-                        uiState.appVersion?.let {
-                            SettingsListItemAppVersion(
-                                data = SettingsListItemAppVersionData(
-                                    appVersionText = stringResource(
-                                        id = R.string.screen_settings_app_version,
-                                        it,
-                                    ),
-                                ),
-                            )
-                        }
-                    }
 
-                    is SettingsListItemDividerData -> {
-                        SettingsListItemDivider(
-                            modifier = Modifier
-                                .testTag(
-                                    tag = "Item $index",
-                                ),
-                        )
-                    }
-
-                    is SettingsListItemContentData -> {
-                        SettingsListItemContent(
-                            modifier = Modifier
-                                .testTag(
-                                    tag = "Item $index",
-                                ),
-                            data = settingsScreenListItemData.data,
-                            handleEvent = settingsScreenListItemData.handleEvent,
-                        )
-                    }
-
-                    is SettingsListItemHeaderData -> {
-                        SettingsListItemHeader(
-                            modifier = Modifier
-                                .testTag(
-                                    tag = "Item $index",
-                                ),
-                            data = settingsScreenListItemData.data,
-                        )
-                    }
-                }
+            is SettingsListItemContentData -> {
+                SettingsListItemContent(
+                    modifier = Modifier
+                        .testTag(
+                            tag = "Item $index",
+                        ),
+                    data = listItemData.data,
+                    handleEvent = listItemData.handleEvent,
+                )
             }
-            NavigationBarsAndImeSpacer()
+
+            is SettingsListItemHeaderData -> {
+                SettingsListItemHeader(
+                    modifier = Modifier
+                        .testTag(
+                            tag = "Item $index",
+                        ),
+                    data = listItemData.data,
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun ColumnScope.SettingsScreenLoader(
+    isLoading: Boolean,
+) {
+    AnimatedVisibility(
+        visible = isLoading,
+    ) {
+        MyLinearProgressIndicator(
+            modifier = Modifier
+                .testTag(
+                    tag = stringResource(
+                        id = R.string.screen_settings_linear_progress_indicator_test_tag,
+                    ),
+                ),
+        )
     }
 }
 
