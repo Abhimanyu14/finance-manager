@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 internal data class AddTransactionForScreenUIState(
     val screenBottomSheetType: AddTransactionForScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
-    val isCtaButtonEnabled: Boolean?,
+    val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,

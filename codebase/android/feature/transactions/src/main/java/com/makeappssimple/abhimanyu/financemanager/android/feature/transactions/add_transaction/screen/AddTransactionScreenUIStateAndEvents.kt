@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -102,7 +101,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 uiState = uiState.orDefault(),
                 uiVisibilityState = uiVisibilityState.orDefault(),
                 isBottomSheetVisible = screenBottomSheetType != AddTransactionScreenBottomSheetType.None,
-                isCtaButtonEnabled = isCtaButtonEnabled.orFalse(),
+                isCtaButtonEnabled = isCtaButtonEnabled,
                 appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
                 ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
                 accountFromTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
@@ -115,7 +114,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 } else {
                     R.string.screen_add_or_edit_transaction_account
                 },
-                filteredCategories = filteredCategories.orEmpty(),
+                filteredCategories = filteredCategories,
                 transactionTypesForNewTransactionChipUIData = validTransactionTypesForNewTransaction
                     .map { transactionType ->
                         ChipUIData(

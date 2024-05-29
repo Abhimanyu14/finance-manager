@@ -797,9 +797,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
             id = originalTransactionId,
         ) ?: return
         this.originalTransactionData = originalTransactionData
-        if (originalTransactionData.transaction.transactionType == TransactionType.REFUND) {
-            calculateMaxRefundAmount()
-        }
+        calculateMaxRefundAmount()
         updateAddTransactionScreenUiStateWithOriginalTransactionData(
             originalTransaction = originalTransactionData.transaction,
             transactionTypesForNewTransaction = validTransactionTypesForNewTransaction.value,

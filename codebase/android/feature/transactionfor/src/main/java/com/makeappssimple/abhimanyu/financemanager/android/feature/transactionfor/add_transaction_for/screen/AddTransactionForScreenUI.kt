@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_TRANSACTION_FOR
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
@@ -175,7 +174,7 @@ internal fun AddTransactionForScreenUI(
             SaveButton(
                 modifier = Modifier,
                 data = SaveButtonData(
-                    isEnabled = uiState.isCtaButtonEnabled.orFalse(),
+                    isEnabled = uiState.isCtaButtonEnabled,
                     isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
