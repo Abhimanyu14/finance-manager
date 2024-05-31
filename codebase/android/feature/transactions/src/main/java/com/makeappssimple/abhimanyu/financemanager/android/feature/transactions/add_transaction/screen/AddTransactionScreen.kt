@@ -6,16 +6,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiStateData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Composable
 public fun AddTransactionScreen(
@@ -29,32 +32,18 @@ public fun AddTransactionScreen(
         message = "Inside AddTransactionScreen",
     )
 
+    val dateTimeUtil = remember {
+        DateTimeUtilImpl()
+    }
+
     // region view model data
-    val uiState: AddTransactionScreenUiStateData by viewModel.uiState.collectAsStateWithLifecycle()
-    val uiVisibilityState: AddTransactionScreenUiVisibilityState by viewModel.uiVisibilityState.collectAsStateWithLifecycle()
-    val isCtaButtonEnabled: Boolean by viewModel.isCtaButtonEnabled.collectAsStateWithLifecycle()
-    val filteredCategories: ImmutableList<Category> by viewModel.filteredCategories.collectAsStateWithLifecycle()
+    val addTransactionScreenData: AddTransactionScreenData? by viewModel.addTransactionScreenData.collectAsStateWithLifecycle()
     val titleSuggestions: ImmutableList<String>? by viewModel.titleSuggestions.collectAsStateWithLifecycle()
-    val selectedTransactionType: TransactionType? by viewModel.selectedTransactionType.collectAsStateWithLifecycle()
-    val isDataFetchCompleted: Boolean by viewModel.isDataFetchCompleted.collectAsStateWithLifecycle()
-    val validTransactionTypesForNewTransaction: ImmutableList<TransactionType> by viewModel.validTransactionTypesForNewTransaction.collectAsStateWithLifecycle()
-    val currentLocalDate: LocalDate = viewModel.currentLocalDate
-    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
-    val accounts: ImmutableList<Account> by viewModel.accounts.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberAddTransactionScreenUIStateAndEvents(
-        uiState = uiState,
-        uiVisibilityState = uiVisibilityState,
-        isCtaButtonEnabled = isCtaButtonEnabled,
-        filteredCategories = filteredCategories,
+        addTransactionScreenData = addTransactionScreenData,
         titleSuggestions = titleSuggestions,
-        selectedTransactionType = selectedTransactionType,
-        isDataFetchCompleted = isDataFetchCompleted,
-        validTransactionTypesForNewTransaction = validTransactionTypesForNewTransaction,
-        currentLocalDate = currentLocalDate,
-        transactionForValues = transactionForValues,
-        accounts = accounts,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
@@ -71,19 +60,174 @@ public fun AddTransactionScreen(
                 }
 
                 is AddTransactionScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.insertTransaction()
+
+                    val amountValue = uiStateAndEvents.state.uiState.amount.text.toLongOrZero()
+                    val amount = Amount(
+                        value = amountValue,
+                    )
+
+                    val categoryId = when (uiStateAndEvents.state.selectedTransactionType) {
+                        TransactionType.INCOME -> {
+                            uiStateAndEvents.state.uiState.category?.id
+                        }
+
+                        TransactionType.EXPENSE -> {
+                            uiStateAndEvents.state.uiState.category?.id
+                        }
+
+                        TransactionType.TRANSFER -> {
+                            null
+                        }
+
+                        TransactionType.ADJUSTMENT -> {
+                            null
+                        }
+
+                        TransactionType.INVESTMENT -> {
+                            uiStateAndEvents.state.uiState.category?.id
+                        }
+
+                        TransactionType.REFUND -> {
+                            uiStateAndEvents.state.uiState.category?.id
+                        }
+                    }
+                    val accountFromId = when (uiStateAndEvents.state.selectedTransactionType) {
+                        TransactionType.INCOME -> {
+                            null
+                        }
+
+                        TransactionType.EXPENSE -> {
+                            uiStateAndEvents.state.uiState.accountFrom?.id
+                        }
+
+                        TransactionType.TRANSFER -> {
+                            uiStateAndEvents.state.uiState.accountFrom?.id
+                        }
+
+                        TransactionType.ADJUSTMENT -> {
+                            null
+                        }
+
+                        TransactionType.INVESTMENT -> {
+                            uiStateAndEvents.state.uiState.accountFrom?.id
+                        }
+
+                        TransactionType.REFUND -> {
+                            null
+                        }
+                    }
+                    val accountToId = when (uiStateAndEvents.state.selectedTransactionType) {
+                        TransactionType.INCOME -> {
+                            uiStateAndEvents.state.uiState.accountTo?.id
+                        }
+
+                        TransactionType.EXPENSE -> {
+                            null
+                        }
+
+                        TransactionType.TRANSFER -> {
+                            uiStateAndEvents.state.uiState.accountTo?.id
+                        }
+
+                        TransactionType.ADJUSTMENT -> {
+                            null
+                        }
+
+                        TransactionType.INVESTMENT -> {
+                            null
+                        }
+
+                        TransactionType.REFUND -> {
+                            uiStateAndEvents.state.uiState.accountTo?.id
+                        }
+                    }
+                    val title = when (uiStateAndEvents.state.selectedTransactionType) {
+                        TransactionType.TRANSFER -> {
+                            TransactionType.TRANSFER.title
+                        }
+
+                        TransactionType.REFUND -> {
+                            TransactionType.REFUND.title
+                        }
+
+                        else -> {
+                            uiStateAndEvents.state.uiState.title.text.capitalizeWords()
+                        }
+                    }
+                    val transactionForId: Int =
+                        when (uiStateAndEvents.state.selectedTransactionType) {
+                            TransactionType.INCOME -> {
+                                1
+                            }
+
+                            TransactionType.EXPENSE -> {
+                                uiStateAndEvents.state.uiState.selectedTransactionForIndex
+                            }
+
+                            TransactionType.TRANSFER -> {
+                                1
+                            }
+
+                            TransactionType.ADJUSTMENT -> {
+                                1
+                            }
+
+                            TransactionType.INVESTMENT -> {
+                                1
+                            }
+
+                            TransactionType.REFUND -> {
+                                1
+                            }
+                        }
+
+                    val transactionTimestamp = LocalDateTime
+                        .of(
+                            uiStateAndEvents.state.uiState.transactionDate,
+                            uiStateAndEvents.state.uiState.transactionTime
+                        )
+                        .toEpochMilli()
+
+                    viewModel.insertTransaction(
+                        amountValue = amountValue,
+                        accountFrom = if (accountFromId.isNotNull()) {
+                            uiStateAndEvents.state.uiState.accountFrom
+                        } else {
+                            null
+                        },
+                        accountTo = if (accountToId.isNotNull()) {
+                            uiStateAndEvents.state.uiState.accountTo
+                        } else {
+                            null
+                        },
+                        transaction = Transaction(
+                            amount = amount,
+                            categoryId = categoryId,
+                            originalTransactionId = addTransactionScreenData?.originalTransactionData?.transaction?.id,
+                            accountFromId = accountFromId,
+                            accountToId = accountToId,
+                            description = "",
+                            // TODO(Abhi): Description
+                            // description = uiStateAndEvents.state.description.text,
+                            title = title,
+                            creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
+                            transactionTimestamp = transactionTimestamp,
+                            transactionForId = transactionForId,
+                            transactionType = uiStateAndEvents.state.selectedTransactionType,
+                        ),
+                    )
                 }
 
                 is AddTransactionScreenUIEvent.OnClearAmountButtonClick -> {
-                    viewModel.clearAmount()
+                    uiStateAndEvents.events.clearAmount()
                 }
 
                 is AddTransactionScreenUIEvent.OnClearDescriptionButtonClick -> {
-                    viewModel.clearDescription()
+                    // TODO(Abhi): Description
                 }
 
                 is AddTransactionScreenUIEvent.OnClearTitleButtonClick -> {
-                    viewModel.clearTitle()
+                    uiStateAndEvents.events.clearTitle()
                 }
 
                 is AddTransactionScreenUIEvent.OnAccountFromTextFieldClick -> {
@@ -117,45 +261,32 @@ public fun AddTransactionScreen(
                 }
 
                 is AddTransactionScreenUIEvent.OnAccountFromUpdated -> {
-                    viewModel.updateAccountFrom(
-                        updatedAccountFrom = uiEvent.updatedAccountFrom,
-                    )
+                    uiStateAndEvents.events.setAccountFrom(uiEvent.updatedAccountFrom)
                 }
 
                 is AddTransactionScreenUIEvent.OnAccountToUpdated -> {
-                    viewModel.updateAccountTo(
-                        updatedAccountTo = uiEvent.updatedAccountTo,
-                    )
+                    uiStateAndEvents.events.setAccountTo(uiEvent.updatedAccountTo)
                 }
 
                 is AddTransactionScreenUIEvent.OnAmountUpdated -> {
-                    viewModel.updateAmount(
-                        updatedAmount = uiEvent.updatedAmount,
-                    )
+                    uiStateAndEvents.events.setAmount(uiEvent.updatedAmount)
                 }
 
                 is AddTransactionScreenUIEvent.OnCategoryUpdated -> {
-                    viewModel.updateCategory(
-                        updatedCategory = uiEvent.updatedCategory,
-                    )
+                    uiStateAndEvents.events.setCategory(uiEvent.updatedCategory)
+                    viewModel.setCategory(uiEvent.updatedCategory)
                 }
 
                 is AddTransactionScreenUIEvent.OnDescriptionUpdated -> {
-                    viewModel.updateDescription(
-                        updatedDescription = uiEvent.updatedDescription,
-                    )
+                    // TODO(Abhi): Description
                 }
 
                 is AddTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated -> {
-                    viewModel.updateSelectedTransactionForIndex(
-                        updatedSelectedTransactionForIndex = uiEvent.updatedSelectedTransactionForIndex,
-                    )
+                    uiStateAndEvents.events.setSelectedTransactionForIndex(uiEvent.updatedSelectedTransactionForIndex)
                 }
 
                 is AddTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                    viewModel.updateSelectedTransactionTypeIndex(
-                        updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
-                    )
+                    uiStateAndEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
                 }
 
                 is AddTransactionScreenUIEvent.OnTransactionTimePickerDismissed -> {
@@ -167,22 +298,17 @@ public fun AddTransactionScreen(
                 }
 
                 is AddTransactionScreenUIEvent.OnTitleUpdated -> {
-                    viewModel.updateTitle(
-                        updatedTitle = uiEvent.updatedTitle,
-                    )
+                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
+                    viewModel.setTitle(uiEvent.updatedTitle.text)
                 }
 
                 is AddTransactionScreenUIEvent.OnTransactionDateUpdated -> {
-                    viewModel.updateTransactionDate(
-                        updatedTransactionDate = uiEvent.updatedTransactionDate,
-                    )
+                    uiStateAndEvents.events.setTransactionDate(uiEvent.updatedTransactionDate)
                     uiStateAndEvents.events.setIsTransactionDatePickerDialogVisible(false)
                 }
 
                 is AddTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
-                    viewModel.updateTransactionTime(
-                        updatedTransactionTime = uiEvent.updatedTransactionTime,
-                    )
+                    uiStateAndEvents.events.setTransactionTime(uiEvent.updatedTransactionTime)
                     uiStateAndEvents.events.setIsTransactionTimePickerDialogVisible(false)
                 }
             }
@@ -193,6 +319,43 @@ public fun AddTransactionScreen(
         key1 = Unit,
     ) {
         viewModel.initViewModel()
+    }
+
+    LaunchedEffect(
+        key1 = addTransactionScreenData,
+    ) {
+        addTransactionScreenData?.let { addTransactionScreenData ->
+            if (addTransactionScreenData.originalTransactionData != null) {
+                uiStateAndEvents.events.setCategory(addTransactionScreenData.originalTransactionData.category)
+                viewModel.setCategory(addTransactionScreenData.originalTransactionData.category)
+                uiStateAndEvents.events.setAccountFrom(addTransactionScreenData.originalTransactionData.accountFrom)
+                uiStateAndEvents.events.setAccountTo(addTransactionScreenData.originalTransactionData.accountTo)
+                uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+                    // TODO(Abhi): Move this logic outside
+                    addTransactionScreenData.validTransactionTypesForNewTransaction.indexOf(
+                        element = TransactionType.REFUND,
+                    )
+                )
+                uiStateAndEvents.events.setSelectedTransactionForIndex(
+                    addTransactionScreenData.transactionForValues.indexOf(
+                        element = addTransactionScreenData.transactionForValues.firstOrNull {
+                            it.id == addTransactionScreenData.originalTransactionData.transaction.id
+                        },
+                    )
+                )
+            } else {
+                uiStateAndEvents.events.setCategory(addTransactionScreenData.defaultExpenseCategory)
+                viewModel.setCategory(addTransactionScreenData.defaultExpenseCategory)
+                uiStateAndEvents.events.setAccountFrom(addTransactionScreenData.defaultAccount)
+                uiStateAndEvents.events.setAccountTo(addTransactionScreenData.defaultAccount)
+                uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+                    // TODO(Abhi): Move this logic outside
+                    addTransactionScreenData.validTransactionTypesForNewTransaction.indexOf(
+                        element = TransactionType.EXPENSE,
+                    )
+                )
+            }
+        }
     }
 
     AddTransactionScreenUI(

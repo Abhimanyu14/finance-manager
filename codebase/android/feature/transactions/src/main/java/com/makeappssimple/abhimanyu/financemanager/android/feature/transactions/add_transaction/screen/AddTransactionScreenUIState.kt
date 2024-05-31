@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiStateData
@@ -32,4 +33,5 @@ internal data class AddTransactionScreenUIState(
     val transactionTypesForNewTransactionChipUIData: ImmutableList<ChipUIData>,
     val titleSuggestions: ImmutableList<String>,
     val currentLocalDate: LocalDate,
+    val selectedTransactionType: TransactionType,
 ) : ScreenUIState
