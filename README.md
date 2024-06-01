@@ -328,7 +328,7 @@ scrcpy -m1024
 
 # Backlog
 
-Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/BACKLOG.md)
+Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/codebase/android/docs/BACKLOG.md)
 
 # Database
 
