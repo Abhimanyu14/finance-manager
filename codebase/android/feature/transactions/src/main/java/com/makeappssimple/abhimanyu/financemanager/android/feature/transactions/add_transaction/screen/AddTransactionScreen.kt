@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -23,30 +24,27 @@ import java.time.LocalDateTime
 @Composable
 public fun AddTransactionScreen(
     screenViewModel: AddTransactionScreenViewModel = hiltViewModel(),
+    dateTimeUtil: DateTimeUtil = remember {
+        DateTimeUtilImpl()
+    },
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside AddTransactionScreen",
     )
 
-    val dateTimeUtil = remember {
-        DateTimeUtilImpl()
-    }
-
     // region view model data
-    val addTransactionScreenInitialData: AddTransactionScreenInitialData? by viewModel.addTransactionScreenInitialData.collectAsStateWithLifecycle()
-    val titleSuggestions: ImmutableList<String>? by viewModel.titleSuggestions.collectAsStateWithLifecycle()
+    val addTransactionScreenInitialData: AddTransactionScreenInitialData? by screenViewModel.addTransactionScreenInitialData.collectAsStateWithLifecycle()
+    val titleSuggestions: ImmutableList<String> by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberAddTransactionScreenUIStateAndEvents(
         addTransactionScreenInitialData = addTransactionScreenInitialData,
         titleSuggestions = titleSuggestions,
     )
+
     val handleUIEvent = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         { uiEvent: AddTransactionScreenUIEvent ->
@@ -188,7 +186,7 @@ public fun AddTransactionScreen(
                         )
                         .toEpochMilli()
 
-                    viewModel.insertTransaction(
+                    screenViewModel.insertTransaction(
                         amountValue = amountValue,
                         accountFrom = if (accountFromId.isNotNull()) {
                             uiStateAndEvents.state.uiState.accountFrom
@@ -257,7 +255,7 @@ public fun AddTransactionScreen(
                 }
 
                 is AddTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
+                    screenViewModel.navigateUp()
                 }
 
                 is AddTransactionScreenUIEvent.OnAccountFromUpdated -> {
@@ -274,7 +272,7 @@ public fun AddTransactionScreen(
 
                 is AddTransactionScreenUIEvent.OnCategoryUpdated -> {
                     uiStateAndEvents.events.setCategory(uiEvent.updatedCategory)
-                    viewModel.setCategory(uiEvent.updatedCategory)
+                    screenViewModel.setCategory(uiEvent.updatedCategory)
                 }
 
                 is AddTransactionScreenUIEvent.OnDescriptionUpdated -> {
@@ -299,7 +297,7 @@ public fun AddTransactionScreen(
 
                 is AddTransactionScreenUIEvent.OnTitleUpdated -> {
                     uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
-                    viewModel.setTitle(uiEvent.updatedTitle.text)
+                    screenViewModel.setTitle(uiEvent.updatedTitle.text)
                 }
 
                 is AddTransactionScreenUIEvent.OnTransactionDateUpdated -> {
@@ -318,48 +316,60 @@ public fun AddTransactionScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     LaunchedEffect(
         key1 = addTransactionScreenInitialData,
     ) {
-        addTransactionScreenInitialData?.let { addTransactionScreenData ->
-            if (addTransactionScreenData.originalTransactionData != null) {
-                uiStateAndEvents.events.setCategory(addTransactionScreenData.originalTransactionData.category)
-                viewModel.setCategory(addTransactionScreenData.originalTransactionData.category)
-                uiStateAndEvents.events.setAccountFrom(addTransactionScreenData.originalTransactionData.accountFrom)
-                uiStateAndEvents.events.setAccountTo(addTransactionScreenData.originalTransactionData.accountTo)
-                uiStateAndEvents.events.setSelectedTransactionTypeIndex(
-                    // TODO(Abhi): Move this logic outside
-                    addTransactionScreenData.validTransactionTypesForNewTransaction.indexOf(
-                        element = TransactionType.REFUND,
-                    )
-                )
-                uiStateAndEvents.events.setSelectedTransactionForIndex(
-                    addTransactionScreenData.transactionForValues.indexOf(
-                        element = addTransactionScreenData.transactionForValues.firstOrNull {
-                            it.id == addTransactionScreenData.originalTransactionData.transaction.id
-                        },
-                    )
-                )
-            } else {
-                uiStateAndEvents.events.setCategory(addTransactionScreenData.defaultExpenseCategory)
-                viewModel.setCategory(addTransactionScreenData.defaultExpenseCategory)
-                uiStateAndEvents.events.setAccountFrom(addTransactionScreenData.defaultAccount)
-                uiStateAndEvents.events.setAccountTo(addTransactionScreenData.defaultAccount)
-                uiStateAndEvents.events.setSelectedTransactionTypeIndex(
-                    // TODO(Abhi): Move this logic outside
-                    addTransactionScreenData.validTransactionTypesForNewTransaction.indexOf(
-                        element = TransactionType.EXPENSE,
-                    )
-                )
-            }
-        }
+        handleAddTransactionScreenInitialData(
+            addTransactionScreenInitialData = addTransactionScreenInitialData,
+            uiStateAndEvents = uiStateAndEvents,
+            screenViewModel = screenViewModel,
+        )
     }
 
     AddTransactionScreenUI(
         uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
+}
+
+private fun handleAddTransactionScreenInitialData(
+    addTransactionScreenInitialData: AddTransactionScreenInitialData?,
+    uiStateAndEvents: AddTransactionScreenUIStateAndEvents,
+    screenViewModel: AddTransactionScreenViewModel,
+) {
+    addTransactionScreenInitialData ?: return
+    val originalTransactionData = addTransactionScreenInitialData.originalTransactionData
+    if (originalTransactionData != null) {
+        uiStateAndEvents.events.setCategory(originalTransactionData.category)
+        screenViewModel.setCategory(originalTransactionData.category)
+        uiStateAndEvents.events.setAccountFrom(originalTransactionData.accountFrom)
+        uiStateAndEvents.events.setAccountTo(originalTransactionData.accountTo)
+        uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+            // TODO(Abhi): Move this logic outside
+            addTransactionScreenInitialData.validTransactionTypesForNewTransaction.indexOf(
+                element = TransactionType.REFUND,
+            )
+        )
+        uiStateAndEvents.events.setSelectedTransactionForIndex(
+            addTransactionScreenInitialData.transactionForValues.indexOf(
+                element = addTransactionScreenInitialData.transactionForValues.firstOrNull {
+                    it.id == originalTransactionData.transaction.id
+                },
+            )
+        )
+    } else {
+        uiStateAndEvents.events.setCategory(addTransactionScreenInitialData.defaultExpenseCategory)
+        screenViewModel.setCategory(addTransactionScreenInitialData.defaultExpenseCategory)
+        uiStateAndEvents.events.setAccountFrom(addTransactionScreenInitialData.defaultAccount)
+        uiStateAndEvents.events.setAccountTo(addTransactionScreenInitialData.defaultAccount)
+        uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+            // TODO(Abhi): Move this logic outside
+            addTransactionScreenInitialData.validTransactionTypesForNewTransaction.indexOf(
+                element = TransactionType.EXPENSE,
+            )
+        )
+    }
 }

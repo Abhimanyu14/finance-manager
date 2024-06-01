@@ -42,6 +42,7 @@ A finance manager app to track and analyse income, expenses and investments.
 - Single Activity architecture with Compose Navigation
 - Multi modular - split by features
 - Clean code principles
+- More details can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/codebase/android/docs/architecture.md)
 
 ## Modularization
 
@@ -328,7 +329,7 @@ scrcpy -m1024
 
 # Backlog
 
-Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/codebase/android/docs/BACKLOG.md)
+Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/codebase/android/docs/backlog.md)
 
 # Database
 
