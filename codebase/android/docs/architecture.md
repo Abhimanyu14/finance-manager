@@ -4,49 +4,49 @@
 
 1. Composable
 
-```mermaid
-flowchart TB
+   ```mermaid
 
-SUC([Composable])
+   flowchart TB
+   CO([Composable])
 
-```
+   ```
 
 2. Class
 
-```mermaid
-flowchart TB
+   ```mermaid
+   flowchart TB
+   C(Class)
 
-SUC(Class)
-
-```
+   ```
 
 ## Architecture Diagram
 
 ```mermaid
 flowchart TB
+    subgraph PresentationLayer
+        direction TB
+        SC([Screen Composable])
+        SV(Screen ViewModel)
+        SUSEH([Screen UI State And Event Handler])
+        SEH(Screen Event Handler)
+        SUC([Screen UI Composable])
 
-subgraph PresentationLayer
-direction TB
-SC([Screen Composable])
-SV(Screen ViewModel)
-SUC([Screen UI Composable])
-SUSE([Screen UI State And Events])
-end
+    end
 
-subgraph DomainLayer
-D(UseCases)
-end
+    subgraph DomainLayer
+        D(UseCases)
+    end
 
-SC-- UI Data and Event Handler -->SUC
-SUC-- UI Events -->SC
-
-SC-- Events -->SV
-SV-- Data -->SC
-
-SC-- Data -->SUSE
-SUSE-- UI Data and Event Handler -->SC
-
-SV  --> DomainLayer
+    SC -- UI State --> SUC
+    SUC -- UI Events --> SC
+    SC -- Events --> SV
+    SV -- Data --> SC
+    SC -- ViewModel --> SUSEH
+    SUSEH -- UI State and Event Handler --> SC
+    PresentationLayer --> DomainLayer
+    SUSEH -- "`1.ViewModel
+    2. UI state
+    3. events`" --> SEH
 
 ```
 

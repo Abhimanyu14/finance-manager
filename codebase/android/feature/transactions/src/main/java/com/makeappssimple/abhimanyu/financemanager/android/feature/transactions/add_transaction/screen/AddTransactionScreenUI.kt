@@ -471,48 +471,6 @@ internal fun AddTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = uiState.uiVisibilityState.isDescriptionTextFieldVisible,
-            ) {
-                MyOutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
-                    data = MyOutlinedTextFieldData(
-                        isLoading = uiState.isLoading,
-                        textFieldValue = uiState.uiState.description,
-                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
-                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                clearFocus()
-                            },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done,
-                        ),
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
-                                handleUIEvent(AddTransactionScreenUIEvent.OnClearDescriptionButtonClick)
-                            }
-
-                            is MyOutlinedTextFieldEvent.OnValueChange -> {
-                                handleUIEvent(
-                                    AddTransactionScreenUIEvent.OnDescriptionUpdated(
-                                        updatedDescription = event.updatedValue,
-                                    )
-                                )
-                            }
-                        }
-                    },
-                )
-            }
-            AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isAccountFromTextFieldVisible,
             ) {
                 MyReadOnlyTextField(

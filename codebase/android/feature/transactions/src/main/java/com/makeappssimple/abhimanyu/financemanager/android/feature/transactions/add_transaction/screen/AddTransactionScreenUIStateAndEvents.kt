@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
@@ -36,9 +37,9 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Stable
-internal class AddTransactionScreenUIStateAndEvents(
-    val state: AddTransactionScreenUIState,
-    val events: AddTransactionScreenUIStateEvents,
+internal data class AddTransactionScreenUIStateAndEvents(
+    val uiState: AddTransactionScreenUIState,
+    val uiStateEvents: AddTransactionScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
 
 @Composable
@@ -65,7 +66,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
     // endregion
 
     // region selected transaction type index
-    var selectedTransactionTypeIndex: Int by remember {
+    var selectedTransactionTypeIndex: Int by rememberSaveable {
         mutableIntStateOf(
             value = 0,
         )
@@ -132,7 +133,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
     // endregion
 
     // region selected transaction for index
-    var selectedTransactionForIndex: Int by remember {
+    var selectedTransactionForIndex: Int by rememberSaveable {
         mutableIntStateOf(
             value = 0,
         )
@@ -215,22 +216,25 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
 
     // region selected transaction type
     val selectedTransactionType: TransactionType = remember(
+        addTransactionScreenInitialData,
         selectedTransactionTypeIndex,
     ) {
-        addTransactionScreenInitialData?.validTransactionTypesForNewTransaction?.get(
-            selectedTransactionTypeIndex
-        ) ?: TransactionType.EXPENSE // TODO(Abhi): Decouple the default value
+        getSelectedTransactionType(
+            addTransactionScreenInitialData,
+            selectedTransactionTypeIndex,
+        )
     }
     // endregion
 
     // region filtered categories
     val filteredCategories: ImmutableList<Category> = remember(
-        key1 = addTransactionScreenInitialData,
+        key1 = addTransactionScreenInitialData?.categories,
         key2 = selectedTransactionType,
     ) {
-        addTransactionScreenInitialData?.categories?.filter { category ->
-            category.transactionType == selectedTransactionType
-        }?.toImmutableList().orEmpty()
+        getFilteredCategories(
+            addTransactionScreenInitialData = addTransactionScreenInitialData,
+            selectedTransactionType = selectedTransactionType,
+        )
     }
     // endregion
 
@@ -243,8 +247,9 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
         amountErrorText,
         accountFrom,
         accountTo,
+        setAmountErrorText,
     ) {
-        updateIsCtaButtonEnabled(
+        getIsCtaButtonEnabled(
             selectedTransactionType = selectedTransactionType,
             amount = amount,
             title = title,
@@ -256,6 +261,126 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
         )
     }
     // endregion
+
+    val uiState: AddTransactionScreenUIState = remember(
+        screenBottomSheetType,
+        isTransactionDatePickerDialogVisible,
+        isTransactionTimePickerDialogVisible,
+        addTransactionScreenInitialData,
+        uiVisibilityState,
+        isCtaButtonEnabled,
+        filteredCategories,
+        titleSuggestions,
+        selectedTransactionType,
+        selectedTransactionTypeIndex,
+        amount,
+        title,
+        category,
+        accountFrom,
+        accountTo,
+        transactionDate,
+        transactionTime,
+        amountErrorText,
+    ) {
+        AddTransactionScreenUIState(
+            screenBottomSheetType = screenBottomSheetType,
+            isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
+            isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
+            isLoading = addTransactionScreenInitialData.isNull(), // TODO(Abhi): Move this logic outside
+            uiState = AddTransactionScreenUiStateData(
+                selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                amount = amount,
+                title = title,
+                category = category,
+                selectedTransactionForIndex = selectedTransactionForIndex,
+                accountFrom = accountFrom,
+                accountTo = accountTo,
+                transactionDate = transactionDate,
+                transactionTime = transactionTime,
+                amountErrorText = amountErrorText,
+            ),
+            uiVisibilityState = uiVisibilityState,
+            isBottomSheetVisible = screenBottomSheetType != AddTransactionScreenBottomSheetType.None, // TODO(Abhi): Move this logic outside
+            isCtaButtonEnabled = isCtaButtonEnabled,
+            appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
+            ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
+            accountFromTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
+                R.string.screen_add_or_edit_transaction_account_from
+            } else {
+                R.string.screen_add_or_edit_transaction_account
+            }, // TODO(Abhi): Move this logic outside
+            accountToTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
+                R.string.screen_add_or_edit_transaction_account_to
+            } else {
+                R.string.screen_add_or_edit_transaction_account
+            }, // TODO(Abhi): Move this logic outside
+            filteredCategories = filteredCategories,
+            transactionTypesForNewTransactionChipUIData = addTransactionScreenInitialData?.validTransactionTypesForNewTransaction
+                ?.map { transactionType ->
+                    ChipUIData(
+                        text = transactionType.title,
+                    )
+                }
+                ?.toImmutableList()
+                .orEmpty(), // TODO(Abhi): Move this logic outside
+            titleSuggestions = titleSuggestions,
+            titleSuggestionsChipUIData = titleSuggestions
+                .map { title ->
+                    ChipUIData(
+                        text = title,
+                    )
+                }
+                .toImmutableList(), // TODO(Abhi): Move this logic outside
+            accounts = addTransactionScreenInitialData?.accounts.orEmpty(),
+            transactionForValuesChipUIData = addTransactionScreenInitialData?.transactionForValues
+                ?.map { transactionFor ->
+                    ChipUIData(
+                        text = transactionFor.titleToDisplay,
+                    )
+                }
+                ?.toImmutableList()
+                .orEmpty(), // TODO(Abhi): Move this logic outside
+            currentLocalDate = dateTimeUtil.getCurrentLocalDate()
+                .orMin(), // TODO(Abhi): Move this logic outside
+            selectedTransactionType = selectedTransactionType,
+        )
+    }
+
+    val uiStateEvents: AddTransactionScreenUIStateEvents = remember(
+        resetScreenBottomSheetType,
+        setScreenBottomSheetType,
+        setIsTransactionDatePickerDialogVisible,
+        setIsTransactionTimePickerDialogVisible,
+        setSelectedTransactionTypeIndex,
+        setAmount,
+        clearAmount,
+        setTitle,
+        clearTitle,
+        setCategory,
+        setSelectedTransactionForIndex,
+        setAccountFrom,
+        setAccountTo,
+        setTransactionDate,
+        setTransactionTime,
+    ) {
+        AddTransactionScreenUIStateEvents(
+            resetScreenBottomSheetType = resetScreenBottomSheetType,
+            setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
+            setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
+            setScreenBottomSheetType = setScreenBottomSheetType,
+            setSelectedTransactionTypeIndex = setSelectedTransactionTypeIndex,
+            setAmount = setAmount,
+            clearAmount = clearAmount,
+            setTitle = setTitle,
+            clearTitle = clearTitle,
+            setCategory = setCategory,
+            setSelectedTransactionForIndex = setSelectedTransactionForIndex,
+            setAccountFrom = setAccountFrom,
+            setAccountTo = setAccountTo,
+            setTransactionDate = setTransactionDate,
+            setTransactionTime = setTransactionTime,
+        )
+    }
 
     LaunchedEffect(
         key1 = selectedTransactionType,
@@ -271,103 +396,35 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
     }
 
     return remember(
-        screenBottomSheetType,
-        setScreenBottomSheetType,
-        isTransactionDatePickerDialogVisible,
-        setIsTransactionDatePickerDialogVisible,
-        isTransactionTimePickerDialogVisible,
-        setIsTransactionTimePickerDialogVisible,
-        uiVisibilityState,
-        isCtaButtonEnabled,
-        filteredCategories,
-        titleSuggestions,
-        selectedTransactionType,
+        uiState,
+        uiStateEvents,
     ) {
         AddTransactionScreenUIStateAndEvents(
-            state = AddTransactionScreenUIState(
-                screenBottomSheetType = screenBottomSheetType,
-                isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
-                isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
-                isLoading = false,
-                uiState = AddTransactionScreenUiStateData(
-                    selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                    amount = amount,
-                    title = title,
-                    description = TextFieldValue(),
-                    category = category,
-                    selectedTransactionForIndex = selectedTransactionForIndex,
-                    accountFrom = accountFrom,
-                    accountTo = accountTo,
-                    transactionDate = transactionDate,
-                    transactionTime = transactionTime,
-                    amountErrorText = amountErrorText,
-                ),
-                uiVisibilityState = uiVisibilityState,
-                isBottomSheetVisible = screenBottomSheetType != AddTransactionScreenBottomSheetType.None,
-                isCtaButtonEnabled = isCtaButtonEnabled,
-                appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
-                ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
-                accountFromTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
-                    R.string.screen_add_or_edit_transaction_account_from
-                } else {
-                    R.string.screen_add_or_edit_transaction_account
-                },
-                accountToTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
-                    R.string.screen_add_or_edit_transaction_account_to
-                } else {
-                    R.string.screen_add_or_edit_transaction_account
-                },
-                filteredCategories = filteredCategories,
-                transactionTypesForNewTransactionChipUIData = addTransactionScreenInitialData?.validTransactionTypesForNewTransaction
-                    ?.map { transactionType ->
-                        ChipUIData(
-                            text = transactionType.title,
-                        )
-                    }
-                    ?.toImmutableList()
-                    .orEmpty(),
-                titleSuggestions = titleSuggestions,
-                titleSuggestionsChipUIData = titleSuggestions
-                    .map { title ->
-                        ChipUIData(
-                            text = title,
-                        )
-                    }
-                    .toImmutableList(),
-                accounts = addTransactionScreenInitialData?.accounts.orEmpty(),
-                transactionForValuesChipUIData = addTransactionScreenInitialData?.transactionForValues
-                    ?.map { transactionFor ->
-                        ChipUIData(
-                            text = transactionFor.titleToDisplay,
-                        )
-                    }
-                    ?.toImmutableList()
-                    .orEmpty(),
-                currentLocalDate = dateTimeUtil.getCurrentLocalDate().orMin(),
-                selectedTransactionType = selectedTransactionType,
-            ),
-            events = AddTransactionScreenUIStateEvents(
-                resetScreenBottomSheetType = resetScreenBottomSheetType,
-                setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
-                setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
-                setScreenBottomSheetType = setScreenBottomSheetType,
-                setSelectedTransactionTypeIndex = setSelectedTransactionTypeIndex,
-                setAmount = setAmount,
-                clearAmount = clearAmount,
-                setTitle = setTitle,
-                clearTitle = clearTitle,
-                setCategory = setCategory,
-                setSelectedTransactionForIndex = setSelectedTransactionForIndex,
-                setAccountFrom = setAccountFrom,
-                setAccountTo = setAccountTo,
-                setTransactionDate = setTransactionDate,
-                setTransactionTime = setTransactionTime,
-            )
+            uiState = uiState,
+            uiStateEvents = uiStateEvents,
         )
     }
 }
 
-private fun updateIsCtaButtonEnabled(
+private fun getFilteredCategories(
+    addTransactionScreenInitialData: AddTransactionScreenInitialData?,
+    selectedTransactionType: TransactionType,
+): ImmutableList<Category> {
+    return addTransactionScreenInitialData?.categories?.filter { category ->
+        category.transactionType == selectedTransactionType
+    }?.toImmutableList().orEmpty()
+}
+
+private fun getSelectedTransactionType(
+    addTransactionScreenInitialData: AddTransactionScreenInitialData?,
+    selectedTransactionTypeIndex: Int,
+): TransactionType {
+    return addTransactionScreenInitialData?.validTransactionTypesForNewTransaction?.get(
+        selectedTransactionTypeIndex
+    ) ?: TransactionType.EXPENSE // TODO(Abhi): Decouple the default value
+}
+
+private fun getIsCtaButtonEnabled(
     selectedTransactionType: TransactionType,
     amount: TextFieldValue,
     title: TextFieldValue,

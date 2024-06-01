@@ -13,7 +13,6 @@ public sealed class AddTransactionScreenUIEvent : ScreenUIEvent {
     public data object OnBottomSheetDismissed : AddTransactionScreenUIEvent()
     public data object OnNavigationBackButtonClick : AddTransactionScreenUIEvent()
     public data object OnClearAmountButtonClick : AddTransactionScreenUIEvent()
-    public data object OnClearDescriptionButtonClick : AddTransactionScreenUIEvent()
     public data object OnClearTitleButtonClick : AddTransactionScreenUIEvent()
     public data object OnCtaButtonClick : AddTransactionScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : AddTransactionScreenUIEvent()
@@ -31,10 +30,6 @@ public sealed class AddTransactionScreenUIEvent : ScreenUIEvent {
 
     public data class OnCategoryUpdated(
         val updatedCategory: Category?,
-    ) : AddTransactionScreenUIEvent()
-
-    public data class OnDescriptionUpdated(
-        val updatedDescription: TextFieldValue,
     ) : AddTransactionScreenUIEvent()
 
     public data class OnSelectedTransactionForIndexUpdated(

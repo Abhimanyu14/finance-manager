@@ -13,7 +13,6 @@ public data class AddTransactionScreenUiStateData(
     val selectedTransactionTypeIndex: Int? = null,
     val amount: TextFieldValue = TextFieldValue(),
     val title: TextFieldValue = TextFieldValue(),
-    val description: TextFieldValue = TextFieldValue(),
     val category: Category? = null,
     val selectedTransactionForIndex: Int = 0,
     val accountFrom: Account? = null,

@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 @Immutable
 public sealed class AddTransactionScreenUiVisibilityState(
     public val isTitleTextFieldVisible: Boolean = false,
-    public val isDescriptionTextFieldVisible: Boolean = false,
     public val isCategoryTextFieldVisible: Boolean = false,
     public val isTransactionForRadioGroupVisible: Boolean = false,
     public val isTransactionTypesRadioGroupVisible: Boolean = false,
@@ -16,7 +15,6 @@ public sealed class AddTransactionScreenUiVisibilityState(
 ) {
     public data object Expense : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = true,
         isTransactionTypesRadioGroupVisible = true,
@@ -27,7 +25,6 @@ public sealed class AddTransactionScreenUiVisibilityState(
 
     public data object Income : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
@@ -38,7 +35,6 @@ public sealed class AddTransactionScreenUiVisibilityState(
 
     public data object Investment : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
@@ -49,7 +45,6 @@ public sealed class AddTransactionScreenUiVisibilityState(
 
     public data object Refund : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = false,
@@ -60,7 +55,6 @@ public sealed class AddTransactionScreenUiVisibilityState(
 
     public data object Transfer : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
