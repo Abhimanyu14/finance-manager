@@ -26,7 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenInitialData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.orDefault
@@ -43,7 +43,7 @@ internal class AddTransactionScreenUIStateAndEvents(
 
 @Composable
 internal fun rememberAddTransactionScreenUIStateAndEvents(
-    addTransactionScreenData: AddTransactionScreenData?,
+    addTransactionScreenInitialData: AddTransactionScreenInitialData?,
     titleSuggestions: ImmutableList<String>?,
 ): AddTransactionScreenUIStateAndEvents {
     val dateTimeUtil = remember {
@@ -218,7 +218,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
     val selectedTransactionType: TransactionType = remember(
         selectedTransactionTypeIndex,
     ) {
-        addTransactionScreenData?.validTransactionTypesForNewTransaction?.get(
+        addTransactionScreenInitialData?.validTransactionTypesForNewTransaction?.get(
             selectedTransactionTypeIndex
         ) ?: TransactionType.EXPENSE // TODO(Abhi): Decouple the default value
     }
@@ -226,10 +226,10 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
 
     // region filtered categories
     val filteredCategories: ImmutableList<Category> = remember(
-        key1 = addTransactionScreenData,
+        key1 = addTransactionScreenInitialData,
         key2 = selectedTransactionType,
     ) {
-        addTransactionScreenData?.categories?.filter { category ->
+        addTransactionScreenInitialData?.categories?.filter { category ->
             category.transactionType == selectedTransactionType
         }?.toImmutableList().orEmpty()
     }
@@ -245,7 +245,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
     // region is cta button enabled
     val isCtaButtonEnabled: Boolean = remember(
         selectedTransactionType,
-        addTransactionScreenData,
+        addTransactionScreenInitialData,
         amount,
         title,
         amountErrorText,
@@ -286,11 +286,12 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
             }
 
             TransactionType.REFUND -> {
-                val maxRefundAmountValue = addTransactionScreenData?.maxRefundAmount?.value.orZero()
+                val maxRefundAmountValue =
+                    addTransactionScreenInitialData?.maxRefundAmount?.value.orZero()
                 if (amountErrorText.isNull() &&
                     (amount.text.toLongOrZero() > maxRefundAmountValue)
                 ) {
-                    amountErrorText = addTransactionScreenData?.maxRefundAmount?.run {
+                    amountErrorText = addTransactionScreenInitialData?.maxRefundAmount?.run {
                         this.toString()
                     }
                     false
@@ -318,18 +319,18 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 setUiVisibilityState(AddTransactionScreenUiVisibilityState.Income)
 
                 val updatedCategory =
-                    if (selectedTransactionType == addTransactionScreenData?.originalTransactionData?.transaction?.transactionType) {
-                        addTransactionScreenData.originalTransactionData.category
-                            ?: addTransactionScreenData.defaultIncomeCategory
+                    if (selectedTransactionType == addTransactionScreenInitialData?.originalTransactionData?.transaction?.transactionType) {
+                        addTransactionScreenInitialData.originalTransactionData.category
+                            ?: addTransactionScreenInitialData.defaultIncomeCategory
                     } else {
-                        addTransactionScreenData?.defaultIncomeCategory
+                        addTransactionScreenInitialData?.defaultIncomeCategory
                     }
                 setCategory(updatedCategory)
 
                 setAccountFrom(null)
                 setAccountTo(
-                    addTransactionScreenData?.originalTransactionData?.accountTo
-                        ?: addTransactionScreenData?.defaultAccount
+                    addTransactionScreenInitialData?.originalTransactionData?.accountTo
+                        ?: addTransactionScreenInitialData?.defaultAccount
                 )
             }
 
@@ -337,17 +338,17 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 setUiVisibilityState(AddTransactionScreenUiVisibilityState.Expense)
 
                 val updatedCategory =
-                    if (selectedTransactionType == addTransactionScreenData?.originalTransactionData?.transaction?.transactionType) {
-                        addTransactionScreenData.originalTransactionData.category
-                            ?: addTransactionScreenData.defaultExpenseCategory
+                    if (selectedTransactionType == addTransactionScreenInitialData?.originalTransactionData?.transaction?.transactionType) {
+                        addTransactionScreenInitialData.originalTransactionData.category
+                            ?: addTransactionScreenInitialData.defaultExpenseCategory
                     } else {
-                        addTransactionScreenData?.defaultExpenseCategory
+                        addTransactionScreenInitialData?.defaultExpenseCategory
                     }
                 setCategory(updatedCategory)
 
                 setAccountFrom(
-                    addTransactionScreenData?.originalTransactionData?.accountFrom
-                        ?: addTransactionScreenData?.defaultAccount,
+                    addTransactionScreenInitialData?.originalTransactionData?.accountFrom
+                        ?: addTransactionScreenInitialData?.defaultAccount,
                 )
                 setAccountTo(null)
             }
@@ -356,12 +357,12 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 setUiVisibilityState(AddTransactionScreenUiVisibilityState.Transfer)
 
                 setAccountFrom(
-                    addTransactionScreenData?.originalTransactionData?.accountFrom
-                        ?: addTransactionScreenData?.defaultAccount,
+                    addTransactionScreenInitialData?.originalTransactionData?.accountFrom
+                        ?: addTransactionScreenInitialData?.defaultAccount,
                 )
                 setAccountTo(
-                    addTransactionScreenData?.originalTransactionData?.accountTo
-                        ?: addTransactionScreenData?.defaultAccount,
+                    addTransactionScreenInitialData?.originalTransactionData?.accountTo
+                        ?: addTransactionScreenInitialData?.defaultAccount,
                 )
             }
 
@@ -372,17 +373,17 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                 setUiVisibilityState(AddTransactionScreenUiVisibilityState.Investment)
 
                 val updatedCategory =
-                    if (selectedTransactionType == addTransactionScreenData?.originalTransactionData?.transaction?.transactionType) {
-                        addTransactionScreenData.originalTransactionData.category
-                            ?: addTransactionScreenData.defaultInvestmentCategory
+                    if (selectedTransactionType == addTransactionScreenInitialData?.originalTransactionData?.transaction?.transactionType) {
+                        addTransactionScreenInitialData.originalTransactionData.category
+                            ?: addTransactionScreenInitialData.defaultInvestmentCategory
                     } else {
-                        addTransactionScreenData?.defaultInvestmentCategory
+                        addTransactionScreenInitialData?.defaultInvestmentCategory
                     }
                 setCategory(updatedCategory)
 
                 setAccountFrom(
-                    addTransactionScreenData?.originalTransactionData?.accountFrom
-                        ?: addTransactionScreenData?.defaultAccount
+                    addTransactionScreenInitialData?.originalTransactionData?.accountFrom
+                        ?: addTransactionScreenInitialData?.defaultAccount
                 )
                 setAccountTo(null)
             }
@@ -441,7 +442,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                     R.string.screen_add_or_edit_transaction_account
                 },
                 filteredCategories = filteredCategories,
-                transactionTypesForNewTransactionChipUIData = addTransactionScreenData?.validTransactionTypesForNewTransaction
+                transactionTypesForNewTransactionChipUIData = addTransactionScreenInitialData?.validTransactionTypesForNewTransaction
                     ?.map { transactionType ->
                         ChipUIData(
                             text = transactionType.title,
@@ -458,8 +459,8 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
                     }
                     ?.toImmutableList()
                     .orEmpty(),
-                accounts = addTransactionScreenData?.accounts.orEmpty(),
-                transactionForValuesChipUIData = addTransactionScreenData?.transactionForValues
+                accounts = addTransactionScreenInitialData?.accounts.orEmpty(),
+                transactionForValuesChipUIData = addTransactionScreenInitialData?.transactionForValues
                     ?.map { transactionFor ->
                         ChipUIData(
                             text = transactionFor.titleToDisplay,

@@ -45,19 +45,6 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-public data class AddTransactionScreenData(
-    public val defaultAccount: Account,
-    public val defaultExpenseCategory: Category,
-    public val defaultIncomeCategory: Category,
-    public val defaultInvestmentCategory: Category,
-    public val accounts: ImmutableList<Account>,
-    public val categories: ImmutableList<Category>,
-    public val transactionForValues: ImmutableList<TransactionFor>,
-    public val validTransactionTypesForNewTransaction: ImmutableList<TransactionType>,
-    public val originalTransactionData: TransactionData? = null,
-    public val maxRefundAmount: Amount? = null,
-)
-
 @HiltViewModel
 public class AddTransactionScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -98,13 +85,13 @@ public class AddTransactionScreenViewModel @Inject constructor(
         mutableListOf()
     // endregion
 
-    // region add transaction screen data
-    private val _addTransactionScreenData: MutableStateFlow<AddTransactionScreenData?> =
+    // region add transaction screen initial data
+    private val _addTransactionScreenInitialData: MutableStateFlow<AddTransactionScreenInitialData?> =
         MutableStateFlow(
             value = null,
         )
-    public val addTransactionScreenData: StateFlow<AddTransactionScreenData?> =
-        _addTransactionScreenData
+    public val addTransactionScreenInitialData: StateFlow<AddTransactionScreenInitialData?> =
+        _addTransactionScreenInitialData
     // endregion
 
     // region title suggestions
@@ -115,8 +102,8 @@ public class AddTransactionScreenViewModel @Inject constructor(
         value = null,
     )
     public val titleSuggestions: StateFlow<ImmutableList<String>> = combine(
-        title,
-        category
+        flow = title,
+        flow2 = category
     ) { title, category ->
         category?.id?.let { categoryId ->
             getTitleSuggestionsUseCase(
@@ -221,73 +208,46 @@ public class AddTransactionScreenViewModel @Inject constructor(
         setValidTransactionTypesForNewTransaction()
         getOriginalTransactionData()
         calculateMaxRefundAmount()
-
-        // region add transaction screen data
-        val defaultAccount = defaultAccount
-        val defaultExpenseCategory = defaultExpenseCategory
-        val defaultIncomeCategory = defaultIncomeCategory
-        val defaultInvestmentCategory = defaultInvestmentCategory
-        val accounts = accounts.toImmutableList()
-        val categories = categories.toImmutableList()
-        val transactionForValues = transactionForValues.toImmutableList()
-        val validTransactionTypesForNewTransaction =
-            validTransactionTypesForNewTransaction.toImmutableList()
-
-        if (defaultAccount != null &&
-            defaultExpenseCategory != null &&
-            defaultIncomeCategory != null &&
-            defaultInvestmentCategory != null &&
-            accounts.isNotEmpty() &&
-            categories.isNotEmpty() &&
-            transactionForValues.isNotEmpty() &&
-            validTransactionTypesForNewTransaction.isNotEmpty()
-        ) {
-            _addTransactionScreenData.update {
-                AddTransactionScreenData(
-                    defaultAccount = defaultAccount,
-                    defaultExpenseCategory = defaultExpenseCategory,
-                    defaultIncomeCategory = defaultIncomeCategory,
-                    defaultInvestmentCategory = defaultInvestmentCategory,
-                    accounts = accounts,
-                    categories = categories,
-                    transactionForValues = transactionForValues,
-                    validTransactionTypesForNewTransaction = validTransactionTypesForNewTransaction,
-                    originalTransactionData = originalTransactionData,
-                    maxRefundAmount = maxRefundAmount,
-                )
-            }
-        }
-        // endregion
+        setAddTransactionScreenInitialData()
     }
 
     private fun setDefaultCategory() {
-        defaultExpenseCategory = getCategory(
-            categoryId = defaultDataIdFromDataStore?.expenseCategory,
-        ) ?: categories.firstOrNull { category ->
+        defaultExpenseCategory = defaultDataIdFromDataStore?.expenseCategory?.let { categoryId ->
+            getCategory(
+                categoryId = categoryId,
+            )
+        } ?: categories.firstOrNull { category ->
             isDefaultExpenseCategory(
                 category = category.title,
             )
         }
-        defaultIncomeCategory = getCategory(
-            categoryId = defaultDataIdFromDataStore?.incomeCategory,
-        ) ?: categories.firstOrNull { category ->
+        defaultIncomeCategory = defaultDataIdFromDataStore?.incomeCategory?.let { categoryId ->
+            getCategory(
+                categoryId = categoryId,
+            )
+        } ?: categories.firstOrNull { category ->
             isDefaultIncomeCategory(
                 category = category.title,
             )
         }
-        defaultInvestmentCategory = getCategory(
-            categoryId = defaultDataIdFromDataStore?.investmentCategory,
-        ) ?: categories.firstOrNull { category ->
-            isDefaultInvestmentCategory(
-                category = category.title,
-            )
-        }
+        defaultInvestmentCategory =
+            defaultDataIdFromDataStore?.investmentCategory?.let { categoryId ->
+                getCategory(
+                    categoryId = categoryId,
+                )
+            } ?: categories.firstOrNull { category ->
+                isDefaultInvestmentCategory(
+                    category = category.title,
+                )
+            }
     }
 
     private fun setDefaultAccount() {
-        defaultAccount = getAccount(
-            accountId = defaultDataIdFromDataStore?.account,
-        ) ?: accounts.firstOrNull { account ->
+        defaultAccount = defaultDataIdFromDataStore?.account?.let { accountId ->
+            getAccount(
+                accountId = accountId,
+            )
+        } ?: accounts.firstOrNull { account ->
             isDefaultAccount(
                 account = account.name,
             )
@@ -336,8 +296,45 @@ public class AddTransactionScreenViewModel @Inject constructor(
         }
     }
 
+    private fun setAddTransactionScreenInitialData() {
+        val defaultAccount = defaultAccount
+        val defaultExpenseCategory = defaultExpenseCategory
+        val defaultIncomeCategory = defaultIncomeCategory
+        val defaultInvestmentCategory = defaultInvestmentCategory
+        val accounts = accounts.toImmutableList()
+        val categories = categories.toImmutableList()
+        val transactionForValues = transactionForValues.toImmutableList()
+        val validTransactionTypesForNewTransaction =
+            validTransactionTypesForNewTransaction.toImmutableList()
+
+        if (defaultAccount != null &&
+            defaultExpenseCategory != null &&
+            defaultIncomeCategory != null &&
+            defaultInvestmentCategory != null &&
+            accounts.isNotEmpty() &&
+            categories.isNotEmpty() &&
+            transactionForValues.isNotEmpty() &&
+            validTransactionTypesForNewTransaction.isNotEmpty()
+        ) {
+            _addTransactionScreenInitialData.update {
+                AddTransactionScreenInitialData(
+                    defaultAccount = defaultAccount,
+                    defaultExpenseCategory = defaultExpenseCategory,
+                    defaultIncomeCategory = defaultIncomeCategory,
+                    defaultInvestmentCategory = defaultInvestmentCategory,
+                    accounts = accounts,
+                    categories = categories,
+                    transactionForValues = transactionForValues,
+                    validTransactionTypesForNewTransaction = validTransactionTypesForNewTransaction,
+                    originalTransactionData = originalTransactionData,
+                    maxRefundAmount = maxRefundAmount,
+                )
+            }
+        }
+    }
+
     private fun getCategory(
-        categoryId: Int?,
+        categoryId: Int,
     ): Category? {
         return categories.find { category ->
             category.id == categoryId
@@ -345,7 +342,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
 
     private fun getAccount(
-        accountId: Int?,
+        accountId: Int,
     ): Account? {
         return accounts.find { account ->
             account.id == accountId

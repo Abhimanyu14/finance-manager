@@ -15,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLo
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenInitialData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime
@@ -37,12 +37,12 @@ public fun AddTransactionScreen(
     }
 
     // region view model data
-    val addTransactionScreenData: AddTransactionScreenData? by viewModel.addTransactionScreenData.collectAsStateWithLifecycle()
+    val addTransactionScreenInitialData: AddTransactionScreenInitialData? by viewModel.addTransactionScreenInitialData.collectAsStateWithLifecycle()
     val titleSuggestions: ImmutableList<String>? by viewModel.titleSuggestions.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberAddTransactionScreenUIStateAndEvents(
-        addTransactionScreenData = addTransactionScreenData,
+        addTransactionScreenInitialData = addTransactionScreenInitialData,
         titleSuggestions = titleSuggestions,
     )
     val handleUIEvent = remember(
@@ -203,7 +203,7 @@ public fun AddTransactionScreen(
                         transaction = Transaction(
                             amount = amount,
                             categoryId = categoryId,
-                            originalTransactionId = addTransactionScreenData?.originalTransactionData?.transaction?.id,
+                            originalTransactionId = addTransactionScreenInitialData?.originalTransactionData?.transaction?.id,
                             accountFromId = accountFromId,
                             accountToId = accountToId,
                             description = "",
@@ -322,9 +322,9 @@ public fun AddTransactionScreen(
     }
 
     LaunchedEffect(
-        key1 = addTransactionScreenData,
+        key1 = addTransactionScreenInitialData,
     ) {
-        addTransactionScreenData?.let { addTransactionScreenData ->
+        addTransactionScreenInitialData?.let { addTransactionScreenData ->
             if (addTransactionScreenData.originalTransactionData != null) {
                 uiStateAndEvents.events.setCategory(addTransactionScreenData.originalTransactionData.category)
                 viewModel.setCategory(addTransactionScreenData.originalTransactionData.category)
