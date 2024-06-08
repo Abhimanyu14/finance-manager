@@ -9,11 +9,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel.AddAccountScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
 
@@ -41,76 +39,14 @@ public fun AddAccountScreen(
         accounts = accounts,
         validAccountTypes = validAccountTypes,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: AddAccountScreenUIEvent ->
-            when (uiEvent) {
-                is AddAccountScreenUIEvent.OnCtaButtonClick -> {
-                    uiStateAndEvents.state.selectedAccountType?.let { accountType ->
-                        val minimumAccountBalanceAmount =
-                            if (accountType == AccountType.BANK) {
-                                Amount(
-                                    value = uiStateAndEvents.state.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
-                                )
-                            } else {
-                                null
-                            }
-
-                        viewModel.insertAccount(
-                            account = Account(
-                                balanceAmount = Amount(
-                                    value = 0L,
-                                ),
-                                type = accountType,
-                                minimumAccountBalanceAmount = minimumAccountBalanceAmount,
-                                name = uiStateAndEvents.state.nameTextFieldValue.text,
-                            ),
-                        )
-                    }
-                    Unit
-                }
-
-                is AddAccountScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AddAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                    uiStateAndEvents.events.clearMinimumAccountBalanceAmountValue()
-                }
-
-                is AddAccountScreenUIEvent.OnClearNameButtonClick -> {
-                    uiStateAndEvents.events.clearName()
-                }
-
-                is AddAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-
-                is AddAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                    uiStateAndEvents.events.updateMinimumAccountBalanceAmountValue(
-                        uiEvent.updatedMinimumAccountBalanceAmountValue,
-                    )
-                }
-
-                is AddAccountScreenUIEvent.OnNameUpdated -> {
-                    uiStateAndEvents.events.updateName(
-                        uiEvent.updatedName,
-                    )
-                }
-
-                is AddAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                    uiStateAndEvents.events.updateSelectedAccountTypeIndex(
-                        uiEvent.updatedIndex,
-                    )
-                }
-
-                else -> {
-                    // No-op
-                }
-            }
-        }
+        AddAccountScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+        )
     }
 
     LaunchedEffect(
@@ -129,6 +65,6 @@ public fun AddAccountScreen(
 
     AddAccountScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

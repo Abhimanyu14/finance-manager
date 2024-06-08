@@ -31,86 +31,18 @@ public fun TransactionForValuesScreen(
         transactionForValues = transactionForValues,
         transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: TransactionForValuesScreenUIEvent ->
-            when (uiEvent) {
-                is TransactionForValuesScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.NegativeButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                    uiStateAndEvents.events.setTransactionForIdToDelete(null)
-                }
-
-                is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
-                    uiStateAndEvents.state.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                        viewModel.deleteTransactionFor(
-                            id = transactionForIdToDeleteValue,
-                        )
-                        uiStateAndEvents.events.setTransactionForIdToDelete(null)
-                    }
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is TransactionForValuesScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick -> {
-                    viewModel.navigateToAddTransactionForScreen()
-                }
-
-                is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.DeleteButtonClick -> {
-                    uiStateAndEvents.events.setTransactionForIdToDelete(uiEvent.transactionForId)
-                    uiStateAndEvents.events.setScreenBottomSheetType(
-                        TransactionForValuesScreenBottomSheetType.DeleteConfirmation
-                    )
-                }
-
-                is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                    viewModel.navigateToEditTransactionForScreen(
-                        transactionForId = uiEvent.transactionForId,
-                    )
-                }
-
-                is TransactionForValuesScreenUIEvent.OnTransactionForListItem.Click -> {
-                    uiEvent.transactionForId?.let {
-                        uiStateAndEvents.events.setScreenBottomSheetType(
-                            TransactionForValuesScreenBottomSheetType.Menu(
-                                isDeleteVisible = uiEvent.isDeleteVisible,
-                                transactionForId = uiEvent.transactionForId,
-                            )
-                        )
-                    }
-                    Unit
-                }
-
-                is TransactionForValuesScreenUIEvent.OnTransactionForListItem.MoreOptionsIconButtonClick -> {
-                    uiEvent.transactionForId?.let {
-                        uiStateAndEvents.events.setScreenBottomSheetType(
-                            TransactionForValuesScreenBottomSheetType.Menu(
-                                isDeleteVisible = uiEvent.isDeleteVisible,
-                                transactionForId = uiEvent.transactionForId,
-                            )
-                        )
-                    }
-                    Unit
-                }
-
-                is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-            }
-        }
+        TransactionForValuesScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+        )
     }
 
     TransactionForValuesScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

@@ -34,65 +34,14 @@ public fun ViewTransactionScreen(
         originalTransactionListItemData = originalTransactionListItemData,
         refundTransactionListItemData = refundTransactionListItemData,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: ViewTransactionScreenUIEvent ->
-            when (uiEvent) {
-                is ViewTransactionScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is ViewTransactionScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is ViewTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-
-                is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.NegativeButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                    uiStateAndEvents.events.setTransactionIdToDelete(null)
-                }
-
-                is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.PositiveButtonClick -> {
-                    uiStateAndEvents.state.transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                        viewModel.deleteTransaction(
-                            transactionId = transactionIdToDeleteValue,
-                        )
-                        uiStateAndEvents.events.setTransactionIdToDelete(null)
-                    }
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is ViewTransactionScreenUIEvent.OnTransactionListItem.Click -> {
-                    viewModel.navigateToViewTransactionScreen(
-                        transactionId = uiEvent.transactionId,
-                    )
-                }
-
-                is ViewTransactionScreenUIEvent.OnTransactionListItem.EditButtonClick -> {
-                    viewModel.navigateToEditTransactionScreen(
-                        transactionId = uiEvent.transactionId,
-                    )
-                }
-
-                is ViewTransactionScreenUIEvent.OnTransactionListItem.DeleteButtonClick -> {
-                    uiStateAndEvents.events.setTransactionIdToDelete(uiEvent.transactionId)
-                    uiStateAndEvents.events.setScreenBottomSheetType(
-                        ViewTransactionScreenBottomSheetType.DeleteConfirmation
-                    )
-                }
-
-                is ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick -> {
-                    viewModel.navigateToAddTransactionScreen(
-                        transactionId = uiEvent.transactionId,
-                    )
-                }
-            }
-        }
+        ViewTransactionScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+        )
     }
 
     LaunchedEffect(
@@ -103,6 +52,6 @@ public fun ViewTransactionScreen(
 
     ViewTransactionScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

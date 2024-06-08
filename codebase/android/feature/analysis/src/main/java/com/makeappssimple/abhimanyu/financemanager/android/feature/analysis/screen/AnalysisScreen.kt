@@ -46,46 +46,18 @@ public fun AnalysisScreen(
         validTransactionTypes = validTransactionTypes,
         transactionTypesChipUIData = transactionTypesChipUIData,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: AnalysisScreenUIEvent ->
-            when (uiEvent) {
-                is AnalysisScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AnalysisScreenUIEvent.OnFilterActionButtonClick -> {
-                    uiStateAndEvents.events.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
-                }
-
-                is AnalysisScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-
-                is AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick -> {
-                    viewModel.updateSelectedFilter(
-                        updatedSelectedFilter = uiEvent.updatedSelectedFilter,
-                    )
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AnalysisScreenUIEvent.OnTransactionTypeChange -> {
-                    viewModel.updateSelectedTransactionTypeIndex(
-                        updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
-                    )
-                }
-            }
-        }
+        AnalysisScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+        )
     }
 
     AnalysisScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

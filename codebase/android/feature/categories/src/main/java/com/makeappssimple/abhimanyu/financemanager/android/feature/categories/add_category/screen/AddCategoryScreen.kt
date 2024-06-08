@@ -34,66 +34,16 @@ public fun AddCategoryScreen(
         categories = categories,
         validTransactionTypes = validTransactionTypes,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         key1 = viewModel,
         key2 = uiStateAndEvents,
+        key3 = validTransactionTypes,
     ) {
-        { uiEvent: AddCategoryScreenUIEvent ->
-            when (uiEvent) {
-                is AddCategoryScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                    uiStateAndEvents.events.setSearchText("")
-                }
-
-                is AddCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AddCategoryScreenUIEvent.OnCtaButtonClick -> {
-                    uiStateAndEvents.state.selectedTransactionTypeIndex?.let { selectedTransactionTypeIndex ->
-                        val transactionType = validTransactionTypes[selectedTransactionTypeIndex]
-                        viewModel.insertCategory(
-                            category = Category(
-                                emoji = uiStateAndEvents.state.emoji,
-                                title = uiStateAndEvents.state.title.text,
-                                transactionType = transactionType,
-                            ),
-                        )
-                    }
-                    Unit
-                }
-
-                is AddCategoryScreenUIEvent.OnClearTitleButtonClick -> {
-                    uiStateAndEvents.events.clearTitle()
-                }
-
-                is AddCategoryScreenUIEvent.OnEmojiCircleClick -> {
-                    uiStateAndEvents.events.setScreenBottomSheetType(
-                        AddCategoryScreenBottomSheetType.SelectEmoji
-                    )
-                }
-
-                is AddCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-
-                is AddCategoryScreenUIEvent.OnEmojiUpdated -> {
-                    uiStateAndEvents.events.setEmoji(uiEvent.updatedEmoji)
-                }
-
-                is AddCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                    uiStateAndEvents.events.setSearchText(uiEvent.updatedSearchText)
-                }
-
-                is AddCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                    uiStateAndEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
-                }
-
-                is AddCategoryScreenUIEvent.OnTitleUpdated -> {
-                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
-                }
-            }
-        }
+        AddCategoryScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+            validTransactionTypes = validTransactionTypes,
+        )
     }
 
     LaunchedEffect(
@@ -113,6 +63,6 @@ public fun AddCategoryScreen(
 
     AddCategoryScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

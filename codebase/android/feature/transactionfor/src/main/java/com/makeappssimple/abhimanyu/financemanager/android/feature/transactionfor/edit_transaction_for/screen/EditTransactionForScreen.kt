@@ -33,43 +33,14 @@ public fun EditTransactionForScreen(
         transactionForValues = transactionForValues,
         transactionFor = transactionFor,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: EditTransactionForScreenUIEvent ->
-            when (uiEvent) {
-                is EditTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is EditTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.updateTransactionFor(
-                        title = uiStateAndEvents.state.title.text,
-                    )
-                }
-
-                is EditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                    uiStateAndEvents.events.setTitle(
-                        uiStateAndEvents.state.title.copy(
-                            text = "",
-                        )
-                    )
-                }
-
-                is EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-
-                is EditTransactionForScreenUIEvent.OnTitleUpdated -> {
-                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
-                }
-            }
-        }
+        EditTransactionForScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+        )
     }
 
     LaunchedEffect(
@@ -91,6 +62,6 @@ public fun EditTransactionForScreen(
 
     EditTransactionForScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

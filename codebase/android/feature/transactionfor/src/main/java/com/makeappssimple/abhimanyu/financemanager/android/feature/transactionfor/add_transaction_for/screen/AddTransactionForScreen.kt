@@ -30,48 +30,14 @@ public fun AddTransactionForScreen(
     val uiStateAndEvents = rememberAddTransactionForScreenUIStateAndEvents(
         transactionForValues = transactionForValues,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         key1 = viewModel,
         key2 = uiStateAndEvents,
     ) {
-        { uiEvent: AddTransactionForScreenUIEvent ->
-            when (uiEvent) {
-                is AddTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AddTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is AddTransactionForScreenUIEvent.OnCtaButtonClick -> {
-                    viewModel.insertTransactionFor(
-                        TransactionFor(
-                            title = uiStateAndEvents.state.title?.text.orEmpty(),
-                        )
-                    )
-                }
-
-                is AddTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                    uiStateAndEvents.state.title?.let { title ->
-                        uiStateAndEvents.events.setTitle(
-                            title.copy(
-                                text = "",
-                            )
-                        )
-                    }
-                    Unit
-                }
-
-                is AddTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-
-                is AddTransactionForScreenUIEvent.OnTitleUpdated -> {
-                    uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
-                }
-            }
-        }
+        AddTransactionForScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+        )
     }
 
     LaunchedEffect(
@@ -82,6 +48,6 @@ public fun AddTransactionForScreen(
 
     AddTransactionForScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

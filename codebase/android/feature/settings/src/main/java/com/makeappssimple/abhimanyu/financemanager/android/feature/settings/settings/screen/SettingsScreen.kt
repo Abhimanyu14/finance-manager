@@ -18,8 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
@@ -61,14 +59,25 @@ public fun SettingsScreen(
                 )
             }
         }
-    val notificationsPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isPermissionGranted ->
-            if (isPermissionGranted) {
-                viewModel.enableReminder()
-            }
-        },
-    )
+    val notificationsPermissionLauncher: ManagedActivityResultLauncher<String, Boolean> =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission(),
+            onResult = { isPermissionGranted ->
+                if (isPermissionGranted) {
+                    viewModel.enableReminder()
+                }
+            },
+        )
+    val hasNotificationPermission: Boolean = remember {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
 
     // region view model data
     val reminder: Reminder? by viewModel.reminder.collectAsStateWithLifecycle()
@@ -81,72 +90,22 @@ public fun SettingsScreen(
         reminder = reminder,
         appVersionName = appVersionName,
     )
-    val handleUIEvent = remember(
+    val screenUIEventHandler = remember(
         viewModel,
         uiStateAndEvents,
+        hasNotificationPermission,
         createDocumentResultLauncher,
         openDocumentResultLauncher,
         notificationsPermissionLauncher,
     ) {
-        { uiEvent: SettingsScreenUIEvent ->
-            when (uiEvent) {
-                is SettingsScreenUIEvent.OnBackupDataListItemClick -> {
-                    createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
-                }
-
-                is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
-                    viewModel.recalculateTotal()
-                }
-
-                is SettingsScreenUIEvent.OnRestoreDataListItemClick -> {
-                    openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
-                }
-
-                is SettingsScreenUIEvent.OnToggleReminder -> {
-                    if (uiStateAndEvents.state.isReminderEnabled.orFalse()) {
-                        viewModel.disableReminder()
-                    } else {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            val hasNotificationPermission = ContextCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.POST_NOTIFICATIONS
-                            ) == PackageManager.PERMISSION_GRANTED
-                            if (hasNotificationPermission) {
-                                viewModel.enableReminder()
-                            } else {
-                                notificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            }
-                        } else {
-                            viewModel.enableReminder()
-                        }
-                    }
-                }
-
-                is SettingsScreenUIEvent.OnAccountsListItemClick -> {
-                    viewModel.navigateToAccountsScreen()
-                }
-
-                is SettingsScreenUIEvent.OnCategoriesListItemClick -> {
-                    viewModel.navigateToCategoriesScreen()
-                }
-
-                is SettingsScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiStateAndEvents.events.resetScreenBottomSheetType()
-                }
-
-                is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
-                    viewModel.navigateToOpenSourceLicensesScreen()
-                }
-
-                is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                    viewModel.navigateUp()
-                }
-
-                is SettingsScreenUIEvent.OnTransactionForListItemClick -> {
-                    viewModel.navigateToTransactionForValuesScreen()
-                }
-            }
-        }
+        SettingsScreenUIEventHandler(
+            viewModel = viewModel,
+            uiStateAndEvents = uiStateAndEvents,
+            hasNotificationPermission = hasNotificationPermission,
+            createDocumentResultLauncher = createDocumentResultLauncher,
+            notificationsPermissionLauncher = notificationsPermissionLauncher,
+            openDocumentResultLauncher = openDocumentResultLauncher,
+        )
     }
     val restoreErrorMessage = stringResource(
         id = R.string.screen_settings_restore_error_message,
@@ -175,6 +134,6 @@ public fun SettingsScreen(
 
     SettingsScreenUI(
         uiState = uiStateAndEvents.state,
-        handleUIEvent = handleUIEvent,
+        handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }
