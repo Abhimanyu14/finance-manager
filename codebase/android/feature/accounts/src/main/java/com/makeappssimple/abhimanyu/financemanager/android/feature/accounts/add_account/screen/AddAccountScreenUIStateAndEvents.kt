@@ -163,7 +163,8 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
                             text = accountType.title,
                             icon = accountType.icon,
                         )
-                    }.toImmutableList(),
+                    }
+                    .toImmutableList(),
                 minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
                 nameTextFieldValue = name,
                 visibilityData = AddAccountScreenUIVisibilityData(

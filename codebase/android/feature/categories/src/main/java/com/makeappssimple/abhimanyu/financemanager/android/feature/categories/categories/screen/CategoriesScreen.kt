@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 
 @Composable
 public fun CategoriesScreen(
@@ -24,7 +25,8 @@ public fun CategoriesScreen(
         message = "Inside CategoriesScreen",
     )
 
-    val categoriesGridItemDataMap: Map<TransactionType, ImmutableList<CategoriesGridItemData>> by viewModel.categoriesGridItemDataMap.collectAsStateWithLifecycle()
+    val categoriesGridItemDataMap: ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>
+            by viewModel.categoriesGridItemDataMap.collectAsStateWithLifecycle()
 
     val uiStateAndEvents = rememberCategoriesScreenUIStateAndEvents(
         categoriesGridItemDataMap = categoriesGridItemDataMap,

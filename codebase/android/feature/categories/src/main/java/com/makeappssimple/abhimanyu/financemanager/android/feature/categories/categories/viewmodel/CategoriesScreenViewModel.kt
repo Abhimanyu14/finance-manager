@@ -19,6 +19,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,11 +40,11 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val _categoriesGridItemDataMap: MutableStateFlow<Map<TransactionType, ImmutableList<CategoriesGridItemData>>> =
+    private val _categoriesGridItemDataMap: MutableStateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
         MutableStateFlow(
-            value = emptyMap(),
+            value = persistentMapOf(),
         )
-    public val categoriesGridItemDataMap: StateFlow<Map<TransactionType, ImmutableList<CategoriesGridItemData>>> =
+    public val categoriesGridItemDataMap: StateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
         _categoriesGridItemDataMap
 
     public fun deleteCategory(
@@ -229,7 +231,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                         ?.toImmutableList()
                         .orEmpty()
                 _categoriesGridItemDataMap.update {
-                    mapOf(
+                    persistentMapOf(
                         TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
                         TransactionType.INCOME to incomeCategoriesGridItemDataList,
                         TransactionType.INVESTMENT to investmentCategoriesGridItemDataList,

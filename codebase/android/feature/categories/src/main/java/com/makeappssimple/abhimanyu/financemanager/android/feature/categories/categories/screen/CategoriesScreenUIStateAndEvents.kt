@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
@@ -25,7 +26,7 @@ internal class CategoriesScreenUIStateAndEvents(
 
 @Composable
 internal fun rememberCategoriesScreenUIStateAndEvents(
-    categoriesGridItemDataMap: Map<TransactionType, ImmutableList<CategoriesGridItemData>>,
+    categoriesGridItemDataMap: ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>,
 ): CategoriesScreenUIStateAndEvents {
     // region pager state
     val pagerState: PagerState = rememberPagerState(

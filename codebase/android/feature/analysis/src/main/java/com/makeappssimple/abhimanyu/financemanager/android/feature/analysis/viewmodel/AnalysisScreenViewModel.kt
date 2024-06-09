@@ -45,7 +45,8 @@ public class AnalysisScreenViewModel @Inject constructor(
         getAllTransactionDataFlowUseCase()
             .map {
                 it
-            }.defaultListStateIn(
+            }
+            .defaultListStateIn(
                 scope = viewModelScope,
             )
     public val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(

@@ -180,7 +180,8 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
                             text = accountType.title,
                             icon = accountType.icon,
                         )
-                    }.toImmutableList(),
+                    }
+                    .toImmutableList(),
                 balanceAmountValue = balanceAmountValue.orEmpty(),
                 minimumBalanceAmountValue = minimumAccountBalanceAmountValue.orEmpty(),
                 name = name.orEmpty(),
