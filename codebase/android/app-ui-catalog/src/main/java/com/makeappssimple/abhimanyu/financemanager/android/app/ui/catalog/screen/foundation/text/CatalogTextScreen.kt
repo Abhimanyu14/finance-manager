@@ -20,10 +20,7 @@ public fun CatalogTextScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_text,

@@ -22,9 +22,7 @@ public fun CatalogOutlinedTextFieldScreen(
     val coroutineScope = rememberCoroutineScope()
     MyScaffold(
         sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_outlined_text_field,

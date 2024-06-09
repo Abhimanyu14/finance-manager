@@ -21,8 +21,6 @@ public fun CatalogEmojiCircleScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
         topBar = {
             MyTopAppBar(

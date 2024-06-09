@@ -24,10 +24,7 @@ public fun CatalogHomeScreen(
     val coroutineScope = rememberCoroutineScope()
 
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_home_appbar_title,

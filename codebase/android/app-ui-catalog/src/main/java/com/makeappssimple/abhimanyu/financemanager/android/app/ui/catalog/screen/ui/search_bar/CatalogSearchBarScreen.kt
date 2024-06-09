@@ -23,10 +23,7 @@ public fun CatalogSearchBarScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_search_bar,

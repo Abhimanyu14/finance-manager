@@ -18,10 +18,7 @@ public fun CatalogNavigationBackButtonScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_navigation_back_button,

@@ -25,8 +25,6 @@ public fun CatalogColorScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
         topBar = {
             MyTopAppBar(

@@ -41,10 +41,7 @@ public fun CatalogSelectionGroupScreen(
     val coroutineScope = rememberCoroutineScope()
 
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_selection_group,
