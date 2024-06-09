@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
 
+@Suppress("ViewModelForwarding")
 @Composable
 public fun AddTransactionScreen(
     viewModel: AddTransactionScreenViewModel = hiltViewModel(),
