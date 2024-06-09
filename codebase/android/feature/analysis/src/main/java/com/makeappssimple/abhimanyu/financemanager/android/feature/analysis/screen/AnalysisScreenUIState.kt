@@ -13,7 +13,6 @@ internal data class AnalysisScreenUIState(
     val screenBottomSheetType: AnalysisScreenBottomSheetType,
     val isBottomSheetVisible: Boolean,
     val selectedFilter: Filter,
-    val maxAmountTextWidth: Int,
     val selectedTransactionTypeIndex: Int?,
     val transactionDataMappedByCategory: ImmutableList<AnalysisListItemData>,
     val transactionTypesChipUIData: ImmutableList<ChipUIData>,

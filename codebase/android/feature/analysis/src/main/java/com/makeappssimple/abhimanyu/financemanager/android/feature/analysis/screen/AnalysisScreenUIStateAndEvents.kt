@@ -6,11 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.TextMeasurer
-import androidx.compose.ui.text.rememberTextMeasurer
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.orEmpty
@@ -32,11 +29,9 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
     oldestTransactionLocalDate: LocalDate?,
     transactionDataMappedByCategory: ImmutableList<AnalysisListItemData>,
     selectedFilter: Filter,
-    allTransactionData: ImmutableList<TransactionData>,
     validTransactionTypes: ImmutableList<TransactionType>,
     transactionTypesChipUIData: ImmutableList<ChipUIData>,
 ): AnalysisScreenUIStateAndEvents {
-    val textMeasurer: TextMeasurer = rememberTextMeasurer()
     val dateTimeUtil = remember {
         DateTimeUtilImpl()
     }
@@ -56,30 +51,14 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
     }
     // endregion
 
-    // region selected filter
-    /*
-    var selectedFilter: Filter by remember {
-        mutableStateOf(
-            value = Filter(),
-        )
-    }
-    val setSelectedFilter = { updatedSelectedFilter: Filter ->
-        selectedFilter = updatedSelectedFilter
-    }
-    */
-    // endregion
-
     return remember(
-        textMeasurer,
         dateTimeUtil,
         screenBottomSheetType,
         setScreenBottomSheetType,
         selectedFilter,
-        // setSelectedFilter,
         selectedTransactionTypeIndex,
         oldestTransactionLocalDate,
         transactionDataMappedByCategory,
-        allTransactionData,
         validTransactionTypes,
         transactionTypesChipUIData,
     ) {
@@ -88,13 +67,6 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
                 screenBottomSheetType = screenBottomSheetType,
                 isBottomSheetVisible = screenBottomSheetType != AnalysisScreenBottomSheetType.None,
                 selectedFilter = selectedFilter.orEmpty(),
-                maxAmountTextWidth = if (transactionDataMappedByCategory.isEmpty()) {
-                    0
-                } else {
-                    transactionDataMappedByCategory.maxOf {
-                        textMeasurer.measure(it.amountText).size.width
-                    }
-                },
                 selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                 transactionDataMappedByCategory = transactionDataMappedByCategory,
                 transactionTypesChipUIData = transactionTypesChipUIData,
@@ -106,7 +78,6 @@ internal fun rememberAnalysisScreenUIStateAndEvents(
             events = AnalysisScreenUIStateEvents(
                 resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setScreenBottomSheetType = setScreenBottomSheetType,
-                // setSelectedFilter = setSelectedFilter,
             ),
         )
     }

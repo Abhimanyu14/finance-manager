@@ -7,7 +7,6 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
@@ -33,7 +32,6 @@ public fun AnalysisScreen(
     val oldestTransactionLocalDate: LocalDate? by viewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle()
     val transactionDataMappedByCategory: ImmutableList<AnalysisListItemData> by viewModel.transactionDataMappedByCategory.collectAsStateWithLifecycle()
     val selectedFilter: Filter by viewModel.selectedFilter.collectAsStateWithLifecycle()
-    val allTransactionData: ImmutableList<TransactionData> by viewModel.allTransactionData.collectAsStateWithLifecycle()
     val validTransactionTypes: ImmutableList<TransactionType> = viewModel.validTransactionTypes
     val transactionTypesChipUIData: ImmutableList<ChipUIData> = viewModel.transactionTypesChipUIData
     // endregion
@@ -43,7 +41,6 @@ public fun AnalysisScreen(
         oldestTransactionLocalDate = oldestTransactionLocalDate,
         transactionDataMappedByCategory = transactionDataMappedByCategory,
         selectedFilter = selectedFilter,
-        allTransactionData = allTransactionData,
         validTransactionTypes = validTransactionTypes,
         transactionTypesChipUIData = transactionTypesChipUIData,
     )

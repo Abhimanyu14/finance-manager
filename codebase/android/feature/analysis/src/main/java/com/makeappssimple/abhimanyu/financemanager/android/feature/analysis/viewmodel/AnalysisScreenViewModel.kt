@@ -47,7 +47,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         TransactionType.INVESTMENT,
     )
 
-    public var allTransactionData: StateFlow<ImmutableList<TransactionData>> =
+    private var allTransactionData: StateFlow<ImmutableList<TransactionData>> =
         getAllTransactionDataFlowUseCase()
             .defaultListStateIn(
                 scope = viewModelScope,
@@ -57,6 +57,7 @@ public class AnalysisScreenViewModel @Inject constructor(
             text = it.title,
         )
     }
+
     public val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
         value = Filter(),
     )
@@ -183,4 +184,3 @@ public class AnalysisScreenViewModel @Inject constructor(
         return transactionData.transaction.transactionTimestamp in fromDateStartOfDayTimestamp until toDateStartOfDayTimestamp
     }
 }
-

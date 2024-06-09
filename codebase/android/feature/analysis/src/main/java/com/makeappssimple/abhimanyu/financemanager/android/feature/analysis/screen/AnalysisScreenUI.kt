@@ -10,9 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextMeasurer
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ANALYSIS
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ANALYSIS
@@ -187,12 +190,22 @@ private fun AnalysisScreenHeader(
 private fun AnalysisScreenList(
     uiState: AnalysisScreenUIState,
 ) {
+    val textMeasurer: TextMeasurer = rememberTextMeasurer()
+    val maxAmountTextWidth = remember(
+        uiState.transactionDataMappedByCategory
+    ) {
+        if (uiState.transactionDataMappedByCategory.isEmpty()) {
+            0
+        } else {
+            uiState.transactionDataMappedByCategory.maxOf {
+                textMeasurer.measure(it.amountText).size.width
+            }
+        }
+    }
+
     LazyColumn(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .testTag(
-                tag = SCREEN_CONTENT_ANALYSIS,
-            )
             .fillMaxSize()
             .navigationBarLandscapeSpacer(),
     ) {
@@ -204,7 +217,7 @@ private fun AnalysisScreenList(
         ) { listItem ->
             AnalysisListItem(
                 data = listItem.copy(
-                    maxEndTextWidth = uiState.maxAmountTextWidth,
+                    maxEndTextWidth = maxAmountTextWidth,
                 ),
             )
         }
