@@ -1,3 +1,6 @@
+@file:Suppress("StringLiteralDuplication")
+// TODO(Abhi): To Fix - StringLiteralDuplication
+
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
 
 import android.widget.Toast
@@ -37,8 +40,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-// TODO(Abhi): To Fix - StringLiteralDuplication
-@Suppress("StringLiteralDuplication")
 @Composable
 internal fun SettingsScreenUI(
     uiState: SettingsScreenUIState,
