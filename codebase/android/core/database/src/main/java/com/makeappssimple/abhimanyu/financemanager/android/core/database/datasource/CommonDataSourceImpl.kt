@@ -23,22 +23,21 @@ public class CommonDataSourceImpl(
                     id = id,
                 )
 
-                val updatedAccounts = buildList {
-                    transactionData?.accountFrom?.let {
-                        add(
-                            it.updateBalanceAmount(
-                                updatedBalanceAmount = it.balanceAmount.value + transactionData.transaction.amount.value,
-                            )
+                val updatedAccounts = mutableListOf<AccountEntity>()
+                transactionData?.accountFrom?.let {
+                    updatedAccounts.add(
+                        it.updateBalanceAmount(
+                            updatedBalanceAmount = it.balanceAmount.value + transactionData.transaction.amount.value,
                         )
-                    }
-                    transactionData?.accountTo?.let {
-                        add(
-                            it.updateBalanceAmount(
-                                updatedBalanceAmount = it.balanceAmount.value - transactionData.transaction.amount.value,
-                            )
+                    )
+                }
+                transactionData?.accountTo?.let {
+                    updatedAccounts.add(
+                        it.updateBalanceAmount(
+                            updatedBalanceAmount = it.balanceAmount.value - transactionData.transaction.amount.value,
                         )
-                    }
-                }.toTypedArray()
+                    )
+                }
 
                 if (transactionData?.transaction?.transactionType == TransactionType.REFUND) {
                     transactionData.transaction.originalTransactionId?.let { originalTransactionId ->
@@ -70,7 +69,7 @@ public class CommonDataSourceImpl(
                     id = id,
                 )
                 accountDao().updateAccounts(
-                    accounts = updatedAccounts,
+                    accounts = updatedAccounts.toTypedArray(),
                 )
             }
             true

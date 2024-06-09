@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 
 public fun sanitizeAccounts(
     accounts: ImmutableList<AccountEntity>,
@@ -20,5 +20,5 @@ public fun sanitizeAccounts(
         } else {
             it
         }
-    }.toImmutableList()
+    }
 }

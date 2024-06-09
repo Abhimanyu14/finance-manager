@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.co
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
@@ -72,17 +73,17 @@ public class RestoreDataUseCase @Inject constructor(
         val accounts = sanitizeAccounts(
             accounts = databaseData.accounts.map(
                 transform = Account::asEntity,
-            ).toImmutableList(),
+            ),
         ).map(
             transform = AccountEntity::asExternalModel,
-        ).toImmutableList()
+        )
         val transactions = sanitizeTransactions(
             transactions = databaseData.transactions.map(
                 transform = Transaction::asEntity,
-            ).toImmutableList(),
+            ),
         ).map(
             transform = TransactionEntity::asExternalModel,
-        ).toImmutableList()
+        )
         transactionRepository.restoreData(
             categories = databaseData.categories.toImmutableList(),
             accounts = accounts,

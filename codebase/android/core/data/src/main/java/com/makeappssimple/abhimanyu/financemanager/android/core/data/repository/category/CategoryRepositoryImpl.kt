@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
@@ -21,7 +22,7 @@ public class CategoryRepositoryImpl(
         return categoryDao.getAllCategoriesFlow().map {
             it.map(
                 transform = CategoryEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -29,7 +30,7 @@ public class CategoryRepositoryImpl(
         return executeOnIoDispatcher {
             categoryDao.getAllCategories().map(
                 transform = CategoryEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 

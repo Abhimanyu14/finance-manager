@@ -24,7 +24,6 @@ public fun CatalogEmojiCircleScreen(
         sheetContent = {},
         onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_emoji_circle,

@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
@@ -22,7 +23,7 @@ public class AccountRepositoryImpl(
         return accountDao.getAllAccountsFlow().map {
             it.map(
                 transform = AccountEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -30,7 +31,7 @@ public class AccountRepositoryImpl(
         return executeOnIoDispatcher {
             accountDao.getAllAccounts().map(
                 transform = AccountEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -58,7 +59,7 @@ public class AccountRepositoryImpl(
                 ids = ids,
             ).map(
                 transform = AccountEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -81,7 +82,7 @@ public class AccountRepositoryImpl(
         return executeOnIoDispatcher {
             val accountIds = accountsBalanceAmountChange.map {
                 it.first
-            }.toImmutableList()
+            }
             val accounts = getAccounts(
                 ids = accountIds,
             )

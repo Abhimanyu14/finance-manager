@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
@@ -28,7 +29,7 @@ public class TransactionRepositoryImpl(
         return executeOnIoDispatcher {
             transactionDao.getAllTransactions().map(
                 transform = TransactionEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -36,7 +37,7 @@ public class TransactionRepositoryImpl(
         return transactionDao.getAllTransactionDataFlow().map {
             it.map(
                 transform = TransactionDataEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -44,7 +45,7 @@ public class TransactionRepositoryImpl(
         return executeOnIoDispatcher {
             transactionDao.getAllTransactionData().map(
                 transform = TransactionDataEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -56,7 +57,7 @@ public class TransactionRepositoryImpl(
                 searchText = searchText,
             ).map(
                 transform = TransactionDataEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -68,7 +69,7 @@ public class TransactionRepositoryImpl(
         ).map {
             it.map(
                 transform = TransactionDataEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -82,7 +83,7 @@ public class TransactionRepositoryImpl(
         ).map {
             it.map(
                 transform = TransactionEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -96,7 +97,7 @@ public class TransactionRepositoryImpl(
                 endingTimestamp = endingTimestamp,
             ).map(
                 transform = TransactionEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 

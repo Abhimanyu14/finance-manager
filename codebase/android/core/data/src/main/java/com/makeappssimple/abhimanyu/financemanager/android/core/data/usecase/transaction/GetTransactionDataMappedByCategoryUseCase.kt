@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionDataMappedByCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
 public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
@@ -42,6 +42,6 @@ public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
             it.copy(
                 percentage = (it.amountValue.toDouble() / sum) * 100,
             )
-        }.toImmutableList()
+        }
     }
 }

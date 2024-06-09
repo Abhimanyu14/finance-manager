@@ -28,7 +28,6 @@ public fun CatalogColorScreen(
         sheetContent = {},
         onClick = { },
         coroutineScope = coroutineScope,
-        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_color,

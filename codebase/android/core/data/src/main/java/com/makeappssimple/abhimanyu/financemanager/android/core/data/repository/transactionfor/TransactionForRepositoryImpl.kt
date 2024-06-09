@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
@@ -21,7 +22,7 @@ public class TransactionForRepositoryImpl(
         return transactionForDao.getAllTransactionForValuesFlow().map {
             it.map(
                 transform = TransactionForEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 
@@ -29,7 +30,7 @@ public class TransactionForRepositoryImpl(
         return executeOnIoDispatcher {
             transactionForDao.getAllTransactionForValues().map(
                 transform = TransactionForEntity::asExternalModel,
-            ).toImmutableList()
+            )
         }
     }
 

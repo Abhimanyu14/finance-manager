@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
@@ -20,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionsBetweenTimestampsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
@@ -31,7 +33,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -124,14 +125,13 @@ public class HomeScreenViewModel @Inject constructor(
         val expenseTransactions = transactions.filter {
             it.transactionType == TransactionType.EXPENSE
         }
-        val expenseTransactionsWithRefund = buildList {
-            expenseTransactions.forEach { expenseTransaction ->
-                add(expenseTransaction)
-                expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
-                    refundTransactionIds.forEach { id ->
-                        getTransactionUseCase(id)?.let {
-                            add(it)
-                        }
+        val expenseTransactionsWithRefund = mutableListOf<Transaction>()
+        expenseTransactions.forEach { expenseTransaction ->
+            expenseTransactionsWithRefund.add(expenseTransaction)
+            expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
+                refundTransactionIds.forEach { id ->
+                    getTransactionUseCase(id)?.let {
+                        expenseTransactionsWithRefund.add(it)
                     }
                 }
             }
@@ -339,7 +339,7 @@ public class HomeScreenViewModel @Inject constructor(
                     title = title,
                     transactionForText = transactionForText,
                 )
-            }.toImmutableList()
+            }
         }.defaultListStateIn(
             scope = viewModelScope,
         )

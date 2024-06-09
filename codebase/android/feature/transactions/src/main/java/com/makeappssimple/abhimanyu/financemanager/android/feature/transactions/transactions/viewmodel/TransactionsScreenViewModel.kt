@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.distinct
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
@@ -47,7 +48,7 @@ public class TransactionsScreenViewModel @Inject constructor(
             }.groupBy { category ->
                 category.transactionType
             }.mapValues { (_, categories) ->
-                categories.distinct().toImmutableList()
+                categories.distinct()
             }.toMap()
         }
 
@@ -72,7 +73,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                 transactionData.accountFrom,
                 transactionData.accountTo,
             )
-        }.distinct().toImmutableList()
+        }.distinct()
     }.defaultListStateIn(
         scope = viewModelScope,
     )

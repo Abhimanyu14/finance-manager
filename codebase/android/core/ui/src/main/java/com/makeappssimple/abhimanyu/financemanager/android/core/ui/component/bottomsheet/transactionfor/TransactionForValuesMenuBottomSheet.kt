@@ -12,34 +12,29 @@ public fun TransactionForValuesMenuBottomSheet(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    val items = buildList {
-        add(
+    val items = mutableListOf<TransactionForValuesMenuBottomSheetItemData>()
+    items.add(
+        element = TransactionForValuesMenuBottomSheetItemData(
+            imageVector = MyIcons.Edit,
+            text = stringResource(
+                id = R.string.bottom_sheet_transaction_for_values_menu_edit,
+            ),
+            onClick = onEditClick,
+        ),
+    )
+    if (isDeleteVisible) {
+        items.add(
             element = TransactionForValuesMenuBottomSheetItemData(
-                imageVector = MyIcons.Edit,
+                imageVector = MyIcons.Delete,
                 text = stringResource(
-                    id = R.string.bottom_sheet_transaction_for_values_menu_edit,
+                    id = R.string.bottom_sheet_transaction_for_values_menu_delete,
                 ),
-                onClick = {
-                    onEditClick()
-                },
+                onClick = onDeleteClick,
             ),
         )
-        if (isDeleteVisible) {
-            add(
-                element = TransactionForValuesMenuBottomSheetItemData(
-                    imageVector = MyIcons.Delete,
-                    text = stringResource(
-                        id = R.string.bottom_sheet_transaction_for_values_menu_delete,
-                    ),
-                    onClick = {
-                        onDeleteClick()
-                    },
-                ),
-            )
-        }
-    }.toImmutableList()
+    }
 
     TransactionForValuesMenuBottomSheetUI(
-        items = items,
+        items = items.toImmutableList(),
     )
 }

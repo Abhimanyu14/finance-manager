@@ -15,43 +15,42 @@ public fun AccountsMenuBottomSheet(
     onEditClick: () -> Unit,
     onSetAsDefaultClick: () -> Unit,
 ) {
-    val items = buildList {
-        if (isEditVisible) {
-            add(
-                AccountsMenuBottomSheetItemData(
-                    imageVector = MyIcons.Edit,
-                    text = stringResource(
-                        id = R.string.bottom_sheet_accounts_menu_edit,
-                    ),
-                    onClick = onEditClick,
-                )
+    val items = mutableListOf<AccountsMenuBottomSheetItemData>()
+    if (isEditVisible) {
+        items.add(
+            AccountsMenuBottomSheetItemData(
+                imageVector = MyIcons.Edit,
+                text = stringResource(
+                    id = R.string.bottom_sheet_accounts_menu_edit,
+                ),
+                onClick = onEditClick,
             )
-        }
-        if (isSetAsDefaultVisible) {
-            add(
-                AccountsMenuBottomSheetItemData(
-                    imageVector = MyIcons.CheckCircle,
-                    text = stringResource(
-                        id = R.string.bottom_sheet_accounts_menu_set_as_default_account,
-                    ),
-                    onClick = onSetAsDefaultClick,
-                )
+        )
+    }
+    if (isSetAsDefaultVisible) {
+        items.add(
+            AccountsMenuBottomSheetItemData(
+                imageVector = MyIcons.CheckCircle,
+                text = stringResource(
+                    id = R.string.bottom_sheet_accounts_menu_set_as_default_account,
+                ),
+                onClick = onSetAsDefaultClick,
             )
-        }
-        if (isDeleteVisible) {
-            add(
-                AccountsMenuBottomSheetItemData(
-                    imageVector = MyIcons.Delete,
-                    text = stringResource(
-                        id = R.string.bottom_sheet_accounts_menu_delete,
-                    ),
-                    onClick = onDeleteClick,
-                )
+        )
+    }
+    if (isDeleteVisible) {
+        items.add(
+            AccountsMenuBottomSheetItemData(
+                imageVector = MyIcons.Delete,
+                text = stringResource(
+                    id = R.string.bottom_sheet_accounts_menu_delete,
+                ),
+                onClick = onDeleteClick,
             )
-        }
-    }.toImmutableList()
+        )
+    }
 
     AccountsMenuBottomSheetUI(
-        items = items,
+        items = items.toImmutableList(),
     )
 }

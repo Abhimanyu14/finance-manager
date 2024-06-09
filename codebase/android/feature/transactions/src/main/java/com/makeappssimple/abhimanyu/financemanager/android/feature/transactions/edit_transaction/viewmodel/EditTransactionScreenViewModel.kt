@@ -7,14 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.sortedWith
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toImmutableList
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
@@ -162,7 +164,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         selectedTransactionType.map { selectedTransactionType ->
             categories.filter { category ->
                 category.transactionType == selectedTransactionType
-            }.toImmutableList().orEmpty()
+            }
         }.defaultListStateIn(
             scope = viewModelScope,
         )
@@ -417,8 +419,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
                             accountBalanceAmountChangeMap[accountTo.id].orZero() + uiState.value.amount.text.toLongOrZero()
                     }
                     updateAccountBalanceAmountUseCase(
-                        accountsBalanceAmountChange = accountBalanceAmountChangeMap.toList()
-                            .toImmutableList(),
+                        accountsBalanceAmountChange = accountBalanceAmountChangeMap.toImmutableList(),
                     )
                     // endregion
                 }
@@ -595,7 +596,6 @@ public class EditTransactionScreenViewModel @Inject constructor(
                                     it.balanceAmount.value
                                 }
                             )
-                            .toImmutableList()
                     }
                 },
                 async {

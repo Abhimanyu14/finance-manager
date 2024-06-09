@@ -126,138 +126,140 @@ public fun TransactionsFiltersBottomSheetUI(
             value = selectedFilter.toDate ?: defaultMaxDate,
         )
     }
-    val filters = buildList {
-        if (expenseCategories.isNotEmpty() && expenseCategories.size > 1) {
-            add(
-                TransactionsFiltersBottomSheetData(
-                    data = TransactionFilterBottomSheetFilterGroupData(
-                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_expense_categories,
-                        items = expenseCategories.map { category ->
-                            ChipUIData(
-                                text = category.title,
-                            )
-                        }.toImmutableList(),
-                        selectedItemsIndices = selectedExpenseCategoryIndicesValue,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
-                                selectedExpenseCategoryIndicesValue.clear()
+    val filters = remember {
+        buildList {
+            if (expenseCategories.isNotEmpty() && expenseCategories.size > 1) {
+                add(
+                    TransactionsFiltersBottomSheetData(
+                        data = TransactionFilterBottomSheetFilterGroupData(
+                            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_expense_categories,
+                            items = expenseCategories.map { category ->
+                                ChipUIData(
+                                    text = category.title,
+                                )
+                            }.toImmutableList(),
+                            selectedItemsIndices = selectedExpenseCategoryIndicesValue,
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                    selectedExpenseCategoryIndicesValue.clear()
+                                }
                             }
-                        }
-                    },
+                        },
+                    )
                 )
-            )
-        }
-        if (incomeCategories.isNotEmpty() && incomeCategories.size > 1) {
-            add(
-                TransactionsFiltersBottomSheetData(
-                    data = TransactionFilterBottomSheetFilterGroupData(
-                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_income_categories,
-                        items = incomeCategories.map { category ->
-                            ChipUIData(
-                                text = category.title,
-                            )
-                        }.toImmutableList(),
-                        selectedItemsIndices = selectedIncomeCategoryIndicesValue,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
-                                selectedIncomeCategoryIndicesValue.clear()
+            }
+            if (incomeCategories.isNotEmpty() && incomeCategories.size > 1) {
+                add(
+                    TransactionsFiltersBottomSheetData(
+                        data = TransactionFilterBottomSheetFilterGroupData(
+                            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_income_categories,
+                            items = incomeCategories.map { category ->
+                                ChipUIData(
+                                    text = category.title,
+                                )
+                            }.toImmutableList(),
+                            selectedItemsIndices = selectedIncomeCategoryIndicesValue,
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                    selectedIncomeCategoryIndicesValue.clear()
+                                }
                             }
-                        }
-                    },
+                        },
+                    )
                 )
-            )
-        }
-        if (investmentCategories.isNotEmpty() && investmentCategories.size > 1) {
-            add(
-                TransactionsFiltersBottomSheetData(
-                    data = TransactionFilterBottomSheetFilterGroupData(
-                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_investment_categories,
-                        items = investmentCategories.map { category ->
-                            ChipUIData(
-                                text = category.title,
-                            )
-                        }.toImmutableList(),
-                        selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
-                                selectedInvestmentCategoryIndicesValue.clear()
+            }
+            if (investmentCategories.isNotEmpty() && investmentCategories.size > 1) {
+                add(
+                    TransactionsFiltersBottomSheetData(
+                        data = TransactionFilterBottomSheetFilterGroupData(
+                            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_investment_categories,
+                            items = investmentCategories.map { category ->
+                                ChipUIData(
+                                    text = category.title,
+                                )
+                            }.toImmutableList(),
+                            selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                    selectedInvestmentCategoryIndicesValue.clear()
+                                }
                             }
-                        }
-                    },
+                        },
+                    )
                 )
-            )
-        }
-        if (accounts.isNotEmpty() && accounts.size > 1) {
-            add(
-                TransactionsFiltersBottomSheetData(
-                    data = TransactionFilterBottomSheetFilterGroupData(
-                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_accounts,
-                        items = accounts.map { account ->
-                            ChipUIData(
-                                text = account.name,
-                            )
-                        }.toImmutableList(),
-                        selectedItemsIndices = selectedAccountIndicesValue,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
-                                selectedAccountIndicesValue.clear()
+            }
+            if (accounts.isNotEmpty() && accounts.size > 1) {
+                add(
+                    TransactionsFiltersBottomSheetData(
+                        data = TransactionFilterBottomSheetFilterGroupData(
+                            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_accounts,
+                            items = accounts.map { account ->
+                                ChipUIData(
+                                    text = account.name,
+                                )
+                            }.toImmutableList(),
+                            selectedItemsIndices = selectedAccountIndicesValue,
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                    selectedAccountIndicesValue.clear()
+                                }
                             }
-                        }
-                    },
+                        },
+                    )
                 )
-            )
-        }
-        if (transactionForValues.isNotEmpty() && transactionForValues.size > 1) {
-            add(
-                TransactionsFiltersBottomSheetData(
-                    data = TransactionFilterBottomSheetFilterGroupData(
-                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_for_values,
-                        items = transactionForValues.map { transactionFor ->
-                            ChipUIData(
-                                text = transactionFor.titleToDisplay,
-                            )
-                        }.toImmutableList(),
-                        selectedItemsIndices = selectedTransactionForValuesIndicesValue,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
-                                selectedTransactionForValuesIndicesValue.clear()
+            }
+            if (transactionForValues.isNotEmpty() && transactionForValues.size > 1) {
+                add(
+                    TransactionsFiltersBottomSheetData(
+                        data = TransactionFilterBottomSheetFilterGroupData(
+                            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_for_values,
+                            items = transactionForValues.map { transactionFor ->
+                                ChipUIData(
+                                    text = transactionFor.titleToDisplay,
+                                )
+                            }.toImmutableList(),
+                            selectedItemsIndices = selectedTransactionForValuesIndicesValue,
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                    selectedTransactionForValuesIndicesValue.clear()
+                                }
                             }
-                        }
-                    },
+                        },
+                    )
                 )
-            )
-        }
-        if (transactionTypes.isNotEmpty() && transactionTypes.size > 1) {
-            add(
-                TransactionsFiltersBottomSheetData(
-                    data = TransactionFilterBottomSheetFilterGroupData(
-                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_types,
-                        items = transactionTypes.map { transactionType ->
-                            ChipUIData(
-                                text = transactionType.title,
-                            )
-                        }.toImmutableList(),
-                        selectedItemsIndices = selectedTransactionTypeIndicesValue,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
-                                selectedTransactionTypeIndicesValue.clear()
+            }
+            if (transactionTypes.isNotEmpty() && transactionTypes.size > 1) {
+                add(
+                    TransactionsFiltersBottomSheetData(
+                        data = TransactionFilterBottomSheetFilterGroupData(
+                            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_types,
+                            items = transactionTypes.map { transactionType ->
+                                ChipUIData(
+                                    text = transactionType.title,
+                                )
+                            }.toImmutableList(),
+                            selectedItemsIndices = selectedTransactionTypeIndicesValue,
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                    selectedTransactionTypeIndicesValue.clear()
+                                }
                             }
-                        }
-                    },
+                        },
+                    )
                 )
-            )
+            }
         }
     }
 

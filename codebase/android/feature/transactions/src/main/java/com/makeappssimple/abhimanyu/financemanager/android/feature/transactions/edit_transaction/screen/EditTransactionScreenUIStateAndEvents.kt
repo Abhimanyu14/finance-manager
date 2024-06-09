@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
@@ -20,7 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.orDefault
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import java.time.LocalDate
 
 @Stable
@@ -116,19 +116,19 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
                     ChipUIData(
                         text = transactionType.title,
                     )
-                }.toImmutableList().orEmpty(),
+                },
                 titleSuggestions = titleSuggestions.orEmpty(),
                 titleSuggestionsChipUIData = titleSuggestions?.map { title ->
                     ChipUIData(
                         text = title,
                     )
-                }?.toImmutableList().orEmpty(),
+                }.orEmpty(),
                 accounts = accounts.orEmpty(),
                 transactionForValuesChipUIData = transactionForValues.map { transactionFor ->
                     ChipUIData(
                         text = transactionFor.titleToDisplay,
                     )
-                }.toImmutableList().orEmpty(),
+                },
                 currentLocalDate = currentLocalDate.orMin(),
             ),
             events = EditTransactionScreenUIStateEvents(

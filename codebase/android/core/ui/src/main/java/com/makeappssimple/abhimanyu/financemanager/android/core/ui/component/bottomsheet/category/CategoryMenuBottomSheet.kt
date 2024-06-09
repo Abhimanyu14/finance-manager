@@ -13,43 +13,42 @@ public fun CategoryMenuBottomSheet(
     onEditClick: () -> Unit,
     onSetAsDefaultClick: () -> Unit,
 ) {
-    val items = buildList {
-        if (data.isEditVisible) {
-            add(
-                CategoryMenuBottomSheetItemData(
-                    imageVector = MyIcons.Edit,
-                    text = stringResource(
-                        id = R.string.bottom_sheet_category_menu_edit,
-                    ),
-                    onClick = onEditClick,
-                )
+    val items = mutableListOf<CategoryMenuBottomSheetItemData>()
+    if (data.isEditVisible) {
+        items.add(
+            CategoryMenuBottomSheetItemData(
+                imageVector = MyIcons.Edit,
+                text = stringResource(
+                    id = R.string.bottom_sheet_category_menu_edit,
+                ),
+                onClick = onEditClick,
             )
-        }
-        if (data.isSetAsDefaultVisible) {
-            add(
-                CategoryMenuBottomSheetItemData(
-                    imageVector = MyIcons.CheckCircle,
-                    text = stringResource(
-                        id = R.string.bottom_sheet_category_menu_set_as_default_category,
-                    ),
-                    onClick = onSetAsDefaultClick,
-                )
+        )
+    }
+    if (data.isSetAsDefaultVisible) {
+        items.add(
+            CategoryMenuBottomSheetItemData(
+                imageVector = MyIcons.CheckCircle,
+                text = stringResource(
+                    id = R.string.bottom_sheet_category_menu_set_as_default_category,
+                ),
+                onClick = onSetAsDefaultClick,
             )
-        }
-        if (data.isDeleteVisible) {
-            add(
-                CategoryMenuBottomSheetItemData(
-                    imageVector = MyIcons.Delete,
-                    text = stringResource(
-                        id = R.string.bottom_sheet_category_menu_delete,
-                    ),
-                    onClick = onDeleteClick,
-                )
+        )
+    }
+    if (data.isDeleteVisible) {
+        items.add(
+            CategoryMenuBottomSheetItemData(
+                imageVector = MyIcons.Delete,
+                text = stringResource(
+                    id = R.string.bottom_sheet_category_menu_delete,
+                ),
+                onClick = onDeleteClick,
             )
-        }
-    }.toImmutableList()
+        )
+    }
 
     CategoryMenuBottomSheetUI(
-        items = items,
+        items = items.toImmutableList(),
     )
 }
