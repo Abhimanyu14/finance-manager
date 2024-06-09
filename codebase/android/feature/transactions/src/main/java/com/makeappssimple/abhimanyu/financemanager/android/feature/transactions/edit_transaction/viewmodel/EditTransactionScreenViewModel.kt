@@ -594,7 +594,8 @@ public class EditTransactionScreenViewModel @Inject constructor(
                                 }.thenByDescending {
                                     it.balanceAmount.value
                                 }
-                            ).toImmutableList()
+                            )
+                            .toImmutableList()
                     }
                 },
                 async {
