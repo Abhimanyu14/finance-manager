@@ -12,11 +12,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
@@ -32,7 +34,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -316,30 +317,25 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
             }, // TODO(Abhi): Move this logic outside
             filteredCategories = filteredCategories,
             transactionTypesForNewTransactionChipUIData = addTransactionScreenInitialData?.validTransactionTypesForNewTransaction
-                ?.map { transactionType ->
+                .map { transactionType ->
                     ChipUIData(
                         text = transactionType.title,
                     )
-                }
-                ?.toImmutableList()
-                .orEmpty(), // TODO(Abhi): Move this logic outside
+                }, // TODO(Abhi): Move this logic outside
             titleSuggestions = titleSuggestions,
             titleSuggestionsChipUIData = titleSuggestions
                 .map { title ->
                     ChipUIData(
                         text = title,
                     )
-                }
-                .toImmutableList(), // TODO(Abhi): Move this logic outside
+                }, // TODO(Abhi): Move this logic outside
             accounts = addTransactionScreenInitialData?.accounts.orEmpty(),
             transactionForValuesChipUIData = addTransactionScreenInitialData?.transactionForValues
-                ?.map { transactionFor ->
+                .map { transactionFor ->
                     ChipUIData(
                         text = transactionFor.titleToDisplay,
                     )
-                }
-                ?.toImmutableList()
-                .orEmpty(), // TODO(Abhi): Move this logic outside
+                }, // TODO(Abhi): Move this logic outside
             currentLocalDate = dateTimeUtil.getCurrentLocalDate()
                 .orMin(), // TODO(Abhi): Move this logic outside
             selectedTransactionType = selectedTransactionType,
@@ -410,9 +406,9 @@ private fun getFilteredCategories(
     addTransactionScreenInitialData: AddTransactionScreenInitialData?,
     selectedTransactionType: TransactionType,
 ): ImmutableList<Category> {
-    return addTransactionScreenInitialData?.categories?.filter { category ->
+    return addTransactionScreenInitialData?.categories.filter { category ->
         category.transactionType == selectedTransactionType
-    }?.toImmutableList().orEmpty()
+    }
 }
 
 private fun getSelectedTransactionType(

@@ -23,7 +23,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -164,7 +163,7 @@ public class AnalysisScreenViewModel @Inject constructor(
                     },
                 title = it.category.title,
             )
-        }.toImmutableList()
+        }
     }
 
     private fun isAvailableAfterDateFilter(

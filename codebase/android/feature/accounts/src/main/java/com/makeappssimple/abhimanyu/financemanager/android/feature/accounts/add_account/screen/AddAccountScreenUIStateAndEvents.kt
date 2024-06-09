@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
@@ -22,7 +23,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.ic
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class AddAccountScreenUIStateAndEvents(
@@ -163,8 +163,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
                             text = accountType.title,
                             icon = accountType.icon,
                         )
-                    }
-                    .toImmutableList(),
+                    },
                 minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
                 nameTextFieldValue = name,
                 visibilityData = AddAccountScreenUIVisibilityData(

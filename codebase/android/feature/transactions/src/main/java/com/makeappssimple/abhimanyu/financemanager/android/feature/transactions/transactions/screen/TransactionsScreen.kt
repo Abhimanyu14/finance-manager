@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -43,10 +44,10 @@ public fun TransactionsScreen(
 
     val uiStateAndEvents = rememberTransactionsScreenUIStateAndEvents(
         allTransactionData = allTransactionData,
-        expenseCategories = expenseCategories,
-        incomeCategories = incomeCategories,
-        investmentCategories = investmentCategories,
-        accounts = accounts,
+        expenseCategories = expenseCategories.orEmpty(),
+        incomeCategories = incomeCategories.orEmpty(),
+        investmentCategories = investmentCategories.orEmpty(),
+        accounts = accounts.orEmpty(),
         transactionForValues = transactionForValues,
         transactionTypes = transactionTypes,
         oldestTransactionLocalDate = oldestTransactionLocalDate,

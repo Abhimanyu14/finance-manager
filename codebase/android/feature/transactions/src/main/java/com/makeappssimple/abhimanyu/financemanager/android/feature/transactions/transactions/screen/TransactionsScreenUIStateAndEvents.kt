@@ -45,10 +45,10 @@ internal class TransactionsScreenUIStateAndEvents(
 @Composable
 internal fun rememberTransactionsScreenUIStateAndEvents(
     allTransactionData: ImmutableList<TransactionData>,
-    expenseCategories: ImmutableList<Category>?,
-    incomeCategories: ImmutableList<Category>?,
-    investmentCategories: ImmutableList<Category>?,
-    accounts: ImmutableList<Account>?,
+    expenseCategories: ImmutableList<Category>,
+    incomeCategories: ImmutableList<Category>,
+    investmentCategories: ImmutableList<Category>,
+    accounts: ImmutableList<Account>,
     transactionForValues: ImmutableList<TransactionFor>,
     transactionTypes: ImmutableList<TransactionType>,
     oldestTransactionLocalDate: LocalDate?,
@@ -333,7 +333,7 @@ internal fun rememberTransactionsScreenUIStateAndEvents(
                 transactionTypes = transactionTypes.orEmpty(),
                 currentLocalDate = currentLocalDate.orMin(),
                 oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
-                transactionDetailsListItemViewData = transactionDetailsListItemViewData.orEmpty(),
+                transactionDetailsListItemViewData = transactionDetailsListItemViewData,
                 selectedSortOption = selectedSortOption.orDefault(),
                 searchText = searchText,
                 screenBottomSheetType = screenBottomSheetType,

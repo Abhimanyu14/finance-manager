@@ -2,8 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.groupBy
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesFlowUseCase
@@ -21,7 +22,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -127,13 +127,9 @@ public class CategoriesScreenViewModel @Inject constructor(
         val categoriesTransactionTypeMap: Flow<Map<TransactionType, ImmutableList<Category>>> =
             getAllCategoriesFlowUseCase()
                 .map { categories ->
-                    categories
-                        .groupBy { category ->
-                            category.transactionType
-                        }
-                        .mapValues { (_, value) ->
-                            value.toImmutableList()
-                        }
+                    categories.groupBy { category ->
+                        category.transactionType
+                    }
                 }
 
         viewModelScope.launch {
@@ -154,7 +150,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                         ?.sortedBy {
                             it.title
                         }
-                        ?.map { category ->
+                        .map { category ->
                             val isDefault =
                                 if (defaultDataId.isNull() || defaultDataId.expenseCategory == 0) {
                                     isDefaultExpenseCategory(
@@ -174,14 +170,12 @@ public class CategoriesScreenViewModel @Inject constructor(
                                 category = category,
                             )
                         }
-                        ?.toImmutableList()
-                        .orEmpty()
                 val incomeCategoriesGridItemDataList =
                     categoriesTransactionTypeMap[TransactionType.INCOME]
                         ?.sortedBy {
                             it.title
                         }
-                        ?.map { category ->
+                        .map { category ->
                             val isDefault =
                                 if (defaultDataId.isNull() || defaultDataId.incomeCategory == 0) {
                                     isDefaultIncomeCategory(
@@ -201,14 +195,12 @@ public class CategoriesScreenViewModel @Inject constructor(
                                 category = category,
                             )
                         }
-                        ?.toImmutableList()
-                        .orEmpty()
                 val investmentCategoriesGridItemDataList =
                     categoriesTransactionTypeMap[TransactionType.INVESTMENT]
                         ?.sortedBy {
                             it.title
                         }
-                        ?.map { category ->
+                        .map { category ->
                             val isDefault =
                                 if (defaultDataId.isNull() || defaultDataId.investmentCategory == 0) {
                                     isDefaultInvestmentCategory(
@@ -228,8 +220,6 @@ public class CategoriesScreenViewModel @Inject constructor(
                                 category = category,
                             )
                         }
-                        ?.toImmutableList()
-                        .orEmpty()
                 _categoriesGridItemDataMap.update {
                     persistentMapOf(
                         TransactionType.EXPENSE to expenseCategoriesGridItemDataList,

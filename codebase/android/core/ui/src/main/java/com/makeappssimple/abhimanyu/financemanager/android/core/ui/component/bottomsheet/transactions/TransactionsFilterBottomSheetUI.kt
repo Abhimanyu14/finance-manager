@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
@@ -137,7 +138,7 @@ public fun TransactionsFiltersBottomSheetUI(
                                 ChipUIData(
                                     text = category.title,
                                 )
-                            }.toImmutableList(),
+                            },
                             selectedItemsIndices = selectedExpenseCategoryIndicesValue,
                         ),
                         handleEvent = { event ->
@@ -159,7 +160,7 @@ public fun TransactionsFiltersBottomSheetUI(
                                 ChipUIData(
                                     text = category.title,
                                 )
-                            }.toImmutableList(),
+                            },
                             selectedItemsIndices = selectedIncomeCategoryIndicesValue,
                         ),
                         handleEvent = { event ->
@@ -181,7 +182,7 @@ public fun TransactionsFiltersBottomSheetUI(
                                 ChipUIData(
                                     text = category.title,
                                 )
-                            }.toImmutableList(),
+                            },
                             selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
                         ),
                         handleEvent = { event ->
@@ -203,7 +204,7 @@ public fun TransactionsFiltersBottomSheetUI(
                                 ChipUIData(
                                     text = account.name,
                                 )
-                            }.toImmutableList(),
+                            },
                             selectedItemsIndices = selectedAccountIndicesValue,
                         ),
                         handleEvent = { event ->
@@ -225,7 +226,7 @@ public fun TransactionsFiltersBottomSheetUI(
                                 ChipUIData(
                                     text = transactionFor.titleToDisplay,
                                 )
-                            }.toImmutableList(),
+                            },
                             selectedItemsIndices = selectedTransactionForValuesIndicesValue,
                         ),
                         handleEvent = { event ->
@@ -247,7 +248,7 @@ public fun TransactionsFiltersBottomSheetUI(
                                 ChipUIData(
                                     text = transactionType.title,
                                 )
-                            }.toImmutableList(),
+                            },
                             selectedItemsIndices = selectedTransactionTypeIndicesValue,
                         ),
                         handleEvent = { event ->

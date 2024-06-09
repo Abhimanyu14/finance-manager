@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -11,7 +12,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -30,7 +30,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     public val accounts: StateFlow<ImmutableList<Account>> = _accounts
     public val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
-    }.toImmutableList()
+    }
 
     public fun initViewModel() {
         fetchData()

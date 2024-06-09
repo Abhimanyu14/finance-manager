@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
@@ -16,7 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 internal class CategoriesScreenUIStateAndEvents(
@@ -112,7 +112,7 @@ internal fun rememberCategoriesScreenUIStateAndEvents(
                     MyTabData(
                         title = it.title,
                     )
-                }.toImmutableList(),
+                },
                 validTransactionTypes = validTransactionTypes,
                 categoriesGridItemDataMap = categoriesGridItemDataMap,
                 pagerState = pagerState,

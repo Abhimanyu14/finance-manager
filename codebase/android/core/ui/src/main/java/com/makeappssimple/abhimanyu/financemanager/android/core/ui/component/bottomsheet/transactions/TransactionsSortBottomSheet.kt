@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions
 
 import androidx.compose.runtime.Composable
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.mapIndexed
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 public fun TransactionsSortBottomSheet(
@@ -29,7 +29,6 @@ public fun TransactionsSortBottomSheet(
                         }
                     },
                 )
-            }
-            .toImmutableList(),
+            },
     )
 }
