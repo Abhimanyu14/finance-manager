@@ -504,9 +504,7 @@ public fun TransactionFilterBottomSheetDateFilter(
                     } else {
                         R.string.bottom_sheet_transactions_filter_expand_group
                     },
-                    onClick = {
-                        onExpandButtonClick()
-                    },
+                    onClick = onExpandButtonClick,
                 )
                 MyText(
                     modifier = Modifier
@@ -522,9 +520,7 @@ public fun TransactionFilterBottomSheetDateFilter(
                 )
             }
             TextButton(
-                onClick = {
-                    onClearButtonClick()
-                },
+                onClick = onClearButtonClick,
                 modifier = Modifier
                     .padding(
                         start = 8.dp,
@@ -661,9 +657,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
                 )
             }
             TextButton(
-                onClick = {
-                    onClearButtonClick()
-                },
+                onClick = onClearButtonClick,
                 modifier = Modifier
                     .padding(
                         start = 8.dp,
