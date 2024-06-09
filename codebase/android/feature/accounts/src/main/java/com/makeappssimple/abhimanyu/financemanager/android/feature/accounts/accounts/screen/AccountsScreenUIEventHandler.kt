@@ -69,11 +69,6 @@ public class AccountsScreenUIEventHandler internal constructor(
                 uiStateAndEvents.events.setClickedItemId(uiEvent.accountId)
             }
 
-            is AccountsScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-                uiStateAndEvents.events.setClickedItemId(null)
-            }
-
             is AccountsScreenUIEvent.OnFloatingActionButtonClick -> {
                 viewModel.navigateToAddAccountScreen()
             }

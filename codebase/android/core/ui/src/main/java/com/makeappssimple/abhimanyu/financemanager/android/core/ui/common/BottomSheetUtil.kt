@@ -2,9 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.SheetState
-import androidx.compose.material3.SheetValue
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
@@ -18,13 +16,7 @@ public fun BottomSheetHandler(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: SheetState,
     keyboardController: SoftwareKeyboardController?,
-    resetBottomSheetType: () -> Unit,
 ) {
-//    BottomSheetDisposeHandler(
-//        modalBottomSheetState = modalBottomSheetState,
-//        resetBottomSheetType = resetBottomSheetType,
-//    )
-
     BottomSheetTypeChangeHandler(
         showModalBottomSheet = showModalBottomSheet,
         screenBottomSheetType = screenBottomSheetType,
@@ -32,22 +24,6 @@ public fun BottomSheetHandler(
         modalBottomSheetState = modalBottomSheetState,
         keyboardController = keyboardController,
     )
-}
-
-@Composable
-private fun BottomSheetDisposeHandler(
-    modalBottomSheetState: SheetState,
-    resetBottomSheetType: () -> Unit,
-) {
-    if (modalBottomSheetState.currentValue != SheetValue.Hidden) {
-        DisposableEffect(
-            key1 = resetBottomSheetType,
-        ) {
-            onDispose {
-                resetBottomSheetType()
-            }
-        }
-    }
 }
 
 @Composable

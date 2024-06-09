@@ -10,10 +10,6 @@ public class ViewTransactionScreenUIEventHandler internal constructor(
         uiEvent: ViewTransactionScreenUIEvent,
     ) {
         when (uiEvent) {
-            is ViewTransactionScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-            }
-
             is ViewTransactionScreenUIEvent.OnNavigationBackButtonClick -> {
                 uiStateAndEvents.events.resetScreenBottomSheetType()
             }

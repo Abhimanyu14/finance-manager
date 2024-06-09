@@ -5,7 +5,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
-    public data object OnBottomSheetDismissed : CategoriesScreenUIEvent()
     public data object OnNavigationBackButtonClick : CategoriesScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : CategoriesScreenUIEvent()
 

@@ -71,11 +71,8 @@ internal fun EditCategoryScreenUI(
         showModalBottomSheet = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
-        keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = {
-            handleUIEvent(EditCategoryScreenUIEvent.OnBottomSheetDismissed)
-        },
+        keyboardController = state.keyboardController,
     )
 
     MyScaffold(

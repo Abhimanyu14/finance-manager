@@ -60,11 +60,8 @@ internal fun EditTransactionForScreenUI(
         showModalBottomSheet = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
-        keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = {
-            handleUIEvent(EditTransactionForScreenUIEvent.OnBottomSheetDismissed)
-        },
+        keyboardController = state.keyboardController,
     )
 
     MyScaffold(

@@ -15,10 +15,6 @@ public class AddTransactionForScreenUIEventHandler internal constructor(
                 uiStateAndEvents.events.resetScreenBottomSheetType()
             }
 
-            is AddTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-            }
-
             is AddTransactionForScreenUIEvent.OnCtaButtonClick -> {
                 viewModel.insertTransactionFor(
                     TransactionFor(

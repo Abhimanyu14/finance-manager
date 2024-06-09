@@ -41,11 +41,8 @@ internal fun TransactionForValuesScreenUI(
         showModalBottomSheet = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
-        keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = {
-            handleUIEvent(TransactionForValuesScreenUIEvent.OnBottomSheetDismissed)
-        },
+        keyboardController = state.keyboardController,
     )
 
     MyScaffold(

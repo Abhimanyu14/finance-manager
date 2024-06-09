@@ -49,9 +49,6 @@ internal fun AnalysisScreenUI(
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
         keyboardController = state.keyboardController,
-        resetBottomSheetType = {
-            handleUIEvent(AnalysisScreenUIEvent.OnBottomSheetDismissed)
-        },
     )
 
     MyScaffold(

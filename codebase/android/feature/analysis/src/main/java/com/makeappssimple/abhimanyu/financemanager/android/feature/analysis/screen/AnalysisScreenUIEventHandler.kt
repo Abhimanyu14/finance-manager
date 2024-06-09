@@ -10,10 +10,6 @@ public class AnalysisScreenUIEventHandler internal constructor(
         uiEvent: AnalysisScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AnalysisScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-            }
-
             is AnalysisScreenUIEvent.OnFilterActionButtonClick -> {
                 uiStateAndEvents.events.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
             }

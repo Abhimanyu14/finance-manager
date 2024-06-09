@@ -10,10 +10,6 @@ public class TransactionForValuesScreenUIEventHandler internal constructor(
         uiEvent: TransactionForValuesScreenUIEvent,
     ) {
         when (uiEvent) {
-            is TransactionForValuesScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-            }
-
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.NegativeButtonClick -> {
                 uiStateAndEvents.events.resetScreenBottomSheetType()
                 uiStateAndEvents.events.setTransactionForIdToDelete(null)

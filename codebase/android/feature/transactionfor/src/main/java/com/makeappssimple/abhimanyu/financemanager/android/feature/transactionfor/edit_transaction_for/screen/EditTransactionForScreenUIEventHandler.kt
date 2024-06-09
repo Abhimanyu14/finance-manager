@@ -14,10 +14,6 @@ public class EditTransactionForScreenUIEventHandler internal constructor(
                 uiStateAndEvents.events.resetScreenBottomSheetType()
             }
 
-            is EditTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-            }
-
             is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
                 viewModel.updateTransactionFor(
                     title = uiStateAndEvents.state.title.text,

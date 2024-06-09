@@ -10,10 +10,6 @@ public class CategoriesScreenUIEventHandler internal constructor(
         uiEvent: CategoriesScreenUIEvent,
     ) {
         when (uiEvent) {
-            is CategoriesScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-            }
-
             is CategoriesScreenUIEvent.OnNavigationBackButtonClick -> {
                 uiStateAndEvents.events.resetScreenBottomSheetType()
             }
