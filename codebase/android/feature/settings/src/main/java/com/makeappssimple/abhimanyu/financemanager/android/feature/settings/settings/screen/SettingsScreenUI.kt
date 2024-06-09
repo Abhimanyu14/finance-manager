@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
@@ -104,6 +103,24 @@ internal fun SettingsScreenUI(
 }
 
 @Composable
+private fun SettingsScreenLoader(
+    isLoading: Boolean,
+) {
+    AnimatedVisibility(
+        visible = isLoading,
+    ) {
+        MyLinearProgressIndicator(
+            modifier = Modifier
+                .testTag(
+                    tag = stringResource(
+                        id = R.string.screen_settings_linear_progress_indicator_test_tag,
+                    ),
+                ),
+        )
+    }
+}
+
+@Composable
 private fun SettingsScreenContent(
     settingsScreenListItemData: ImmutableList<SettingsScreenListItemData>,
 ) {
@@ -150,24 +167,6 @@ private fun SettingsScreenContent(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun ColumnScope.SettingsScreenLoader(
-    isLoading: Boolean,
-) {
-    AnimatedVisibility(
-        visible = isLoading,
-    ) {
-        MyLinearProgressIndicator(
-            modifier = Modifier
-                .testTag(
-                    tag = stringResource(
-                        id = R.string.screen_settings_linear_progress_indicator_test_tag,
-                    ),
-                ),
-        )
     }
 }
 
