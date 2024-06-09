@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
@@ -41,24 +42,22 @@ public class AnalysisScreenViewModel @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    public var allTransactionData: StateFlow<ImmutableList<TransactionData>> =
-        getAllTransactionDataFlowUseCase()
-            .map {
-                it
-            }
-            .defaultListStateIn(
-                scope = viewModelScope,
-            )
     public val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
         TransactionType.INVESTMENT,
     )
+
+    public var allTransactionData: StateFlow<ImmutableList<TransactionData>> =
+        getAllTransactionDataFlowUseCase()
+            .defaultListStateIn(
+                scope = viewModelScope,
+            )
     public val transactionTypesChipUIData: ImmutableList<ChipUIData> = validTransactionTypes.map {
         ChipUIData(
             text = it.title,
         )
-    }.toImmutableList()
+    }
     public val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
         value = Filter(),
     )
@@ -89,6 +88,10 @@ public class AnalysisScreenViewModel @Inject constructor(
             scope = viewModelScope,
         )
 
+    public fun initViewModel() {
+        fetchData()
+    }
+
     public fun navigateUp() {
         navigator.navigateUp()
     }
@@ -107,6 +110,10 @@ public class AnalysisScreenViewModel @Inject constructor(
         selectedTransactionTypeIndex.update {
             updatedSelectedTransactionTypeIndex
         }
+    }
+
+    private fun fetchData() {
+
     }
 
     private fun getAnalysisListItemData(
