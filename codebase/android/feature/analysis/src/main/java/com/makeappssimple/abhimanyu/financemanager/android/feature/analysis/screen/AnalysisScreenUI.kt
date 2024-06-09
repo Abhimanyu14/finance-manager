@@ -114,82 +114,102 @@ internal fun AnalysisScreenUI(
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {
-            Row(
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colorScheme.background,
-                    ),
-            ) {
-                MyHorizontalScrollingRadioGroup(
-                    modifier = Modifier
-                        .weight(
-                            weight = 1F,
+            AnalysisScreenHeader(
+                uiState = uiState,
+                handleUIEvent = handleUIEvent,
+            )
+            AnalysisScreenList(
+                uiState = uiState,
+            )
+        }
+    }
+}
+
+@Composable
+private fun AnalysisScreenHeader(
+    uiState: AnalysisScreenUIState,
+    handleUIEvent: (uiEvent: AnalysisScreenUIEvent) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.background,
+            ),
+    ) {
+        MyHorizontalScrollingRadioGroup(
+            modifier = Modifier
+                .weight(
+                    weight = 1F,
+                )
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 4.dp,
+                ),
+            data = MyHorizontalScrollingRadioGroupData(
+                horizontalArrangement = Arrangement.Start,
+                items = uiState.transactionTypesChipUIData,
+                selectedItemIndex = uiState.selectedTransactionTypeIndex,
+            ),
+            handleEvent = { event ->
+                when (event) {
+                    is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
+                        handleUIEvent(
+                            AnalysisScreenUIEvent.OnTransactionTypeChange(
+                                updatedSelectedTransactionTypeIndex = event.index,
+                            )
                         )
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
-                    data = MyHorizontalScrollingRadioGroupData(
-                        horizontalArrangement = Arrangement.Start,
-                        items = uiState.transactionTypesChipUIData,
-                        selectedItemIndex = uiState.selectedTransactionTypeIndex,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
-                                handleUIEvent(
-                                    AnalysisScreenUIEvent.OnTransactionTypeChange(
-                                        updatedSelectedTransactionTypeIndex = event.index,
-                                    )
-                                )
-                            }
-                        }
-                    },
-                )
-                ActionButton(
-                    data = ActionButtonData(
-                        isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
-                        imageVector = MyIcons.FilterAlt,
-                        contentDescriptionStringResourceId = R.string.screen_analysis_filter_button_content_description,
-                    ),
-                    handleEvent = { event ->
-                        when (event) {
-                            is ActionButtonEvent.OnClick -> {
-                                handleUIEvent(AnalysisScreenUIEvent.OnFilterActionButtonClick)
-                            }
-                        }
-                    },
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp,
-                        ),
-                )
-            }
-            LazyColumn(
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .testTag(
-                        tag = SCREEN_CONTENT_ANALYSIS,
-                    )
-                    .fillMaxSize()
-                    .navigationBarLandscapeSpacer(),
-            ) {
-                items(
-                    items = uiState.transactionDataMappedByCategory,
-                    key = { listItem ->
-                        listItem.hashCode()
-                    },
-                ) { listItem ->
-                    AnalysisListItem(
-                        data = listItem.copy(
-                            maxEndTextWidth = uiState.maxAmountTextWidth,
-                        ),
-                    )
+                    }
                 }
-                item {
-                    NavigationBarsAndImeSpacer()
+            },
+        )
+        ActionButton(
+            data = ActionButtonData(
+                isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
+                imageVector = MyIcons.FilterAlt,
+                contentDescriptionStringResourceId = R.string.screen_analysis_filter_button_content_description,
+            ),
+            handleEvent = { event ->
+                when (event) {
+                    is ActionButtonEvent.OnClick -> {
+                        handleUIEvent(AnalysisScreenUIEvent.OnFilterActionButtonClick)
+                    }
                 }
-            }
+            },
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp,
+                ),
+        )
+    }
+}
+
+@Composable
+private fun AnalysisScreenList(
+    uiState: AnalysisScreenUIState,
+) {
+    LazyColumn(
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .testTag(
+                tag = SCREEN_CONTENT_ANALYSIS,
+            )
+            .fillMaxSize()
+            .navigationBarLandscapeSpacer(),
+    ) {
+        items(
+            items = uiState.transactionDataMappedByCategory,
+            key = { listItem ->
+                listItem.hashCode()
+            },
+        ) { listItem ->
+            AnalysisListItem(
+                data = listItem.copy(
+                    maxEndTextWidth = uiState.maxAmountTextWidth,
+                ),
+            )
+        }
+        item {
+            NavigationBarsAndImeSpacer()
         }
     }
 }
