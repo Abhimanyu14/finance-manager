@@ -15,12 +15,12 @@ public fun AnalysisFilterBottomSheet(
 ) {
     var fromSelectedLocalDate by remember {
         mutableStateOf(
-            value = data.selectedFilter.fromLocalDate ?: data.startLocalDate,
+            value = data.selectedFilter.fromLocalDate ?: data.defaultStartLocalDate,
         )
     }
     var toSelectedLocalDate by remember {
         mutableStateOf(
-            value = data.selectedFilter.toLocalDate ?: data.endLocalDate,
+            value = data.selectedFilter.toLocalDate ?: data.defaultEndLocalDate,
         )
     }
     var isFromDatePickerDialogVisible by remember {
@@ -37,27 +37,27 @@ public fun AnalysisFilterBottomSheet(
             headingTextStringResourceId = data.headingTextStringResourceId,
             fromDatePickerEndLocalDate = toSelectedLocalDate,
             fromDatePickerSelectedLocalDate = fromSelectedLocalDate,
-            fromDatePickerStartLocalDate = data.startLocalDate,
-            toDatePickerEndLocalDate = data.endLocalDate,
+            fromDatePickerStartLocalDate = data.defaultStartLocalDate,
+            toDatePickerEndLocalDate = data.defaultEndLocalDate,
             toDatePickerSelectedLocalDate = toSelectedLocalDate,
             toDatePickerStartLocalDate = fromSelectedLocalDate,
             fromDateText = fromSelectedLocalDate.formattedDate(),
             toDateText = toSelectedLocalDate.formattedDate(),
         ),
         onClearButtonClick = {
-            fromSelectedLocalDate = data.startLocalDate
-            toSelectedLocalDate = data.endLocalDate
+            fromSelectedLocalDate = data.defaultStartLocalDate
+            toSelectedLocalDate = data.defaultEndLocalDate
         },
         onDateRangeOptionClick = { dateRangeOptions ->
             when (dateRangeOptions) {
                 DateRangeOptions.THIS_MONTH -> {
-                    fromSelectedLocalDate = data.startOfMonthLocalDate
-                    toSelectedLocalDate = data.endLocalDate
+                    fromSelectedLocalDate = data.startOfCurrentMonthLocalDate
+                    toSelectedLocalDate = data.defaultEndLocalDate
                 }
 
                 DateRangeOptions.THIS_YEAR -> {
-                    fromSelectedLocalDate = data.startOfYearLocalDate
-                    toSelectedLocalDate = data.endLocalDate
+                    fromSelectedLocalDate = data.startOfCurrentYearLocalDate
+                    toSelectedLocalDate = data.defaultEndLocalDate
                 }
             }
         },
@@ -68,13 +68,14 @@ public fun AnalysisFilterBottomSheet(
             isFromDatePickerDialogVisible = true
         },
         onNegativeButtonClick = {
-            fromSelectedLocalDate = data.startLocalDate
-            toSelectedLocalDate = data.endLocalDate
+            fromSelectedLocalDate = data.defaultStartLocalDate
+            toSelectedLocalDate = data.defaultEndLocalDate
             handleEvent(AnalysisFilterBottomSheetEvent.OnNegativeButtonClick)
         },
         onPositiveButtonClick = {
-            val isFromDateSameAsOldestTransactionDate = fromSelectedLocalDate == data.startLocalDate
-            val isToDateSameAsCurrentDayDate = toSelectedLocalDate == data.endLocalDate
+            val isFromDateSameAsOldestTransactionDate =
+                fromSelectedLocalDate == data.defaultStartLocalDate
+            val isToDateSameAsCurrentDayDate = toSelectedLocalDate == data.defaultEndLocalDate
             val isDateFilterCleared = isFromDateSameAsOldestTransactionDate &&
                     isToDateSameAsCurrentDayDate
             handleEvent(

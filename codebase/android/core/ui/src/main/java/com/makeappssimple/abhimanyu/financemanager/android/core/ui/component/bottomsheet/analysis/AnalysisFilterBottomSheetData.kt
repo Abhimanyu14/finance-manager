@@ -9,8 +9,8 @@ import java.time.LocalDate
 public data class AnalysisFilterBottomSheetData(
     val selectedFilter: Filter,
     @StringRes val headingTextStringResourceId: Int,
-    val endLocalDate: LocalDate,
-    val startLocalDate: LocalDate,
-    val startOfMonthLocalDate: LocalDate,
-    val startOfYearLocalDate: LocalDate,
+    val defaultEndLocalDate: LocalDate,
+    val defaultStartLocalDate: LocalDate,
+    val startOfCurrentMonthLocalDate: LocalDate,
+    val startOfCurrentYearLocalDate: LocalDate,
 )

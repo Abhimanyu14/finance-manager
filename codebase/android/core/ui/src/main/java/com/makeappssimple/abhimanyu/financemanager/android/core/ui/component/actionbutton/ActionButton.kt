@@ -3,21 +3,49 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ac
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
+
+private object ActionButtonConstants {
+    val loadingUISize = 36.dp
+    val loadingUIPadding = 8.dp
+}
 
 @Composable
 public fun ActionButton(
     modifier: Modifier = Modifier,
     data: ActionButtonData,
     handleEvent: (event: ActionButtonEvent) -> Unit = {},
+) {
+    if (data.isLoading) {
+        ActionButtonLoadingUI(
+            modifier = modifier,
+        )
+    } else {
+        ActionButtonUI(
+            modifier = modifier,
+            data = data,
+            handleEvent = handleEvent,
+        )
+    }
+}
+
+@Composable
+private fun ActionButtonUI(
+    modifier: Modifier,
+    data: ActionButtonData,
+    handleEvent: (event: ActionButtonEvent) -> Unit,
 ) {
     ElevatedCard(
         onClick = {
@@ -55,3 +83,26 @@ public fun ActionButton(
         }
     }
 }
+
+@Composable
+private fun ActionButtonLoadingUI(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .size(
+                size = DpSize(
+                    width = ActionButtonConstants.loadingUISize,
+                    height = ActionButtonConstants.loadingUISize,
+                ),
+            )
+            .clip(
+                shape = MaterialTheme.shapes.small,
+            )
+            .shimmer()
+            .padding(
+                all = ActionButtonConstants.loadingUIPadding,
+            ),
+    )
+}
+
