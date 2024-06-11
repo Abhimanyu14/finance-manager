@@ -1,9 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.event
+package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.event
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.bottomsheet.AnalysisScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.state.AnalysisScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.state.AnalysisScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateEvents
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock

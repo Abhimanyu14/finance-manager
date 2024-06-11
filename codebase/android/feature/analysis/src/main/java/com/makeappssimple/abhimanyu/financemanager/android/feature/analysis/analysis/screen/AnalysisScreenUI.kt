@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,11 +18,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.bottomsheet.AnalysisScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.components.AnalysisScreenHeader
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.components.AnalysisScreenList
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.event.AnalysisScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.state.AnalysisScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.components.AnalysisScreenHeader
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.components.AnalysisScreenList
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.event.AnalysisScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIState
 
 @Composable
 internal fun AnalysisScreenUI(

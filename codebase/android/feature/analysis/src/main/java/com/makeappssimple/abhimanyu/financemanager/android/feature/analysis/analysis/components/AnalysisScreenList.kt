@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.components
+package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,7 +12,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.state.AnalysisScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIState
 
 @Composable
 internal fun AnalysisScreenList(

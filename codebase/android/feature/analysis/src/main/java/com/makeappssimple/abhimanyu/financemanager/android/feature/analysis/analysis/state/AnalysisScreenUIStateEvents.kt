@@ -1,9 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.state
+package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state
 
 import androidx.compose.runtime.Stable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.bottomsheet.AnalysisScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
 
 @Stable
 internal class AnalysisScreenUIStateEvents(

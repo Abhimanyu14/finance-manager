@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.event
+package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.event
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
