@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.event.OpenSourceLicensesScreenUIEventHandler
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.rememberOpenSourceLicensesScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel.OpenSourceLicensesScreenViewModel
 
 @Composable

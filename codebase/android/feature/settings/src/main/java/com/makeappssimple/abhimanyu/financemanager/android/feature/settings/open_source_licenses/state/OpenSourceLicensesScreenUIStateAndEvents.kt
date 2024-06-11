@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.bottomsheet.OpenSourceLicensesScreenBottomSheetType
 
 @Stable
 internal class OpenSourceLicensesScreenUIStateAndEvents(
