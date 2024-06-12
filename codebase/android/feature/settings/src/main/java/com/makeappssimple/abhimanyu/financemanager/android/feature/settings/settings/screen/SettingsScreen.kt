@@ -22,6 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.docu
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event.SettingsScreenUIEventHandler
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.rememberSettingsScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 import kotlinx.coroutines.launch
 
@@ -29,9 +31,6 @@ import kotlinx.coroutines.launch
 public fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside SettingsScreen",
@@ -44,7 +43,7 @@ public fun SettingsScreen(
             contract = CreateJsonDocument(),
         ) { uri ->
             uri?.let {
-                viewModel.backupDataToDocument(
+                screenViewModel.backupDataToDocument(
                     uri = it,
                 )
             }
@@ -54,7 +53,7 @@ public fun SettingsScreen(
             contract = ActivityResultContracts.OpenDocument(),
         ) { uri ->
             uri?.let {
-                viewModel.restoreDataFromDocument(
+                screenViewModel.restoreDataFromDocument(
                     uri = it,
                 )
             }
@@ -64,7 +63,7 @@ public fun SettingsScreen(
             contract = ActivityResultContracts.RequestPermission(),
             onResult = { isPermissionGranted ->
                 if (isPermissionGranted) {
-                    viewModel.enableReminder()
+                    screenViewModel.enableReminder()
                 }
             },
         )
@@ -80,9 +79,9 @@ public fun SettingsScreen(
     }
 
     // region view model data
-    val reminder: Reminder? by viewModel.reminder.collectAsStateWithLifecycle()
-    val isLoading: Boolean by viewModel.isLoading.collectAsStateWithLifecycle()
-    val appVersionName: String = viewModel.appVersionName
+    val reminder: Reminder? by screenViewModel.reminder.collectAsStateWithLifecycle()
+    val isLoading: Boolean by screenViewModel.isLoading.collectAsStateWithLifecycle()
+    val appVersionName: String = screenViewModel.appVersionName
     // endregion
 
     val uiStateAndEvents = rememberSettingsScreenUIStateAndEvents(
@@ -91,7 +90,7 @@ public fun SettingsScreen(
         appVersionName = appVersionName,
     )
     val screenUIEventHandler = remember(
-        viewModel,
+        screenViewModel,
         uiStateAndEvents,
         hasNotificationPermission,
         createDocumentResultLauncher,
@@ -99,7 +98,7 @@ public fun SettingsScreen(
         notificationsPermissionLauncher,
     ) {
         SettingsScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndEvents = uiStateAndEvents,
             hasNotificationPermission = hasNotificationPermission,
             createDocumentResultLauncher = createDocumentResultLauncher,
@@ -114,7 +113,7 @@ public fun SettingsScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.event.collect { event ->
+        screenViewModel.event.collect { event ->
             when (event) {
                 is SettingsScreenEvent.RestoreDataFailed -> {
                     coroutineScope.launch {

@@ -1,8 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Stable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 
 @Stable
 internal data class SettingsScreenUIState(

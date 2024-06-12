@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event
 
 import android.Manifest
 import android.net.Uri
@@ -6,11 +6,12 @@ import android.os.Build
 import androidx.activity.compose.ManagedActivityResultLauncher
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 
 public class SettingsScreenUIEventHandler internal constructor(
     private val viewModel: SettingsScreenViewModel,
-    private val uiStateAndEvents: SettingsScreenUIStateAndEvents,
+    private val uiStateAndEvents: SettingsScreenUIStateAndStateEvents,
     private val hasNotificationPermission: Boolean,
     private val createDocumentResultLauncher: ManagedActivityResultLauncher<String, Uri?>,
     private val notificationsPermissionLauncher: ManagedActivityResultLauncher<String, Boolean>,

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 

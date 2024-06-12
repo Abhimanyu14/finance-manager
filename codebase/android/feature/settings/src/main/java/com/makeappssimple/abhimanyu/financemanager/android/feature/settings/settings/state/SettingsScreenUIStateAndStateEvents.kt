@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -10,9 +10,10 @@ import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 
 @Stable
-internal class SettingsScreenUIStateAndEvents(
+internal class SettingsScreenUIStateAndStateEvents(
     val state: SettingsScreenUIState,
     val events: SettingsScreenUIStateEvents,
 ) : ScreenUIStateAndEvents
@@ -22,7 +23,7 @@ internal fun rememberSettingsScreenUIStateAndEvents(
     isLoading: Boolean,
     reminder: Reminder?,
     appVersionName: String,
-): SettingsScreenUIStateAndEvents {
+): SettingsScreenUIStateAndStateEvents {
     val snackbarHostState: SnackbarHostState = remember {
         SnackbarHostState()
     }
@@ -50,7 +51,7 @@ internal fun rememberSettingsScreenUIStateAndEvents(
         reminder,
         appVersionName,
     ) {
-        SettingsScreenUIStateAndEvents(
+        SettingsScreenUIStateAndStateEvents(
             state = SettingsScreenUIState(
                 isLoading = isLoading,
                 isReminderEnabled = reminder?.isEnabled.orFalse(),
