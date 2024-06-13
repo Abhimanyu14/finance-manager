@@ -29,8 +29,7 @@ public fun AnalysisScreen(
     }
 
     val screenUIEventHandler = remember(
-        key1 = screenViewModel,
-        key2 = uiStateAndStateEvents,
+        key1 = uiStateAndStateEvents,
     ) {
         AnalysisScreenUIEventHandler(
             uiStateAndStateEvents = uiStateAndStateEvents,

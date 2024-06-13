@@ -29,8 +29,7 @@ public fun OpenSourceLicensesScreen(
     }
 
     val screenUIEventHandler = remember(
-        key1 = screenViewModel,
-        key2 = uiStateAndStateEvents,
+        key1 = uiStateAndStateEvents,
     ) {
         OpenSourceLicensesScreenUIEventHandler(
             uiStateAndStateEvents = uiStateAndStateEvents,
