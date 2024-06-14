@@ -22,18 +22,18 @@ public fun AnalysisScreen(
 
     val uiStateAndStateEvents: AnalysisScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.initViewModel()
-    }
-
     val screenUIEventHandler = remember(
         key1 = uiStateAndStateEvents,
     ) {
         AnalysisScreenUIEventHandler(
             uiStateAndStateEvents = uiStateAndStateEvents,
         )
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        screenViewModel.initViewModel()
     }
 
     AnalysisScreenUI(

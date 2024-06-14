@@ -22,18 +22,18 @@ public fun OpenSourceLicensesScreen(
 
     val uiStateAndStateEvents: OpenSourceLicensesScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.initViewModel()
-    }
-
     val screenUIEventHandler = remember(
         key1 = uiStateAndStateEvents,
     ) {
         OpenSourceLicensesScreenUIEventHandler(
             uiStateAndStateEvents = uiStateAndStateEvents,
         )
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        screenViewModel.initViewModel()
     }
 
     OpenSourceLicensesScreenUI(

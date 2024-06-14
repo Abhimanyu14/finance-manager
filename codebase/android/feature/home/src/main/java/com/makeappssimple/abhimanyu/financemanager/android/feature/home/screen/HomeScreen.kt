@@ -37,12 +37,6 @@ public fun HomeScreen(
 
     val uiStateAndStateEvents: HomeScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.initViewModel()
-    }
-
     val screenUIEventHandler = remember(
         key1 = uiStateAndStateEvents,
     ) {
@@ -52,6 +46,12 @@ public fun HomeScreen(
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },
         )
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        screenViewModel.initViewModel()
     }
 
     HomeScreenUI(

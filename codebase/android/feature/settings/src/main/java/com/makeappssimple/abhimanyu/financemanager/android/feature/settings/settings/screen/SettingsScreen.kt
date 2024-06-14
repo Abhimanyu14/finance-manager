@@ -112,12 +112,6 @@ public fun SettingsScreen(
 
     val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.initViewModel()
-    }
-
     val screenUIEventHandler = remember(
         key1 = uiStateAndStateEvents,
     ) {
@@ -136,6 +130,12 @@ public fun SettingsScreen(
                 }
             },
         )
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        screenViewModel.initViewModel()
     }
 
     SettingsScreenUI(
