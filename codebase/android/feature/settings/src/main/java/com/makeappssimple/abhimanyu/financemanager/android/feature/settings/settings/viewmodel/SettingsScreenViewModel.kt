@@ -64,9 +64,47 @@ public class SettingsScreenViewModel @Inject constructor(
             value = SettingsScreenUIStateAndStateEvents(),
         )
 
+    private val _event: MutableSharedFlow<SettingsScreenEvent> = MutableSharedFlow()
+    internal val event: SharedFlow<SettingsScreenEvent> = _event
+
     internal fun initViewModel() {
         fetchData()
         observeData()
+    }
+
+    internal fun backupDataToDocument(
+        uri: Uri,
+    ) {
+        viewModelScope.launch {
+            isLoading.value = true
+            val isBackupSuccessful = async {
+                backupDataUseCase(
+                    uri = uri,
+                )
+            }.await()
+            Log.e("Abhi", "$isBackupSuccessful")
+            // TODO(Abhi): use the result to show snackbar to the user
+            navigator.navigateUp()
+        }
+    }
+
+    internal fun restoreDataFromDocument(
+        uri: Uri,
+    ) {
+        viewModelScope.launch {
+            isLoading.value = true
+            if (restoreDataUseCase(
+                    uri = uri,
+                )
+            ) {
+                navigator.navigateUp()
+            } else {
+                isLoading.value = false
+                _event.emit(
+                    value = SettingsScreenEvent.RestoreDataFailed,
+                )
+            }
+        }
     }
 
     private fun fetchData() {
@@ -128,44 +166,6 @@ public class SettingsScreenViewModel @Inject constructor(
                         ),
                     )
                 }
-            }
-        }
-    }
-
-    private val _event: MutableSharedFlow<SettingsScreenEvent> = MutableSharedFlow()
-    public val event: SharedFlow<SettingsScreenEvent> = _event
-
-    public fun backupDataToDocument(
-        uri: Uri,
-    ) {
-        viewModelScope.launch {
-            isLoading.value = true
-            val isBackupSuccessful = async {
-                backupDataUseCase(
-                    uri = uri,
-                )
-            }.await()
-            Log.e("Abhi", "$isBackupSuccessful")
-            // TODO(Abhi): use the result to show snackbar to the user
-            navigator.navigateUp()
-        }
-    }
-
-    public fun restoreDataFromDocument(
-        uri: Uri,
-    ) {
-        viewModelScope.launch {
-            isLoading.value = true
-            if (restoreDataUseCase(
-                    uri = uri,
-                )
-            ) {
-                navigator.navigateUp()
-            } else {
-                isLoading.value = false
-                _event.emit(
-                    value = SettingsScreenEvent.RestoreDataFailed,
-                )
             }
         }
     }

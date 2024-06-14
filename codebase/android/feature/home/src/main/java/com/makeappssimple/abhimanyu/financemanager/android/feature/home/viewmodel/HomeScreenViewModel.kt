@@ -3,12 +3,18 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmod
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
+import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Nonuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultLongStateIn
@@ -21,8 +27,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionsBetweenTimestampsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.toNonSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -30,13 +38,21 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.Instant
 import javax.inject.Inject
@@ -58,11 +74,11 @@ public class HomeScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    public val homeListItemViewData: StateFlow<ImmutableList<TransactionListItemData>> =
+    private val homeListItemViewData: StateFlow<ImmutableList<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
-    public val isBackupCardVisible: StateFlow<Boolean> = getIsBackupCardVisibleFromData()
+    private val isBackupCardVisible: StateFlow<Boolean> = getIsBackupCardVisibleFromData()
 
-    public val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
+    private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
     )
 
@@ -70,7 +86,7 @@ public class HomeScreenViewModel @Inject constructor(
         value = dateTimeUtil.getCurrentTimeMillis(),
     )
 
-    public val overviewCardData: StateFlow<OverviewCardViewModelData?> = combine(
+    private val overviewCardData: StateFlow<OverviewCardViewModelData?> = combine(
         flow = overviewTabSelectionIndex,
         flow2 = timestamp,
     ) { overviewTabSelectionIndex, timestamp ->
@@ -167,18 +183,41 @@ public class HomeScreenViewModel @Inject constructor(
         scope = viewModelScope,
     )
 
-    public val accountsTotalBalanceAmountValue: StateFlow<Long> =
+    private val accountsTotalBalanceAmountValue: StateFlow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
             .defaultLongStateIn(
                 scope = viewModelScope,
             )
-    public val accountsTotalMinimumBalanceAmountValue: StateFlow<Long> =
+    private val accountsTotalMinimumBalanceAmountValue: StateFlow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
             .defaultLongStateIn(
                 scope = viewModelScope,
             )
 
-    public fun backupDataToDocument(
+    // region UI data
+    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
+        value = true,
+    )
+    private val isBalanceVisible: MutableStateFlow<Boolean> = MutableStateFlow(
+        value = false,
+    )
+    private val screenBottomSheetType: MutableStateFlow<HomeScreenBottomSheetType> =
+        MutableStateFlow(
+            value = HomeScreenBottomSheetType.None,
+        )
+    // endregion
+
+    internal val uiStateAndStateEvents: MutableStateFlow<HomeScreenUIStateAndStateEvents> =
+        MutableStateFlow(
+            value = HomeScreenUIStateAndStateEvents(),
+        )
+
+    internal fun initViewModel() {
+        fetchData()
+        observeData()
+    }
+
+    internal fun backupDataToDocument(
         uri: Uri,
     ) {
         viewModelScope.launch {
@@ -192,101 +231,119 @@ public class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    public fun handleOverviewCardAction(
-        overviewCardAction: OverviewCardAction,
-    ) {
-        val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex.value]
-        when (overviewCardAction) {
-            OverviewCardAction.NEXT -> {
-                when (overviewTabOption) {
-                    OverviewTabOption.DAY -> {
-                        timestamp.value = Instant
-                            .ofEpochMilli(timestamp.value)
-                            .toZonedDateTime()
-                            .plusDays(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.MONTH -> {
-                        timestamp.value = Instant
-                            .ofEpochMilli(timestamp.value)
-                            .toZonedDateTime()
-                            .plusMonths(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.YEAR -> {
-                        timestamp.value = Instant
-                            .ofEpochMilli(timestamp.value)
-                            .toZonedDateTime()
-                            .plusYears(1)
-                            .toEpochMilli()
-                    }
-                }
-            }
-
-            OverviewCardAction.PREV -> {
-                when (overviewTabOption) {
-                    OverviewTabOption.DAY -> {
-                        timestamp.value = Instant
-                            .ofEpochMilli(timestamp.value)
-                            .toZonedDateTime()
-                            .minusDays(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.MONTH -> {
-                        timestamp.value = Instant
-                            .ofEpochMilli(timestamp.value)
-                            .toZonedDateTime()
-                            .minusMonths(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.YEAR -> {
-                        timestamp.value = Instant
-                            .ofEpochMilli(timestamp.value)
-                            .toZonedDateTime()
-                            .minusYears(1)
-                            .toEpochMilli()
-                    }
-                }
+    private fun fetchData() {
+        viewModelScope.launch {
+            isLoading.update {
+                false
             }
         }
     }
 
-    public fun navigateToAnalysisScreen() {
-        navigator.navigateToAnalysisScreen()
+    private fun observeData() {
+        observeForUiStateAndStateEventsChanges()
     }
 
-    public fun navigateToAddTransactionScreen() {
-        navigator.navigateToAddTransactionScreen()
-    }
+    private fun observeForUiStateAndStateEventsChanges() {
+        viewModelScope.launch {
+            combine(
+                isLoading,
+                screenBottomSheetType,
+                isBalanceVisible,
+                isBackupCardVisible,
+                overviewCardData,
+                homeListItemViewData,
+                overviewTabSelectionIndex,
+                accountsTotalBalanceAmountValue,
+                accountsTotalMinimumBalanceAmountValue,
+            ) {
+                    isLoading,
+                    screenBottomSheetType,
+                    isBalanceVisible,
+                    isBackupCardVisible,
+                    overviewCardData,
+                    homeListItemViewData,
+                    overviewTabSelectionIndex,
+                    accountsTotalBalanceAmountValue,
+                    accountsTotalMinimumBalanceAmountValue,
+                ->
+                Nonuple(
+                    isLoading,
+                    screenBottomSheetType,
+                    isBalanceVisible,
+                    isBackupCardVisible,
+                    overviewCardData,
+                    homeListItemViewData,
+                    overviewTabSelectionIndex,
+                    accountsTotalBalanceAmountValue,
+                    accountsTotalMinimumBalanceAmountValue,
+                )
+            }.collectLatest {
+                    (
+                        isLoading,
+                        screenBottomSheetType,
+                        isBalanceVisible,
+                        isBackupCardVisible,
+                        overviewCardData,
+                        homeListItemViewData,
+                        overviewTabSelectionIndex,
+                        accountsTotalBalanceAmountValue,
+                        accountsTotalMinimumBalanceAmountValue,
+                    ),
+                ->
+                val totalIncomeAmount = Amount(
+                    value = overviewCardData?.income?.toLong().orZero(),
+                )
+                val totalExpenseAmount = Amount(
+                    value = overviewCardData?.expense?.toLong().orZero(),
+                )
 
-    public fun navigateToSettingsScreen() {
-        navigator.navigateToSettingsScreen()
-    }
-
-    public fun navigateToAccountsScreen() {
-        navigator.navigateToAccountsScreen()
-    }
-
-    public fun navigateToTransactionsScreen() {
-        navigator.navigateToTransactionsScreen()
-    }
-
-    public fun navigateToViewTransactionScreen(
-        transactionId: Int,
-    ) {
-        navigator.navigateToViewTransactionScreen(
-            transactionId = transactionId,
-        )
-    }
-
-    public fun setOverviewTabSelectionIndex(
-        updatedOverviewTabSelectionIndex: Int,
-    ) {
-        overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
+                uiStateAndStateEvents.update {
+                    HomeScreenUIStateAndStateEvents(
+                        state = HomeScreenUIState(
+                            isBottomSheetVisible = screenBottomSheetType != HomeScreenBottomSheetType.None,
+                            isBackupCardVisible = isBackupCardVisible.orFalse(),
+                            isBalanceVisible = isBalanceVisible,
+                            isLoading = isLoading,
+                            isRecentTransactionsTrailingTextVisible = homeListItemViewData
+                                .isNotEmpty(),
+                            screenBottomSheetType = screenBottomSheetType,
+                            overviewTabSelectionIndex = overviewTabSelectionIndex.orZero(),
+                            transactionListItemDataList = homeListItemViewData,
+                            accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
+                            accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
+                            overviewCardData = overviewCardData.orDefault(),
+                            pieChartData = PieChartData(
+                                items = persistentListOf(
+                                    PieChartItemData(
+                                        value = overviewCardData?.income.orZero(),
+                                        text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources
+                                        color = MyColor.TERTIARY,
+                                    ),
+                                    PieChartItemData(
+                                        value = overviewCardData?.expense.orZero(),
+                                        text = "Expense : ${totalExpenseAmount.toNonSignedString()}", // TODO(Abhi): Move to string resources
+                                        color = MyColor.ERROR,
+                                    ),
+                                ),
+                            ),
+                        ),
+                        events = HomeScreenUIStateEvents(
+                            handleOverviewCardAction = ::handleOverviewCardAction,
+                            navigateToAccountsScreen = ::navigateToAccountsScreen,
+                            navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
+                            navigateToAnalysisScreen = ::navigateToAnalysisScreen,
+                            navigateToSettingsScreen = ::navigateToSettingsScreen,
+                            navigateToTransactionsScreen = ::navigateToTransactionsScreen,
+                            navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
+                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                            setBalanceVisible = ::setBalanceVisible,
+                            setOverviewTabSelectionIndex = ::setOverviewTabSelectionIndex,
+                            setScreenBottomSheetType = ::setScreenBottomSheetType,
+                        ),
+                    )
+                }
+            }
+        }
     }
 
     private fun getHomeListItemViewDataFromData(): StateFlow<ImmutableList<TransactionListItemData>> {
@@ -352,4 +409,125 @@ public class HomeScreenViewModel @Inject constructor(
             scope = viewModelScope,
         )
     }
+
+    // region state events
+    private fun handleOverviewCardAction(
+        overviewCardAction: OverviewCardAction,
+    ) {
+        val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex.value]
+        when (overviewCardAction) {
+            OverviewCardAction.NEXT -> {
+                when (overviewTabOption) {
+                    OverviewTabOption.DAY -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .plusDays(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.MONTH -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .plusMonths(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.YEAR -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .plusYears(1)
+                            .toEpochMilli()
+                    }
+                }
+            }
+
+            OverviewCardAction.PREV -> {
+                when (overviewTabOption) {
+                    OverviewTabOption.DAY -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .minusDays(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.MONTH -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .minusMonths(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.YEAR -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .minusYears(1)
+                            .toEpochMilli()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun navigateToAccountsScreen() {
+        navigator.navigateToAccountsScreen()
+    }
+
+    private fun navigateToAddTransactionScreen() {
+        navigator.navigateToAddTransactionScreen()
+    }
+
+    private fun navigateToAnalysisScreen() {
+        navigator.navigateToAnalysisScreen()
+    }
+
+    private fun navigateToSettingsScreen() {
+        navigator.navigateToSettingsScreen()
+    }
+
+    private fun navigateToTransactionsScreen() {
+        navigator.navigateToTransactionsScreen()
+    }
+
+    private fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    ) {
+        navigator.navigateToViewTransactionScreen(
+            transactionId = transactionId,
+        )
+    }
+
+    private fun resetScreenBottomSheetType() {
+        setScreenBottomSheetType(
+            updatedHomeScreenBottomSheetType = HomeScreenBottomSheetType.None,
+        )
+    }
+
+    private fun setBalanceVisible(
+        updatedIsBalanceVisible: Boolean,
+    ) {
+        isBalanceVisible.update {
+            updatedIsBalanceVisible
+        }
+    }
+
+    private fun setOverviewTabSelectionIndex(
+        updatedOverviewTabSelectionIndex: Int,
+    ) {
+        overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
+    }
+
+    private fun setScreenBottomSheetType(
+        updatedHomeScreenBottomSheetType: HomeScreenBottomSheetType,
+    ) {
+        screenBottomSheetType.update {
+            updatedHomeScreenBottomSheetType
+        }
+    }
+    // endregion
 }

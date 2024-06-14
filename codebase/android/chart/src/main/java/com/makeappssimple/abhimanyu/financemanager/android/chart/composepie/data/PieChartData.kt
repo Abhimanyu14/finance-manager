@@ -3,5 +3,5 @@ package com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.dat
 // TODO(Abhi): Check why this can not be immutable
 // @Immutable
 public data class PieChartData(
-    val items: List<PieChartItemData>,
+    val items: List<PieChartItemData> = emptyList(),
 )
