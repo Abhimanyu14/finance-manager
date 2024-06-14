@@ -7,7 +7,7 @@ import android.os.Build
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -18,14 +18,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event.SettingsScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.rememberSettingsScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 public fun SettingsScreen(
@@ -38,34 +37,47 @@ public fun SettingsScreen(
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState: SnackbarHostState = remember {
+        SnackbarHostState()
+    }
+    val restoreErrorMessage = stringResource(
+        id = R.string.screen_settings_restore_error_message,
+    )
+
+    val onDocumentCreated: (Uri?) -> Unit = { uri: Uri? ->
+        uri?.let {
+            screenViewModel.backupDataToDocument(
+                uri = uri,
+            )
+        }
+    }
     val createDocumentResultLauncher: ManagedActivityResultLauncher<String, Uri?> =
         rememberLauncherForActivityResult(
             contract = CreateJsonDocument(),
-        ) { uri ->
-            uri?.let {
-                screenViewModel.backupDataToDocument(
-                    uri = it,
-                )
-            }
-        }
+            onResult = onDocumentCreated,
+        )
+    val onDocumentOpened = { uri: Uri ->
+        screenViewModel.restoreDataFromDocument(
+            uri = uri,
+        )
+    }
     val openDocumentResultLauncher: ManagedActivityResultLauncher<Array<String>, Uri?> =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.OpenDocument(),
         ) { uri ->
             uri?.let {
-                screenViewModel.restoreDataFromDocument(
-                    uri = it,
-                )
+                onDocumentOpened(it)
             }
         }
+    val onNotificationPermissionRequestResult = { isPermissionGranted: Boolean ->
+        if (isPermissionGranted) {
+            screenViewModel.enableReminder()
+        }
+    }
     val notificationsPermissionLauncher: ManagedActivityResultLauncher<String, Boolean> =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestPermission(),
-            onResult = { isPermissionGranted ->
-                if (isPermissionGranted) {
-                    screenViewModel.enableReminder()
-                }
-            },
+            onResult = onNotificationPermissionRequestResult,
         )
     val hasNotificationPermission: Boolean = remember {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -78,61 +90,56 @@ public fun SettingsScreen(
         }
     }
 
-    // region view model data
-    val reminder: Reminder? by screenViewModel.reminder.collectAsStateWithLifecycle()
-    val isLoading: Boolean by screenViewModel.isLoading.collectAsStateWithLifecycle()
-    val appVersionName: String = screenViewModel.appVersionName
-    // endregion
-
-    val uiStateAndEvents = rememberSettingsScreenUIStateAndEvents(
-        isLoading = isLoading,
-        reminder = reminder,
-        appVersionName = appVersionName,
-    )
-    val screenUIEventHandler = remember(
-        screenViewModel,
-        uiStateAndEvents,
-        hasNotificationPermission,
-        createDocumentResultLauncher,
-        openDocumentResultLauncher,
-        notificationsPermissionLauncher,
-    ) {
-        SettingsScreenUIEventHandler(
-            viewModel = screenViewModel,
-            uiStateAndEvents = uiStateAndEvents,
-            hasNotificationPermission = hasNotificationPermission,
-            createDocumentResultLauncher = createDocumentResultLauncher,
-            notificationsPermissionLauncher = notificationsPermissionLauncher,
-            openDocumentResultLauncher = openDocumentResultLauncher,
-        )
-    }
-    val restoreErrorMessage = stringResource(
-        id = R.string.screen_settings_restore_error_message,
-    )
-
     LaunchedEffect(
         key1 = Unit,
     ) {
         screenViewModel.event.collect { event ->
             when (event) {
                 is SettingsScreenEvent.RestoreDataFailed -> {
-                    coroutineScope.launch {
-                        val result = uiStateAndEvents.state.snackbarHostState
-                            .showSnackbar(
-                                message = restoreErrorMessage,
-                            )
-                        when (result) {
-                            SnackbarResult.ActionPerformed -> {}
-                            SnackbarResult.Dismissed -> {}
-                        }
-                    }
+//                    coroutineScope.launch {
+//                        val result = snackbarHostState.showSnackbar(
+//                            message = restoreErrorMessage,
+//                        )
+//                        when (result) {
+//                            SnackbarResult.ActionPerformed -> {}
+//                            SnackbarResult.Dismissed -> {}
+//                        }
+//                    }
                 }
             }
         }
     }
 
+    val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        screenViewModel.initViewModel()
+    }
+
+    val screenUIEventHandler = remember(
+        key1 = uiStateAndStateEvents,
+    ) {
+        SettingsScreenUIEventHandler(
+            hasNotificationPermission = hasNotificationPermission,
+            uiStateAndStateEvents = uiStateAndStateEvents,
+            createDocument = { handler: (uri: Uri?) -> Unit ->
+                createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
+            },
+            openDocument = {
+                openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
+            },
+            requestNotificationsPermission = {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    notificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            },
+        )
+    }
+
     SettingsScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

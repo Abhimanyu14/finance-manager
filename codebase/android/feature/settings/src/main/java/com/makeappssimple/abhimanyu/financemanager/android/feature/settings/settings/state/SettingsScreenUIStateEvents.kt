@@ -2,8 +2,18 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 
 @Immutable
 internal data class SettingsScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
+    val disableReminder: () -> Unit = {},
+    val enableReminder: () -> Unit = {},
+    val navigateToAccountsScreen: () -> Unit = {},
+    val navigateToCategoriesScreen: () -> Unit = {},
+    val navigateToOpenSourceLicensesScreen: () -> Unit = {},
+    val navigateToTransactionForValuesScreen: () -> Unit = {},
+    val navigateUp: () -> Unit = {},
+    val recalculateTotal: () -> Unit = {},
+    val resetScreenBottomSheetType: () -> Unit = {},
+    val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
 ) : ScreenUIStateEvents

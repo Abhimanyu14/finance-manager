@@ -1,72 +1,70 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event
 
-import android.Manifest
 import android.net.Uri
 import android.os.Build
-import androidx.activity.compose.ManagedActivityResultLauncher
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 
 public class SettingsScreenUIEventHandler internal constructor(
-    private val viewModel: SettingsScreenViewModel,
-    private val uiStateAndEvents: SettingsScreenUIStateAndStateEvents,
     private val hasNotificationPermission: Boolean,
-    private val createDocumentResultLauncher: ManagedActivityResultLauncher<String, Uri?>,
-    private val notificationsPermissionLauncher: ManagedActivityResultLauncher<String, Boolean>,
-    private val openDocumentResultLauncher: ManagedActivityResultLauncher<Array<String>, Uri?>,
+    private val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents,
+    private val createDocument: ((uri: Uri?) -> Unit) -> Unit,
+    private val openDocument: () -> Unit,
+    private val requestNotificationsPermission: () -> Unit,
 ) {
+
     public fun handleUIEvent(
         uiEvent: SettingsScreenUIEvent,
     ) {
         when (uiEvent) {
             is SettingsScreenUIEvent.OnBackupDataListItemClick -> {
-                createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
+                createDocument {
+
+                }
             }
 
             is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
-                viewModel.recalculateTotal()
+                uiStateAndStateEvents.events.recalculateTotal()
             }
 
             is SettingsScreenUIEvent.OnRestoreDataListItemClick -> {
-                openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
+                openDocument()
             }
 
             is SettingsScreenUIEvent.OnToggleReminder -> {
-                if (uiStateAndEvents.state.isReminderEnabled.orFalse()) {
-                    viewModel.disableReminder()
+                if (uiStateAndStateEvents.state.isReminderEnabled.orFalse()) {
+                    uiStateAndStateEvents.events.disableReminder()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
-                        notificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        requestNotificationsPermission()
                     } else {
-                        viewModel.enableReminder()
+                        uiStateAndStateEvents.events.enableReminder()
                     }
                 }
             }
 
             is SettingsScreenUIEvent.OnAccountsListItemClick -> {
-                viewModel.navigateToAccountsScreen()
+                uiStateAndStateEvents.events.navigateToAccountsScreen()
             }
 
             is SettingsScreenUIEvent.OnCategoriesListItemClick -> {
-                viewModel.navigateToCategoriesScreen()
+                uiStateAndStateEvents.events.navigateToCategoriesScreen()
             }
 
             is SettingsScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
-                viewModel.navigateToOpenSourceLicensesScreen()
+                uiStateAndStateEvents.events.navigateToOpenSourceLicensesScreen()
             }
 
             is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
 
             is SettingsScreenUIEvent.OnTransactionForListItemClick -> {
-                viewModel.navigateToTransactionForValuesScreen()
+                uiStateAndStateEvents.events.navigateToTransactionForValuesScreen()
             }
         }
     }
