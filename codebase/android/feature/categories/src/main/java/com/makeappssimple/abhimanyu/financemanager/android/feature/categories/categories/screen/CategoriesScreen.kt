@@ -7,48 +7,35 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModel
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
 
 @Composable
 public fun CategoriesScreen(
     screenViewModel: CategoriesScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside CategoriesScreen",
     )
 
-    val categoriesGridItemDataMap: ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>
-            by viewModel.categoriesGridItemDataMap.collectAsStateWithLifecycle()
+    val uiStateAndStateEvents: CategoriesScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    val uiStateAndEvents = rememberCategoriesScreenUIStateAndEvents(
-        categoriesGridItemDataMap = categoriesGridItemDataMap,
-    )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
-        key2 = uiStateAndEvents,
+        key1 = uiStateAndStateEvents,
     ) {
         CategoriesScreenUIEventHandler(
-            viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     CategoriesScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

@@ -3,6 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -35,8 +37,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIConstants.PAGE_COUNT
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
+
+private object CategoriesScreenUIConstants {
+    const val PAGE_COUNT = 3
+}
 
 @Composable
 internal fun CategoriesScreenUI(
@@ -44,18 +51,22 @@ internal fun CategoriesScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: CategoriesScreenUIEvent) -> Unit = {},
 ) {
+    val pagerState: PagerState = rememberPagerState(
+        pageCount = { PAGE_COUNT },
+    )
+
     LaunchedEffect(
-        key1 = uiState.pagerState.currentPage,
+        key1 = pagerState.currentPage,
         key2 = handleUIEvent,
     ) {
-        handleUIEvent(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(uiState.pagerState.currentPage))
+        handleUIEvent(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(pagerState.currentPage))
     }
 
     LaunchedEffect(
         key1 = uiState.selectedTabIndex,
     ) {
         state.coroutineScope.launch {
-            uiState.pagerState.animateScrollToPage(uiState.selectedTabIndex)
+            pagerState.animateScrollToPage(uiState.selectedTabIndex)
         }
     }
 
@@ -212,41 +223,43 @@ internal fun CategoriesScreenUI(
                 },
             )
             HorizontalPager(
-                state = uiState.pagerState,
+                state = pagerState,
                 verticalAlignment = Alignment.Top,
                 modifier = Modifier
                     .weight(
                         weight = 1F,
                     ),
             ) { page ->
-                val transactionType: TransactionType = uiState.validTransactionTypes[page]
-                val categoriesGridItemDataList: ImmutableList<CategoriesGridItemData> =
-                    uiState.categoriesGridItemDataMap[transactionType].orEmpty()
+                uiState.validTransactionTypes.getOrNull(page)?.let { transactionType ->
+                    val categoriesGridItemDataList: ImmutableList<CategoriesGridItemData> =
+                        uiState.categoriesGridItemDataMap[transactionType].orEmpty()
 
-                CategoriesGrid(
-                    bottomPadding = 80.dp,
-                    topPadding = 8.dp,
-                    categoriesGridItemDataList = categoriesGridItemDataList,
-                    onItemClick = { index ->
+                    CategoriesGrid(
+                        bottomPadding = 80.dp,
+                        topPadding = 8.dp,
+                        categoriesGridItemDataList = categoriesGridItemDataList,
+                        onItemClick = { index ->
 
-                        // TODO(Abhi): Move this logic outside the UI composable
-                        val isDeleteVisible =
-                            categoriesGridItemDataList[index].isDeleteVisible ?: false
-                        val isEditVisible = categoriesGridItemDataList[index].isEditVisible ?: false
-                        val isSetAsDefaultVisible =
-                            categoriesGridItemDataList[index].isSetAsDefaultVisible ?: false
-                        val categoryId = categoriesGridItemDataList[index].category.id
+                            // TODO(Abhi): Move this logic outside the UI composable
+                            val isDeleteVisible =
+                                categoriesGridItemDataList[index].isDeleteVisible ?: false
+                            val isEditVisible =
+                                categoriesGridItemDataList[index].isEditVisible ?: false
+                            val isSetAsDefaultVisible =
+                                categoriesGridItemDataList[index].isSetAsDefaultVisible ?: false
+                            val categoryId = categoriesGridItemDataList[index].category.id
 
-                        handleUIEvent(
-                            CategoriesScreenUIEvent.OnCategoriesGridItemClick(
-                                isDeleteVisible = isDeleteVisible,
-                                isEditVisible = isEditVisible,
-                                isSetAsDefaultVisible = isSetAsDefaultVisible,
-                                categoryId = categoryId,
+                            handleUIEvent(
+                                CategoriesScreenUIEvent.OnCategoriesGridItemClick(
+                                    isDeleteVisible = isDeleteVisible,
+                                    isEditVisible = isEditVisible,
+                                    isSetAsDefaultVisible = isSetAsDefaultVisible,
+                                    categoryId = categoryId,
+                                )
                             )
-                        )
-                    },
-                )
+                        },
+                    )
+                }
             }
         }
     }
