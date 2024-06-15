@@ -5,7 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.screen.HomeScreen
 
 public fun NavGraphBuilder.homeNavGraph() {
     composable(

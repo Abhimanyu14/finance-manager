@@ -20,11 +20,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen.AddAccountScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen.AddAccountScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen.AddAccountScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen.AddAccountScreenUIStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen.AddAccountScreenUIVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIVisibilityData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
