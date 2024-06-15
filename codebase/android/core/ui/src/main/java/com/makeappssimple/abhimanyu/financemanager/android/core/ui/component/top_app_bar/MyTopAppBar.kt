@@ -21,6 +21,11 @@ public fun MyTopAppBar(
     navigationAction: (() -> Unit)? = null,
     appBarActions: NullableComposableContent = null,
 ) {
+    // TODO(Abhi): Fix this properly later
+    if (titleTextStringResourceId == -1) {
+        return
+    }
+
     MyTopAppBarUI(
         isNavigationIconVisible = navigationAction.isNotNull(),
         titleText = stringResource(

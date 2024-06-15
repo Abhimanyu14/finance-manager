@@ -7,12 +7,9 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.event.AddCategoryScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.rememberAddCategoryScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenViewModel
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun AddCategoryScreen(
@@ -23,26 +20,13 @@ public fun AddCategoryScreen(
         message = "Inside AddCategoryScreen",
     )
 
-    // region view model data
-    val categories: ImmutableList<Category> by screenViewModel.categories.collectAsStateWithLifecycle()
-    val validTransactionTypes: ImmutableList<TransactionType> =
-        screenViewModel.validTransactionTypes
-    val originalTransactionType: String? = screenViewModel.originalTransactionType
-    // endregion
+    val uiStateAndStateEvents: AddCategoryScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    val uiStateAndStateEvents = rememberAddCategoryScreenUIStateAndStateEvents(
-        categories = categories,
-        validTransactionTypes = validTransactionTypes,
-    )
     val screenUIEventHandler = remember(
-        key1 = screenViewModel,
-        key2 = uiStateAndStateEvents,
-        key3 = validTransactionTypes,
+        key1 = uiStateAndStateEvents,
     ) {
         AddCategoryScreenUIEventHandler(
-            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndStateEvents,
-            validTransactionTypes = validTransactionTypes,
         )
     }
 
@@ -50,15 +34,6 @@ public fun AddCategoryScreen(
         key1 = Unit,
     ) {
         screenViewModel.initViewModel()
-        originalTransactionType?.let { originalTransactionType ->
-            uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(
-                validTransactionTypes.indexOf(
-                    element = TransactionType.entries.find { transactionType ->
-                        transactionType.title == originalTransactionType
-                    },
-                )
-            )
-        }
     }
 
     AddCategoryScreenUI(
