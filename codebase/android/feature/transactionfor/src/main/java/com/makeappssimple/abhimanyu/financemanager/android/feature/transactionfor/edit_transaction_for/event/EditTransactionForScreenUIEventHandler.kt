@@ -1,10 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.event
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.viewmodel.EditTransactionForScreenViewModel
 
 public class EditTransactionForScreenUIEventHandler internal constructor(
-    private val viewModel: EditTransactionForScreenViewModel,
     private val uiStateAndStateEvents: EditTransactionForScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
@@ -16,9 +14,7 @@ public class EditTransactionForScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
-                viewModel.updateTransactionFor(
-                    title = uiStateAndStateEvents.state.title.text,
-                )
+                uiStateAndStateEvents.events.updateTransactionFor(uiStateAndStateEvents.state.title.text)
             }
 
             is EditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
@@ -30,7 +26,7 @@ public class EditTransactionForScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
 
             is EditTransactionForScreenUIEvent.OnTitleUpdated -> {

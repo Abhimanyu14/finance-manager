@@ -4,15 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.text.TextRange
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.event.EditTransactionForScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.rememberEditTransactionForScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.viewmodel.EditTransactionForScreenViewModel
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun EditTransactionForScreen(
@@ -23,21 +20,12 @@ public fun EditTransactionForScreen(
         message = "Inside EditTransactionForScreen",
     )
 
-    // region view model data
-    val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
-    val transactionFor: TransactionFor? by screenViewModel.transactionFor.collectAsStateWithLifecycle()
-    // endregion
+    val uiStateAndStateEvents: EditTransactionForScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    val uiStateAndStateEvents = rememberEditTransactionForScreenUIStateAndStateEvents(
-        transactionForValues = transactionForValues,
-        transactionFor = transactionFor,
-    )
     val screenUIEventHandler = remember(
-        key1 = screenViewModel,
-        key2 = uiStateAndStateEvents,
+        key1 = uiStateAndStateEvents,
     ) {
         EditTransactionForScreenUIEventHandler(
-            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
@@ -46,17 +34,6 @@ public fun EditTransactionForScreen(
         key1 = Unit,
     ) {
         screenViewModel.initViewModel()
-    }
-
-    LaunchedEffect(transactionFor) {
-        transactionFor?.let { transactionFor ->
-            uiStateAndStateEvents.events.setTitle(
-                uiStateAndStateEvents.state.title.copy(
-                    text = transactionFor.title,
-                    selection = TextRange(transactionFor.title.length),
-                )
-            )
-        }
     }
 
     EditTransactionForScreenUI(
