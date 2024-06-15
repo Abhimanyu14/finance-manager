@@ -41,7 +41,7 @@ public fun AddCategoryScreen(
     ) {
         AddCategoryScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
             validTransactionTypes = validTransactionTypes,
         )
     }

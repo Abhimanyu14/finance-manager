@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -14,9 +14,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
@@ -24,29 +23,28 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.collections.immutable.ImmutableList
 
 @Stable
-internal class EditCategoryScreenUIStateAndEvents(
-    val state: EditCategoryScreenUIState,
-    val events: EditCategoryScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+internal class AddCategoryScreenUIStateAndStateEvents(
+    val state: AddCategoryScreenUIState,
+    val events: AddCategoryScreenUIStateEvents,
+) : ScreenUIStateAndStateEvents
 
 @Composable
-internal fun rememberEditCategoryScreenUIStateAndEvents(
+internal fun rememberAddCategoryScreenUIStateAndEvents(
     categories: ImmutableList<Category>,
-    category: Category?,
     validTransactionTypes: ImmutableList<TransactionType>,
-): EditCategoryScreenUIStateAndEvents {
+): AddCategoryScreenUIStateAndStateEvents {
     // region screen bottom sheet type
-    var screenBottomSheetType: EditCategoryScreenBottomSheetType by remember {
+    var screenBottomSheetType: AddCategoryScreenBottomSheetType by remember {
         mutableStateOf(
-            value = EditCategoryScreenBottomSheetType.None,
+            value = AddCategoryScreenBottomSheetType.None,
         )
     }
     val setScreenBottomSheetType =
-        { updatedEditCategoryScreenBottomSheetType: EditCategoryScreenBottomSheetType ->
-            screenBottomSheetType = updatedEditCategoryScreenBottomSheetType
+        { updatedAddCategoryScreenBottomSheetType: AddCategoryScreenBottomSheetType ->
+            screenBottomSheetType = updatedAddCategoryScreenBottomSheetType
         }
     val resetScreenBottomSheetType = {
-        setScreenBottomSheetType(EditCategoryScreenBottomSheetType.None)
+        setScreenBottomSheetType(AddCategoryScreenBottomSheetType.None)
     }
     // endregion
 
@@ -72,6 +70,10 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
             value = null,
         )
     }
+    val setTitleTextFieldErrorTextStringResourceId =
+        { updatedTitleTextFieldErrorTextStringResourceId: Int? ->
+            titleTextFieldErrorTextStringResourceId = updatedTitleTextFieldErrorTextStringResourceId
+        }
     // endregion
 
     // region selected transaction type index
@@ -116,6 +118,7 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
         setTitle,
         clearTitle,
         titleTextFieldErrorTextStringResourceId,
+        setTitleTextFieldErrorTextStringResourceId,
         selectedTransactionTypeIndex,
         setSelectedTransactionTypeIndex,
         searchText,
@@ -123,7 +126,6 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
         emoji,
         setEmoji,
         categories,
-        category,
         validTransactionTypes,
     ) {
         titleTextFieldErrorTextStringResourceId = null
@@ -135,11 +137,11 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
                 category = title.text.trim(),
             ) || isDefaultInvestmentCategory(
                 category = title.text.trim(),
-            ) || (title.text.trim() != category?.title?.trim() && categories.find {
+            ) || categories.find {
                 it.title.equalsIgnoringCase(
                     other = title.text.trim(),
                 )
-            }.isNotNull())
+            }.isNotNull()
         ) {
             titleTextFieldErrorTextStringResourceId =
                 R.string.screen_add_or_edit_category_error_category_exists
@@ -148,11 +150,11 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
             true
         }
 
-        EditCategoryScreenUIStateAndEvents(
-            state = EditCategoryScreenUIState(
+        AddCategoryScreenUIStateAndStateEvents(
+            state = AddCategoryScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
-                isBottomSheetVisible = screenBottomSheetType != EditCategoryScreenBottomSheetType.None,
-                isLoading = false,
+                isBottomSheetVisible = screenBottomSheetType != AddCategoryScreenBottomSheetType.None,
+                isLoading = validTransactionTypes.isEmpty(),
                 isSupportingTextVisible = titleTextFieldErrorTextStringResourceId.isNotNull(),
                 isCtaButtonEnabled = isCtaButtonEnabled,
                 selectedTransactionTypeIndex = selectedTransactionTypeIndex,
@@ -163,12 +165,12 @@ internal fun rememberEditCategoryScreenUIStateAndEvents(
                 },
                 emoji = emoji,
                 emojiSearchText = searchText,
-                title = title.orEmpty(),
+                title = title,
                 titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
-                appBarTitleTextStringResourceId = R.string.screen_edit_category_appbar_title,
-                ctaButtonLabelTextStringResourceId = R.string.screen_edit_category_floating_action_button_content_description,
+                appBarTitleTextStringResourceId = R.string.screen_add_category_appbar_title,
+                ctaButtonLabelTextStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
             ),
-            events = EditCategoryScreenUIStateEvents(
+            events = AddCategoryScreenUIStateEvents(
                 setScreenBottomSheetType = setScreenBottomSheetType,
                 resetScreenBottomSheetType = resetScreenBottomSheetType,
                 setTitle = setTitle,

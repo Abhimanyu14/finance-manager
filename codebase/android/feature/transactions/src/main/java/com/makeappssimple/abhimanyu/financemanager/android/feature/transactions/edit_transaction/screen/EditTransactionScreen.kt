@@ -62,7 +62,7 @@ public fun EditTransactionScreen(
     ) {
         EditTransactionScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
         )
     }
 

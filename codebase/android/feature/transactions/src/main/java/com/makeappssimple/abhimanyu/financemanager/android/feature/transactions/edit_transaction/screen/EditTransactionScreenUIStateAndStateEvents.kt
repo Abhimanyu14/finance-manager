@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiStateData
@@ -24,10 +24,10 @@ import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
 
 @Stable
-internal class EditTransactionScreenUIStateAndEvents(
+internal class EditTransactionScreenUIStateAndStateEvents(
     val state: EditTransactionScreenUIState,
     val events: EditTransactionScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+) : ScreenUIStateAndStateEvents
 
 @Composable
 internal fun rememberEditTransactionScreenUIStateAndEvents(
@@ -42,7 +42,7 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
     currentLocalDate: LocalDate,
     transactionForValues: ImmutableList<TransactionFor>,
     accounts: ImmutableList<Account>,
-): EditTransactionScreenUIStateAndEvents {
+): EditTransactionScreenUIStateAndStateEvents {
     // region screen bottom sheet type
     var screenBottomSheetType: EditTransactionScreenBottomSheetType by remember {
         mutableStateOf(
@@ -89,7 +89,7 @@ internal fun rememberEditTransactionScreenUIStateAndEvents(
         transactionForValues,
         accounts,
     ) {
-        EditTransactionScreenUIStateAndEvents(
+        EditTransactionScreenUIStateAndStateEvents(
             state = EditTransactionScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,

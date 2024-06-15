@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 
 public class EditAccountScreenUIEventHandler internal constructor(
     private val viewModel: EditAccountScreenViewModel,
-    private val uiStateAndEvents: EditAccountScreenUIStateAndEvents,
+    private val uiStateAndStateEvents: EditAccountScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
         uiEvent: EditAccountScreenUIEvent,
@@ -13,15 +13,15 @@ public class EditAccountScreenUIEventHandler internal constructor(
         when (uiEvent) {
             is EditAccountScreenUIEvent.OnCtaButtonClick -> {
                 viewModel.updateAccount(
-                    selectedAccountTypeIndex = uiStateAndEvents.state.selectedAccountTypeIndex,
-                    name = uiStateAndEvents.state.name.text,
-                    balanceAmountValue = uiStateAndEvents.state.balanceAmountValue.text,
-                    minimumAccountBalanceAmountValue = uiStateAndEvents.state.minimumBalanceAmountValue.text,
+                    selectedAccountTypeIndex = uiStateAndStateEvents.state.selectedAccountTypeIndex,
+                    name = uiStateAndStateEvents.state.name.text,
+                    balanceAmountValue = uiStateAndStateEvents.state.balanceAmountValue.text,
+                    minimumAccountBalanceAmountValue = uiStateAndStateEvents.state.minimumBalanceAmountValue.text,
                 )
             }
 
             is EditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
-                uiStateAndEvents.events.setBalanceAmountValue(
+                uiStateAndStateEvents.events.setBalanceAmountValue(
                     uiEvent.updatedBalanceAmountValue.copy(
                         text = uiEvent.updatedBalanceAmountValue.text.filterDigits(),
                     )
@@ -29,28 +29,28 @@ public class EditAccountScreenUIEventHandler internal constructor(
             }
 
             is EditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is EditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
-                uiStateAndEvents.events.setBalanceAmountValue(
-                    uiStateAndEvents.state.balanceAmountValue.copy(
+                uiStateAndStateEvents.events.setBalanceAmountValue(
+                    uiStateAndStateEvents.state.balanceAmountValue.copy(
                         text = "",
                     )
                 )
             }
 
             is EditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                uiStateAndEvents.events.setMinimumAccountBalanceAmountValue(
-                    uiStateAndEvents.state.minimumBalanceAmountValue.copy(
+                uiStateAndStateEvents.events.setMinimumAccountBalanceAmountValue(
+                    uiStateAndStateEvents.state.minimumBalanceAmountValue.copy(
                         text = "",
                     )
                 )
             }
 
             is EditAccountScreenUIEvent.OnClearNameButtonClick -> {
-                uiStateAndEvents.events.setName(
-                    uiStateAndEvents.state.name.copy(
+                uiStateAndStateEvents.events.setName(
+                    uiStateAndStateEvents.state.name.copy(
                         text = "",
                     )
                 )
@@ -61,15 +61,15 @@ public class EditAccountScreenUIEventHandler internal constructor(
             }
 
             is EditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                uiStateAndEvents.events.setMinimumAccountBalanceAmountValue(uiEvent.updatedMinimumAccountBalanceAmountValue)
+                uiStateAndStateEvents.events.setMinimumAccountBalanceAmountValue(uiEvent.updatedMinimumAccountBalanceAmountValue)
             }
 
             is EditAccountScreenUIEvent.OnNameUpdated -> {
-                uiStateAndEvents.events.setName(uiEvent.updatedName)
+                uiStateAndStateEvents.events.setName(uiEvent.updatedName)
             }
 
             is EditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                uiStateAndEvents.events.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
+                uiStateAndStateEvents.events.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
             }
         }
     }

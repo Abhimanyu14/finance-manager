@@ -45,7 +45,7 @@ public fun AddAccountScreen(
     ) {
         AddAccountScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
         )
     }
 

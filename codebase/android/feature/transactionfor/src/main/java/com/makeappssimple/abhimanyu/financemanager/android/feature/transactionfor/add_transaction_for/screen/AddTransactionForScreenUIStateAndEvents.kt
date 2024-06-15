@@ -10,7 +10,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import kotlinx.collections.immutable.ImmutableList
@@ -19,7 +19,7 @@ import kotlinx.collections.immutable.ImmutableList
 internal class AddTransactionForScreenUIStateAndEvents(
     val state: AddTransactionForScreenUIState,
     val events: AddTransactionForScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+) : ScreenUIStateAndStateEvents
 
 @Stable
 internal class AddTransactionForScreenUIStateEvents(

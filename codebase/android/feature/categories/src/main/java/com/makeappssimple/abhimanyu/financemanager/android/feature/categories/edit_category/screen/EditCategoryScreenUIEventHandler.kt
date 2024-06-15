@@ -7,7 +7,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 public class EditCategoryScreenUIEventHandler internal constructor(
     private val viewModel: EditCategoryScreenViewModel,
-    private val uiStateAndEvents: EditCategoryScreenUIStateAndEvents,
+    private val uiStateAndStateEvents: EditCategoryScreenUIStateAndStateEvents,
     private val category: Category?,
     private val validTransactionTypes: ImmutableList<TransactionType>,
 ) {
@@ -16,21 +16,21 @@ public class EditCategoryScreenUIEventHandler internal constructor(
     ) {
         when (uiEvent) {
             is EditCategoryScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
-                uiStateAndEvents.events.setSearchText("")
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.setSearchText("")
             }
 
             is EditCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is EditCategoryScreenUIEvent.OnCtaButtonClick -> {
                 category?.let { category ->
-                    uiStateAndEvents.state.selectedTransactionTypeIndex?.let { selectedTransactionTypeIndex ->
+                    uiStateAndStateEvents.state.selectedTransactionTypeIndex?.let { selectedTransactionTypeIndex ->
                         viewModel.updateCategory(
                             category = category.copy(
-                                emoji = uiStateAndEvents.state.emoji,
-                                title = uiStateAndEvents.state.title.text,
+                                emoji = uiStateAndStateEvents.state.emoji,
+                                title = uiStateAndStateEvents.state.title.text,
                                 transactionType = validTransactionTypes[selectedTransactionTypeIndex],
                             ),
                         )
@@ -40,11 +40,11 @@ public class EditCategoryScreenUIEventHandler internal constructor(
             }
 
             is EditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
-                uiStateAndEvents.events.clearTitle()
+                uiStateAndStateEvents.events.clearTitle()
             }
 
             is EditCategoryScreenUIEvent.OnEmojiCircleClick -> {
-                uiStateAndEvents.events.setScreenBottomSheetType(
+                uiStateAndStateEvents.events.setScreenBottomSheetType(
                     EditCategoryScreenBottomSheetType.SelectEmoji
                 )
             }
@@ -54,19 +54,19 @@ public class EditCategoryScreenUIEventHandler internal constructor(
             }
 
             is EditCategoryScreenUIEvent.OnEmojiUpdated -> {
-                uiStateAndEvents.events.setEmoji(uiEvent.updatedEmoji)
+                uiStateAndStateEvents.events.setEmoji(uiEvent.updatedEmoji)
             }
 
             is EditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                uiStateAndEvents.events.setSearchText(uiEvent.updatedSearchText)
+                uiStateAndStateEvents.events.setSearchText(uiEvent.updatedSearchText)
             }
 
             is EditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                uiStateAndEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
+                uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
             }
 
             is EditCategoryScreenUIEvent.OnTitleUpdated -> {
-                uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
+                uiStateAndStateEvents.events.setTitle(uiEvent.updatedTitle)
             }
         }
     }

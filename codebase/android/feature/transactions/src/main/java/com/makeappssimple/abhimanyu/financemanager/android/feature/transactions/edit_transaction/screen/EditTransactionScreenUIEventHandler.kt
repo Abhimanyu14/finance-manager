@@ -4,18 +4,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 
 public class EditTransactionScreenUIEventHandler internal constructor(
     private val viewModel: EditTransactionScreenViewModel,
-    private val uiStateAndEvents: EditTransactionScreenUIStateAndEvents,
+    private val uiStateAndStateEvents: EditTransactionScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
         uiEvent: EditTransactionScreenUIEvent,
     ) {
         when (uiEvent) {
             is EditTransactionScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is EditTransactionScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is EditTransactionScreenUIEvent.OnCtaButtonClick -> {
@@ -35,27 +35,27 @@ public class EditTransactionScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionScreenUIEvent.OnAccountFromTextFieldClick -> {
-                uiStateAndEvents.events.setScreenBottomSheetType(
+                uiStateAndStateEvents.events.setScreenBottomSheetType(
                     EditTransactionScreenBottomSheetType.SelectAccountFrom
                 )
             }
 
             is EditTransactionScreenUIEvent.OnAccountToTextFieldClick -> {
-                uiStateAndEvents.events.setScreenBottomSheetType(
+                uiStateAndStateEvents.events.setScreenBottomSheetType(
                     EditTransactionScreenBottomSheetType.SelectAccountTo
                 )
             }
 
             is EditTransactionScreenUIEvent.OnTransactionTimeTextFieldClick -> {
-                uiStateAndEvents.events.setIsTransactionTimePickerDialogVisible(true)
+                uiStateAndStateEvents.events.setIsTransactionTimePickerDialogVisible(true)
             }
 
             is EditTransactionScreenUIEvent.OnTransactionDateTextFieldClick -> {
-                uiStateAndEvents.events.setIsTransactionDatePickerDialogVisible(true)
+                uiStateAndStateEvents.events.setIsTransactionDatePickerDialogVisible(true)
             }
 
             is EditTransactionScreenUIEvent.OnCategoryTextFieldClick -> {
-                uiStateAndEvents.events.setScreenBottomSheetType(
+                uiStateAndStateEvents.events.setScreenBottomSheetType(
                     EditTransactionScreenBottomSheetType.SelectCategory
                 )
             }
@@ -107,11 +107,11 @@ public class EditTransactionScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionScreenUIEvent.OnTransactionTimePickerDismissed -> {
-                uiStateAndEvents.events.setIsTransactionTimePickerDialogVisible(false)
+                uiStateAndStateEvents.events.setIsTransactionTimePickerDialogVisible(false)
             }
 
             is EditTransactionScreenUIEvent.OnTransactionDatePickerDismissed -> {
-                uiStateAndEvents.events.setIsTransactionDatePickerDialogVisible(false)
+                uiStateAndStateEvents.events.setIsTransactionDatePickerDialogVisible(false)
             }
 
             is EditTransactionScreenUIEvent.OnTitleUpdated -> {
@@ -124,14 +124,14 @@ public class EditTransactionScreenUIEventHandler internal constructor(
                 viewModel.updateTransactionDate(
                     updatedTransactionDate = uiEvent.updatedTransactionDate,
                 )
-                uiStateAndEvents.events.setIsTransactionDatePickerDialogVisible(false)
+                uiStateAndStateEvents.events.setIsTransactionDatePickerDialogVisible(false)
             }
 
             is EditTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
                 viewModel.updateTransactionTime(
                     updatedTransactionTime = uiEvent.updatedTransactionTime,
                 )
-                uiStateAndEvents.events.setIsTransactionTimePickerDialogVisible(false)
+                uiStateAndStateEvents.events.setIsTransactionTimePickerDialogVisible(false)
             }
         }
     }

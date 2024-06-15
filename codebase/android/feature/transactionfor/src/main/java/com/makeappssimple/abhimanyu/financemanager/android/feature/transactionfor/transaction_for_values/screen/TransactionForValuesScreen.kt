@@ -37,7 +37,7 @@ public fun TransactionForValuesScreen(
     ) {
         TransactionForValuesScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
         )
     }
 

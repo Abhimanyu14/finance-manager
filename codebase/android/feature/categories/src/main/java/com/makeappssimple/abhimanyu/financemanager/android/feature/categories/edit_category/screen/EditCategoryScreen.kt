@@ -45,7 +45,7 @@ public fun EditCategoryScreen(
     ) {
         EditCategoryScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
             category = category,
             validTransactionTypes = validTransactionTypes,
         )

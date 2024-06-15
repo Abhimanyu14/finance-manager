@@ -40,7 +40,7 @@ public fun ViewTransactionScreen(
     ) {
         ViewTransactionScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
         )
     }
 

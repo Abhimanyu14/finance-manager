@@ -29,7 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.ar
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toSignedString
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import kotlinx.collections.immutable.ImmutableList
@@ -37,10 +37,10 @@ import kotlinx.collections.immutable.toImmutableList
 import java.time.LocalDate
 
 @Stable
-internal class TransactionsScreenUIStateAndEvents(
+internal class TransactionsScreenUIStateAndStateEvents(
     val state: TransactionsScreenUIState,
     val events: TransactionsScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+) : ScreenUIStateAndStateEvents
 
 @Composable
 internal fun rememberTransactionsScreenUIStateAndEvents(
@@ -54,7 +54,7 @@ internal fun rememberTransactionsScreenUIStateAndEvents(
     oldestTransactionLocalDate: LocalDate?,
     sortOptions: ImmutableList<SortOption>,
     currentLocalDate: LocalDate,
-): TransactionsScreenUIStateAndEvents {
+): TransactionsScreenUIStateAndStateEvents {
     // region is loading
     var isLoading: Boolean by rememberSaveable {
         mutableStateOf(
@@ -312,7 +312,7 @@ internal fun rememberTransactionsScreenUIStateAndEvents(
         sortOptions,
         currentLocalDate,
     ) {
-        TransactionsScreenUIStateAndEvents(
+        TransactionsScreenUIStateAndStateEvents(
             state = TransactionsScreenUIState(
                 isBottomSheetVisible = screenBottomSheetType != TransactionsScreenBottomSheetType.None,
                 isInSelectionMode = isInSelectionMode,

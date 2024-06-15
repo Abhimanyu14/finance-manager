@@ -36,7 +36,7 @@ public fun AddTransactionForScreen(
     ) {
         AddTransactionForScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
         )
     }
 

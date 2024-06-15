@@ -43,7 +43,7 @@ public fun EditAccountScreen(
     ) {
         EditAccountScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
         )
     }
 

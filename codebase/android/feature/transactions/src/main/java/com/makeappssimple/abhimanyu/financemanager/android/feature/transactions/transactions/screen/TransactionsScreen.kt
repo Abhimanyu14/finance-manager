@@ -60,7 +60,7 @@ public fun TransactionsScreen(
     ) {
         TransactionsScreenUIEventHandler(
             viewModel = viewModel,
-            uiStateAndEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndEvents,
         )
     }
 

@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
@@ -26,17 +26,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import kotlinx.collections.immutable.ImmutableList
 
 @Stable
-internal class EditAccountScreenUIStateAndEvents(
+internal class EditAccountScreenUIStateAndStateEvents(
     val state: EditAccountScreenUIState,
     val events: EditAccountScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+) : ScreenUIStateAndStateEvents
 
 @Composable
 internal fun rememberEditAccountScreenUIStateAndEvents(
     accounts: ImmutableList<Account>,
     originalAccount: Account?,
     validAccountTypes: ImmutableList<AccountType>,
-): EditAccountScreenUIStateAndEvents {
+): EditAccountScreenUIStateAndStateEvents {
     // region name text field focus requester
     val nameTextFieldFocusRequester = remember {
         FocusRequester()
@@ -163,7 +163,7 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
             true
         }
 
-        EditAccountScreenUIStateAndEvents(
+        EditAccountScreenUIStateAndStateEvents(
             state = EditAccountScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 nameTextFieldFocusRequester = nameTextFieldFocusRequester,

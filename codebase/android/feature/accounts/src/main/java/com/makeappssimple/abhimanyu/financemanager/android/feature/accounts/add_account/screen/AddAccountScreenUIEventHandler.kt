@@ -8,18 +8,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 
 public class AddAccountScreenUIEventHandler internal constructor(
     private val viewModel: AddAccountScreenViewModel,
-    private val uiStateAndEvents: AddAccountScreenUIStateAndEvents,
+    private val uiStateAndStateEvents: AddAccountScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
         uiEvent: AddAccountScreenUIEvent,
     ) {
         when (uiEvent) {
             is AddAccountScreenUIEvent.OnCtaButtonClick -> {
-                uiStateAndEvents.state.selectedAccountType?.let { accountType ->
+                uiStateAndStateEvents.state.selectedAccountType?.let { accountType ->
                     val minimumAccountBalanceAmount =
                         if (accountType == AccountType.BANK) {
                             Amount(
-                                value = uiStateAndEvents.state.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
+                                value = uiStateAndStateEvents.state.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
                             )
                         } else {
                             null
@@ -32,22 +32,22 @@ public class AddAccountScreenUIEventHandler internal constructor(
                             ),
                             type = accountType,
                             minimumAccountBalanceAmount = minimumAccountBalanceAmount,
-                            name = uiStateAndEvents.state.nameTextFieldValue.text,
+                            name = uiStateAndStateEvents.state.nameTextFieldValue.text,
                         ),
                     )
                 }
             }
 
             is AddAccountScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is AddAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                uiStateAndEvents.events.clearMinimumAccountBalanceAmountValue()
+                uiStateAndStateEvents.events.clearMinimumAccountBalanceAmountValue()
             }
 
             is AddAccountScreenUIEvent.OnClearNameButtonClick -> {
-                uiStateAndEvents.events.clearName()
+                uiStateAndStateEvents.events.clearName()
             }
 
             is AddAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
@@ -55,19 +55,19 @@ public class AddAccountScreenUIEventHandler internal constructor(
             }
 
             is AddAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                uiStateAndEvents.events.updateMinimumAccountBalanceAmountValue(
+                uiStateAndStateEvents.events.updateMinimumAccountBalanceAmountValue(
                     uiEvent.updatedMinimumAccountBalanceAmountValue,
                 )
             }
 
             is AddAccountScreenUIEvent.OnNameUpdated -> {
-                uiStateAndEvents.events.updateName(
+                uiStateAndStateEvents.events.updateName(
                     uiEvent.updatedName,
                 )
             }
 
             is AddAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                uiStateAndEvents.events.updateSelectedAccountTypeIndex(
+                uiStateAndStateEvents.events.updateSelectedAccountTypeIndex(
                     uiEvent.updatedIndex,
                 )
             }

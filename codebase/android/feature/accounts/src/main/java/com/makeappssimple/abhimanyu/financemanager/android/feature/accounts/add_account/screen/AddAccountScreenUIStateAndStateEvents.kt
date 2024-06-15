@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
@@ -25,16 +25,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import kotlinx.collections.immutable.ImmutableList
 
 @Stable
-internal class AddAccountScreenUIStateAndEvents(
+internal class AddAccountScreenUIStateAndStateEvents(
     val state: AddAccountScreenUIState,
     val events: AddAccountScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+) : ScreenUIStateAndStateEvents
 
 @Composable
 internal fun rememberAddAccountScreenUIStateAndEvents(
     accounts: ImmutableList<Account>,
     validAccountTypes: ImmutableList<AccountType>,
-): AddAccountScreenUIStateAndEvents {
+): AddAccountScreenUIStateAndStateEvents {
     // region screen bottom sheet type
     var screenBottomSheetType: AddAccountScreenBottomSheetType by remember {
         mutableStateOf(
@@ -146,7 +146,7 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         accounts,
         validAccountTypes,
     ) {
-        AddAccountScreenUIStateAndEvents(
+        AddAccountScreenUIStateAndStateEvents(
             state = AddAccountScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 nameTextFieldFocusRequester = nameTextFieldFocusRequester,

@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenInitialData
@@ -38,10 +38,10 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Stable
-internal data class AddTransactionScreenUIStateAndEvents(
+internal data class AddTransactionScreenUIStateAndStateEvents(
     val uiState: AddTransactionScreenUIState,
     val uiStateEvents: AddTransactionScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+) : ScreenUIStateAndStateEvents
 
 @Composable
 internal fun rememberAddTransactionScreenUIStateAndEvents(
@@ -50,7 +50,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
     dateTimeUtil: DateTimeUtil = remember {
         DateTimeUtilImpl()
     },
-): AddTransactionScreenUIStateAndEvents {
+): AddTransactionScreenUIStateAndStateEvents {
     // region screen bottom sheet type
     var screenBottomSheetType: AddTransactionScreenBottomSheetType by remember {
         mutableStateOf(
@@ -395,7 +395,7 @@ internal fun rememberAddTransactionScreenUIStateAndEvents(
         uiState,
         uiStateEvents,
     ) {
-        AddTransactionScreenUIStateAndEvents(
+        AddTransactionScreenUIStateAndStateEvents(
             uiState = uiState,
             uiStateEvents = uiStateEvents,
         )

@@ -4,25 +4,25 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 
 public class EditTransactionForScreenUIEventHandler internal constructor(
     private val viewModel: EditTransactionForScreenViewModel,
-    private val uiStateAndEvents: EditTransactionForScreenUIStateAndEvents,
+    private val uiStateAndStateEvents: EditTransactionForScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
         uiEvent: EditTransactionForScreenUIEvent,
     ) {
         when (uiEvent) {
             is EditTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndEvents.events.resetScreenBottomSheetType()
+                uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
                 viewModel.updateTransactionFor(
-                    title = uiStateAndEvents.state.title.text,
+                    title = uiStateAndStateEvents.state.title.text,
                 )
             }
 
             is EditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                uiStateAndEvents.events.setTitle(
-                    uiStateAndEvents.state.title.copy(
+                uiStateAndStateEvents.events.setTitle(
+                    uiStateAndStateEvents.state.title.copy(
                         text = "",
                     )
                 )
@@ -33,7 +33,7 @@ public class EditTransactionForScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionForScreenUIEvent.OnTitleUpdated -> {
-                uiStateAndEvents.events.setTitle(uiEvent.updatedTitle)
+                uiStateAndStateEvents.events.setTitle(uiEvent.updatedTitle)
             }
         }
     }

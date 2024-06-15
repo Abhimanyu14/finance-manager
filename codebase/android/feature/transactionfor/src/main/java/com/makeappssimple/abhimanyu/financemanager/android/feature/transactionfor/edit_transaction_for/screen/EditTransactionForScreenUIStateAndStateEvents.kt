@@ -10,21 +10,21 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import kotlinx.collections.immutable.ImmutableList
 
 @Stable
-internal class EditTransactionForScreenUIStateAndEvents(
+internal class EditTransactionForScreenUIStateAndStateEvents(
     val state: EditTransactionForScreenUIState,
     val events: EditTransactionForScreenUIStateEvents,
-) : ScreenUIStateAndEvents
+) : ScreenUIStateAndStateEvents
 
 @Composable
 internal fun rememberEditTransactionForScreenUIStateAndEvents(
     transactionForValues: ImmutableList<TransactionFor>,
     transactionFor: TransactionFor?,
-): EditTransactionForScreenUIStateAndEvents {
+): EditTransactionForScreenUIStateAndStateEvents {
     // region screen bottom sheet type
     var screenBottomSheetType: EditTransactionForScreenBottomSheetType by remember {
         mutableStateOf(
@@ -85,7 +85,7 @@ internal fun rememberEditTransactionForScreenUIStateAndEvents(
             true
         }
 
-        EditTransactionForScreenUIStateAndEvents(
+        EditTransactionForScreenUIStateAndStateEvents(
             state = EditTransactionForScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
                 isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
