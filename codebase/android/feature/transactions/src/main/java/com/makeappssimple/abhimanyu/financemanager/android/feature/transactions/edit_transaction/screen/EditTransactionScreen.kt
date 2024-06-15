@@ -40,7 +40,7 @@ public fun EditTransactionScreen(
     val accounts: ImmutableList<Account> by screenViewModel.accounts.collectAsStateWithLifecycle()
     // endregion
 
-    val uiStateAndEvents = rememberEditTransactionScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberEditTransactionScreenUIStateAndEvents(
         uiState = uiState,
         uiVisibilityState = uiVisibilityState,
         isCtaButtonEnabled = isCtaButtonEnabled,
@@ -55,11 +55,11 @@ public fun EditTransactionScreen(
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         EditTransactionScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
@@ -70,7 +70,7 @@ public fun EditTransactionScreen(
     }
 
     EditTransactionScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

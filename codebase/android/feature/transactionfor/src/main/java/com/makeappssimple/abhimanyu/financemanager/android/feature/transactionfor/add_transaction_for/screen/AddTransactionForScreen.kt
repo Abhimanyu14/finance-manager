@@ -24,16 +24,16 @@ public fun AddTransactionForScreen(
     val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
     // endregion
 
-    val uiStateAndEvents = rememberAddTransactionForScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberAddTransactionForScreenUIStateAndEvents(
         transactionForValues = transactionForValues,
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         AddTransactionForScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
@@ -44,7 +44,7 @@ public fun AddTransactionForScreen(
     }
 
     AddTransactionForScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

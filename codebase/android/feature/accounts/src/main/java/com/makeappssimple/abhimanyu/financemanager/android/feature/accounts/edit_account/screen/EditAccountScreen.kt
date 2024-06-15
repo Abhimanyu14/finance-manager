@@ -29,18 +29,18 @@ public fun EditAccountScreen(
     val validAccountTypes: ImmutableList<AccountType> = screenViewModel.validAccountTypes
     // endregion
 
-    val uiStateAndEvents = rememberEditAccountScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberEditAccountScreenUIStateAndEvents(
         accounts = accounts,
         originalAccount = originalAccount,
         validAccountTypes = validAccountTypes,
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         EditAccountScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
@@ -54,24 +54,24 @@ public fun EditAccountScreen(
         originalAccount,
     ) {
         originalAccount?.let { originalAccount ->
-            uiStateAndEvents.events.setSelectedAccountTypeIndex(
+            uiStateAndStateEvents.events.setSelectedAccountTypeIndex(
                 validAccountTypes.indexOf(
                     element = originalAccount.type,
                 )
             )
-            uiStateAndEvents.events.setName(
-                uiStateAndEvents.state.name.copy(
+            uiStateAndStateEvents.events.setName(
+                uiStateAndStateEvents.state.name.copy(
                     text = originalAccount.name,
                 )
             )
-            uiStateAndEvents.events.setBalanceAmountValue(
+            uiStateAndStateEvents.events.setBalanceAmountValue(
                 TextFieldValue(
                     text = originalAccount.balanceAmount.value.toString(),
                     selection = TextRange(originalAccount.balanceAmount.value.toString().length),
                 )
             )
             originalAccount.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
-                uiStateAndEvents.events.setMinimumAccountBalanceAmountValue(
+                uiStateAndStateEvents.events.setMinimumAccountBalanceAmountValue(
                     TextFieldValue(
                         text = minimumAccountBalanceAmount.value.toString(),
                         selection = TextRange(minimumAccountBalanceAmount.value.toString().length),
@@ -82,7 +82,7 @@ public fun EditAccountScreen(
     }
 
     EditAccountScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

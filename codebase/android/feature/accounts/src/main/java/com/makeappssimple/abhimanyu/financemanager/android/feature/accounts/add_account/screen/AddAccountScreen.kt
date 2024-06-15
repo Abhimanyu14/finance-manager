@@ -32,17 +32,17 @@ public fun AddAccountScreen(
     val validAccountTypes: ImmutableList<AccountType> = screenViewModel.validAccountTypes
     // endregion
 
-    val uiStateAndEvents = rememberAddAccountScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberAddAccountScreenUIStateAndEvents(
         accounts = accounts,
         validAccountTypes = validAccountTypes,
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         AddAccountScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
@@ -61,7 +61,7 @@ public fun AddAccountScreen(
     }
 
     AddAccountScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

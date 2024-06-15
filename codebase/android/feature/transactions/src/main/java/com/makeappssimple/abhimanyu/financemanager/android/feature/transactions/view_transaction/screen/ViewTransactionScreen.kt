@@ -26,18 +26,18 @@ public fun ViewTransactionScreen(
     val refundTransactionListItemData: ImmutableList<TransactionListItemData> by screenViewModel.refundTransactionListItemData.collectAsStateWithLifecycle()
     // endregion
 
-    val uiStateAndEvents = rememberViewTransactionScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberViewTransactionScreenUIStateAndEvents(
         currentTransactionListItemData = currentTransactionListItemData,
         originalTransactionListItemData = originalTransactionListItemData,
         refundTransactionListItemData = refundTransactionListItemData,
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         ViewTransactionScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
@@ -48,7 +48,7 @@ public fun ViewTransactionScreen(
     }
 
     ViewTransactionScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

@@ -39,7 +39,7 @@ public fun TransactionsScreen(
     val currentLocalDate: LocalDate = screenViewModel.currentLocalDate
     // endregion
 
-    val uiStateAndEvents = rememberTransactionsScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberTransactionsScreenUIStateAndEvents(
         allTransactionData = allTransactionData,
         expenseCategories = expenseCategories.orEmpty(),
         incomeCategories = incomeCategories.orEmpty(),
@@ -53,16 +53,16 @@ public fun TransactionsScreen(
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         TransactionsScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
     TransactionsScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

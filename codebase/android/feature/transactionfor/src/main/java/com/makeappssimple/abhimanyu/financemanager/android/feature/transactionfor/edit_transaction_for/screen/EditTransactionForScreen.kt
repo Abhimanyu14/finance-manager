@@ -26,17 +26,17 @@ public fun EditTransactionForScreen(
     val transactionFor: TransactionFor? by screenViewModel.transactionFor.collectAsStateWithLifecycle()
     // endregion
 
-    val uiStateAndEvents = rememberEditTransactionForScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberEditTransactionForScreenUIStateAndEvents(
         transactionForValues = transactionForValues,
         transactionFor = transactionFor,
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         EditTransactionForScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
@@ -48,8 +48,8 @@ public fun EditTransactionForScreen(
 
     LaunchedEffect(transactionFor) {
         transactionFor?.let { transactionFor ->
-            uiStateAndEvents.events.setTitle(
-                uiStateAndEvents.state.title.copy(
+            uiStateAndStateEvents.events.setTitle(
+                uiStateAndStateEvents.state.title.copy(
                     text = transactionFor.title,
                     selection = TextRange(transactionFor.title.length),
                 )
@@ -58,7 +58,7 @@ public fun EditTransactionForScreen(
     }
 
     EditTransactionForScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

@@ -30,20 +30,20 @@ public fun EditCategoryScreen(
     val originalTransactionType: String? = screenViewModel.originalTransactionType
     // endregion
 
-    val uiStateAndEvents = rememberEditCategoryScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberEditCategoryScreenUIStateAndEvents(
         categories = categories,
         category = category,
         validTransactionTypes = validTransactionTypes,
     )
     val screenUIEventHandler = remember(
         screenViewModel,
-        uiStateAndEvents,
+        uiStateAndStateEvents,
         category,
         validTransactionTypes,
     ) {
         EditCategoryScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
             category = category,
             validTransactionTypes = validTransactionTypes,
         )
@@ -54,7 +54,7 @@ public fun EditCategoryScreen(
     ) {
         screenViewModel.initViewModel()
         originalTransactionType?.let { originalTransactionType ->
-            uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+            uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(
                 validTransactionTypes.indexOf(
                     element = TransactionType.entries.find { transactionType ->
                         transactionType.title == originalTransactionType
@@ -66,23 +66,23 @@ public fun EditCategoryScreen(
 
     LaunchedEffect(category) {
         category?.let { category ->
-            uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+            uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(
                 validTransactionTypes.indexOf(
                     element = category.transactionType,
                 )
             )
-            uiStateAndEvents.events.setTitle(
-                uiStateAndEvents.state.title.copy(
+            uiStateAndStateEvents.events.setTitle(
+                uiStateAndStateEvents.state.title.copy(
                     text = category.title,
                     selection = TextRange(category.title.length),
                 )
             )
-            uiStateAndEvents.events.setEmoji(category.emoji)
+            uiStateAndStateEvents.events.setEmoji(category.emoji)
         }
     }
 
     EditCategoryScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

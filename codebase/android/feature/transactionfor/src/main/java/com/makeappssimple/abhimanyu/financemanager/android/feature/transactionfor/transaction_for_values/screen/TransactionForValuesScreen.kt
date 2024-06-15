@@ -24,22 +24,22 @@ public fun TransactionForValuesScreen(
     val transactionForValuesIsUsedInTransactions: ImmutableList<Boolean> by screenViewModel.transactionForValuesIsUsedInTransactions.collectAsStateWithLifecycle()
     // endregion
 
-    val uiStateAndEvents = rememberTransactionForValuesScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberTransactionForValuesScreenUIStateAndEvents(
         transactionForValues = transactionForValues,
         transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
     ) {
         TransactionForValuesScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
 
     TransactionForValuesScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

@@ -28,18 +28,18 @@ public fun AddCategoryScreen(
     val originalTransactionType: String? = screenViewModel.originalTransactionType
     // endregion
 
-    val uiStateAndEvents = rememberAddCategoryScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberAddCategoryScreenUIStateAndEvents(
         categories = categories,
         validTransactionTypes = validTransactionTypes,
     )
     val screenUIEventHandler = remember(
         key1 = screenViewModel,
-        key2 = uiStateAndEvents,
+        key2 = uiStateAndStateEvents,
         key3 = validTransactionTypes,
     ) {
         AddCategoryScreenUIEventHandler(
             viewModel = screenViewModel,
-            uiStateAndStateEvents = uiStateAndEvents,
+            uiStateAndStateEvents = uiStateAndStateEvents,
             validTransactionTypes = validTransactionTypes,
         )
     }
@@ -49,7 +49,7 @@ public fun AddCategoryScreen(
     ) {
         screenViewModel.initViewModel()
         originalTransactionType?.let { originalTransactionType ->
-            uiStateAndEvents.events.setSelectedTransactionTypeIndex(
+            uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(
                 validTransactionTypes.indexOf(
                     element = TransactionType.entries.find { transactionType ->
                         transactionType.title == originalTransactionType
@@ -60,7 +60,7 @@ public fun AddCategoryScreen(
     }
 
     AddCategoryScreenUI(
-        uiState = uiStateAndEvents.state,
+        uiState = uiStateAndStateEvents.state,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }
