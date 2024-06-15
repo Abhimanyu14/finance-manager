@@ -8,6 +8,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.event.AddTransactionScreenEventHandler
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.rememberAddTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenInitialData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -27,7 +30,7 @@ public fun AddTransactionScreen(
     val titleSuggestions: ImmutableList<String> by viewModel.titleSuggestions.collectAsStateWithLifecycle()
     // endregion
 
-    val (uiState, uiStateEvents) = rememberAddTransactionScreenUIStateAndEvents(
+    val (uiState, uiStateEvents) = rememberAddTransactionScreenUIStateAndStateEvents(
         addTransactionScreenInitialData = addTransactionScreenInitialData,
         titleSuggestions = titleSuggestions,
     )

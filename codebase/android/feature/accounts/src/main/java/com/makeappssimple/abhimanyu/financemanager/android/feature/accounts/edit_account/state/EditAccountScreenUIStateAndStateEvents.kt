@@ -33,7 +33,7 @@ internal class EditAccountScreenUIStateAndStateEvents(
 ) : ScreenUIStateAndStateEvents
 
 @Composable
-internal fun rememberEditAccountScreenUIStateAndEvents(
+internal fun rememberEditAccountScreenUIStateAndStateEvents(
     accounts: ImmutableList<Account>,
     originalAccount: Account?,
     validAccountTypes: ImmutableList<AccountType>,

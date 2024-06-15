@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLo
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.event.AddCategoryScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.rememberAddCategoryScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.rememberAddCategoryScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
 
@@ -30,7 +30,7 @@ public fun AddCategoryScreen(
     val originalTransactionType: String? = screenViewModel.originalTransactionType
     // endregion
 
-    val uiStateAndStateEvents = rememberAddCategoryScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberAddCategoryScreenUIStateAndStateEvents(
         categories = categories,
         validTransactionTypes = validTransactionTypes,
     )

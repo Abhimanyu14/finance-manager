@@ -11,6 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.event.EditTransactionScreenUIEventHandler
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.rememberEditTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenViewModel
@@ -40,7 +42,7 @@ public fun EditTransactionScreen(
     val accounts: ImmutableList<Account> by screenViewModel.accounts.collectAsStateWithLifecycle()
     // endregion
 
-    val uiStateAndStateEvents = rememberEditTransactionScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberEditTransactionScreenUIStateAndStateEvents(
         uiState = uiState,
         uiVisibilityState = uiVisibilityState,
         isCtaButtonEnabled = isCtaButtonEnabled,

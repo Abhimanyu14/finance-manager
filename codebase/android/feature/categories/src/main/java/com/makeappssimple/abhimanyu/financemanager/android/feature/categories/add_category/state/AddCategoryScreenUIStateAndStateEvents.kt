@@ -30,7 +30,7 @@ internal class AddCategoryScreenUIStateAndStateEvents(
 ) : ScreenUIStateAndStateEvents
 
 @Composable
-internal fun rememberAddCategoryScreenUIStateAndEvents(
+internal fun rememberAddCategoryScreenUIStateAndStateEvents(
     categories: ImmutableList<Category>,
     validTransactionTypes: ImmutableList<TransactionType>,
 ): AddCategoryScreenUIStateAndStateEvents {

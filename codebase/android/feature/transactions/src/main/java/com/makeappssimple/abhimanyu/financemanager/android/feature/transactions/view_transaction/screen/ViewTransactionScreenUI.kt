@@ -18,8 +18,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.rememberCommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionDeleteConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionDeleteConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
@@ -29,6 +29,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.view_transaction_section_header.ViewTransactionSectionHeader
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.view_transaction_section_header.ViewTransactionSectionHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.bottomsheet.ViewTransactionScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.event.ViewTransactionScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.state.ViewTransactionScreenUIState
 
 @Composable
 internal fun ViewTransactionScreenUI(

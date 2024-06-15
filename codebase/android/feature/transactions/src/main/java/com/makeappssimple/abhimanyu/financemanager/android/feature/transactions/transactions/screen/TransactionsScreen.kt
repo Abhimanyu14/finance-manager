@@ -13,6 +13,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.event.TransactionsScreenUIEventHandler
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.rememberTransactionsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDate
@@ -39,7 +41,7 @@ public fun TransactionsScreen(
     val currentLocalDate: LocalDate = screenViewModel.currentLocalDate
     // endregion
 
-    val uiStateAndStateEvents = rememberTransactionsScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberTransactionsScreenUIStateAndStateEvents(
         allTransactionData = allTransactionData,
         expenseCategories = expenseCategories.orEmpty(),
         incomeCategories = incomeCategories.orEmpty(),

@@ -8,8 +8,8 @@ import androidx.compose.ui.platform.testTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_OPEN_SOURCE_LICENSES
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_OPEN_SOURCE_LICENSES
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.rememberCommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R

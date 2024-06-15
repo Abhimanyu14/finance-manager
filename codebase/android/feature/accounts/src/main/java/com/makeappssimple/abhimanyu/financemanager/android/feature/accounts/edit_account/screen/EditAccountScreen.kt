@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLo
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.event.EditAccountScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.rememberEditAccountScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.rememberEditAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.viewmodel.EditAccountScreenViewModel
 import kotlinx.collections.immutable.ImmutableList
 
@@ -31,7 +31,7 @@ public fun EditAccountScreen(
     val validAccountTypes: ImmutableList<AccountType> = screenViewModel.validAccountTypes
     // endregion
 
-    val uiStateAndStateEvents = rememberEditAccountScreenUIStateAndEvents(
+    val uiStateAndStateEvents = rememberEditAccountScreenUIStateAndStateEvents(
         accounts = accounts,
         originalAccount = originalAccount,
         validAccountTypes = validAccountTypes,

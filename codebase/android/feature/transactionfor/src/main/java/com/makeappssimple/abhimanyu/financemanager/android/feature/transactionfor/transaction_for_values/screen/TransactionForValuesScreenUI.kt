@@ -18,8 +18,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.rememberCommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesDeleteConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesDeleteConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesMenuBottomSheet

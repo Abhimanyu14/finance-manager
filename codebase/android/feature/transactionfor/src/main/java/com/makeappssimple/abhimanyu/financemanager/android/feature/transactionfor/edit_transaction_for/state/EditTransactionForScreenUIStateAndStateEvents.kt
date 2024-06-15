@@ -22,7 +22,7 @@ internal class EditTransactionForScreenUIStateAndStateEvents(
 ) : ScreenUIStateAndStateEvents
 
 @Composable
-internal fun rememberEditTransactionForScreenUIStateAndEvents(
+internal fun rememberEditTransactionForScreenUIStateAndStateEvents(
     transactionForValues: ImmutableList<TransactionFor>,
     transactionFor: TransactionFor?,
 ): EditTransactionForScreenUIStateAndStateEvents {

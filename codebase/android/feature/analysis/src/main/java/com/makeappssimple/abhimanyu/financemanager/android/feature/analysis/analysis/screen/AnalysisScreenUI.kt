@@ -10,8 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.screen.rememberCommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis.AnalysisFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis.AnalysisFilterBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis.AnalysisFilterBottomSheetEvent
