@@ -12,9 +12,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -48,11 +50,15 @@ internal fun AddAccountScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: AddAccountScreenUIEvent) -> Unit = {},
 ) {
+    val nameTextFieldFocusRequester = remember {
+        FocusRequester()
+    }
+
     if (!uiState.isLoading) {
         LaunchedEffect(
             key1 = Unit,
         ) {
-            uiState.nameTextFieldFocusRequester.requestFocus()
+            nameTextFieldFocusRequester.requestFocus()
             state.keyboardController?.show()
         }
     }
@@ -122,7 +128,7 @@ internal fun AddAccountScreenUI(
             MyOutlinedTextField(
                 modifier = Modifier
                     .focusRequester(
-                        focusRequester = uiState.nameTextFieldFocusRequester,
+                        focusRequester = nameTextFieldFocusRequester,
                     )
                     .fillMaxWidth()
                     .padding(

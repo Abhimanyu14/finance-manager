@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -37,18 +36,6 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
     originalAccount: Account?,
     validAccountTypes: ImmutableList<AccountType>,
 ): EditAccountScreenUIStateAndStateEvents {
-    // region name text field focus requester
-    val nameTextFieldFocusRequester = remember {
-        FocusRequester()
-    }
-    // endregion
-
-    // region balance amount text field focus requester
-    val balanceAmountTextFieldFocusRequester = remember {
-        FocusRequester()
-    }
-    // endregion
-
     // region screen bottom sheet type
     var screenBottomSheetType: EditAccountScreenBottomSheetType by remember {
         mutableStateOf(
@@ -120,8 +107,6 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
     // endregion
 
     return remember(
-        nameTextFieldFocusRequester,
-        balanceAmountTextFieldFocusRequester,
         screenBottomSheetType,
         name,
         balanceAmountValue,
@@ -166,8 +151,6 @@ internal fun rememberEditAccountScreenUIStateAndEvents(
         EditAccountScreenUIStateAndStateEvents(
             state = EditAccountScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
-                nameTextFieldFocusRequester = nameTextFieldFocusRequester,
-                balanceAmountTextFieldFocusRequester = balanceAmountTextFieldFocusRequester,
                 isLoading = false,
                 isCtaButtonEnabled = isCtaButtonEnabled,
                 appBarTitleTextStringResourceId = R.string.screen_edit_account_appbar_title,

@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
@@ -74,12 +73,6 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
     }
     // endregion
 
-    // region name text field focus requester
-    val nameTextFieldFocusRequester = remember {
-        FocusRequester()
-    }
-    // region
-
     // region minimum account balance amount value
     var minimumAccountBalanceAmountValue: TextFieldValue by remember {
         mutableStateOf(
@@ -137,7 +130,6 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         setSelectedAccountTypeIndex,
         name,
         setName,
-        nameTextFieldFocusRequester,
         minimumAccountBalanceAmountValue,
         setMinimumAccountBalanceAmountValue,
         isValidData,
@@ -149,7 +141,6 @@ internal fun rememberAddAccountScreenUIStateAndEvents(
         AddAccountScreenUIStateAndStateEvents(
             state = AddAccountScreenUIState(
                 screenBottomSheetType = screenBottomSheetType,
-                nameTextFieldFocusRequester = nameTextFieldFocusRequester,
                 isLoading = false,
                 isCtaButtonEnabled = isValidData,
                 appBarTitleTextStringResourceId = R.string.screen_add_account_appbar_title,

@@ -13,9 +13,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -72,15 +74,22 @@ internal fun EditAccountScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: EditAccountScreenUIEvent) -> Unit = {},
 ) {
+    val nameTextFieldFocusRequester = remember {
+        FocusRequester()
+    }
+    val balanceAmountTextFieldFocusRequester = remember {
+        FocusRequester()
+    }
+
     if (!uiState.isLoading) {
         LaunchedEffect(
             key1 = uiState.visibilityData.balanceAmountTextField,
             key2 = uiState.visibilityData.nameTextField,
         ) {
             if (uiState.visibilityData.balanceAmountTextField) {
-                uiState.balanceAmountTextFieldFocusRequester.requestFocus()
+                balanceAmountTextFieldFocusRequester.requestFocus()
             } else if (uiState.visibilityData.nameTextField) {
-                uiState.nameTextFieldFocusRequester.requestFocus()
+                nameTextFieldFocusRequester.requestFocus()
             }
             state.keyboardController?.show()
         }
@@ -154,7 +163,7 @@ internal fun EditAccountScreenUI(
                 MyOutlinedTextField(
                     modifier = Modifier
                         .focusRequester(
-                            focusRequester = uiState.nameTextFieldFocusRequester,
+                            focusRequester = nameTextFieldFocusRequester,
                         )
                         .fillMaxWidth()
                         .padding(
@@ -224,7 +233,7 @@ internal fun EditAccountScreenUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(
-                            focusRequester = uiState.balanceAmountTextFieldFocusRequester,
+                            focusRequester = balanceAmountTextFieldFocusRequester,
                         )
                         .padding(
                             horizontal = 16.dp,

@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
@@ -15,7 +14,6 @@ internal data class AddAccountScreenUIState(
     val visibilityData: AddAccountScreenUIVisibilityData,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,
-    val nameTextFieldFocusRequester: FocusRequester,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     @StringRes val nameTextFieldErrorTextStringResourceId: Int?,
