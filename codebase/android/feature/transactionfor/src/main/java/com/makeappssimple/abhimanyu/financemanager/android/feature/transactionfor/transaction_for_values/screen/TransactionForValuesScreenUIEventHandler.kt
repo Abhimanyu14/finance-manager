@@ -1,9 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen
 
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel.TransactionForValuesScreenViewModel
-
 public class TransactionForValuesScreenUIEventHandler internal constructor(
-    private val viewModel: TransactionForValuesScreenViewModel,
     private val uiStateAndStateEvents: TransactionForValuesScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
@@ -17,9 +14,7 @@ public class TransactionForValuesScreenUIEventHandler internal constructor(
 
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
                 uiStateAndStateEvents.state.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                    viewModel.deleteTransactionFor(
-                        id = transactionForIdToDeleteValue,
-                    )
+                    uiStateAndStateEvents.events.deleteTransactionFor(transactionForIdToDeleteValue)
                     uiStateAndStateEvents.events.setTransactionForIdToDelete(null)
                 }
                 uiStateAndStateEvents.events.resetScreenBottomSheetType()
@@ -30,7 +25,7 @@ public class TransactionForValuesScreenUIEventHandler internal constructor(
             }
 
             is TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick -> {
-                viewModel.navigateToAddTransactionForScreen()
+                uiStateAndStateEvents.events.navigateToAddTransactionForScreen()
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.DeleteButtonClick -> {
@@ -42,9 +37,7 @@ public class TransactionForValuesScreenUIEventHandler internal constructor(
 
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick -> {
                 uiStateAndStateEvents.events.resetScreenBottomSheetType()
-                viewModel.navigateToEditTransactionForScreen(
-                    transactionForId = uiEvent.transactionForId,
-                )
+                uiStateAndStateEvents.events.navigateToEditTransactionForScreen(uiEvent.transactionForId)
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForListItem.Click -> {
@@ -72,7 +65,7 @@ public class TransactionForValuesScreenUIEventHandler internal constructor(
             }
 
             is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
         }
     }
