@@ -5,6 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Fi
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
+import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class TransactionsScreenUIStateEvents(
@@ -18,4 +19,11 @@ internal class TransactionsScreenUIStateEvents(
     val removeFromSelectedTransactions: (transactionId: Int) -> Unit = {},
     val clearSelectedTransactions: () -> Unit = {},
     val selectAllTransactions: () -> Unit = {},
+    val navigateUp: () -> Unit = {},
+    val navigateToAddTransactionScreen: () -> Unit = {},
+    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit = {},
+    val updateTransactionForValuesInTransactions: (
+        selectedTransactions: ImmutableList<Int>,
+        transactionForId: Int,
+    ) -> Unit = { _, _ -> },
 ) : ScreenUIStateEvents

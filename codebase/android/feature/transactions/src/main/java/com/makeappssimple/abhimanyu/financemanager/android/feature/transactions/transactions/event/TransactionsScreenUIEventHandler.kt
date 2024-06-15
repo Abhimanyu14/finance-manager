@@ -3,10 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 
 public class TransactionsScreenUIEventHandler internal constructor(
-    private val viewModel: TransactionsScreenViewModel,
     private val uiStateAndStateEvents: TransactionsScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
@@ -56,9 +54,7 @@ public class TransactionsScreenUIEventHandler internal constructor(
                         uiStateAndStateEvents.events.addToSelectedTransactions(uiEvent.transactionId)
                     }
                 } else {
-                    viewModel.navigateToViewTransactionScreen(
-                        transactionId = uiEvent.transactionId,
-                    )
+                    uiStateAndStateEvents.events.navigateToViewTransactionScreen(uiEvent.transactionId)
                 }
             }
 
@@ -76,11 +72,11 @@ public class TransactionsScreenUIEventHandler internal constructor(
             }
 
             is TransactionsScreenUIEvent.OnFloatingActionButtonClick -> {
-                viewModel.navigateToAddTransactionScreen()
+                uiStateAndStateEvents.events.navigateToAddTransactionScreen()
             }
 
             is TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
 
             is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
@@ -109,9 +105,9 @@ public class TransactionsScreenUIEventHandler internal constructor(
             is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
                 uiStateAndStateEvents.events.setIsInSelectionMode(false)
                 uiStateAndStateEvents.events.resetScreenBottomSheetType()
-                viewModel.updateTransactionForValuesInTransactions(
-                    selectedTransactions = uiStateAndStateEvents.state.selectedTransactions,
-                    transactionForId = uiEvent.updatedTransactionForValues,
+                uiStateAndStateEvents.events.updateTransactionForValuesInTransactions(
+                    uiStateAndStateEvents.state.selectedTransactions,
+                    uiEvent.updatedTransactionForValues,
                 )
                 uiStateAndStateEvents.events.clearSelectedTransactions()
             }
