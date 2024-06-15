@@ -15,18 +15,15 @@ import kotlinx.collections.immutable.ImmutableList
 public fun ViewTransactionScreen(
     screenViewModel: ViewTransactionScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside ViewTransactionScreen",
     )
 
     // region view model data
-    val currentTransactionListItemData: TransactionListItemData? by viewModel.currentTransactionListItemData.collectAsStateWithLifecycle()
-    val originalTransactionListItemData: TransactionListItemData? by viewModel.originalTransactionListItemData.collectAsStateWithLifecycle()
-    val refundTransactionListItemData: ImmutableList<TransactionListItemData> by viewModel.refundTransactionListItemData.collectAsStateWithLifecycle()
+    val currentTransactionListItemData: TransactionListItemData? by screenViewModel.currentTransactionListItemData.collectAsStateWithLifecycle()
+    val originalTransactionListItemData: TransactionListItemData? by screenViewModel.originalTransactionListItemData.collectAsStateWithLifecycle()
+    val refundTransactionListItemData: ImmutableList<TransactionListItemData> by screenViewModel.refundTransactionListItemData.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberViewTransactionScreenUIStateAndEvents(
@@ -35,11 +32,11 @@ public fun ViewTransactionScreen(
         refundTransactionListItemData = refundTransactionListItemData,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         ViewTransactionScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }
@@ -47,7 +44,7 @@ public fun ViewTransactionScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     ViewTransactionScreenUI(

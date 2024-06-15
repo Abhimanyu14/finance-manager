@@ -18,18 +18,15 @@ import kotlinx.collections.immutable.ImmutableList
 public fun EditAccountScreen(
     screenViewModel: EditAccountScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside EditAccountScreen",
     )
 
     // region view model data
-    val accounts: ImmutableList<Account> by viewModel.accounts.collectAsStateWithLifecycle()
-    val originalAccount: Account? by viewModel.originalAccount.collectAsStateWithLifecycle()
-    val validAccountTypes: ImmutableList<AccountType> = viewModel.validAccountTypes
+    val accounts: ImmutableList<Account> by screenViewModel.accounts.collectAsStateWithLifecycle()
+    val originalAccount: Account? by screenViewModel.originalAccount.collectAsStateWithLifecycle()
+    val validAccountTypes: ImmutableList<AccountType> = screenViewModel.validAccountTypes
     // endregion
 
     val uiStateAndEvents = rememberEditAccountScreenUIStateAndEvents(
@@ -38,11 +35,11 @@ public fun EditAccountScreen(
         validAccountTypes = validAccountTypes,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         EditAccountScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }
@@ -50,7 +47,7 @@ public fun EditAccountScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     LaunchedEffect(

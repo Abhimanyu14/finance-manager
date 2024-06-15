@@ -15,27 +15,24 @@ import kotlinx.collections.immutable.ImmutableList
 public fun AddTransactionForScreen(
     screenViewModel: AddTransactionForScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside AddTransactionForScreen",
     )
 
     // region view model data
-    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
+    val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberAddTransactionForScreenUIStateAndEvents(
         transactionForValues = transactionForValues,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         AddTransactionForScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }
@@ -43,7 +40,7 @@ public fun AddTransactionForScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     AddTransactionForScreenUI(

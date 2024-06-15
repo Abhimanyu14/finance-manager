@@ -16,17 +16,14 @@ import kotlinx.collections.immutable.ImmutableList
 public fun EditTransactionForScreen(
     screenViewModel: EditTransactionForScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside EditTransactionForScreen",
     )
 
     // region view model data
-    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
-    val transactionFor: TransactionFor? by viewModel.transactionFor.collectAsStateWithLifecycle()
+    val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
+    val transactionFor: TransactionFor? by screenViewModel.transactionFor.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberEditTransactionForScreenUIStateAndEvents(
@@ -34,11 +31,11 @@ public fun EditTransactionForScreen(
         transactionFor = transactionFor,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         EditTransactionForScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }
@@ -46,7 +43,7 @@ public fun EditTransactionForScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     LaunchedEffect(transactionFor) {

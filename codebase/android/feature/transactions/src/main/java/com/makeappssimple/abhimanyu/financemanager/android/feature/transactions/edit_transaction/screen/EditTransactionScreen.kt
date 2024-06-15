@@ -21,26 +21,23 @@ import java.time.LocalDate
 public fun EditTransactionScreen(
     screenViewModel: EditTransactionScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside EditTransactionScreen",
     )
 
     // region view model data
-    val uiState: EditTransactionScreenUiStateData by viewModel.uiState.collectAsStateWithLifecycle()
-    val uiVisibilityState: EditTransactionScreenUiVisibilityState by viewModel.uiVisibilityState.collectAsStateWithLifecycle()
-    val isCtaButtonEnabled: Boolean by viewModel.isCtaButtonEnabled.collectAsStateWithLifecycle()
-    val filteredCategories: ImmutableList<Category> by viewModel.filteredCategories.collectAsStateWithLifecycle()
-    val titleSuggestions: ImmutableList<String>? by viewModel.titleSuggestions.collectAsStateWithLifecycle()
-    val selectedTransactionType: TransactionType? by viewModel.selectedTransactionType.collectAsStateWithLifecycle()
-    val isDataFetchCompleted: Boolean by viewModel.isDataFetchCompleted.collectAsStateWithLifecycle()
-    val validTransactionTypesForNewTransaction: ImmutableList<TransactionType> by viewModel.validTransactionTypesForNewTransaction.collectAsStateWithLifecycle()
-    val currentLocalDate: LocalDate = viewModel.currentLocalDate
-    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
-    val accounts: ImmutableList<Account> by viewModel.accounts.collectAsStateWithLifecycle()
+    val uiState: EditTransactionScreenUiStateData by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiVisibilityState: EditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
+    val isCtaButtonEnabled: Boolean by screenViewModel.isCtaButtonEnabled.collectAsStateWithLifecycle()
+    val filteredCategories: ImmutableList<Category> by screenViewModel.filteredCategories.collectAsStateWithLifecycle()
+    val titleSuggestions: ImmutableList<String>? by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
+    val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsStateWithLifecycle()
+    val isDataFetchCompleted: Boolean by screenViewModel.isDataFetchCompleted.collectAsStateWithLifecycle()
+    val validTransactionTypesForNewTransaction: ImmutableList<TransactionType> by screenViewModel.validTransactionTypesForNewTransaction.collectAsStateWithLifecycle()
+    val currentLocalDate: LocalDate = screenViewModel.currentLocalDate
+    val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
+    val accounts: ImmutableList<Account> by screenViewModel.accounts.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberEditTransactionScreenUIStateAndEvents(
@@ -57,11 +54,11 @@ public fun EditTransactionScreen(
         accounts = accounts,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         EditTransactionScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }
@@ -69,7 +66,7 @@ public fun EditTransactionScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     EditTransactionScreenUI(

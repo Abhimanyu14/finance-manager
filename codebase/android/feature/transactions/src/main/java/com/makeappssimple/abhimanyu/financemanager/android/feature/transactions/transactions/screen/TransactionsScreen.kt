@@ -21,25 +21,22 @@ import java.time.LocalDate
 public fun TransactionsScreen(
     screenViewModel: TransactionsScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside TransactionsScreen",
     )
 
     // region view model data
-    val allTransactionData: ImmutableList<TransactionData> by viewModel.allTransactionData.collectAsStateWithLifecycle()
-    val expenseCategories: ImmutableList<Category>? by viewModel.expenseCategories.collectAsStateWithLifecycle()
-    val incomeCategories: ImmutableList<Category>? by viewModel.incomeCategories.collectAsStateWithLifecycle()
-    val investmentCategories: ImmutableList<Category>? by viewModel.investmentCategories.collectAsStateWithLifecycle()
-    val accounts: ImmutableList<Account>? by viewModel.accounts.collectAsStateWithLifecycle()
-    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
-    val transactionTypes: ImmutableList<TransactionType> = viewModel.transactionTypes
-    val oldestTransactionLocalDate: LocalDate? by viewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle()
-    val sortOptions: ImmutableList<SortOption> = viewModel.sortOptions
-    val currentLocalDate: LocalDate = viewModel.currentLocalDate
+    val allTransactionData: ImmutableList<TransactionData> by screenViewModel.allTransactionData.collectAsStateWithLifecycle()
+    val expenseCategories: ImmutableList<Category>? by screenViewModel.expenseCategories.collectAsStateWithLifecycle()
+    val incomeCategories: ImmutableList<Category>? by screenViewModel.incomeCategories.collectAsStateWithLifecycle()
+    val investmentCategories: ImmutableList<Category>? by screenViewModel.investmentCategories.collectAsStateWithLifecycle()
+    val accounts: ImmutableList<Account>? by screenViewModel.accounts.collectAsStateWithLifecycle()
+    val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
+    val transactionTypes: ImmutableList<TransactionType> = screenViewModel.transactionTypes
+    val oldestTransactionLocalDate: LocalDate? by screenViewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle()
+    val sortOptions: ImmutableList<SortOption> = screenViewModel.sortOptions
+    val currentLocalDate: LocalDate = screenViewModel.currentLocalDate
     // endregion
 
     val uiStateAndEvents = rememberTransactionsScreenUIStateAndEvents(
@@ -55,11 +52,11 @@ public fun TransactionsScreen(
         currentLocalDate = currentLocalDate,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         TransactionsScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }

@@ -14,17 +14,14 @@ import kotlinx.collections.immutable.ImmutableList
 public fun TransactionForValuesScreen(
     screenViewModel: TransactionForValuesScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside TransactionForValuesScreen",
     )
 
     // region view model data
-    val transactionForValues: ImmutableList<TransactionFor> by viewModel.transactionForValues.collectAsStateWithLifecycle()
-    val transactionForValuesIsUsedInTransactions: ImmutableList<Boolean> by viewModel.transactionForValuesIsUsedInTransactions.collectAsStateWithLifecycle()
+    val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
+    val transactionForValuesIsUsedInTransactions: ImmutableList<Boolean> by screenViewModel.transactionForValuesIsUsedInTransactions.collectAsStateWithLifecycle()
     // endregion
 
     val uiStateAndEvents = rememberTransactionForValuesScreenUIStateAndEvents(
@@ -32,11 +29,11 @@ public fun TransactionForValuesScreen(
         transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         TransactionForValuesScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }

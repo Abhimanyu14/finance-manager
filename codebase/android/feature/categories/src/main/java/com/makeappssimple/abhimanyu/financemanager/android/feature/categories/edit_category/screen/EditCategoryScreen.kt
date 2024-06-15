@@ -17,19 +17,17 @@ import kotlinx.collections.immutable.ImmutableList
 public fun EditCategoryScreen(
     screenViewModel: EditCategoryScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside EditCategoryScreen",
     )
 
     // region view model data
-    val categories: ImmutableList<Category> by viewModel.categories.collectAsStateWithLifecycle()
-    val category: Category? by viewModel.category.collectAsStateWithLifecycle()
-    val validTransactionTypes: ImmutableList<TransactionType> = viewModel.validTransactionTypes
-    val originalTransactionType: String? = viewModel.originalTransactionType
+    val categories: ImmutableList<Category> by screenViewModel.categories.collectAsStateWithLifecycle()
+    val category: Category? by screenViewModel.category.collectAsStateWithLifecycle()
+    val validTransactionTypes: ImmutableList<TransactionType> =
+        screenViewModel.validTransactionTypes
+    val originalTransactionType: String? = screenViewModel.originalTransactionType
     // endregion
 
     val uiStateAndEvents = rememberEditCategoryScreenUIStateAndEvents(
@@ -38,13 +36,13 @@ public fun EditCategoryScreen(
         validTransactionTypes = validTransactionTypes,
     )
     val screenUIEventHandler = remember(
-        viewModel,
+        screenViewModel,
         uiStateAndEvents,
         category,
         validTransactionTypes,
     ) {
         EditCategoryScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
             category = category,
             validTransactionTypes = validTransactionTypes,
@@ -54,7 +52,7 @@ public fun EditCategoryScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
         originalTransactionType?.let { originalTransactionType ->
             uiStateAndEvents.events.setSelectedTransactionTypeIndex(
                 validTransactionTypes.indexOf(

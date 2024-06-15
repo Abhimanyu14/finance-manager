@@ -19,9 +19,6 @@ import kotlinx.collections.immutable.ImmutableList
 public fun AddAccountScreen(
     screenViewModel: AddAccountScreenViewModel = hiltViewModel(),
 ) {
-    val viewModel: AddAccountScreenViewModel = remember {
-        screenViewModel
-    }
     val myLogger = LocalMyLogger.current
     myLogger.logError(
         message = "Inside AddAccountScreen",
@@ -31,8 +28,8 @@ public fun AddAccountScreen(
     val isKeyboardOpen = WindowInsets.isImeVisible
 
     // region view model data
-    val accounts: ImmutableList<Account> by viewModel.accounts.collectAsStateWithLifecycle()
-    val validAccountTypes: ImmutableList<AccountType> = viewModel.validAccountTypes
+    val accounts: ImmutableList<Account> by screenViewModel.accounts.collectAsStateWithLifecycle()
+    val validAccountTypes: ImmutableList<AccountType> = screenViewModel.validAccountTypes
     // endregion
 
     val uiStateAndEvents = rememberAddAccountScreenUIStateAndEvents(
@@ -40,11 +37,11 @@ public fun AddAccountScreen(
         validAccountTypes = validAccountTypes,
     )
     val screenUIEventHandler = remember(
-        key1 = viewModel,
+        key1 = screenViewModel,
         key2 = uiStateAndEvents,
     ) {
         AddAccountScreenUIEventHandler(
-            viewModel = viewModel,
+            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndEvents,
         )
     }
@@ -60,7 +57,7 @@ public fun AddAccountScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.initViewModel()
+        screenViewModel.initViewModel()
     }
 
     AddAccountScreenUI(
