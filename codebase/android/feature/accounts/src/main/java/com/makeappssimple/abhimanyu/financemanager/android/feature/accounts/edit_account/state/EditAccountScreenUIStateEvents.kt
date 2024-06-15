@@ -6,9 +6,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 internal class EditAccountScreenUIStateEvents(
+    val clearMinimumAccountBalanceAmountValue: () -> Unit = {},
+    val clearName: () -> Unit = {},
+    val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
     val setName: (updatedName: TextFieldValue) -> Unit = {},
     val setBalanceAmountValue: (updatedBalanceAmountValue: TextFieldValue) -> Unit = {},
     val setMinimumAccountBalanceAmountValue: (updatedMinimumAccountBalanceAmountValue: TextFieldValue) -> Unit = {},
     val setSelectedAccountTypeIndex: (updatedSelectedAccountTypeIndex: Int) -> Unit = {},
+    val updateAccount: (
+        selectedAccountTypeIndex: Int,
+        name: String,
+        balanceAmountValue: String,
+        minimumAccountBalanceAmountValue: String,
+    ) -> Unit = { _, _, _, _ -> },
 ) : ScreenUIStateEvents

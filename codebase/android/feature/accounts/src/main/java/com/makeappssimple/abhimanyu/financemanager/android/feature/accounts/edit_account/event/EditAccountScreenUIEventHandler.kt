@@ -2,10 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edi
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.viewmodel.EditAccountScreenViewModel
 
 public class EditAccountScreenUIEventHandler internal constructor(
-    private val viewModel: EditAccountScreenViewModel,
     private val uiStateAndStateEvents: EditAccountScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
@@ -13,11 +11,11 @@ public class EditAccountScreenUIEventHandler internal constructor(
     ) {
         when (uiEvent) {
             is EditAccountScreenUIEvent.OnCtaButtonClick -> {
-                viewModel.updateAccount(
-                    selectedAccountTypeIndex = uiStateAndStateEvents.state.selectedAccountTypeIndex,
-                    name = uiStateAndStateEvents.state.name.text,
-                    balanceAmountValue = uiStateAndStateEvents.state.balanceAmountValue.text,
-                    minimumAccountBalanceAmountValue = uiStateAndStateEvents.state.minimumBalanceAmountValue.text,
+                uiStateAndStateEvents.events.updateAccount(
+                    uiStateAndStateEvents.state.selectedAccountTypeIndex,
+                    uiStateAndStateEvents.state.name.text,
+                    uiStateAndStateEvents.state.balanceAmountValue.text,
+                    uiStateAndStateEvents.state.minimumBalanceAmountValue.text,
                 )
             }
 
@@ -58,7 +56,7 @@ public class EditAccountScreenUIEventHandler internal constructor(
             }
 
             is EditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
 
             is EditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
