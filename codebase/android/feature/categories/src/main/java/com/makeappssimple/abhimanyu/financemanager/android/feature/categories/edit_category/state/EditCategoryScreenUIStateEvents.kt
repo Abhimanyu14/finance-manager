@@ -7,11 +7,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ed
 
 @Stable
 internal class EditCategoryScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit = {},
-    val setScreenBottomSheetType: (EditCategoryScreenBottomSheetType) -> Unit = {},
-    val setTitle: (updatedTitle: TextFieldValue) -> Unit = {},
     val clearTitle: () -> Unit = {},
-    val setSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit = {},
-    val setSearchText: (updatedSearchText: String) -> Unit = {},
+    val navigateUp: () -> Unit = {},
+    val resetScreenBottomSheetType: () -> Unit = {},
     val setEmoji: (updatedEmoji: String) -> Unit = {},
+    val setScreenBottomSheetType: (EditCategoryScreenBottomSheetType) -> Unit = {},
+    val setSearchText: (updatedSearchText: String) -> Unit = {},
+    val setSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit = {},
+    val setTitle: (updatedTitle: TextFieldValue) -> Unit = {},
+    val updateCategory: () -> Unit = {},
 ) : ScreenUIStateEvents

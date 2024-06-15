@@ -1,17 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.event
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.bottomsheet.EditCategoryScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModel
-import kotlinx.collections.immutable.ImmutableList
 
 public class EditCategoryScreenUIEventHandler internal constructor(
-    private val viewModel: EditCategoryScreenViewModel,
     private val uiStateAndStateEvents: EditCategoryScreenUIStateAndStateEvents,
-    private val category: Category?,
-    private val validTransactionTypes: ImmutableList<TransactionType>,
 ) {
     public fun handleUIEvent(
         uiEvent: EditCategoryScreenUIEvent,
@@ -27,18 +20,9 @@ public class EditCategoryScreenUIEventHandler internal constructor(
             }
 
             is EditCategoryScreenUIEvent.OnCtaButtonClick -> {
-                category?.let { category ->
-                    uiStateAndStateEvents.state.selectedTransactionTypeIndex?.let { selectedTransactionTypeIndex ->
-                        viewModel.updateCategory(
-                            category = category.copy(
-                                emoji = uiStateAndStateEvents.state.emoji,
-                                title = uiStateAndStateEvents.state.title.text,
-                                transactionType = validTransactionTypes[selectedTransactionTypeIndex],
-                            ),
-                        )
-                    }
+                uiStateAndStateEvents.state.selectedTransactionTypeIndex?.let { _ ->
+                    uiStateAndStateEvents.events.updateCategory()
                 }
-                Unit
             }
 
             is EditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
@@ -52,7 +36,7 @@ public class EditCategoryScreenUIEventHandler internal constructor(
             }
 
             is EditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
 
             is EditCategoryScreenUIEvent.OnEmojiUpdated -> {
