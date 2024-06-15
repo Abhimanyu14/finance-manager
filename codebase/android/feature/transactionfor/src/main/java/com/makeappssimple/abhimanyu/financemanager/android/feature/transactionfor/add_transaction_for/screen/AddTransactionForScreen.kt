@@ -7,9 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.viewmodel.AddTransactionForScreenViewModel
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 public fun AddTransactionForScreen(
@@ -20,19 +18,12 @@ public fun AddTransactionForScreen(
         message = "Inside AddTransactionForScreen",
     )
 
-    // region view model data
-    val transactionForValues: ImmutableList<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
-    // endregion
+    val uiStateAndStateEvents: AddTransactionForScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
-    val uiStateAndStateEvents = rememberAddTransactionForScreenUIStateAndEvents(
-        transactionForValues = transactionForValues,
-    )
     val screenUIEventHandler = remember(
-        key1 = screenViewModel,
-        key2 = uiStateAndStateEvents,
+        key1 = uiStateAndStateEvents,
     ) {
         AddTransactionForScreenUIEventHandler(
-            viewModel = screenViewModel,
             uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }
