@@ -5,6 +5,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 internal class ViewTransactionScreenUIStateEvents(
+    val deleteTransaction: (transactionId: Int) -> Unit = {},
+    val navigateUp: () -> Unit = {},
+    val navigateToAddTransactionScreen: (transactionId: Int) -> Unit = {},
+    val navigateToEditTransactionScreen: (transactionId: Int) -> Unit = {},
+    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
     val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit = {},
     val setTransactionIdToDelete: (Int?) -> Unit = {},

@@ -9,6 +9,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Stable
 internal data class ViewTransactionScreenUIState(
     val isBottomSheetVisible: Boolean = false,
+    val isLoading: Boolean = true,
     val transactionIdToDelete: Int? = null,
     val refundTransactionListItemData: ImmutableList<TransactionListItemData>? = persistentListOf(),
     val originalTransactionListItemData: TransactionListItemData? = null,

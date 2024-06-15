@@ -1,9 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen
 
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
-
 public class ViewTransactionScreenUIEventHandler internal constructor(
-    private val viewModel: ViewTransactionScreenViewModel,
     private val uiStateAndStateEvents: ViewTransactionScreenUIStateAndStateEvents,
 ) {
     public fun handleUIEvent(
@@ -15,7 +12,7 @@ public class ViewTransactionScreenUIEventHandler internal constructor(
             }
 
             is ViewTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.NegativeButtonClick -> {
@@ -25,24 +22,18 @@ public class ViewTransactionScreenUIEventHandler internal constructor(
 
             is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.PositiveButtonClick -> {
                 uiStateAndStateEvents.state.transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                    viewModel.deleteTransaction(
-                        transactionId = transactionIdToDeleteValue,
-                    )
+                    uiStateAndStateEvents.events.deleteTransaction(transactionIdToDeleteValue)
                     uiStateAndStateEvents.events.setTransactionIdToDelete(null)
                 }
                 uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionListItem.Click -> {
-                viewModel.navigateToViewTransactionScreen(
-                    transactionId = uiEvent.transactionId,
-                )
+                uiStateAndStateEvents.events.navigateToViewTransactionScreen(uiEvent.transactionId)
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionListItem.EditButtonClick -> {
-                viewModel.navigateToEditTransactionScreen(
-                    transactionId = uiEvent.transactionId,
-                )
+                uiStateAndStateEvents.events.navigateToEditTransactionScreen(uiEvent.transactionId)
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionListItem.DeleteButtonClick -> {
@@ -53,9 +44,7 @@ public class ViewTransactionScreenUIEventHandler internal constructor(
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick -> {
-                viewModel.navigateToAddTransactionScreen(
-                    transactionId = uiEvent.transactionId,
-                )
+                uiStateAndStateEvents.events.navigateToAddTransactionScreen(uiEvent.transactionId)
             }
         }
     }
