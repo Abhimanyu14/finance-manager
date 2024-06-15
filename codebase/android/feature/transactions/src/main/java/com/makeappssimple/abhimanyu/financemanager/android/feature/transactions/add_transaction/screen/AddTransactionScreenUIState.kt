@@ -10,28 +10,29 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDate
 
 @Stable
 internal data class AddTransactionScreenUIState(
-    val screenBottomSheetType: AddTransactionScreenBottomSheetType,
-    val uiState: AddTransactionScreenUiStateData,
-    val uiVisibilityState: AddTransactionScreenUiVisibilityState,
-    val isBottomSheetVisible: Boolean,
-    val isCtaButtonEnabled: Boolean,
-    val isLoading: Boolean,
-    val isTransactionDatePickerDialogVisible: Boolean,
-    val isTransactionTimePickerDialogVisible: Boolean,
-    @StringRes val accountFromTextFieldLabelTextStringResourceId: Int,
-    @StringRes val accountToTextFieldLabelTextStringResourceId: Int,
-    @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    val accounts: ImmutableList<Account>,
-    val filteredCategories: ImmutableList<Category>,
-    val titleSuggestionsChipUIData: ImmutableList<ChipUIData>,
-    val transactionForValuesChipUIData: ImmutableList<ChipUIData>,
-    val transactionTypesForNewTransactionChipUIData: ImmutableList<ChipUIData>,
-    val titleSuggestions: ImmutableList<String>,
-    val currentLocalDate: LocalDate,
-    val selectedTransactionType: TransactionType,
+    val screenBottomSheetType: AddTransactionScreenBottomSheetType = AddTransactionScreenBottomSheetType.None,
+    val uiState: AddTransactionScreenUiStateData = AddTransactionScreenUiStateData(),
+    val uiVisibilityState: AddTransactionScreenUiVisibilityState = AddTransactionScreenUiVisibilityState.Expense,
+    val isBottomSheetVisible: Boolean = false,
+    val isCtaButtonEnabled: Boolean = false,
+    val isLoading: Boolean = true,
+    val isTransactionDatePickerDialogVisible: Boolean = false,
+    val isTransactionTimePickerDialogVisible: Boolean = false,
+    @StringRes val accountFromTextFieldLabelTextStringResourceId: Int = -1,
+    @StringRes val accountToTextFieldLabelTextStringResourceId: Int = -1,
+    @StringRes val appBarTitleTextStringResourceId: Int = -1,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int = -1,
+    val accounts: ImmutableList<Account> = persistentListOf(),
+    val filteredCategories: ImmutableList<Category> = persistentListOf(),
+    val titleSuggestionsChipUIData: ImmutableList<ChipUIData> = persistentListOf(),
+    val transactionForValuesChipUIData: ImmutableList<ChipUIData> = persistentListOf(),
+    val transactionTypesForNewTransactionChipUIData: ImmutableList<ChipUIData> = persistentListOf(),
+    val titleSuggestions: ImmutableList<String> = persistentListOf(),
+    val currentLocalDate: LocalDate = LocalDate.MIN,
+    val selectedTransactionType: TransactionType = TransactionType.EXPENSE,
 ) : ScreenUIState

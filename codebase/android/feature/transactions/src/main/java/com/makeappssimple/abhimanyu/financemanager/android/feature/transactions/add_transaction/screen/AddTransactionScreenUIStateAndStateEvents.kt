@@ -39,8 +39,8 @@ import java.time.LocalTime
 
 @Stable
 internal data class AddTransactionScreenUIStateAndStateEvents(
-    val uiState: AddTransactionScreenUIState,
-    val uiStateEvents: AddTransactionScreenUIStateEvents,
+    val uiState: AddTransactionScreenUIState = AddTransactionScreenUIState(),
+    val uiStateEvents: AddTransactionScreenUIStateEvents = AddTransactionScreenUIStateEvents(),
 ) : ScreenUIStateAndStateEvents
 
 @Composable

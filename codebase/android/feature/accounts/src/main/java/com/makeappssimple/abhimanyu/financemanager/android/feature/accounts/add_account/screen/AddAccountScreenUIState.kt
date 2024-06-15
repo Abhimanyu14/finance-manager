@@ -7,19 +7,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 internal data class AddAccountScreenUIState(
-    val screenBottomSheetType: AddAccountScreenBottomSheetType,
-    val visibilityData: AddAccountScreenUIVisibilityData,
-    val isCtaButtonEnabled: Boolean,
-    val isLoading: Boolean,
-    @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    @StringRes val nameTextFieldErrorTextStringResourceId: Int?,
-    val selectedAccountTypeIndex: Int,
-    val selectedAccountType: AccountType?,
-    val accountTypesChipUIDataList: ImmutableList<ChipUIData>,
-    val minimumAccountBalanceTextFieldValue: TextFieldValue,
-    val nameTextFieldValue: TextFieldValue,
+    val screenBottomSheetType: AddAccountScreenBottomSheetType = AddAccountScreenBottomSheetType.None,
+    val visibilityData: AddAccountScreenUIVisibilityData = AddAccountScreenUIVisibilityData(),
+    val isCtaButtonEnabled: Boolean = false,
+    val isLoading: Boolean = true,
+    @StringRes val appBarTitleTextStringResourceId: Int = -1,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int = -1,
+    @StringRes val nameTextFieldErrorTextStringResourceId: Int? = null,
+    val selectedAccountTypeIndex: Int = 0,
+    val selectedAccountType: AccountType? = null,
+    val accountTypesChipUIDataList: ImmutableList<ChipUIData> = persistentListOf(),
+    val minimumAccountBalanceTextFieldValue: TextFieldValue = TextFieldValue(),
+    val nameTextFieldValue: TextFieldValue = TextFieldValue(),
 ) : ScreenUIState

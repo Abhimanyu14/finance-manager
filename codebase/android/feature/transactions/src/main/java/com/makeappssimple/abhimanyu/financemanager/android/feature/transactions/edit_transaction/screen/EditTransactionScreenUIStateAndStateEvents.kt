@@ -25,8 +25,8 @@ import java.time.LocalDate
 
 @Stable
 internal class EditTransactionScreenUIStateAndStateEvents(
-    val state: EditTransactionScreenUIState,
-    val events: EditTransactionScreenUIStateEvents,
+    val state: EditTransactionScreenUIState = EditTransactionScreenUIState(),
+    val events: EditTransactionScreenUIStateEvents = EditTransactionScreenUIStateEvents(),
 ) : ScreenUIStateAndStateEvents
 
 @Composable

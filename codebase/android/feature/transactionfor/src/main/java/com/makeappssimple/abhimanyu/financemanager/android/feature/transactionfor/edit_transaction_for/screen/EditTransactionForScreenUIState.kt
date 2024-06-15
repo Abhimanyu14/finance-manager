@@ -7,12 +7,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 internal data class EditTransactionForScreenUIState(
-    val screenBottomSheetType: EditTransactionForScreenBottomSheetType,
-    val isBottomSheetVisible: Boolean,
-    val isCtaButtonEnabled: Boolean?,
-    val isLoading: Boolean,
-    @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    @StringRes val titleTextFieldErrorTextStringResourceId: Int?,
-    val title: TextFieldValue,
+    val screenBottomSheetType: EditTransactionForScreenBottomSheetType = EditTransactionForScreenBottomSheetType.None,
+    val isBottomSheetVisible: Boolean = false,
+    val isCtaButtonEnabled: Boolean? = null,
+    val isLoading: Boolean = true,
+    @StringRes val appBarTitleTextStringResourceId: Int = -1,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int = -1,
+    @StringRes val titleTextFieldErrorTextStringResourceId: Int? = null,
+    val title: TextFieldValue = TextFieldValue(),
 ) : ScreenUIState

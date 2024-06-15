@@ -16,8 +16,8 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class EditTransactionForScreenUIStateAndStateEvents(
-    val state: EditTransactionForScreenUIState,
-    val events: EditTransactionForScreenUIStateEvents,
+    val state: EditTransactionForScreenUIState = EditTransactionForScreenUIState(),
+    val events: EditTransactionForScreenUIStateEvents = EditTransactionForScreenUIStateEvents(),
 ) : ScreenUIStateAndStateEvents
 
 @Composable

@@ -25,7 +25,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class AddAccountScreenUIStateAndStateEvents(
-    val state: AddAccountScreenUIState,
+    val state: AddAccountScreenUIState = AddAccountScreenUIState(),
     val events: AddAccountScreenUIStateEvents,
 ) : ScreenUIStateAndStateEvents
 

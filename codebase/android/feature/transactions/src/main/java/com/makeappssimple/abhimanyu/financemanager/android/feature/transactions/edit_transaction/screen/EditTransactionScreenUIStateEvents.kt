@@ -5,8 +5,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 internal class EditTransactionScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
-    val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
-    val setScreenBottomSheetType: (EditTransactionScreenBottomSheetType) -> Unit,
+    val resetScreenBottomSheetType: () -> Unit = {},
+    val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit = {},
+    val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit = {},
+    val setScreenBottomSheetType: (EditTransactionScreenBottomSheetType) -> Unit = {},
 ) : ScreenUIStateEvents

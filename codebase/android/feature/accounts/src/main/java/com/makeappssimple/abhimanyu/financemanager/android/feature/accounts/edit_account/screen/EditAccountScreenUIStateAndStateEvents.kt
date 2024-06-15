@@ -26,8 +26,8 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class EditAccountScreenUIStateAndStateEvents(
-    val state: EditAccountScreenUIState,
-    val events: EditAccountScreenUIStateEvents,
+    val state: EditAccountScreenUIState = EditAccountScreenUIState(),
+    val events: EditAccountScreenUIStateEvents = EditAccountScreenUIStateEvents(),
 ) : ScreenUIStateAndStateEvents
 
 @Composable

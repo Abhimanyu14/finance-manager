@@ -38,8 +38,8 @@ import java.time.LocalDate
 
 @Stable
 internal class TransactionsScreenUIStateAndStateEvents(
-    val state: TransactionsScreenUIState,
-    val events: TransactionsScreenUIStateEvents,
+    val state: TransactionsScreenUIState = TransactionsScreenUIState(),
+    val events: TransactionsScreenUIStateEvents = TransactionsScreenUIStateEvents(),
 ) : ScreenUIStateAndStateEvents
 
 @Composable

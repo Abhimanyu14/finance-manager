@@ -7,14 +7,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 internal class TransactionsScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setIsInSelectionMode: (Boolean) -> Unit,
-    val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
-    val setSearchText: (updatedSearchText: String) -> Unit,
-    val setSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
-    val setSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit,
-    val addToSelectedTransactions: (transactionId: Int) -> Unit,
-    val removeFromSelectedTransactions: (transactionId: Int) -> Unit,
-    val clearSelectedTransactions: () -> Unit,
-    val selectAllTransactions: () -> Unit,
+    val resetScreenBottomSheetType: () -> Unit = {},
+    val setIsInSelectionMode: (Boolean) -> Unit = {},
+    val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit = {},
+    val setSearchText: (updatedSearchText: String) -> Unit = {},
+    val setSelectedFilter: (updatedSelectedFilter: Filter) -> Unit = {},
+    val setSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit = {},
+    val addToSelectedTransactions: (transactionId: Int) -> Unit = {},
+    val removeFromSelectedTransactions: (transactionId: Int) -> Unit = {},
+    val clearSelectedTransactions: () -> Unit = {},
+    val selectAllTransactions: () -> Unit = {},
 ) : ScreenUIStateEvents

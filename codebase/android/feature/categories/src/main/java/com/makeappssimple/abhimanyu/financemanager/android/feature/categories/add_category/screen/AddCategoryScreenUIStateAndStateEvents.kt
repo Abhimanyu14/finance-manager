@@ -24,8 +24,8 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class AddCategoryScreenUIStateAndStateEvents(
-    val state: AddCategoryScreenUIState,
-    val events: AddCategoryScreenUIStateEvents,
+    val state: AddCategoryScreenUIState = AddCategoryScreenUIState(),
+    val events: AddCategoryScreenUIStateEvents = AddCategoryScreenUIStateEvents(),
 ) : ScreenUIStateAndStateEvents
 
 @Composable

@@ -6,11 +6,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 internal class AddCategoryScreenUIStateEvents(
-    val resetScreenBottomSheetType: () -> Unit,
-    val setScreenBottomSheetType: (updatedAddCategoryScreenBottomSheetType: AddCategoryScreenBottomSheetType) -> Unit,
-    val setTitle: (updatedTitle: TextFieldValue) -> Unit,
-    val clearTitle: () -> Unit,
-    val setSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
-    val setSearchText: (updatedSearchText: String) -> Unit,
-    val setEmoji: (updatedEmoji: String) -> Unit,
+    val resetScreenBottomSheetType: () -> Unit = {},
+    val setScreenBottomSheetType: (updatedAddCategoryScreenBottomSheetType: AddCategoryScreenBottomSheetType) -> Unit = {},
+    val setTitle: (updatedTitle: TextFieldValue) -> Unit = {},
+    val clearTitle: () -> Unit = {},
+    val setSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit = {},
+    val setSearchText: (updatedSearchText: String) -> Unit = {},
+    val setEmoji: (updatedEmoji: String) -> Unit = {},
 ) : ScreenUIStateEvents
