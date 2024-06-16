@@ -25,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Sexd
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetMaxRefundAmountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionUseCase
@@ -38,8 +39,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.minus
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.plus
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -78,6 +77,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
+    private val getMaxRefundAmountUseCase: GetMaxRefundAmountUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
@@ -505,25 +505,8 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
 
     private suspend fun updateMaxRefundAmount() {
-        val originalTransactionData: TransactionData = originalTransactionData ?: return
-        var refundedAmountCalculated: Amount? = null
-        originalTransactionData.transaction.refundTransactionIds?.forEach { refundTransactionId ->
-            if (refundTransactionId != getOriginalTransactionId()) {
-                getTransactionDataUseCase(
-                    id = refundTransactionId,
-                )?.transaction?.amount?.let { prevRefundedTransactionAmount ->
-                    refundedAmountCalculated = refundedAmountCalculated?.run {
-                        this.plus(prevRefundedTransactionAmount)
-                    } ?: prevRefundedTransactionAmount
-                }
-            }
-        }
-        originalTransactionData.transaction.amount.let { originalTransactionAmount ->
-            maxRefundAmount = if (refundedAmountCalculated.isNotNull()) {
-                originalTransactionAmount.minus((refundedAmountCalculated ?: Amount()))
-            } else {
-                originalTransactionAmount
-            }
+        getOriginalTransactionId()?.let {
+            maxRefundAmount = getMaxRefundAmountUseCase(it)
         }
     }
 
