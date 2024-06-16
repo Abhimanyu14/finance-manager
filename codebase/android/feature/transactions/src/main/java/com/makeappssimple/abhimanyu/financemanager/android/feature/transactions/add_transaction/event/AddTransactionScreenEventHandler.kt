@@ -74,7 +74,6 @@ internal class AddTransactionScreenEventHandler(
 
             is AddTransactionScreenUIEvent.OnCategoryUpdated -> {
                 uiStateAndStateEvents.events.setCategory(uiEvent.updatedCategory)
-                uiStateAndStateEvents.events.setCategory(uiEvent.updatedCategory)
             }
 
             is AddTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated -> {
