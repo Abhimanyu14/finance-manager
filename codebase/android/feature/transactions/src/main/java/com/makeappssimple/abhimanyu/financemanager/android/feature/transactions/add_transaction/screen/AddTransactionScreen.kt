@@ -7,7 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.event.AddTransactionScreenEventHandler
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.event.AddTransactionScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
 
@@ -25,7 +25,7 @@ public fun AddTransactionScreen(
     val screenUIEventHandler = remember(
         key1 = uiStateAndStateEvents,
     ) {
-        AddTransactionScreenEventHandler(
+        AddTransactionScreenUIEventHandler(
             uiStateAndStateEvents = uiStateAndStateEvents,
         )
     }

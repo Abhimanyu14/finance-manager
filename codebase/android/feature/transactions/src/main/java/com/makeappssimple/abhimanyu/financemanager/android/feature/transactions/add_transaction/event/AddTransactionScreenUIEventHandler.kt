@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.bottomsheet.AddTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateAndStateEvents
 
-internal class AddTransactionScreenEventHandler(
+internal class AddTransactionScreenUIEventHandler(
     private val uiStateAndStateEvents: AddTransactionScreenUIStateAndStateEvents,
 ) {
     fun handleUIEvent(
