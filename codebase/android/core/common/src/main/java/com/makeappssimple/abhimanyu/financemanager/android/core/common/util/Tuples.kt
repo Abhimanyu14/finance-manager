@@ -289,3 +289,207 @@ public fun <T> Duodecuple<T, T, T, T, T, T, T, T, T, T, T, T>.toList(): List<T> 
         twelfth
     )
 }
+
+/**
+ * Represents a collection of thirteen values.
+ */
+public data class Tredecuple<out A, out B, out C, out D, out E, out F, out G, out H, out I, out J, out K, out L, out M>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D,
+    val fifth: E,
+    val sixth: F,
+    val seventh: G,
+    val eighth: H,
+    val ninth: I,
+    val tenth: J,
+    val eleventh: K,
+    val twelfth: L,
+    val thirteenth: M,
+) : Serializable {
+
+    /**
+     * Returns string representation of the [Tredecuple].
+     */
+    override fun toString(): String {
+        return "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth, $tenth, $eleventh, $twelfth, $thirteenth)"
+    }
+}
+
+/**
+ * Converts this [Tredecuple] into a list.
+ */
+public fun <T> Tredecuple<T, T, T, T, T, T, T, T, T, T, T, T, T>.toList(): List<T> {
+    return listOf(
+        first,
+        second,
+        third,
+        fourth,
+        fifth,
+        sixth,
+        seventh,
+        eighth,
+        ninth,
+        tenth,
+        eleventh,
+        twelfth,
+        thirteenth,
+    )
+}
+
+/**
+ * Represents a collection of fourteen values.
+ */
+public data class Quattuordecuple<out A, out B, out C, out D, out E, out F, out G, out H, out I, out J, out K, out L, out M, out N>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D,
+    val fifth: E,
+    val sixth: F,
+    val seventh: G,
+    val eighth: H,
+    val ninth: I,
+    val tenth: J,
+    val eleventh: K,
+    val twelfth: L,
+    val thirteenth: M,
+    val fourteenth: N,
+) : Serializable {
+
+    /**
+     * Returns string representation of the [Quattuordecuple].
+     */
+    override fun toString(): String {
+        return "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth, $tenth, $eleventh, $twelfth, $thirteenth, $fourteenth)"
+    }
+}
+
+/**
+ * Converts this [Quattuordecuple] into a list.
+ */
+public fun <T> Quattuordecuple<T, T, T, T, T, T, T, T, T, T, T, T, T, T>.toList(): List<T> {
+    return listOf(
+        first,
+        second,
+        third,
+        fourth,
+        fifth,
+        sixth,
+        seventh,
+        eighth,
+        ninth,
+        tenth,
+        eleventh,
+        twelfth,
+        thirteenth,
+        fourteenth,
+    )
+}
+
+/**
+ * Represents a collection of fifteen values.
+ */
+public data class Quindecuple<out A, out B, out C, out D, out E, out F, out G, out H, out I, out J, out K, out L, out M, out N, out O>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D,
+    val fifth: E,
+    val sixth: F,
+    val seventh: G,
+    val eighth: H,
+    val ninth: I,
+    val tenth: J,
+    val eleventh: K,
+    val twelfth: L,
+    val thirteenth: M,
+    val fourteenth: N,
+    val fifteenth: O,
+) : Serializable {
+
+    /**
+     * Returns string representation of the [Quindecuple].
+     */
+    override fun toString(): String {
+        return "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth, $tenth, $eleventh, $twelfth, $thirteenth, $fourteenth, $fifteenth)"
+    }
+}
+
+/**
+ * Converts this [Quindecuple] into a list.
+ */
+public fun <T> Quindecuple<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T>.toList(): List<T> {
+    return listOf(
+        first,
+        second,
+        third,
+        fourth,
+        fifth,
+        sixth,
+        seventh,
+        eighth,
+        ninth,
+        tenth,
+        eleventh,
+        twelfth,
+        thirteenth,
+        fourteenth,
+        fifteenth,
+    )
+}
+
+/**
+ * Represents a collection of sixteen values.
+ */
+public data class Sexdecuple<out A, out B, out C, out D, out E, out F, out G, out H, out I, out J, out K, out L, out M, out N, out O, out P>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D,
+    val fifth: E,
+    val sixth: F,
+    val seventh: G,
+    val eighth: H,
+    val ninth: I,
+    val tenth: J,
+    val eleventh: K,
+    val twelfth: L,
+    val thirteenth: M,
+    val fourteenth: N,
+    val fifteenth: O,
+    val sixteenth: P,
+) : Serializable {
+
+    /**
+     * Returns string representation of the [Sexdecuple].
+     */
+    override fun toString(): String {
+        return "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth, $tenth, $eleventh, $twelfth, $thirteenth, $fourteenth, $fifteenth, $sixteenth)"
+    }
+}
+
+/**
+ * Converts this [Sexdecuple] into a list.
+ */
+public fun <T> Sexdecuple<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T>.toList(): List<T> {
+    return listOf(
+        first,
+        second,
+        third,
+        fourth,
+        fifth,
+        sixth,
+        seventh,
+        eighth,
+        ninth,
+        tenth,
+        eleventh,
+        twelfth,
+        thirteenth,
+        fourteenth,
+        fifteenth,
+        sixteenth,
+    )
+}

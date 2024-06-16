@@ -11,6 +11,8 @@ import java.time.LocalTime
 
 @Stable
 internal class AddTransactionScreenUIStateEvents(
+    val navigateUp: () -> Unit = {},
+    val insertTransaction: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
     val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit = {},
     val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit = {},
