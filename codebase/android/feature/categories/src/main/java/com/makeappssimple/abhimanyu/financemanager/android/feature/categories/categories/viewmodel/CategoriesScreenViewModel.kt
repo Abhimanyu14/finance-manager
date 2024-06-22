@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.groupBy
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
@@ -33,7 +34,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -203,7 +203,7 @@ public class CategoriesScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine(
+            combine(
                 isLoading,
                 screenBottomSheetType,
                 categoryIdToDelete,
