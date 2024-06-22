@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 public class AlarmReceiver : BroadcastReceiver() {
-
     @Inject
     public lateinit var myLogger: MyLogger
 

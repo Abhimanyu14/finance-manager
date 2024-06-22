@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.CheckIfTransactionForIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.DeleteTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesFlowUseCase
@@ -17,8 +16,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.state.TransactionForValuesScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,21 +30,16 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
+    private val transactionForValues: Flow<ImmutableList<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase()
-            .defaultListStateIn(
-                scope = viewModelScope,
-            )
-    private val transactionForValuesIsUsedInTransactions: StateFlow<ImmutableList<Boolean>> =
+    private val transactionForValuesIsUsedInTransactions: Flow<ImmutableList<Boolean>> =
         transactionForValues.map {
             it.map { transactionFor ->
                 checkIfTransactionForIsUsedInTransactionsUseCase(
                     transactionForId = transactionFor.id,
                 )
             }
-        }.defaultListStateIn(
-            scope = viewModelScope,
-        )
+        }
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(

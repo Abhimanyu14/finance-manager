@@ -8,78 +8,75 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.boot.BootCompleteReceiver
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.time.TimeChangedReceiver
-import kotlinx.coroutines.coroutineScope
 import java.time.LocalTime
 
 public class AlarmKitImpl(
     private val context: Context,
-    private val dispatcherProvider: DispatcherProvider,
     private val dateTimeUtil: DateTimeUtil,
     private val myLogger: MyLogger,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : AlarmKit {
-    // TODO(Abhi): Return status of alarm
-    override suspend fun disableReminder() {
-        myLogger.logInfo(
-            message = "Alarm cleared",
-        )
-        val alarmManager = getAlarmManager() ?: return
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            0,
-            getAlarmReceiverIntent(),
-            PendingIntent.FLAG_IMMUTABLE
-        )
-
-        alarmManager.cancel(pendingIntent)
-
+    override suspend fun cancelReminderAlarm(): Boolean {
+        var isAlarmCancelled = cancelAlarm()
+        if (!isAlarmCancelled) {
+            return false
+        }
+        
         disableBroadcastReceivers()
 
-        coroutineScope {
-            myPreferencesRepository.setIsReminderEnabled(
-                isReminderEnabled = false,
-            )
-        }
-    }
-
-    // TODO(Abhi): Return status of alarm
-    override suspend fun enableReminder() {
-        val reminder = myPreferencesRepository.getReminder() ?: return
-        if (!reminder.isEnabled) {
-            return
-        }
-        val initialAlarmTimestamp = dateTimeUtil.getTimestamp(
-            time = LocalTime.of(reminder.hour, reminder.min),
+        isAlarmCancelled = setIsReminderEnabledInPreferences(
+            isReminderEnabled = false,
         )
-        getAlarmManager()?.let { alarmManager ->
-            setAlarm(
-                alarmManager = alarmManager,
-                initialAlarmTimestamp = initialAlarmTimestamp,
-                reminder = reminder,
+
+        if (isAlarmCancelled) {
+            myLogger.logInfo(
+                message = "Alarm cancelled",
             )
         }
+        return isAlarmCancelled
     }
 
-    private fun getAlarmManager(): AlarmManager? {
-        return context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+    override suspend fun setReminderAlarm(): Boolean {
+        val reminder = myPreferencesRepository.getReminder() ?: return false
+        val initialAlarmTimestamp = getInitialAlarmTimestamp(
+            reminder = reminder,
+        )
+        var isAlarmSet = setAlarm(
+            initialAlarmTimestamp = initialAlarmTimestamp,
+        )
+        if (!isAlarmSet) {
+            return false
+        }
+
+        enableBroadcastReceivers()
+
+        isAlarmSet = setIsReminderEnabledInPreferences(
+            isReminderEnabled = true,
+        )
+
+        if (isAlarmSet) {
+            myLogger.logInfo(
+                message = "Alarm set for : ${reminder.hour}:${reminder.min}",
+            )
+        }
+        return isAlarmSet
     }
 
-    private suspend fun setAlarm(
-        alarmManager: AlarmManager,
+    // region alarm
+    private fun setAlarm(
         initialAlarmTimestamp: Long,
-        reminder: Reminder,
-    ) {
+    ): Boolean {
+        val alarmManager = getAlarmManager() ?: return false
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             0,
             getAlarmReceiverIntent(),
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE,
         )
         alarmManager.setRepeating(
             AlarmManager.RTC,
@@ -87,49 +84,91 @@ public class AlarmKitImpl(
             AlarmManager.INTERVAL_DAY,
             pendingIntent,
         )
-        myLogger.logInfo(
-            message = "Alarm set for : ${reminder.hour}:${reminder.min}",
-        )
+        return true
+    }
 
-        enableBroadcastReceivers()
-        myPreferencesRepository.setIsReminderEnabled(
-            isReminderEnabled = true,
+    private fun cancelAlarm(): Boolean {
+        val alarmManager = getAlarmManager() ?: return false
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            getAlarmReceiverIntent(),
+            PendingIntent.FLAG_IMMUTABLE,
         )
+        alarmManager.cancel(pendingIntent)
+        return true
+    }
+
+    private fun getAlarmManager(): AlarmManager? {
+        return context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
     }
 
     private fun getAlarmReceiverIntent(): Intent {
         return Intent(context, AlarmReceiver::class.java)
     }
+    // endregion
 
+    // region broadcast receivers
     private fun enableBroadcastReceivers() {
-        val bootComplete = ComponentName(context, BootCompleteReceiver::class.java)
-        context.packageManager.setComponentEnabledSetting(
-            bootComplete,
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
-        )
-
-        val timeChanged = ComponentName(context, TimeChangedReceiver::class.java)
-        context.packageManager.setComponentEnabledSetting(
-            timeChanged,
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
-        )
+        enableBootCompleteReceiver()
+        enableTimeChangedReceiver()
     }
 
     private fun disableBroadcastReceivers() {
-        val bootComplete = ComponentName(context, BootCompleteReceiver::class.java)
+        disableBootCompleteReceiver()
+        disableTimeChangedReceiver()
+    }
+
+    private fun enableBootCompleteReceiver() {
         context.packageManager.setComponentEnabledSetting(
-            bootComplete,
-            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            ComponentName(context, BootCompleteReceiver::class.java),
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
             PackageManager.DONT_KILL_APP
         )
+    }
 
-        val timeChanged = ComponentName(context, TimeChangedReceiver::class.java)
+    private fun disableBootCompleteReceiver() {
         context.packageManager.setComponentEnabledSetting(
-            timeChanged,
+            ComponentName(context, BootCompleteReceiver::class.java),
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP
         )
     }
+
+    private fun enableTimeChangedReceiver() {
+        context.packageManager.setComponentEnabledSetting(
+            ComponentName(context, TimeChangedReceiver::class.java),
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
+    }
+
+    private fun disableTimeChangedReceiver() {
+        context.packageManager.setComponentEnabledSetting(
+            ComponentName(context, TimeChangedReceiver::class.java),
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP
+        )
+    }
+    // endregion
+
+    // region preferences
+    private suspend fun setIsReminderEnabledInPreferences(
+        isReminderEnabled: Boolean,
+    ): Boolean {
+        return myPreferencesRepository.setIsReminderEnabled(
+            isReminderEnabled = isReminderEnabled,
+        )
+    }
+    // endregion
+
+    // region date time
+    private fun getInitialAlarmTimestamp(
+        reminder: Reminder,
+    ): Long {
+        return dateTimeUtil.getTimestamp(
+            time = LocalTime.of(reminder.hour, reminder.min),
+        )
+    }
+    // endregion
 }

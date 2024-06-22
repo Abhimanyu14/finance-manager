@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
@@ -34,7 +33,6 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -50,12 +48,9 @@ public class AccountsScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val defaultAccountId: StateFlow<Int?> =
-        myPreferencesRepository.getDefaultDataIdFlow().map {
-            it?.account
-        }.defaultObjectStateIn(
-            scope = viewModelScope,
-        )
+    private val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataIdFlow().map {
+        it?.account
+    }
     private val allAccounts: Flow<ImmutableList<Account>> = getAllAccountsFlowUseCase()
     private val isAccountUsedInTransactions: Flow<ImmutableMap<Int, Boolean>> =
         getIsAccountsUsedInTransactionFlowUseCase()

@@ -3,9 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.fake
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 
 public class FakeAlarmKitImpl : AlarmKit {
-    override suspend fun disableReminder() {
+    public override suspend fun cancelReminderAlarm(): Boolean {
+        return true
     }
 
-    override suspend fun enableReminder() {
+    public override suspend fun setReminderAlarm(): Boolean {
+        return true
     }
 }

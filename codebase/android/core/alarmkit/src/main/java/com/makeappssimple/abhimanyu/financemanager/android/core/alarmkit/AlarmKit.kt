@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit
 
 public interface AlarmKit {
-    public suspend fun disableReminder()
+    public suspend fun cancelReminderAlarm(): Boolean
 
-    public suspend fun enableReminder()
+    public suspend fun setReminderAlarm(): Boolean
 }

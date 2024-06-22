@@ -28,7 +28,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,10 +38,9 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val insertAccountsUseCase: InsertAccountsUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val _accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
+    private val accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
         value = persistentListOf(),
     )
-    private val accounts: StateFlow<ImmutableList<Account>> = _accounts
     private val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
     }
@@ -82,7 +80,7 @@ public class AddAccountScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            _accounts.update {
+            accounts.update {
                 getAllAccountsUseCase()
             }
             isLoading.update {

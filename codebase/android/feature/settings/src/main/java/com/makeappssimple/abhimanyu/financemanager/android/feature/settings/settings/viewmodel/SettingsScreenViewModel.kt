@@ -8,7 +8,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKi
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
@@ -23,10 +22,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
@@ -43,10 +42,7 @@ public class SettingsScreenViewModel @Inject constructor(
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : ScreenViewModel, ViewModel() {
     private var appVersion: String = ""
-    private val reminder: StateFlow<Reminder?> = myPreferencesRepository.getReminderFlow()
-        .defaultObjectStateIn(
-            scope = viewModelScope,
-        )
+    private val reminder: Flow<Reminder?> = myPreferencesRepository.getReminderFlow()
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -162,13 +158,13 @@ public class SettingsScreenViewModel @Inject constructor(
     // region state events
     private fun disableReminder() {
         viewModelScope.launch {
-            alarmKit.disableReminder()
+            alarmKit.cancelReminderAlarm()
         }
     }
 
     internal fun enableReminder() {
         viewModelScope.launch {
-            alarmKit.enableReminder()
+            alarmKit.setReminderAlarm()
         }
     }
 

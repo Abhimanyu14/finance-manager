@@ -15,10 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultLongStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalMinimumBalanceAmountValueUseCase
@@ -47,8 +43,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.sta
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -72,9 +68,9 @@ public class HomeScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val homeListItemViewData: StateFlow<ImmutableList<TransactionListItemData>> =
+    private val homeListItemViewData: Flow<ImmutableList<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
-    private val isBackupCardVisible: StateFlow<Boolean> = getIsBackupCardVisibleFromData()
+    private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
 
     private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
@@ -84,7 +80,7 @@ public class HomeScreenViewModel @Inject constructor(
         value = dateTimeUtil.getCurrentTimeMillis(),
     )
 
-    private val overviewCardData: StateFlow<OverviewCardViewModelData?> = combine(
+    private val overviewCardData: Flow<OverviewCardViewModelData?> = combine(
         flow = overviewTabSelectionIndex,
         flow2 = timestamp,
     ) { overviewTabSelectionIndex, timestamp ->
@@ -177,20 +173,12 @@ public class HomeScreenViewModel @Inject constructor(
             expense = expenseAmount,
             title = title,
         )
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
-    )
+    }
 
-    private val accountsTotalBalanceAmountValue: StateFlow<Long> =
+    private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
-            .defaultLongStateIn(
-                scope = viewModelScope,
-            )
-    private val accountsTotalMinimumBalanceAmountValue: StateFlow<Long> =
+    private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
-            .defaultLongStateIn(
-                scope = viewModelScope,
-            )
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -322,7 +310,7 @@ public class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private fun getHomeListItemViewDataFromData(): StateFlow<ImmutableList<TransactionListItemData>> {
+    private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
         return getRecentTransactionDataFlowUseCase().map {
             it.map { listItem ->
                 val amountColor: MyColor = listItem.transaction.getAmountTextColor()
@@ -373,17 +361,13 @@ public class HomeScreenViewModel @Inject constructor(
                     transactionForText = transactionForText,
                 )
             }
-        }.defaultListStateIn(
-            scope = viewModelScope,
-        )
+        }
     }
 
-    private fun getIsBackupCardVisibleFromData(): StateFlow<Boolean> {
+    private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
         return myPreferencesRepository.getDataTimestampFlow().map {
             it.isNotNull() && (it.lastBackup < it.lastChange)
-        }.defaultBooleanStateIn(
-            scope = viewModelScope,
-        )
+        }
     }
 
     // region state events

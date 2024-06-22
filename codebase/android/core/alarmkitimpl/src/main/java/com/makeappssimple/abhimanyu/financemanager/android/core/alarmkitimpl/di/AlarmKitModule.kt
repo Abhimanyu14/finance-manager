@@ -26,7 +26,6 @@ public class AlarmKitModule {
     ): AlarmKit {
         return AlarmKitImpl(
             context = context,
-            dispatcherProvider = dispatcherProvider,
             dateTimeUtil = dateTimeUtil,
             myLogger = myLogger,
             myPreferencesRepository = myPreferencesRepository,

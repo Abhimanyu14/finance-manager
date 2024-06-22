@@ -15,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.UpdateTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesFlowUseCase
@@ -111,15 +110,13 @@ public class TransactionsScreenViewModel @Inject constructor(
         )
     private val transactionTypes: ImmutableList<TransactionType> =
         TransactionType.entries.toImmutableList()
-    private var oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
+    private var oldestTransactionLocalDate: Flow<LocalDate?> = allTransactionData.map {
         dateTimeUtil.getLocalDate(
             timestamp = it.minOfOrNull { transactionData ->
                 transactionData.transaction.transactionTimestamp
             }.orZero(),
         )
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
-    )
+    }
     private val sortOptions: ImmutableList<SortOption> = SortOption.entries.toImmutableList()
     private val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
 
