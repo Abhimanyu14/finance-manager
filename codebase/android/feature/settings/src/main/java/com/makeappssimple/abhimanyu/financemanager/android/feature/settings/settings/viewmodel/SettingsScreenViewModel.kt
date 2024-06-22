@@ -161,11 +161,15 @@ public class SettingsScreenViewModel @Inject constructor(
 
     // region state events
     private fun disableReminder() {
-        alarmKit.disableReminder()
+        viewModelScope.launch {
+            alarmKit.disableReminder()
+        }
     }
 
     internal fun enableReminder() {
-        alarmKit.enableReminder()
+        viewModelScope.launch {
+            alarmKit.enableReminder()
+        }
     }
 
     private fun navigateToAccountsScreen() {

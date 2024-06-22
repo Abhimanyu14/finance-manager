@@ -17,7 +17,7 @@ public object CoroutineScopesModule {
         dispatcherProvider: DispatcherProvider,
     ): CoroutineScope {
         return CoroutineScope(
-            context = dispatcherProvider.default + SupervisorJob(),
+            context = dispatcherProvider.mainImmediate + SupervisorJob(),
         )
     }
 }

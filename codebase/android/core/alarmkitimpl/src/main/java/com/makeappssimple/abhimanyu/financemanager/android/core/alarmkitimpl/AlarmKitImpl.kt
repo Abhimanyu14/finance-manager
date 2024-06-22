@@ -14,8 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.time.TimeChangedReceiver
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.coroutineScope
 import java.time.LocalTime
 
 public class AlarmKitImpl(
@@ -26,27 +25,7 @@ public class AlarmKitImpl(
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : AlarmKit {
     // TODO(Abhi): Return status of alarm
-    override fun enableReminder() {
-        // TODO(Abhi): To fix - https://kotlinlang.slack.com/archives/C88E12QH4/p1715586092060619?thread_ts=1715581758.821969&cid=C88E12QH4
-        CoroutineScope(
-            context = dispatcherProvider.io,
-        ).launch {
-            val reminder = myPreferencesRepository.getReminder() ?: Reminder()
-            val initialAlarmTimestamp = dateTimeUtil.getTimestamp(
-                time = LocalTime.of(reminder.hour, reminder.min)
-            )
-            getAlarmManager()?.let { alarmManager ->
-                setAlarm(
-                    alarmManager = alarmManager,
-                    initialAlarmTimestamp = initialAlarmTimestamp,
-                    reminder = reminder,
-                )
-            }
-        }
-    }
-
-    // TODO(Abhi): Return status of alarm
-    override fun disableReminder() {
+    override suspend fun disableReminder() {
         myLogger.logError(
             message = "Alarm cleared",
         )
@@ -62,11 +41,24 @@ public class AlarmKitImpl(
 
         disableBroadcastReceivers()
 
-        CoroutineScope(
-            context = dispatcherProvider.io,
-        ).launch {
+        coroutineScope {
             myPreferencesRepository.setIsReminderEnabled(
                 isReminderEnabled = false,
+            )
+        }
+    }
+
+    // TODO(Abhi): Return status of alarm
+    override suspend fun enableReminder() {
+        val reminder = myPreferencesRepository.getReminder() ?: return
+        val initialAlarmTimestamp = dateTimeUtil.getTimestamp(
+            time = LocalTime.of(reminder.hour, reminder.min),
+        )
+        getAlarmManager()?.let { alarmManager ->
+            setAlarm(
+                alarmManager = alarmManager,
+                initialAlarmTimestamp = initialAlarmTimestamp,
+                reminder = reminder,
             )
         }
     }
