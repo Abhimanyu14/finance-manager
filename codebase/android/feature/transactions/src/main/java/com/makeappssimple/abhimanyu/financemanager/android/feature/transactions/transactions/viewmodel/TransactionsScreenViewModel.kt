@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.distinct
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -14,8 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Octuple
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Undecuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataFlowUseCase
@@ -46,7 +44,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -173,7 +170,7 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     private fun observeForTransactionDetailsListItemViewData() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 transactionForValues,
                 searchText,
                 selectedFilter,
@@ -183,26 +180,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                 investmentCategories,
                 selectedSortOption,
             ) {
-                    transactionForValues,
-                    searchText,
-                    selectedFilter,
-                    accounts,
-                    expenseCategories,
-                    incomeCategories,
-                    investmentCategories,
-                    selectedSortOption,
-                ->
-                Octuple(
-                    transactionForValues,
-                    searchText,
-                    selectedFilter,
-                    accounts,
-                    expenseCategories,
-                    incomeCategories,
-                    investmentCategories,
-                    selectedSortOption,
-                )
-            }.collectLatest {
                     (
                         transactionForValues,
                         searchText,
@@ -357,7 +334,7 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 transactionForValues,
@@ -370,32 +347,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                 selectedTransactionIndices,
                 transactionDetailsListItemViewData,
             ) {
-                    isLoading,
-                    screenBottomSheetType,
-                    transactionForValues,
-                    isInSelectionMode,
-                    searchText,
-                    selectedFilter,
-                    accounts,
-                    oldestTransactionLocalDate,
-                    selectedSortOption,
-                    selectedTransactionIndices,
-                    transactionDetailsListItemViewData,
-                ->
-                Undecuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    transactionForValues,
-                    isInSelectionMode,
-                    searchText,
-                    selectedFilter,
-                    accounts,
-                    oldestTransactionLocalDate,
-                    selectedSortOption,
-                    selectedTransactionIndices,
-                    transactionDetailsListItemViewData,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,

@@ -4,13 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quintuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -30,7 +29,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -116,17 +114,21 @@ public class AnalysisScreenViewModel @Inject constructor(
 
     private fun observeForTransactionDataMappedByCategoryChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 selectedTransactionTypeIndex,
                 selectedFilter,
-            ) { _, selectedTransactionTypeIndexValue, selectedFilterValue ->
-                Pair(selectedTransactionTypeIndexValue, selectedFilterValue)
-            }.collectLatest { (selectedTransactionTypeIndexValue, selectedFilterValue) ->
+            ) {
+                    (
+                        isLoading,
+                        selectedTransactionTypeIndex,
+                        selectedFilter,
+                    ),
+                ->
                 analysisListItemData.update {
                     getAnalysisListItemData(
-                        selectedFilterValue = selectedFilterValue,
-                        selectedTransactionTypeIndexValue = selectedTransactionTypeIndexValue,
+                        selectedFilterValue = selectedFilter,
+                        selectedTransactionTypeIndexValue = selectedTransactionTypeIndex,
                         allTransactionDataValue = allTransactionData,
                     )
                 }
@@ -136,27 +138,13 @@ public class AnalysisScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 selectedFilter,
                 selectedTransactionTypeIndex,
                 analysisListItemData,
             ) {
-                    isLoading,
-                    screenBottomSheetType,
-                    selectedFilter,
-                    selectedTransactionTypeIndex,
-                    analysisListItemData,
-                ->
-                Quintuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    selectedFilter,
-                    selectedTransactionTypeIndex,
-                    analysisListItemData,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,

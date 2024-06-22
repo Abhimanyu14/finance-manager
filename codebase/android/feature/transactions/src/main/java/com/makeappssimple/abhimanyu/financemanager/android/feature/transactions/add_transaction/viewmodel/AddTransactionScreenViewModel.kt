@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -21,7 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Sexdecuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
@@ -222,7 +221,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 selectedTransactionTypeIndex,
@@ -240,42 +239,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 titleSuggestions,
                 selectedTransactionType,
             ) {
-                    isLoading,
-                    screenBottomSheetType,
-                    selectedTransactionTypeIndex,
-                    amount,
-                    title,
-                    accountFrom,
-                    accountTo,
-                    isTransactionDatePickerDialogVisible,
-                    isTransactionTimePickerDialogVisible,
-                    category,
-                    selectedTransactionForIndex,
-                    transactionDate,
-                    transactionTime,
-                    uiVisibilityState,
-                    titleSuggestions,
-                    selectedTransactionType,
-                ->
-                Sexdecuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    selectedTransactionTypeIndex,
-                    amount,
-                    title,
-                    accountFrom,
-                    accountTo,
-                    isTransactionDatePickerDialogVisible,
-                    isTransactionTimePickerDialogVisible,
-                    category,
-                    selectedTransactionForIndex,
-                    transactionDate,
-                    transactionTime,
-                    uiVisibilityState,
-                    titleSuggestions,
-                    selectedTransactionType,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,
@@ -296,7 +259,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     ),
                 ->
 
-                selectedTransactionType ?: return@collectLatest
+                selectedTransactionType ?: return@combineAndCollectLatest
                 var amountErrorText: String? = null
                 val filteredCategories: ImmutableList<Category> = getFilteredCategories(
                     selectedTransactionType = selectedTransactionType,
@@ -399,19 +362,17 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     private fun observeForTitleSuggestions() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 flow = title,
                 flow2 = category
-            ) { title, category ->
-                category?.id?.let { categoryId ->
-                    getTitleSuggestionsUseCase(
-                        categoryId = categoryId,
-                        enteredTitle = title.text,
-                    )
-                } ?: persistentListOf()
-            }.collectLatest {
+            ) { (title, category) ->
                 titleSuggestions.update {
-                    it
+                    category?.id?.let { categoryId ->
+                        getTitleSuggestionsUseCase(
+                            categoryId = categoryId,
+                            enteredTitle = title.text,
+                        )
+                    } ?: persistentListOf()
                 }
             }
         }

@@ -2,11 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Octuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
@@ -37,7 +36,6 @@ import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -110,7 +108,7 @@ public class AccountsScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 allAccounts,
@@ -120,27 +118,6 @@ public class AccountsScreenViewModel @Inject constructor(
                 defaultAccountId,
                 clickedItemId,
             ) {
-
-                    isLoading,
-                    screenBottomSheetType,
-                    allAccounts,
-                    accountsTotalBalanceAmountValue,
-                    accountsTotalMinimumBalanceAmountValue,
-                    isAccountUsedInTransactions,
-                    defaultAccountId,
-                    clickedItemId,
-                ->
-                Octuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    allAccounts,
-                    accountsTotalBalanceAmountValue,
-                    accountsTotalMinimumBalanceAmountValue,
-                    isAccountUsedInTransactions,
-                    defaultAccountId,
-                    clickedItemId,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,

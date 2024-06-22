@@ -8,13 +8,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Nonuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultLongStateIn
@@ -49,7 +49,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -244,7 +243,7 @@ public class HomeScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 isBalanceVisible,
@@ -255,28 +254,6 @@ public class HomeScreenViewModel @Inject constructor(
                 accountsTotalBalanceAmountValue,
                 accountsTotalMinimumBalanceAmountValue,
             ) {
-                    isLoading,
-                    screenBottomSheetType,
-                    isBalanceVisible,
-                    isBackupCardVisible,
-                    overviewCardData,
-                    homeListItemViewData,
-                    overviewTabSelectionIndex,
-                    accountsTotalBalanceAmountValue,
-                    accountsTotalMinimumBalanceAmountValue,
-                ->
-                Nonuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    isBalanceVisible,
-                    isBackupCardVisible,
-                    overviewCardData,
-                    homeListItemViewData,
-                    overviewTabSelectionIndex,
-                    accountsTotalBalanceAmountValue,
-                    accountsTotalMinimumBalanceAmountValue,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,

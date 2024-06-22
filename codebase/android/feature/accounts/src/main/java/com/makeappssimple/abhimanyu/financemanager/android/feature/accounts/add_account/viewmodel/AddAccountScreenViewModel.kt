@@ -3,13 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Sextuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -30,7 +29,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -99,7 +97,7 @@ public class AddAccountScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 accounts,
@@ -107,22 +105,6 @@ public class AddAccountScreenViewModel @Inject constructor(
                 selectedAccountTypeIndex,
                 minimumAccountBalanceAmountValue,
             ) {
-                    isLoading,
-                    screenBottomSheetType,
-                    accounts,
-                    name,
-                    selectedAccountTypeIndex,
-                    minimumAccountBalanceAmountValue,
-                ->
-                Sextuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    accounts,
-                    name,
-                    selectedAccountTypeIndex,
-                    minimumAccountBalanceAmountValue,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,

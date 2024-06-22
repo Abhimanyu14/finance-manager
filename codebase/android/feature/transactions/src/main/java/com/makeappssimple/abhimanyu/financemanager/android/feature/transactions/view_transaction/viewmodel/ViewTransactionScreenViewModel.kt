@@ -5,10 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Sextuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -28,7 +27,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
@@ -98,7 +96,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 transactionIdToDelete,
@@ -106,22 +104,6 @@ public class ViewTransactionScreenViewModel @Inject constructor(
                 originalTransactionListItemData,
                 currentTransactionListItemData,
             ) {
-                    isLoading,
-                    screenBottomSheetType,
-                    transactionIdToDelete,
-                    refundTransactionListItemData,
-                    originalTransactionListItemData,
-                    currentTransactionListItemData,
-                ->
-                Sextuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    transactionIdToDelete,
-                    refundTransactionListItemData,
-                    originalTransactionListItemData,
-                    currentTransactionListItemData,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,

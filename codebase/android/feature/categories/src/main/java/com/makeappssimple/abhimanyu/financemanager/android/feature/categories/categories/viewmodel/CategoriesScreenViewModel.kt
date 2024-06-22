@@ -2,11 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.groupBy
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Sextuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesFlowUseCase
@@ -33,7 +32,6 @@ import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -94,18 +92,10 @@ public class CategoriesScreenViewModel @Inject constructor(
                 }
 
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 defaultDataId,
                 categoriesTransactionTypeMap
-            ) {
-                    defaultDataId,
-                    categoriesTransactionTypeMap,
-                ->
-                Pair(
-                    first = defaultDataId,
-                    second = categoriesTransactionTypeMap,
-                )
-            }.collectLatest { (defaultDataId, categoriesTransactionTypeMap) ->
+            ) { (defaultDataId, categoriesTransactionTypeMap) ->
                 val expenseCategoriesGridItemDataList =
                     categoriesTransactionTypeMap[TransactionType.EXPENSE]
                         ?.sortedBy {
@@ -203,7 +193,7 @@ public class CategoriesScreenViewModel @Inject constructor(
 
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 categoryIdToDelete,
@@ -211,22 +201,6 @@ public class CategoriesScreenViewModel @Inject constructor(
                 selectedCategoryTypeIndex,
                 categoriesGridItemDataMap,
             ) {
-                    isLoading,
-                    screenBottomSheetType,
-                    categoryIdToDelete,
-                    clickedItemId,
-                    selectedCategoryTypeIndex,
-                    categoriesGridItemDataMap,
-                ->
-                Sextuple(
-                    isLoading,
-                    screenBottomSheetType,
-                    categoryIdToDelete,
-                    clickedItemId,
-                    selectedCategoryTypeIndex,
-                    categoriesGridItemDataMap,
-                )
-            }.collectLatest {
                     (
                         isLoading,
                         screenBottomSheetType,

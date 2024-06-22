@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -752,15 +753,10 @@ public class EditTransactionScreenViewModel @Inject constructor(
 
     private fun observeSelectedCategory() {
         viewModelScope.launch {
-            combine(
+            combineAndCollectLatest(
                 flow = selectedCategoryId,
                 flow2 = uiState,
-            ) { selectedCategoryId, uiState ->
-                Pair(
-                    first = selectedCategoryId,
-                    second = uiState,
-                )
-            }.collectLatest { (selectedCategoryId, uiState) ->
+            ) { (selectedCategoryId, uiState) ->
                 selectedCategoryId?.let {
                     titleSuggestions.update {
                         getTitleSuggestionsUseCase(
