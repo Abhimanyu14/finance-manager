@@ -23,7 +23,7 @@ public class MyPreferencesDataSource(
 ) {
     private val preferences: Flow<Preferences> = dataStore.data
         .catch { exception ->
-            myLogger.logError(
+            myLogger.logInfo(
                 message = "Error reading preferences. ${exception.localizedMessage}",
             )
             emit(

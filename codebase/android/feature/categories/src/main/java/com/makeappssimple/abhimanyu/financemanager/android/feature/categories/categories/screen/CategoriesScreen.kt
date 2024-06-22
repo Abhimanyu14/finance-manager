@@ -16,7 +16,7 @@ public fun CategoriesScreen(
     screenViewModel: CategoriesScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside CategoriesScreen",
     )
 

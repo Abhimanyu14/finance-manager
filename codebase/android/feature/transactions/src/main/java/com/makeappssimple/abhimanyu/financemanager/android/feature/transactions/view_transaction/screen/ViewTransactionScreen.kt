@@ -16,7 +16,7 @@ public fun ViewTransactionScreen(
     screenViewModel: ViewTransactionScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside ViewTransactionScreen",
     )
 

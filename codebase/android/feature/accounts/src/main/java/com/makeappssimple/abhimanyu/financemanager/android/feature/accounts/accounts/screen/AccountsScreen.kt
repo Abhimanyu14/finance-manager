@@ -16,7 +16,7 @@ public fun AccountsScreen(
     screenViewModel: AccountsScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside AccountsScreen",
     )
 

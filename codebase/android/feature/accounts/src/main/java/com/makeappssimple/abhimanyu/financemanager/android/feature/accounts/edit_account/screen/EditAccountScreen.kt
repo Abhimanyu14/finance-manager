@@ -16,7 +16,7 @@ public fun EditAccountScreen(
     screenViewModel: EditAccountScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside EditAccountScreen",
     )
 

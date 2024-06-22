@@ -21,7 +21,7 @@ public class AlarmReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent?,
     ) {
-        myLogger.logError(
+        myLogger.logInfo(
             message = "Alarm received : ${System.currentTimeMillis()}",
         )
         notificationKit.scheduleNotification()

@@ -26,7 +26,7 @@ public class AlarmKitImpl(
 ) : AlarmKit {
     // TODO(Abhi): Return status of alarm
     override suspend fun disableReminder() {
-        myLogger.logError(
+        myLogger.logInfo(
             message = "Alarm cleared",
         )
         val alarmManager = getAlarmManager() ?: return
@@ -87,7 +87,7 @@ public class AlarmKitImpl(
             AlarmManager.INTERVAL_DAY,
             pendingIntent,
         )
-        myLogger.logError(
+        myLogger.logInfo(
             message = "Alarm set for : ${reminder.hour}:${reminder.min}",
         )
 

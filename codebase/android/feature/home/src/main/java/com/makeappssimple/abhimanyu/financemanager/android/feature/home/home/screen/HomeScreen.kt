@@ -21,7 +21,7 @@ public fun HomeScreen(
     screenViewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside HomeScreen",
     )
     val onDocumentCreated: (Uri?) -> Unit = { uri: Uri? ->

@@ -18,7 +18,7 @@ internal fun MyNavGraph(
     activityViewModel: MainActivityViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside MyNavGraph",
     )
     val lifecycle = LocalLifecycleOwner.current.lifecycle

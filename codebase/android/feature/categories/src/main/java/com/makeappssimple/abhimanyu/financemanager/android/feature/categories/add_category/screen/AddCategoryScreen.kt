@@ -16,7 +16,7 @@ public fun AddCategoryScreen(
     screenViewModel: AddCategoryScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside AddCategoryScreen",
     )
 

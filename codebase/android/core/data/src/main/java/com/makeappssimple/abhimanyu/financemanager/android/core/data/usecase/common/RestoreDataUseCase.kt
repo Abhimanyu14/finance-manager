@@ -38,7 +38,7 @@ public class RestoreDataUseCase @Inject constructor(
             uri = uri,
         )
         if (jsonString.isNull()) {
-            myLogger.logError(
+            myLogger.logInfo(
                 message = "Restore Data: Error reading file",
             )
             return false
@@ -48,13 +48,13 @@ public class RestoreDataUseCase @Inject constructor(
             string = jsonString,
         )
         if (backupData.databaseData.isNull()) {
-            myLogger.logError(
+            myLogger.logInfo(
                 message = "Restore Data: Error in file database data",
             )
             return false
         }
         if (backupData.datastoreData.isNull()) {
-            myLogger.logError(
+            myLogger.logInfo(
                 message = "Restore Data: Error in file datastore data",
             )
             return false

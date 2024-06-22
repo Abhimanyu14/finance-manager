@@ -31,7 +31,7 @@ public fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside SettingsScreen",
     )
 

@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconf
 public class MyLoggerImpl(
     private val buildConfigUtil: BuildConfigUtil,
 ) : MyLogger {
-    override fun logError(
+    override fun logInfo(
         message: String,
         tag: String,
     ) {

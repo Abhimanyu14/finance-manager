@@ -16,7 +16,7 @@ public fun EditTransactionForScreen(
     screenViewModel: EditTransactionForScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside EditTransactionForScreen",
     )
 

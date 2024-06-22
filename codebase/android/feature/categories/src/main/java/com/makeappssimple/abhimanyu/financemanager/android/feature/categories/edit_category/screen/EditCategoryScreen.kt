@@ -16,7 +16,7 @@ public fun EditCategoryScreen(
     screenViewModel: EditCategoryScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside EditCategoryScreen",
     )
 

@@ -26,7 +26,7 @@ public class NotificationKitImpl(
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        myLogger.logError(
+        myLogger.logInfo(
             message = "Sending Notification : ${System.currentTimeMillis()}",
         )
         val notification =
@@ -42,7 +42,7 @@ public class NotificationKitImpl(
                 .setAutoCancel(true)
                 .build()
         notificationManager.notify(1, notification)
-        myLogger.logError(
+        myLogger.logInfo(
             message = "Notification : ${System.currentTimeMillis()}",
         )
     }

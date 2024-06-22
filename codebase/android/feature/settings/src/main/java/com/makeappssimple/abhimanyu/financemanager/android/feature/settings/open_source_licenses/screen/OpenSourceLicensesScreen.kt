@@ -16,7 +16,7 @@ public fun OpenSourceLicensesScreen(
     screenViewModel: OpenSourceLicensesScreenViewModel = hiltViewModel(),
 ) {
     val myLogger = LocalMyLogger.current
-    myLogger.logError(
+    myLogger.logInfo(
         message = "Inside OpenSourceLicensesScreen",
     )
 

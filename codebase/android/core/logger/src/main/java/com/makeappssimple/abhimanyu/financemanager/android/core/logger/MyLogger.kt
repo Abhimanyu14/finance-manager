@@ -5,7 +5,7 @@ private object MyLoggerConstants {
 }
 
 public interface MyLogger {
-    public fun logError(
+    public fun logInfo(
         message: String,
         tag: String = MyLoggerConstants.DEFAULT_LOGGER_TAG,
     )
