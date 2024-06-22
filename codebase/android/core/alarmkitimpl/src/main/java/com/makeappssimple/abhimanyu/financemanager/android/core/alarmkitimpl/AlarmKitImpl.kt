@@ -51,6 +51,9 @@ public class AlarmKitImpl(
     // TODO(Abhi): Return status of alarm
     override suspend fun enableReminder() {
         val reminder = myPreferencesRepository.getReminder() ?: return
+        if (!reminder.isEnabled) {
+            return
+        }
         val initialAlarmTimestamp = dateTimeUtil.getTimestamp(
             time = LocalTime.of(reminder.hour, reminder.min),
         )
@@ -78,7 +81,6 @@ public class AlarmKitImpl(
             getAlarmReceiverIntent(),
             PendingIntent.FLAG_IMMUTABLE
         )
-
         alarmManager.setRepeating(
             AlarmManager.RTC,
             initialAlarmTimestamp,

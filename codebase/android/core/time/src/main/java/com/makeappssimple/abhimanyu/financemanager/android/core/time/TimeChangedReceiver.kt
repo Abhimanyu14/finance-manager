@@ -4,10 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -23,15 +19,6 @@ public class TimeChangedReceiver : BroadcastReceiver() {
     @Inject
     public lateinit var alarmKit: AlarmKit
 
-    @Inject
-    public lateinit var dispatcherProvider: DispatcherProvider
-
-    @Inject
-    public lateinit var dateTimeUtil: DateTimeUtil
-
-    @Inject
-    public lateinit var myPreferencesRepository: MyPreferencesRepository
-
     override fun onReceive(
         context: Context?,
         intent: Intent?,
@@ -45,10 +32,7 @@ public class TimeChangedReceiver : BroadcastReceiver() {
     }
 
     private suspend fun doWork() {
-        val reminder = myPreferencesRepository.getReminder() ?: return
-        if (reminder.isEnabled.orFalse()) {
-            alarmKit.enableReminder()
-        }
+        alarmKit.enableReminder()
     }
 
     private fun cleanUp() {
