@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalMinimumBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.CheckIfAccountIsUsedInTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetIsAccountsUsedInTransactionFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
@@ -32,7 +32,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -46,7 +45,7 @@ public class AccountsScreenViewModel @Inject constructor(
     getAllAccountsFlowUseCase: GetAllAccountsFlowUseCase,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
-    private val checkIfAccountIsUsedInTransactionsUseCase: CheckIfAccountIsUsedInTransactionsUseCase,
+    getIsAccountsUsedInTransactionFlowUseCase: GetIsAccountsUsedInTransactionFlowUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
@@ -59,13 +58,7 @@ public class AccountsScreenViewModel @Inject constructor(
         )
     private val allAccounts: Flow<ImmutableList<Account>> = getAllAccountsFlowUseCase()
     private val isAccountUsedInTransactions: Flow<ImmutableMap<Int, Boolean>> =
-        allAccounts.map { accounts ->
-            accounts.associate { account ->
-                account.id to checkIfAccountIsUsedInTransactionsUseCase(
-                    accountId = account.id,
-                )
-            }.toImmutableMap()
-        }
+        getIsAccountsUsedInTransactionFlowUseCase()
     private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
     private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
@@ -129,77 +122,100 @@ public class AccountsScreenViewModel @Inject constructor(
                         clickedItemId,
                     ),
                 ->
-                val accountTypes = AccountType.entries.sortedBy {
-                    it.sortOrder
-                }
-                val groupedAccounts = allAccounts.groupBy {
-                    it.type
-                }
-                val accountsListItemDataList = mutableListOf<AccountsListItemData>()
-                accountTypes.forEach { accountType ->
-                    if (groupedAccounts[accountType].isNotNull()) {
-                        accountsListItemDataList.add(
-                            AccountsListItemHeaderData(
-                                isHeading = true,
-                                balance = "",
-                                name = accountType.title,
-                            )
-                        )
-                        accountsListItemDataList.addAll(
-                            groupedAccounts[accountType]?.sortedByDescending { account ->
-                                account.balanceAmount.value
-                            }?.map { account ->
-                                val deleteEnabled = isAccountUsedInTransactions[account.id] != true
-                                val isDefault = if (defaultAccountId.isNull()) {
-                                    isDefaultAccount(
-                                        account = account.name,
-                                    )
-                                } else {
-                                    defaultAccountId == account.id
-                                }
-
-                                AccountsListItemContentData(
-                                    isDefault = isDefault,
-                                    isDeleteEnabled = !isDefaultAccount(
-                                        account = account.name,
-                                    ) && deleteEnabled,
-                                    isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
-                                    isMoreOptionsIconButtonVisible = true,
-                                    icon = account.type.icon,
-                                    accountId = account.id,
-                                    balance = account.balanceAmount.toString(),
-                                    name = account.name,
-                                )
-                            }.orEmpty()
-                        )
-                    }
-                }
-
+                val accountsScreenUIStateAndStateEvents = getAccountsScreenUIStateAndStateEvents(
+                    allAccounts = allAccounts,
+                    isAccountUsedInTransactions = isAccountUsedInTransactions,
+                    defaultAccountId = defaultAccountId,
+                    screenBottomSheetType = screenBottomSheetType,
+                    clickedItemId = clickedItemId,
+                    isLoading = isLoading,
+                    accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
+                    accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue,
+                )
                 uiStateAndStateEvents.update {
-                    AccountsScreenUIStateAndStateEvents(
-                        state = AccountsScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
-                            isBottomSheetVisible = screenBottomSheetType != AccountsScreenBottomSheetType.None,
-                            clickedItemId = clickedItemId,
-                            isLoading = isLoading,
-                            accountsListItemDataList = accountsListItemDataList.toImmutableList(),
-                            accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
-                            accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
-                        ),
-                        events = AccountsScreenUIStateEvents(
-                            deleteAccount = ::deleteAccount,
-                            navigateToAddAccountScreen = ::navigateToAddAccountScreen,
-                            navigateToEditAccountScreen = ::navigateToEditAccountScreen,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setClickedItemId = ::setClickedItemId,
-                            setDefaultAccountIdInDataStore = ::setDefaultAccountIdInDataStore,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                        ),
-                    )
+                    accountsScreenUIStateAndStateEvents
                 }
             }
         }
+    }
+
+    private fun getAccountsScreenUIStateAndStateEvents(
+        screenBottomSheetType: AccountsScreenBottomSheetType,
+        isLoading: Boolean,
+        allAccounts: ImmutableList<Account>,
+        isAccountUsedInTransactions: ImmutableMap<Int, Boolean>,
+        defaultAccountId: Int?,
+        clickedItemId: Int?,
+        accountsTotalBalanceAmountValue: Long,
+        accountsTotalMinimumBalanceAmountValue: Long,
+    ): AccountsScreenUIStateAndStateEvents {
+        val accountTypes = AccountType.entries.sortedBy {
+            it.sortOrder
+        }
+        val groupedAccounts = allAccounts.groupBy {
+            it.type
+        }
+        val accountsListItemDataList = mutableListOf<AccountsListItemData>()
+        accountTypes.forEach { accountType ->
+            if (groupedAccounts[accountType].isNotNull()) {
+                accountsListItemDataList.add(
+                    AccountsListItemHeaderData(
+                        isHeading = true,
+                        balance = "",
+                        name = accountType.title,
+                    )
+                )
+                accountsListItemDataList.addAll(
+                    groupedAccounts[accountType]?.sortedByDescending { account ->
+                        account.balanceAmount.value
+                    }?.map { account ->
+                        val deleteEnabled = isAccountUsedInTransactions[account.id] != true
+                        val isDefault = if (defaultAccountId.isNull()) {
+                            isDefaultAccount(
+                                account = account.name,
+                            )
+                        } else {
+                            defaultAccountId == account.id
+                        }
+
+                        AccountsListItemContentData(
+                            isDefault = isDefault,
+                            isDeleteEnabled = !isDefaultAccount(
+                                account = account.name,
+                            ) && deleteEnabled,
+                            isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
+                            isMoreOptionsIconButtonVisible = true,
+                            icon = account.type.icon,
+                            accountId = account.id,
+                            balance = account.balanceAmount.toString(),
+                            name = account.name,
+                        )
+                    }.orEmpty()
+                )
+            }
+        }
+        val accountsScreenUIStateAndStateEvents = AccountsScreenUIStateAndStateEvents(
+            state = AccountsScreenUIState(
+                screenBottomSheetType = screenBottomSheetType,
+                isBottomSheetVisible = screenBottomSheetType != AccountsScreenBottomSheetType.None,
+                clickedItemId = clickedItemId,
+                isLoading = isLoading,
+                accountsListItemDataList = accountsListItemDataList.toImmutableList(),
+                accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
+                accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
+            ),
+            events = AccountsScreenUIStateEvents(
+                deleteAccount = ::deleteAccount,
+                navigateToAddAccountScreen = ::navigateToAddAccountScreen,
+                navigateToEditAccountScreen = ::navigateToEditAccountScreen,
+                navigateUp = ::navigateUp,
+                resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                setClickedItemId = ::setClickedItemId,
+                setDefaultAccountIdInDataStore = ::setDefaultAccountIdInDataStore,
+                setScreenBottomSheetType = ::setScreenBottomSheetType,
+            ),
+        )
+        return accountsScreenUIStateAndStateEvents
     }
 
     // region state events
