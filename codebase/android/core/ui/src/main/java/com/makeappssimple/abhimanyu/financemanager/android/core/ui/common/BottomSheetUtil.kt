@@ -11,14 +11,14 @@ import kotlinx.coroutines.launch
 
 @Composable
 public fun BottomSheetHandler(
-    showModalBottomSheet: Boolean,
+    isBottomSheetVisible: Boolean,
     screenBottomSheetType: ScreenBottomSheetType,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: SheetState,
     keyboardController: SoftwareKeyboardController?,
 ) {
     BottomSheetTypeChangeHandler(
-        showModalBottomSheet = showModalBottomSheet,
+        showModalBottomSheet = isBottomSheetVisible,
         screenBottomSheetType = screenBottomSheetType,
         coroutineScope = coroutineScope,
         modalBottomSheetState = modalBottomSheetState,
@@ -37,17 +37,17 @@ private fun BottomSheetTypeChangeHandler(
     LaunchedEffect(
         key1 = screenBottomSheetType,
     ) {
-        if (showModalBottomSheet) {
-            keyboardController?.hide()
-            showModalBottomSheet(
-                coroutineScope = coroutineScope,
-                modalBottomSheetState = modalBottomSheetState,
-            )
-        } else {
-            hideModalBottomSheet(
-                coroutineScope = coroutineScope,
-                modalBottomSheetState = modalBottomSheetState,
-            )
+        coroutineScope.launch {
+            if (showModalBottomSheet) {
+                keyboardController?.hide()
+                showModalBottomSheet(
+                    modalBottomSheetState = modalBottomSheetState,
+                )
+            } else {
+                hideModalBottomSheet(
+                    modalBottomSheetState = modalBottomSheetState,
+                )
+            }
         }
     }
 }
@@ -57,41 +57,36 @@ internal fun BottomSheetBackHandler(
     isEnabled: Boolean,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: SheetState,
-    resetBottomSheetType: () -> Unit,
+    onBackPressed: () -> Unit,
 ) {
     BackHandler(
         enabled = isEnabled,
     ) {
-        hideModalBottomSheet(
-            coroutineScope = coroutineScope,
-            modalBottomSheetState = modalBottomSheetState,
-            action = resetBottomSheetType,
-        )
-    }
-}
-
-private fun showModalBottomSheet(
-    coroutineScope: CoroutineScope,
-    modalBottomSheetState: SheetState,
-    action: (() -> Unit)? = null,
-) {
-    coroutineScope.launch {
-        if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
-            modalBottomSheetState.show()
-            action?.invoke()
+        coroutineScope.launch {
+            hideModalBottomSheet(
+                modalBottomSheetState = modalBottomSheetState,
+                onBackPressed = onBackPressed,
+            )
         }
     }
 }
 
-private fun hideModalBottomSheet(
-    coroutineScope: CoroutineScope,
+private suspend fun showModalBottomSheet(
     modalBottomSheetState: SheetState,
-    action: (() -> Unit)? = null,
+    onBackPressed: () -> Unit = {},
 ) {
-    coroutineScope.launch {
-        if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
-            modalBottomSheetState.hide()
-            action?.invoke()
-        }
+    if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
+        modalBottomSheetState.show()
+        onBackPressed()
+    }
+}
+
+private suspend fun hideModalBottomSheet(
+    modalBottomSheetState: SheetState,
+    onBackPressed: () -> Unit = {},
+) {
+    if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
+        modalBottomSheetState.hide()
+        onBackPressed()
     }
 }

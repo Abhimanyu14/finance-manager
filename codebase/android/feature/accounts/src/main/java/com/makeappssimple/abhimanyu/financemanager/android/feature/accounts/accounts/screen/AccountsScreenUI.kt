@@ -46,7 +46,7 @@ internal fun AccountsScreenUI(
     handleUIEvent: (uiEvent: AccountsScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.isBottomSheetVisible,
+        isBottomSheetVisible = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,

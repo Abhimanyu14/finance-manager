@@ -41,7 +41,7 @@ internal fun TransactionForValuesScreenUI(
     handleUIEvent: (uiEvent: TransactionForValuesScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.isBottomSheetVisible,
+        isBottomSheetVisible = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,

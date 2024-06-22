@@ -85,7 +85,7 @@ public fun MyScaffold(
         isEnabled = isBackHandlerEnabled,
         coroutineScope = coroutineScope,
         modalBottomSheetState = sheetState,
-        resetBottomSheetType = onNavigationBackButtonClick,
+        onBackPressed = onNavigationBackButtonClick,
     )
 
     Scaffold(

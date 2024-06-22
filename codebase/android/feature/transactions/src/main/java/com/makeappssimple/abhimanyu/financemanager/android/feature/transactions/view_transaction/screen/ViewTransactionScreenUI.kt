@@ -40,7 +40,7 @@ internal fun ViewTransactionScreenUI(
     handleUIEvent: (uiEvent: ViewTransactionScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.isBottomSheetVisible,
+        isBottomSheetVisible = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,

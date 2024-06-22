@@ -60,7 +60,7 @@ internal fun EditTransactionForScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.isBottomSheetVisible,
+        isBottomSheetVisible = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
