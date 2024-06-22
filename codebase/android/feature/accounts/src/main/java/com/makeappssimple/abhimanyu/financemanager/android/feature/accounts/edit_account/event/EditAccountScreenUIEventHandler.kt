@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edi
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
 
-public class EditAccountScreenUIEventHandler internal constructor(
+internal class EditAccountScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: EditAccountScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: EditAccountScreenUIEvent,
     ) {
         when (uiEvent) {

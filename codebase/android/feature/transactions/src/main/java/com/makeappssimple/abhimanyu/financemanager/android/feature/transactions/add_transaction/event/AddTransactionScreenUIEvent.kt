@@ -9,54 +9,54 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Immutable
-public sealed class AddTransactionScreenUIEvent : ScreenUIEvent {
-    public data object OnBottomSheetDismissed : AddTransactionScreenUIEvent()
-    public data object OnNavigationBackButtonClick : AddTransactionScreenUIEvent()
-    public data object OnClearAmountButtonClick : AddTransactionScreenUIEvent()
-    public data object OnClearTitleButtonClick : AddTransactionScreenUIEvent()
-    public data object OnCtaButtonClick : AddTransactionScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : AddTransactionScreenUIEvent()
-    public data object OnCategoryTextFieldClick : AddTransactionScreenUIEvent()
-    public data object OnTransactionDateTextFieldClick : AddTransactionScreenUIEvent()
-    public data object OnTransactionTimeTextFieldClick : AddTransactionScreenUIEvent()
-    public data object OnAccountFromTextFieldClick : AddTransactionScreenUIEvent()
-    public data object OnAccountToTextFieldClick : AddTransactionScreenUIEvent()
-    public data object OnTransactionDatePickerDismissed : AddTransactionScreenUIEvent()
-    public data object OnTransactionTimePickerDismissed : AddTransactionScreenUIEvent()
+internal sealed class AddTransactionScreenUIEvent : ScreenUIEvent {
+    data object OnBottomSheetDismissed : AddTransactionScreenUIEvent()
+    data object OnNavigationBackButtonClick : AddTransactionScreenUIEvent()
+    data object OnClearAmountButtonClick : AddTransactionScreenUIEvent()
+    data object OnClearTitleButtonClick : AddTransactionScreenUIEvent()
+    data object OnCtaButtonClick : AddTransactionScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : AddTransactionScreenUIEvent()
+    data object OnCategoryTextFieldClick : AddTransactionScreenUIEvent()
+    data object OnTransactionDateTextFieldClick : AddTransactionScreenUIEvent()
+    data object OnTransactionTimeTextFieldClick : AddTransactionScreenUIEvent()
+    data object OnAccountFromTextFieldClick : AddTransactionScreenUIEvent()
+    data object OnAccountToTextFieldClick : AddTransactionScreenUIEvent()
+    data object OnTransactionDatePickerDismissed : AddTransactionScreenUIEvent()
+    data object OnTransactionTimePickerDismissed : AddTransactionScreenUIEvent()
 
-    public data class OnAmountUpdated(
+    data class OnAmountUpdated(
         val updatedAmount: TextFieldValue,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnCategoryUpdated(
+    data class OnCategoryUpdated(
         val updatedCategory: Category?,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnSelectedTransactionForIndexUpdated(
+    data class OnSelectedTransactionForIndexUpdated(
         val updatedSelectedTransactionForIndex: Int,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnSelectedTransactionTypeIndexUpdated(
+    data class OnSelectedTransactionTypeIndexUpdated(
         val updatedSelectedTransactionTypeIndex: Int,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnAccountFromUpdated(
+    data class OnAccountFromUpdated(
         val updatedAccountFrom: Account?,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnAccountToUpdated(
+    data class OnAccountToUpdated(
         val updatedAccountTo: Account?,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnTitleUpdated(
+    data class OnTitleUpdated(
         val updatedTitle: TextFieldValue,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnTransactionDateUpdated(
+    data class OnTransactionDateUpdated(
         val updatedTransactionDate: LocalDate,
     ) : AddTransactionScreenUIEvent()
 
-    public data class OnTransactionTimeUpdated(
+    data class OnTransactionTimeUpdated(
         val updatedTransactionTime: LocalTime,
     ) : AddTransactionScreenUIEvent()
 }

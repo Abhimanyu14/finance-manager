@@ -5,13 +5,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-public sealed class EditTransactionForScreenUIEvent : ScreenUIEvent {
-    public data object OnNavigationBackButtonClick : EditTransactionForScreenUIEvent()
-    public data object OnClearTitleButtonClick : EditTransactionForScreenUIEvent()
-    public data object OnCtaButtonClick : EditTransactionForScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : EditTransactionForScreenUIEvent()
+internal sealed class EditTransactionForScreenUIEvent : ScreenUIEvent {
+    data object OnNavigationBackButtonClick : EditTransactionForScreenUIEvent()
+    data object OnClearTitleButtonClick : EditTransactionForScreenUIEvent()
+    data object OnCtaButtonClick : EditTransactionForScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : EditTransactionForScreenUIEvent()
 
-    public data class OnTitleUpdated(
+    data class OnTitleUpdated(
         val updatedTitle: TextFieldValue,
     ) : EditTransactionForScreenUIEvent()
 }

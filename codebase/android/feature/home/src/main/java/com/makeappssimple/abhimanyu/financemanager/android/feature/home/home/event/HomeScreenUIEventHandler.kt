@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.ev
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateAndStateEvents
 
-public class HomeScreenUIEventHandler internal constructor(
+internal class HomeScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: HomeScreenUIStateAndStateEvents,
     private val createDocument: ((uri: Uri?) -> Unit) -> Unit,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: HomeScreenUIEvent,
     ) {
         when (uiEvent) {

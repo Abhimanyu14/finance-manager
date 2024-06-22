@@ -2,10 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateAndStateEvents
 
-public class EditTransactionForScreenUIEventHandler internal constructor(
+internal class EditTransactionForScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: EditTransactionForScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: EditTransactionForScreenUIEvent,
     ) {
         when (uiEvent) {

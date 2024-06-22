@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIStateAndStateEvents
 
-public class AccountsScreenUIEventHandler internal constructor(
+internal class AccountsScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: AccountsScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    internal fun handleUIEvent(
         uiEvent: AccountsScreenUIEvent,
     ) {
         when (uiEvent) {

@@ -4,29 +4,29 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-public sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
-    public data object OnNavigationBackButtonClick : ViewTransactionScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : ViewTransactionScreenUIEvent()
+internal sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
+    data object OnNavigationBackButtonClick : ViewTransactionScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : ViewTransactionScreenUIEvent()
 
-    public sealed class OnTransactionDeleteConfirmationBottomSheet {
-        public data object NegativeButtonClick : ViewTransactionScreenUIEvent()
-        public data object PositiveButtonClick : ViewTransactionScreenUIEvent()
+    sealed class OnTransactionDeleteConfirmationBottomSheet {
+        data object NegativeButtonClick : ViewTransactionScreenUIEvent()
+        data object PositiveButtonClick : ViewTransactionScreenUIEvent()
     }
 
-    public sealed class OnTransactionListItem {
-        public data class RefundButtonClick(
+    sealed class OnTransactionListItem {
+        data class RefundButtonClick(
             val transactionId: Int,
         ) : ViewTransactionScreenUIEvent()
 
-        public data class DeleteButtonClick(
+        data class DeleteButtonClick(
             val transactionId: Int,
         ) : ViewTransactionScreenUIEvent()
 
-        public data class EditButtonClick(
+        data class EditButtonClick(
             val transactionId: Int,
         ) : ViewTransactionScreenUIEvent()
 
-        public data class Click(
+        data class Click(
             val transactionId: Int,
         ) : ViewTransactionScreenUIEvent()
     }

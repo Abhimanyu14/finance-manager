@@ -5,27 +5,27 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 
 @Immutable
-public sealed class HomeScreenUIEvent : ScreenUIEvent {
-    public data object OnBackupCardClick : HomeScreenUIEvent()
-    public data object OnFloatingActionButtonClick : HomeScreenUIEvent()
-    public data object OnHomeRecentTransactionsClick : HomeScreenUIEvent()
-    public data object OnNavigationBackButtonClick : HomeScreenUIEvent()
-    public data object OnTopAppBarSettingsButtonClick : HomeScreenUIEvent()
-    public data object OnTotalBalanceCardClick : HomeScreenUIEvent()
-    public data object OnTotalBalanceCardViewBalanceClick : HomeScreenUIEvent()
+internal sealed class HomeScreenUIEvent : ScreenUIEvent {
+    data object OnBackupCardClick : HomeScreenUIEvent()
+    data object OnFloatingActionButtonClick : HomeScreenUIEvent()
+    data object OnHomeRecentTransactionsClick : HomeScreenUIEvent()
+    data object OnNavigationBackButtonClick : HomeScreenUIEvent()
+    data object OnTopAppBarSettingsButtonClick : HomeScreenUIEvent()
+    data object OnTotalBalanceCardClick : HomeScreenUIEvent()
+    data object OnTotalBalanceCardViewBalanceClick : HomeScreenUIEvent()
 
-    public data class OnTransactionListItemClick(
+    data class OnTransactionListItemClick(
         val transactionId: Int,
     ) : HomeScreenUIEvent()
 
-    public sealed class OnOverviewCard {
-        public data object Click : HomeScreenUIEvent()
+    sealed class OnOverviewCard {
+        data object Click : HomeScreenUIEvent()
 
-        public data class Action(
+        data class Action(
             val overviewCardAction: OverviewCardAction,
         ) : HomeScreenUIEvent()
 
-        public data class TabClick(
+        data class TabClick(
             val index: Int,
         ) : HomeScreenUIEvent()
     }

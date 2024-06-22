@@ -5,27 +5,27 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-public sealed class EditCategoryScreenUIEvent : ScreenUIEvent {
-    public data object OnNavigationBackButtonClick : EditCategoryScreenUIEvent()
-    public data object OnBottomSheetDismissed : EditCategoryScreenUIEvent()
-    public data object OnClearTitleButtonClick : EditCategoryScreenUIEvent()
-    public data object OnCtaButtonClick : EditCategoryScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : EditCategoryScreenUIEvent()
-    public data object OnEmojiCircleClick : EditCategoryScreenUIEvent()
+internal sealed class EditCategoryScreenUIEvent : ScreenUIEvent {
+    data object OnNavigationBackButtonClick : EditCategoryScreenUIEvent()
+    data object OnBottomSheetDismissed : EditCategoryScreenUIEvent()
+    data object OnClearTitleButtonClick : EditCategoryScreenUIEvent()
+    data object OnCtaButtonClick : EditCategoryScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : EditCategoryScreenUIEvent()
+    data object OnEmojiCircleClick : EditCategoryScreenUIEvent()
 
-    public data class OnEmojiBottomSheetSearchTextUpdated(
+    data class OnEmojiBottomSheetSearchTextUpdated(
         val updatedSearchText: String,
     ) : EditCategoryScreenUIEvent()
 
-    public data class OnEmojiUpdated(
+    data class OnEmojiUpdated(
         val updatedEmoji: String,
     ) : EditCategoryScreenUIEvent()
 
-    public data class OnSelectedTransactionTypeIndexUpdated(
+    data class OnSelectedTransactionTypeIndexUpdated(
         val updatedIndex: Int,
     ) : EditCategoryScreenUIEvent()
 
-    public data class OnTitleUpdated(
+    data class OnTitleUpdated(
         val updatedTitle: TextFieldValue,
     ) : EditCategoryScreenUIEvent()
 }

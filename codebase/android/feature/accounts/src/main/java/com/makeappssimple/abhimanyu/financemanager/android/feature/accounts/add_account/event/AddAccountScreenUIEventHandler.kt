@@ -6,10 +6,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
 
-public class AddAccountScreenUIEventHandler internal constructor(
+internal class AddAccountScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: AddAccountScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: AddAccountScreenUIEvent,
     ) {
         when (uiEvent) {

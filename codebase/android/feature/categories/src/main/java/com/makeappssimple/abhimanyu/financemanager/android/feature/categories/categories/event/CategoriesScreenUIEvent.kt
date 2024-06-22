@@ -4,46 +4,46 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
-    public data object OnNavigationBackButtonClick : CategoriesScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : CategoriesScreenUIEvent()
+internal sealed class CategoriesScreenUIEvent : ScreenUIEvent {
+    data object OnNavigationBackButtonClick : CategoriesScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : CategoriesScreenUIEvent()
 
-    public data class OnFloatingActionButtonClick(
+    data class OnFloatingActionButtonClick(
         val transactionType: String,
     ) : CategoriesScreenUIEvent()
 
-    public data class OnSelectedTabIndexUpdated(
+    data class OnSelectedTabIndexUpdated(
         val updatedSelectedTabIndex: Int,
     ) : CategoriesScreenUIEvent()
 
-    public data class OnCategoriesGridItemClick(
+    data class OnCategoriesGridItemClick(
         val isDeleteVisible: Boolean,
         val isEditVisible: Boolean,
         val isSetAsDefaultVisible: Boolean,
         val categoryId: Int?,
     ) : CategoriesScreenUIEvent()
 
-    public sealed class OnCategoriesSetAsDefaultConfirmationBottomSheet {
-        public data object NegativeButtonClick : CategoriesScreenUIEvent()
-        public data object PositiveButtonClick : CategoriesScreenUIEvent()
+    sealed class OnCategoriesSetAsDefaultConfirmationBottomSheet {
+        data object NegativeButtonClick : CategoriesScreenUIEvent()
+        data object PositiveButtonClick : CategoriesScreenUIEvent()
     }
 
-    public sealed class OnCategoryMenuBottomSheet {
-        public data class DeleteButtonClick(
+    sealed class OnCategoryMenuBottomSheet {
+        data class DeleteButtonClick(
             val categoryId: Int,
         ) : CategoriesScreenUIEvent()
 
-        public data class EditButtonClick(
+        data class EditButtonClick(
             val categoryId: Int,
         ) : CategoriesScreenUIEvent()
 
-        public data class SetAsDefaultButtonClick(
+        data class SetAsDefaultButtonClick(
             val categoryId: Int,
         ) : CategoriesScreenUIEvent()
     }
 
-    public sealed class OnCategoriesDeleteConfirmationBottomSheet {
-        public data object NegativeButtonClick : CategoriesScreenUIEvent()
-        public data object PositiveButtonClick : CategoriesScreenUIEvent()
+    sealed class OnCategoriesDeleteConfirmationBottomSheet {
+        data object NegativeButtonClick : CategoriesScreenUIEvent()
+        data object PositiveButtonClick : CategoriesScreenUIEvent()
     }
 }

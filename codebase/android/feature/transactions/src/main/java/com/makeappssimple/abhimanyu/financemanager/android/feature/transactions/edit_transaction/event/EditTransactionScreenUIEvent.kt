@@ -9,59 +9,59 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Immutable
-public sealed class EditTransactionScreenUIEvent : ScreenUIEvent {
-    public data object OnBottomSheetDismissed : EditTransactionScreenUIEvent()
-    public data object OnNavigationBackButtonClick : EditTransactionScreenUIEvent()
-    public data object OnClearAmountButtonClick : EditTransactionScreenUIEvent()
-    public data object OnClearDescriptionButtonClick : EditTransactionScreenUIEvent()
-    public data object OnClearTitleButtonClick : EditTransactionScreenUIEvent()
-    public data object OnCtaButtonClick : EditTransactionScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : EditTransactionScreenUIEvent()
-    public data object OnCategoryTextFieldClick : EditTransactionScreenUIEvent()
-    public data object OnTransactionDateTextFieldClick : EditTransactionScreenUIEvent()
-    public data object OnTransactionTimeTextFieldClick : EditTransactionScreenUIEvent()
-    public data object OnAccountFromTextFieldClick : EditTransactionScreenUIEvent()
-    public data object OnAccountToTextFieldClick : EditTransactionScreenUIEvent()
-    public data object OnTransactionDatePickerDismissed : EditTransactionScreenUIEvent()
-    public data object OnTransactionTimePickerDismissed : EditTransactionScreenUIEvent()
+internal sealed class EditTransactionScreenUIEvent : ScreenUIEvent {
+    data object OnBottomSheetDismissed : EditTransactionScreenUIEvent()
+    data object OnNavigationBackButtonClick : EditTransactionScreenUIEvent()
+    data object OnClearAmountButtonClick : EditTransactionScreenUIEvent()
+    data object OnClearDescriptionButtonClick : EditTransactionScreenUIEvent()
+    data object OnClearTitleButtonClick : EditTransactionScreenUIEvent()
+    data object OnCtaButtonClick : EditTransactionScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : EditTransactionScreenUIEvent()
+    data object OnCategoryTextFieldClick : EditTransactionScreenUIEvent()
+    data object OnTransactionDateTextFieldClick : EditTransactionScreenUIEvent()
+    data object OnTransactionTimeTextFieldClick : EditTransactionScreenUIEvent()
+    data object OnAccountFromTextFieldClick : EditTransactionScreenUIEvent()
+    data object OnAccountToTextFieldClick : EditTransactionScreenUIEvent()
+    data object OnTransactionDatePickerDismissed : EditTransactionScreenUIEvent()
+    data object OnTransactionTimePickerDismissed : EditTransactionScreenUIEvent()
 
-    public data class OnAmountUpdated(
+    data class OnAmountUpdated(
         val updatedAmount: TextFieldValue,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnCategoryUpdated(
+    data class OnCategoryUpdated(
         val updatedCategory: Category?,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnDescriptionUpdated(
+    data class OnDescriptionUpdated(
         val updatedDescription: TextFieldValue,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnSelectedTransactionForIndexUpdated(
+    data class OnSelectedTransactionForIndexUpdated(
         val updatedSelectedTransactionForIndex: Int,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnSelectedTransactionTypeIndexUpdated(
+    data class OnSelectedTransactionTypeIndexUpdated(
         val updatedSelectedTransactionTypeIndex: Int,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnAccountFromUpdated(
+    data class OnAccountFromUpdated(
         val updatedAccountFrom: Account?,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnAccountToUpdated(
+    data class OnAccountToUpdated(
         val updatedAccountTo: Account?,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnTitleUpdated(
+    data class OnTitleUpdated(
         val updatedTitle: TextFieldValue,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnTransactionDateUpdated(
+    data class OnTransactionDateUpdated(
         val updatedTransactionDate: LocalDate,
     ) : EditTransactionScreenUIEvent()
 
-    public data class OnTransactionTimeUpdated(
+    data class OnTransactionTimeUpdated(
         val updatedTransactionTime: LocalTime,
     ) : EditTransactionScreenUIEvent()
 }

@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.ana
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateAndStateEvents
 
-public class AnalysisScreenUIEventHandler internal constructor(
+internal class AnalysisScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: AnalysisScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: AnalysisScreenUIEvent,
     ) {
         when (uiEvent) {

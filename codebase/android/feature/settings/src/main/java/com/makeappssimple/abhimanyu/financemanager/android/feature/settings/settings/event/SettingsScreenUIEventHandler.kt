@@ -5,7 +5,7 @@ import android.os.Build
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
 
-public class SettingsScreenUIEventHandler internal constructor(
+internal class SettingsScreenUIEventHandler internal constructor(
     private val hasNotificationPermission: Boolean,
     private val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents,
     private val createDocument: ((uri: Uri?) -> Unit) -> Unit,
@@ -13,7 +13,7 @@ public class SettingsScreenUIEventHandler internal constructor(
     private val requestNotificationsPermission: () -> Unit,
 ) {
 
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: SettingsScreenUIEvent,
     ) {
         when (uiEvent) {

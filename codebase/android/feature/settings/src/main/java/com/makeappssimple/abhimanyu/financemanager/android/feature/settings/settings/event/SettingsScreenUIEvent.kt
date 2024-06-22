@@ -4,15 +4,15 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-public sealed class SettingsScreenUIEvent : ScreenUIEvent {
-    public data object OnAccountsListItemClick : SettingsScreenUIEvent()
-    public data object OnBackupDataListItemClick : SettingsScreenUIEvent()
-    public data object OnCategoriesListItemClick : SettingsScreenUIEvent()
-    public data object OnNavigationBackButtonClick : SettingsScreenUIEvent()
-    public data object OnOpenSourceLicensesListItemClick : SettingsScreenUIEvent()
-    public data object OnRecalculateTotalListItemClick : SettingsScreenUIEvent()
-    public data object OnRestoreDataListItemClick : SettingsScreenUIEvent()
-    public data object OnToggleReminder : SettingsScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : SettingsScreenUIEvent()
-    public data object OnTransactionForListItemClick : SettingsScreenUIEvent()
+internal sealed class SettingsScreenUIEvent : ScreenUIEvent {
+    data object OnAccountsListItemClick : SettingsScreenUIEvent()
+    data object OnBackupDataListItemClick : SettingsScreenUIEvent()
+    data object OnCategoriesListItemClick : SettingsScreenUIEvent()
+    data object OnNavigationBackButtonClick : SettingsScreenUIEvent()
+    data object OnOpenSourceLicensesListItemClick : SettingsScreenUIEvent()
+    data object OnRecalculateTotalListItemClick : SettingsScreenUIEvent()
+    data object OnRestoreDataListItemClick : SettingsScreenUIEvent()
+    data object OnToggleReminder : SettingsScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : SettingsScreenUIEvent()
+    data object OnTransactionForListItemClick : SettingsScreenUIEvent()
 }

@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateAndStateEvents
 
-public class AddTransactionForScreenUIEventHandler internal constructor(
+internal class AddTransactionForScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: AddTransactionForScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: AddTransactionForScreenUIEvent,
     ) {
         when (uiEvent) {

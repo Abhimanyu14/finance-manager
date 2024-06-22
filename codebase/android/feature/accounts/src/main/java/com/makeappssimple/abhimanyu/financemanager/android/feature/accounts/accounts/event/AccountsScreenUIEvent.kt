@@ -4,37 +4,37 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-public sealed class AccountsScreenUIEvent : ScreenUIEvent {
-    public data object OnFloatingActionButtonClick : AccountsScreenUIEvent()
-    public data object OnNavigationBackButtonClick : AccountsScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : AccountsScreenUIEvent()
+internal sealed class AccountsScreenUIEvent : ScreenUIEvent {
+    data object OnFloatingActionButtonClick : AccountsScreenUIEvent()
+    data object OnNavigationBackButtonClick : AccountsScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : AccountsScreenUIEvent()
 
-    public sealed class OnAccountsDeleteConfirmationBottomSheet {
-        public data object NegativeButtonClick : AccountsScreenUIEvent()
-        public data object PositiveButtonClick : AccountsScreenUIEvent()
+    sealed class OnAccountsDeleteConfirmationBottomSheet {
+        data object NegativeButtonClick : AccountsScreenUIEvent()
+        data object PositiveButtonClick : AccountsScreenUIEvent()
     }
 
-    public sealed class OnAccountsMenuBottomSheet {
-        public data class DeleteButtonClick(
+    sealed class OnAccountsMenuBottomSheet {
+        data class DeleteButtonClick(
             val accountId: Int,
         ) : AccountsScreenUIEvent()
 
-        public data class EditButtonClick(
+        data class EditButtonClick(
             val accountId: Int,
         ) : AccountsScreenUIEvent()
 
-        public data class SetAsDefaultButtonClick(
+        data class SetAsDefaultButtonClick(
             val accountId: Int,
         ) : AccountsScreenUIEvent()
     }
 
-    public sealed class OnAccountsSetAsDefaultConfirmationBottomSheet {
-        public data object NegativeButtonClick : AccountsScreenUIEvent()
-        public data object PositiveButtonClick : AccountsScreenUIEvent()
+    sealed class OnAccountsSetAsDefaultConfirmationBottomSheet {
+        data object NegativeButtonClick : AccountsScreenUIEvent()
+        data object PositiveButtonClick : AccountsScreenUIEvent()
     }
 
-    public sealed class OnAccountsListItemContent {
-        public data class Click(
+    sealed class OnAccountsListItemContent {
+        data class Click(
             val isDeleteEnabled: Boolean,
             val isDefault: Boolean,
             val accountId: Int?,

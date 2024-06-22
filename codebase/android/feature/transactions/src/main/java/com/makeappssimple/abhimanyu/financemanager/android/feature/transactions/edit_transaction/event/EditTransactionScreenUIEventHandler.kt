@@ -4,11 +4,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenViewModel
 
-public class EditTransactionScreenUIEventHandler internal constructor(
+internal class EditTransactionScreenUIEventHandler internal constructor(
     private val viewModel: EditTransactionScreenViewModel,
     private val uiStateAndStateEvents: EditTransactionScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: EditTransactionScreenUIEvent,
     ) {
         when (uiEvent) {

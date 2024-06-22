@@ -4,10 +4,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Fi
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateAndStateEvents
 
-public class TransactionsScreenUIEventHandler internal constructor(
+internal class TransactionsScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: TransactionsScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: TransactionsScreenUIEvent,
     ) {
         when (uiEvent) {

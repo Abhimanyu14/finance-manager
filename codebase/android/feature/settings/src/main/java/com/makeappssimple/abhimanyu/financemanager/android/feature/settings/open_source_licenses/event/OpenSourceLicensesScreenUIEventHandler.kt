@@ -2,10 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIStateAndStateEvents
 
-public class OpenSourceLicensesScreenUIEventHandler internal constructor(
+internal class OpenSourceLicensesScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: OpenSourceLicensesScreenUIStateAndStateEvents,
 ) {
-    public fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: OpenSourceLicensesScreenUIEvent,
     ) {
         when (uiEvent) {

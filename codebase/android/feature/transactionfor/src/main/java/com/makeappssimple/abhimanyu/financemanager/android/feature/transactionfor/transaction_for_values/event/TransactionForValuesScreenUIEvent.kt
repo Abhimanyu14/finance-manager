@@ -4,33 +4,33 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-public sealed class TransactionForValuesScreenUIEvent : ScreenUIEvent {
-    public data object OnFloatingActionButtonClick : TransactionForValuesScreenUIEvent()
-    public data object OnNavigationBackButtonClick : TransactionForValuesScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : TransactionForValuesScreenUIEvent()
+internal sealed class TransactionForValuesScreenUIEvent : ScreenUIEvent {
+    data object OnFloatingActionButtonClick : TransactionForValuesScreenUIEvent()
+    data object OnNavigationBackButtonClick : TransactionForValuesScreenUIEvent()
+    data object OnTopAppBarNavigationButtonClick : TransactionForValuesScreenUIEvent()
 
-    public sealed class OnTransactionForValuesDeleteConfirmationBottomSheet {
-        public data object NegativeButtonClick : TransactionForValuesScreenUIEvent()
-        public data object PositiveButtonClick : TransactionForValuesScreenUIEvent()
+    sealed class OnTransactionForValuesDeleteConfirmationBottomSheet {
+        data object NegativeButtonClick : TransactionForValuesScreenUIEvent()
+        data object PositiveButtonClick : TransactionForValuesScreenUIEvent()
     }
 
-    public sealed class OnTransactionForValuesMenuBottomSheet {
-        public data class DeleteButtonClick(
+    sealed class OnTransactionForValuesMenuBottomSheet {
+        data class DeleteButtonClick(
             val transactionForId: Int,
         ) : TransactionForValuesScreenUIEvent()
 
-        public data class EditButtonClick(
+        data class EditButtonClick(
             val transactionForId: Int,
         ) : TransactionForValuesScreenUIEvent()
     }
 
-    public sealed class OnTransactionForListItem {
-        public data class Click(
+    sealed class OnTransactionForListItem {
+        data class Click(
             val isDeleteVisible: Boolean,
             val transactionForId: Int?,
         ) : TransactionForValuesScreenUIEvent()
 
-        public data class MoreOptionsIconButtonClick(
+        data class MoreOptionsIconButtonClick(
             val isDeleteVisible: Boolean,
             val transactionForId: Int?,
         ) : TransactionForValuesScreenUIEvent()
