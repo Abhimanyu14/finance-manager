@@ -7,9 +7,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Octuple
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultLongStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultMapStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
@@ -37,6 +34,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -61,28 +59,19 @@ public class AccountsScreenViewModel @Inject constructor(
         }.defaultObjectStateIn(
             scope = viewModelScope,
         )
-    private val allAccounts: StateFlow<ImmutableList<Account>> =
-        getAllAccountsFlowUseCase().defaultListStateIn(
-            scope = viewModelScope,
-        )
-    private val isAccountUsedInTransactions: StateFlow<ImmutableMap<Int, Boolean>> =
+    private val allAccounts: Flow<ImmutableList<Account>> = getAllAccountsFlowUseCase()
+    private val isAccountUsedInTransactions: Flow<ImmutableMap<Int, Boolean>> =
         allAccounts.map { accounts ->
             accounts.associate { account ->
                 account.id to checkIfAccountIsUsedInTransactionsUseCase(
                     accountId = account.id,
                 )
             }.toImmutableMap()
-        }.defaultMapStateIn(
-            scope = viewModelScope,
-        )
-    private val accountsTotalBalanceAmountValue: StateFlow<Long> =
-        getAccountsTotalBalanceAmountValueUseCase().defaultLongStateIn(
-            scope = viewModelScope,
-        )
-    private val accountsTotalMinimumBalanceAmountValue: StateFlow<Long> =
-        getAccountsTotalMinimumBalanceAmountValueUseCase().defaultLongStateIn(
-            scope = viewModelScope,
-        )
+        }
+    private val accountsTotalBalanceAmountValue: Flow<Long> =
+        getAccountsTotalBalanceAmountValueUseCase()
+    private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
+        getAccountsTotalMinimumBalanceAmountValueUseCase()
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
