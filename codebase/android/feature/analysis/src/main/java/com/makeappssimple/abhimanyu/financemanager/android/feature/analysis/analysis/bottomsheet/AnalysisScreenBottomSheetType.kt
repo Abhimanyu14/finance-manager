@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.ana
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class AnalysisScreenBottomSheetType : ScreenBottomSheetType {
-    public data object Filters : AnalysisScreenBottomSheetType()
-    public data object None : AnalysisScreenBottomSheetType()
+internal sealed class AnalysisScreenBottomSheetType : ScreenBottomSheetType {
+    data object Filters : AnalysisScreenBottomSheetType()
+    data object None : AnalysisScreenBottomSheetType()
 }

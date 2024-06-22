@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class EditTransactionScreenBottomSheetType : ScreenBottomSheetType {
-    public data object None : EditTransactionScreenBottomSheetType()
-    public data object SelectCategory : EditTransactionScreenBottomSheetType()
-    public data object SelectAccountFrom : EditTransactionScreenBottomSheetType()
-    public data object SelectAccountTo : EditTransactionScreenBottomSheetType()
+internal sealed class EditTransactionScreenBottomSheetType : ScreenBottomSheetType {
+    data object None : EditTransactionScreenBottomSheetType()
+    data object SelectCategory : EditTransactionScreenBottomSheetType()
+    data object SelectAccountFrom : EditTransactionScreenBottomSheetType()
+    data object SelectAccountTo : EditTransactionScreenBottomSheetType()
 }

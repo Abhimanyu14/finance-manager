@@ -105,7 +105,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     // region Data source
     private var categories: MutableList<Category> = mutableListOf()
 
-    public val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
+    internal val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
         value = null,
     )
     // endregion
@@ -115,7 +115,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         MutableStateFlow(
             value = persistentListOf(),
         )
-    public var validTransactionTypesForNewTransaction: StateFlow<ImmutableList<TransactionType>> =
+    internal var validTransactionTypesForNewTransaction: StateFlow<ImmutableList<TransactionType>> =
         _validTransactionTypesForNewTransaction
     // endregion
 
@@ -124,7 +124,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         MutableStateFlow(
             value = persistentListOf(),
         )
-    public var transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
+    internal var transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
         _transactionForValues
     // endregion
 
@@ -132,12 +132,12 @@ public class EditTransactionScreenViewModel @Inject constructor(
     private val _accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
         value = persistentListOf(),
     )
-    public var accounts: StateFlow<ImmutableList<Account>> = _accounts
+    internal var accounts: StateFlow<ImmutableList<Account>> = _accounts
     // endregion
 
-    public val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
+    internal val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
 
-    public val uiState: MutableStateFlow<EditTransactionScreenUiStateData> = MutableStateFlow(
+    internal val uiState: MutableStateFlow<EditTransactionScreenUiStateData> = MutableStateFlow(
         value = EditTransactionScreenUiStateData(
             selectedTransactionTypeIndex = null,
             amount = TextFieldValue(),
@@ -151,17 +151,17 @@ public class EditTransactionScreenViewModel @Inject constructor(
             transactionTime = dateTimeUtil.getCurrentLocalTime(),
         ),
     )
-    public val uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
+    internal val uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
         MutableStateFlow(
             value = EditTransactionScreenUiVisibilityState.Expense,
         )
 
     // Dependant data
-    public val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
+    internal val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
         value = null,
     )
 
-    public val filteredCategories: StateFlow<ImmutableList<Category>> =
+    internal val filteredCategories: StateFlow<ImmutableList<Category>> =
         selectedTransactionType.map { selectedTransactionType ->
             categories.filter { category ->
                 category.transactionType == selectedTransactionType
@@ -174,7 +174,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         it.category?.id
     }
 
-    public val isCtaButtonEnabled: StateFlow<Boolean> = combine(
+    internal val isCtaButtonEnabled: StateFlow<Boolean> = combine(
         flow = uiState,
         flow2 = selectedTransactionType,
     ) { uiState, selectedTransactionType ->
@@ -249,16 +249,16 @@ public class EditTransactionScreenViewModel @Inject constructor(
         scope = viewModelScope,
     )
 
-    public val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
+    internal val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
     )
 
-    public fun initViewModel() {
+    internal fun initViewModel() {
         fetchData()
         observeData()
     }
 
-    public fun updateTransaction() {
+    internal fun updateTransaction() {
         viewModelScope.launch {
             val selectedTransactionTypeValue = selectedTransactionType.value
             val uiStateValue = uiState.value
@@ -430,7 +430,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     }
 
     // region UI changes
-    public fun updateSelectedTransactionTypeIndex(
+    internal fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
@@ -443,7 +443,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateAmount(
+    internal fun updateAmount(
         updatedAmount: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
@@ -455,7 +455,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun clearAmount() {
+    internal fun clearAmount() {
         updateAmount(
             updatedAmount = uiState.value.amount.copy(
                 text = "",
@@ -463,11 +463,11 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun navigateUp() {
+    internal fun navigateUp() {
         navigator.navigateUp()
     }
 
-    public fun updateTitle(
+    internal fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
@@ -477,7 +477,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun clearTitle() {
+    internal fun clearTitle() {
         updateTitle(
             updatedTitle = uiState.value.title.copy(
                 text = "",
@@ -485,7 +485,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateDescription(
+    internal fun updateDescription(
         updatedDescription: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
@@ -495,7 +495,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun clearDescription() {
+    internal fun clearDescription() {
         updateDescription(
             updatedDescription = uiState.value.description.copy(
                 text = "",
@@ -503,7 +503,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateCategory(
+    internal fun updateCategory(
         updatedCategory: Category?,
     ) {
         updateEditTransactionScreenUiState(
@@ -513,7 +513,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateSelectedTransactionForIndex(
+    internal fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
@@ -523,7 +523,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateAccountFrom(
+    internal fun updateAccountFrom(
         updatedAccountFrom: Account?,
     ) {
         updateEditTransactionScreenUiState(
@@ -533,7 +533,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateAccountTo(
+    internal fun updateAccountTo(
         updatedAccountTo: Account?,
     ) {
         updateEditTransactionScreenUiState(
@@ -543,7 +543,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateTransactionDate(
+    internal fun updateTransactionDate(
         updatedTransactionDate: LocalDate,
     ) {
         updateEditTransactionScreenUiState(
@@ -553,7 +553,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    public fun updateTransactionTime(
+    internal fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
     ) {
         updateEditTransactionScreenUiState(

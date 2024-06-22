@@ -2,6 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edi
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class EditAccountScreenBottomSheetType : ScreenBottomSheetType {
-    public data object None : EditAccountScreenBottomSheetType()
+internal sealed class EditAccountScreenBottomSheetType : ScreenBottomSheetType {
+    data object None : EditAccountScreenBottomSheetType()
 }

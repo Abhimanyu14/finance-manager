@@ -2,10 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class TransactionsScreenBottomSheetType : ScreenBottomSheetType {
-    public data object Filters : TransactionsScreenBottomSheetType()
-    public data object Menu : TransactionsScreenBottomSheetType()
-    public data object None : TransactionsScreenBottomSheetType()
-    public data object SelectTransactionFor : TransactionsScreenBottomSheetType()
-    public data object Sort : TransactionsScreenBottomSheetType()
+internal sealed class TransactionsScreenBottomSheetType : ScreenBottomSheetType {
+    data object Filters : TransactionsScreenBottomSheetType()
+    data object Menu : TransactionsScreenBottomSheetType()
+    data object None : TransactionsScreenBottomSheetType()
+    data object SelectTransactionFor : TransactionsScreenBottomSheetType()
+    data object Sort : TransactionsScreenBottomSheetType()
 }

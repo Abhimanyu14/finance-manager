@@ -2,6 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class OpenSourceLicensesScreenBottomSheetType : ScreenBottomSheetType {
-    public data object None : OpenSourceLicensesScreenBottomSheetType()
+internal sealed class OpenSourceLicensesScreenBottomSheetType : ScreenBottomSheetType {
+    data object None : OpenSourceLicensesScreenBottomSheetType()
 }

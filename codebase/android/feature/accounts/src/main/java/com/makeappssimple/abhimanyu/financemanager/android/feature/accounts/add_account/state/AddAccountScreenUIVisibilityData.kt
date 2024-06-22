@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 import androidx.compose.runtime.Immutable
 
 @Immutable
-public data class AddAccountScreenUIVisibilityData(
+internal data class AddAccountScreenUIVisibilityData(
     val minimumBalanceAmountTextField: Boolean = false,
     val nameTextFieldErrorText: Boolean = false,
 )

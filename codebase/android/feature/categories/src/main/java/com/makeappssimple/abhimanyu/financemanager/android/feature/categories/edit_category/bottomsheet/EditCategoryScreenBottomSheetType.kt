@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.e
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class EditCategoryScreenBottomSheetType : ScreenBottomSheetType {
-    public data object None : EditCategoryScreenBottomSheetType()
-    public data object SelectEmoji : EditCategoryScreenBottomSheetType()
+internal sealed class EditCategoryScreenBottomSheetType : ScreenBottomSheetType {
+    data object None : EditCategoryScreenBottomSheetType()
+    data object SelectEmoji : EditCategoryScreenBottomSheetType()
 }

@@ -2,12 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class AccountsScreenBottomSheetType : ScreenBottomSheetType {
-    public data object DeleteConfirmation : AccountsScreenBottomSheetType()
-    public data object None : AccountsScreenBottomSheetType()
-    public data object SetAsDefaultConfirmation : AccountsScreenBottomSheetType()
+internal sealed class AccountsScreenBottomSheetType : ScreenBottomSheetType {
+    data object DeleteConfirmation : AccountsScreenBottomSheetType()
+    data object None : AccountsScreenBottomSheetType()
+    data object SetAsDefaultConfirmation : AccountsScreenBottomSheetType()
 
-    public data class Menu(
+    data class Menu(
         val isDeleteVisible: Boolean,
         val isEditVisible: Boolean,
         val isSetAsDefaultVisible: Boolean,

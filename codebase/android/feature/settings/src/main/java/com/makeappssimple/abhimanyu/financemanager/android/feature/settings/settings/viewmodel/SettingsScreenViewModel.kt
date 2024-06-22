@@ -164,7 +164,7 @@ public class SettingsScreenViewModel @Inject constructor(
         alarmKit.disableReminder()
     }
 
-    public fun enableReminder() {
+    internal fun enableReminder() {
         alarmKit.enableReminder()
     }
 

@@ -70,7 +70,7 @@ public sealed class EditTransactionScreenUiVisibilityState(
     )
 }
 
-public fun EditTransactionScreenUiVisibilityState?.orDefault(): EditTransactionScreenUiVisibilityState {
+internal fun EditTransactionScreenUiVisibilityState?.orDefault(): EditTransactionScreenUiVisibilityState {
     return if (this.isNull()) {
         EditTransactionScreenUiVisibilityState.Expense
     } else {

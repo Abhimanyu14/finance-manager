@@ -2,6 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.bo
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class HomeScreenBottomSheetType : ScreenBottomSheetType {
-    public data object None : HomeScreenBottomSheetType()
+internal sealed class HomeScreenBottomSheetType : ScreenBottomSheetType {
+    data object None : HomeScreenBottomSheetType()
 }

@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemData
 
 @Immutable
-public data class SettingsScreenListItemData(
+internal data class SettingsScreenListItemData(
     val data: SettingsListItemData,
     val handleEvent: (event: SettingsListItemContentEvent) -> Unit = {},
 )

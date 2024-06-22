@@ -2,6 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenEvent
 
-public sealed class SettingsScreenEvent : ScreenEvent {
-    public data object RestoreDataFailed : SettingsScreenEvent()
+internal sealed class SettingsScreenEvent : ScreenEvent {
+    data object RestoreDataFailed : SettingsScreenEvent()
 }

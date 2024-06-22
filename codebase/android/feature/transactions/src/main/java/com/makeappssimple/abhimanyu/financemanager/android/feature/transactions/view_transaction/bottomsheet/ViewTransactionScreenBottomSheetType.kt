@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public sealed class ViewTransactionScreenBottomSheetType : ScreenBottomSheetType {
-    public data object DeleteConfirmation : ViewTransactionScreenBottomSheetType()
-    public data object None : ViewTransactionScreenBottomSheetType()
+internal sealed class ViewTransactionScreenBottomSheetType : ScreenBottomSheetType {
+    data object DeleteConfirmation : ViewTransactionScreenBottomSheetType()
+    data object None : ViewTransactionScreenBottomSheetType()
 }

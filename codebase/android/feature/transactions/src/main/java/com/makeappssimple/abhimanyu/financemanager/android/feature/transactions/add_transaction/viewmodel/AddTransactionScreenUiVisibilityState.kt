@@ -4,16 +4,16 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 
 @Immutable
-public sealed class AddTransactionScreenUiVisibilityState(
-    public val isTitleTextFieldVisible: Boolean = false,
-    public val isCategoryTextFieldVisible: Boolean = false,
-    public val isTransactionForRadioGroupVisible: Boolean = false,
-    public val isTransactionTypesRadioGroupVisible: Boolean = false,
-    public val isAccountFromTextFieldVisible: Boolean = false,
-    public val isAccountToTextFieldVisible: Boolean = false,
-    public val isTitleSuggestionsVisible: Boolean = false,
+internal sealed class AddTransactionScreenUiVisibilityState(
+    val isTitleTextFieldVisible: Boolean = false,
+    val isCategoryTextFieldVisible: Boolean = false,
+    val isTransactionForRadioGroupVisible: Boolean = false,
+    val isTransactionTypesRadioGroupVisible: Boolean = false,
+    val isAccountFromTextFieldVisible: Boolean = false,
+    val isAccountToTextFieldVisible: Boolean = false,
+    val isTitleSuggestionsVisible: Boolean = false,
 ) {
-    public data object Expense : AddTransactionScreenUiVisibilityState(
+    data object Expense : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = true,
@@ -23,7 +23,7 @@ public sealed class AddTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    public data object Income : AddTransactionScreenUiVisibilityState(
+    data object Income : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
@@ -33,7 +33,7 @@ public sealed class AddTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    public data object Investment : AddTransactionScreenUiVisibilityState(
+    data object Investment : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
@@ -43,7 +43,7 @@ public sealed class AddTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    public data object Refund : AddTransactionScreenUiVisibilityState(
+    data object Refund : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
@@ -53,7 +53,7 @@ public sealed class AddTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = false,
     )
 
-    public data object Transfer : AddTransactionScreenUiVisibilityState(
+    data object Transfer : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
@@ -64,7 +64,7 @@ public sealed class AddTransactionScreenUiVisibilityState(
     )
 }
 
-public fun AddTransactionScreenUiVisibilityState?.orDefault(): AddTransactionScreenUiVisibilityState {
+internal fun AddTransactionScreenUiVisibilityState?.orDefault(): AddTransactionScreenUiVisibilityState {
     return if (this.isNull()) {
         AddTransactionScreenUiVisibilityState.Expense
     } else {
