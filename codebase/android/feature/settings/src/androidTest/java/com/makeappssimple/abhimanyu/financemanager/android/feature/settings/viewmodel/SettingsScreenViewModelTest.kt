@@ -3,9 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.vie
 /*
 @Ignore("Fix Hilt")
 @HiltAndroidTest
-public class SettingsScreenViewModelTest {
+internal class SettingsScreenViewModelTest {
     @get:Rule
-    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
+    internal val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var appVersionUtil: AppVersionUtil
     private lateinit var myLogger: MyLogger
@@ -25,7 +25,7 @@ public class SettingsScreenViewModelTest {
     private lateinit var settingsScreenViewModel: SettingsScreenViewModel
 
     @Before
-    public fun setUp() {
+    internal fun setUp() {
         appVersionUtil = TestAppVersionUtil()
         myLogger = TestMyLogger()
         myJsonReader = TestMyJsonReader()
@@ -73,11 +73,11 @@ public class SettingsScreenViewModelTest {
     }
 
     @After
-    public fun tearDown() {
+    internal fun tearDown() {
     }
 
     @Test
-    public fun backupDataToDocumentTest(): TestResult = runTest {
+    internal fun backupDataToDocumentTest(): TestResult = runTest {
         val testUri = Uri.EMPTY
         navigator = FakeNavigatorImpl()
         initViewModel()
@@ -102,7 +102,7 @@ public class SettingsScreenViewModelTest {
     */
 /*
     @Test
-    public fun navigateToCategoriesScreenTest(): TestResult = runTest {
+    internal fun navigateToCategoriesScreenTest(): TestResult = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -124,7 +124,7 @@ public class SettingsScreenViewModelTest {
     }
 
     @Test
-    public fun navigateToAccountsScreenTest(): TestResult = runTest {
+    internal fun navigateToAccountsScreenTest(): TestResult = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -146,7 +146,7 @@ public class SettingsScreenViewModelTest {
     }
 
     @Test
-    public fun navigateToTransactionForValuesScreenTest(): TestResult = runTest {
+    internal fun navigateToTransactionForValuesScreenTest(): TestResult = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -168,7 +168,7 @@ public class SettingsScreenViewModelTest {
     }
 
     @Test
-    public fun navigateUpTest(): TestResult = runTest {
+    internal fun navigateUpTest(): TestResult = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -190,7 +190,7 @@ public class SettingsScreenViewModelTest {
     }
 
     @Test
-    public fun restoreDataFromDocumentTest(): TestResult = runTest {
+    internal fun restoreDataFromDocumentTest(): TestResult = runTest {
         val testUri = Uri.EMPTY
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
@@ -215,7 +215,7 @@ public class SettingsScreenViewModelTest {
     }
 
     @Test
-    public fun recalculateTotalTest(): TestResult = runTest {
+    internal fun recalculateTotalTest(): TestResult = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )

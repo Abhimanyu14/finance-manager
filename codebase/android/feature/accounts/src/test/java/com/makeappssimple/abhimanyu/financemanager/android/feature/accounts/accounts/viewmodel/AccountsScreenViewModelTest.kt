@@ -12,21 +12,21 @@ import org.junit.Test
 
 @Ignore("Fix ViewModel test")
 @HiltAndroidTest
-public class AccountsScreenViewModelTest {
+internal class AccountsScreenViewModelTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    internal var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
 //    @Inject
-//    public lateinit var accountsScreenViewModel: AccountsScreenViewModel
+//    internal lateinit var accountsScreenViewModel: AccountsScreenViewModel
 
     /*
     @Before
-    public fun setUp() {
+    internal fun setUp() {
     }
     */
 
     @Test
-    public fun screenUIDataTest(): TestResult = runTest {
+    internal fun screenUIDataTest(): TestResult = runTest {
         Assert.assertEquals(
             4,
             2 + 2,

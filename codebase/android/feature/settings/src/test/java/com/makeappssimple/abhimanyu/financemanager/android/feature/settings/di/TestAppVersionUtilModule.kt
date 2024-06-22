@@ -13,9 +13,9 @@ import dagger.hilt.testing.TestInstallIn
     components = [SingletonComponent::class],
     replaces = [AppVersionUtilModule::class],
 )
-public class TestAppVersionUtilModule {
+internal class TestAppVersionUtilModule {
     @Provides
-    public fun providesAppVersionUtil(): AppVersionUtil {
+    internal fun providesAppVersionUtil(): AppVersionUtil {
         return FakeAppVersionUtilImpl()
     }
 }

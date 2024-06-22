@@ -33,12 +33,12 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-public class ViewTransactionScreenViewModelTest {
+internal class ViewTransactionScreenViewModelTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    internal var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
+    internal val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var stringDecoder: StringDecoder
@@ -55,7 +55,7 @@ public class ViewTransactionScreenViewModelTest {
     private lateinit var viewTransactionScreenViewModel: ViewTransactionScreenViewModel
 
     @Before
-    public fun setUp() {
+    internal fun setUp() {
         savedStateHandle = SavedStateHandle()
         stringDecoder = StringDecoderImpl()
         myLogger = FakeMyLoggerImpl()
@@ -70,20 +70,20 @@ public class ViewTransactionScreenViewModelTest {
     }
 
     @After
-    public fun tearDown() {
+    internal fun tearDown() {
     }
 
     @Test
-    public fun navigateToAddTransactionScreenTest() {
+    internal fun navigateToAddTransactionScreenTest() {
     }
 
     @Test
-    public fun navigateToEditTransactionScreenTest() {
+    internal fun navigateToEditTransactionScreenTest() {
     }
 
     @Test
     @Ignore("Fix later")
-    public fun navigateUpTest(): TestResult = runTest {
+    internal fun navigateUpTest(): TestResult = runTest {
         navigator = FakeNavigatorImpl()
         initViewModel()
 

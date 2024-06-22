@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
-public class AddOrEditTransactionScreenViewModelTest
+internal class AddOrEditTransactionScreenViewModelTest
 
 /**
  * Test cases

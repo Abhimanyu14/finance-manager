@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmod
 import org.junit.Assert
 import org.junit.Test
 
-public class HomeScreenViewModelTest {
+internal class HomeScreenViewModelTest {
 
     @Test
-    public fun sampleText() {
+    internal fun sampleText() {
         Assert.assertEquals(4, 2 + 2)
     }
 }

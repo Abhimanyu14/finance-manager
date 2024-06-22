@@ -2,12 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.scr
 
 /*
 @HiltAndroidTest
-public class SettingsScreenViewTest {
+internal class SettingsScreenViewTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    internal var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    public val composeTestRule: ComposeContentTestRule = createComposeRule()
+    internal val composeTestRule: ComposeContentTestRule = createComposeRule()
 
     private lateinit var context: Context
 
@@ -19,7 +19,7 @@ public class SettingsScreenViewTest {
     private lateinit var appVersionText: SemanticsNodeInteraction
 
     @Before
-    public fun setup() {
+    internal fun setup() {
         context = ApplicationProvider.getApplicationContext()
 
         linearProgressIndicator = composeTestRule.onNodeWithTag(
@@ -44,7 +44,7 @@ public class SettingsScreenViewTest {
     }
 
     @Test
-    public fun isLoading_isTrue() {
+    internal fun isLoading_isTrue() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -76,7 +76,7 @@ public class SettingsScreenViewTest {
     }
 
     @Test
-    public fun isLoading_isFalse() {
+    internal fun isLoading_isFalse() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -108,7 +108,7 @@ public class SettingsScreenViewTest {
     }
 
     @Test
-    public fun appVersion_isShown() {
+    internal fun appVersion_isShown() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -128,7 +128,7 @@ public class SettingsScreenViewTest {
     }
 
     @Test
-    public fun appVersion_isNotShown() {
+    internal fun appVersion_isNotShown() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -147,7 +147,7 @@ public class SettingsScreenViewTest {
         appVersionText.assertDoesNotExist()
     }
 
-    public companion object {
+    internal companion object {
         private const val TEST_APP_VERSION = "2023.04.07.1"
         private val testSettingsScreenViewData = SettingsScreenUIData(
             isLoading = false,
