@@ -16,16 +16,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenEvent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.snackbar.SettingsScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
@@ -52,15 +50,16 @@ public class SettingsScreenViewModel @Inject constructor(
         MutableStateFlow(
             value = SettingsScreenBottomSheetType.None,
         )
+    private val screenSnackbarType: MutableStateFlow<SettingsScreenSnackbarType> =
+        MutableStateFlow(
+            value = SettingsScreenSnackbarType.None,
+        )
     // endregion
 
     internal val uiStateAndStateEvents: MutableStateFlow<SettingsScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = SettingsScreenUIStateAndStateEvents(),
         )
-
-    private val _event: MutableSharedFlow<SettingsScreenEvent> = MutableSharedFlow()
-    internal val event: SharedFlow<SettingsScreenEvent> = _event
 
     internal fun initViewModel() {
         fetchData()
@@ -95,8 +94,8 @@ public class SettingsScreenViewModel @Inject constructor(
                 navigator.navigateUp()
             } else {
                 isLoading.value = false
-                _event.emit(
-                    value = SettingsScreenEvent.RestoreDataFailed,
+                setScreenSnackbarType(
+                    updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.RestoreDataFailed,
                 )
             }
         }
@@ -120,11 +119,13 @@ public class SettingsScreenViewModel @Inject constructor(
             combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
+                screenSnackbarType,
                 reminder,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
+                        screenSnackbarType,
                         reminder,
                     ),
                 ->
@@ -135,6 +136,7 @@ public class SettingsScreenViewModel @Inject constructor(
                             isLoading = isLoading,
                             isReminderEnabled = reminder?.isEnabled.orFalse(),
                             screenBottomSheetType = screenBottomSheetType,
+                            screenSnackbarType = screenSnackbarType,
                             appVersion = appVersion,
                         ),
                         events = SettingsScreenUIStateEvents(
@@ -147,7 +149,9 @@ public class SettingsScreenViewModel @Inject constructor(
                             navigateUp = ::navigateUp,
                             recalculateTotal = ::recalculateTotal,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                            resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
+                            setScreenSnackbarType = ::setScreenSnackbarType,
                         ),
                     )
                 }
@@ -158,7 +162,15 @@ public class SettingsScreenViewModel @Inject constructor(
     // region state events
     private fun disableReminder() {
         viewModelScope.launch {
-            alarmKit.cancelReminderAlarm()
+            if (alarmKit.cancelReminderAlarm()) {
+                setScreenSnackbarType(
+                    updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.CancelReminderSuccessful,
+                )
+            } else {
+                setScreenSnackbarType(
+                    updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.CancelReminderFailed,
+                )
+            }
         }
     }
 
@@ -198,15 +210,29 @@ public class SettingsScreenViewModel @Inject constructor(
 
     private fun resetScreenBottomSheetType() {
         setScreenBottomSheetType(
-            updatedAnalysisScreenBottomSheetType = SettingsScreenBottomSheetType.None,
+            updatedSettingsScreenBottomSheetType = SettingsScreenBottomSheetType.None,
+        )
+    }
+
+    private fun resetScreenSnackbarType() {
+        setScreenSnackbarType(
+            updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.None,
         )
     }
 
     private fun setScreenBottomSheetType(
-        updatedAnalysisScreenBottomSheetType: SettingsScreenBottomSheetType,
+        updatedSettingsScreenBottomSheetType: SettingsScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
-            updatedAnalysisScreenBottomSheetType
+            updatedSettingsScreenBottomSheetType
+        }
+    }
+
+    private fun setScreenSnackbarType(
+        updatedSettingsScreenSnackbarType: SettingsScreenSnackbarType,
+    ) {
+        screenSnackbarType.update {
+            updatedSettingsScreenSnackbarType
         }
     }
     // endregion

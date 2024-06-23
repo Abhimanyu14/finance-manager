@@ -12,39 +12,18 @@ internal class SettingsScreenUIEventHandler internal constructor(
     private val openDocument: () -> Unit,
     private val requestNotificationsPermission: () -> Unit,
 ) {
-
     fun handleUIEvent(
         uiEvent: SettingsScreenUIEvent,
     ) {
         when (uiEvent) {
+            is SettingsScreenUIEvent.OnAccountsListItemClick -> {
+                uiStateAndStateEvents.events.navigateToAccountsScreen()
+            }
+
             is SettingsScreenUIEvent.OnBackupDataListItemClick -> {
                 createDocument {
 
                 }
-            }
-
-            is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
-                uiStateAndStateEvents.events.recalculateTotal()
-            }
-
-            is SettingsScreenUIEvent.OnRestoreDataListItemClick -> {
-                openDocument()
-            }
-
-            is SettingsScreenUIEvent.OnToggleReminder -> {
-                if (uiStateAndStateEvents.state.isReminderEnabled.orFalse()) {
-                    uiStateAndStateEvents.events.disableReminder()
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
-                        requestNotificationsPermission()
-                    } else {
-                        uiStateAndStateEvents.events.enableReminder()
-                    }
-                }
-            }
-
-            is SettingsScreenUIEvent.OnAccountsListItemClick -> {
-                uiStateAndStateEvents.events.navigateToAccountsScreen()
             }
 
             is SettingsScreenUIEvent.OnCategoriesListItemClick -> {
@@ -57,6 +36,30 @@ internal class SettingsScreenUIEventHandler internal constructor(
 
             is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
                 uiStateAndStateEvents.events.navigateToOpenSourceLicensesScreen()
+            }
+
+            is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
+                uiStateAndStateEvents.events.recalculateTotal()
+            }
+
+            is SettingsScreenUIEvent.OnRestoreDataListItemClick -> {
+                openDocument()
+            }
+
+            is SettingsScreenUIEvent.OnSnackbarDismissed -> {
+                uiStateAndStateEvents.events.resetScreenSnackbarType()
+            }
+
+            is SettingsScreenUIEvent.OnToggleReminder -> {
+                if (uiStateAndStateEvents.state.isReminderEnabled.orFalse()) {
+                    uiStateAndStateEvents.events.disableReminder()
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
+                        requestNotificationsPermission()
+                    } else {
+                        uiStateAndStateEvents.events.enableReminder()
+                    }
+                }
             }
 
             is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

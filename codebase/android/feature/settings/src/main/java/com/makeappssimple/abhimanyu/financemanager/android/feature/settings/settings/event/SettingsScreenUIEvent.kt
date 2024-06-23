@@ -12,6 +12,7 @@ internal sealed class SettingsScreenUIEvent : ScreenUIEvent {
     data object OnOpenSourceLicensesListItemClick : SettingsScreenUIEvent()
     data object OnRecalculateTotalListItemClick : SettingsScreenUIEvent()
     data object OnRestoreDataListItemClick : SettingsScreenUIEvent()
+    data object OnSnackbarDismissed : SettingsScreenUIEvent()
     data object OnToggleReminder : SettingsScreenUIEvent()
     data object OnTopAppBarNavigationButtonClick : SettingsScreenUIEvent()
     data object OnTransactionForListItemClick : SettingsScreenUIEvent()

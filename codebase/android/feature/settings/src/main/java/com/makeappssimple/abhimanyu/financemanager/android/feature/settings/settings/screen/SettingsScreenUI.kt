@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,9 +44,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.components.SettingsScreenListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event.SettingsScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.snackbar.SettingsScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun SettingsScreenUI(
@@ -55,11 +59,72 @@ internal fun SettingsScreenUI(
     val snackbarHostState: SnackbarHostState = remember {
         SnackbarHostState()
     }
+
+    val restoreDataFailedSnackbarText = stringResource(
+        id = R.string.screen_settings_restore_data_failed,
+    )
+    val cancelReminderFailedSnackbarText = stringResource(
+        id = R.string.screen_settings_cancel_reminder_failed,
+    )
+    val cancelReminderSuccessfulSnackbarText = stringResource(
+        id = R.string.screen_settings_cancel_reminder_successful,
+    )
+
     val settingsScreenListItemData: ImmutableList<SettingsScreenListItemData> =
         getSettingsListItemData(
             uiState = uiState,
             handleUIEvent = handleUIEvent,
         )
+
+    LaunchedEffect(
+        key1 = uiState.screenSnackbarType,
+    ) {
+        when (uiState.screenSnackbarType) {
+            SettingsScreenSnackbarType.None -> {}
+
+            SettingsScreenSnackbarType.RestoreDataFailed -> {
+                launch {
+                    val result = snackbarHostState.showSnackbar(
+                        message = restoreDataFailedSnackbarText,
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> {}
+                        SnackbarResult.Dismissed -> {
+                            handleUIEvent(SettingsScreenUIEvent.OnSnackbarDismissed)
+                        }
+                    }
+                }
+            }
+
+            SettingsScreenSnackbarType.CancelReminderFailed -> {
+                launch {
+                    val result = snackbarHostState.showSnackbar(
+                        message = cancelReminderFailedSnackbarText,
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> {}
+                        SnackbarResult.Dismissed -> {
+                            handleUIEvent(SettingsScreenUIEvent.OnSnackbarDismissed)
+                        }
+                    }
+                }
+            }
+
+            SettingsScreenSnackbarType.CancelReminderSuccessful -> {
+                launch {
+                    val result = snackbarHostState.showSnackbar(
+                        message = cancelReminderSuccessfulSnackbarText,
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> {}
+                        SnackbarResult.Dismissed -> {
+                            handleUIEvent(SettingsScreenUIEvent.OnSnackbarDismissed)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     MyScaffold(
         modifier = Modifier

@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acco
 internal class AccountsScreenUIEventHandler internal constructor(
     private val uiStateAndStateEvents: AccountsScreenUIStateAndStateEvents,
 ) {
-    internal fun handleUIEvent(
+    fun handleUIEvent(
         uiEvent: AccountsScreenUIEvent,
     ) {
         when (uiEvent) {

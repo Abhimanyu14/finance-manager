@@ -21,7 +21,9 @@
     <string name="screen_settings_credits">Credits</string>
     <string name="screen_settings_open_source_licenses">Open Source Licenses</string>
     <string name="screen_settings_app_version">Version - %1$s</string>
-    <string name="screen_settings_restore_error_message">Error in Restoring Data 😕</string>
+    <string name="screen_settings_restore_data_failed">Error in Restoring Data 😕</string>
+    <string name="screen_settings_cancel_reminder_failed">Cancel Reminder Failed 😕</string>
+    <string name="screen_settings_cancel_reminder_successful">Cancel Reminder Successful 🙂</string>
     <!-- endregion -->
 
 </resources>
