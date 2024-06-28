@@ -184,7 +184,7 @@ internal fun AddTransactionScreenUI(
         sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
                 navigationAction = {
                     handleUIEvent(AddTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
@@ -570,7 +570,7 @@ internal fun AddTransactionScreenUI(
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled,
                     isLoading = uiState.isLoading,
-                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                    textStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
                 ),
                 handleEvent = { event ->
                     when (event) {

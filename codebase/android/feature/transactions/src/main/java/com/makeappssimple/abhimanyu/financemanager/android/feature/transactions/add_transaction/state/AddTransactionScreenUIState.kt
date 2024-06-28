@@ -26,8 +26,6 @@ internal data class AddTransactionScreenUIState(
     val isTransactionTimePickerDialogVisible: Boolean = false,
     @StringRes val accountFromTextFieldLabelTextStringResourceId: Int = -1,
     @StringRes val accountToTextFieldLabelTextStringResourceId: Int = -1,
-    @StringRes val appBarTitleTextStringResourceId: Int = -1,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = -1,
     val accounts: ImmutableList<Account> = persistentListOf(),
     val filteredCategories: ImmutableList<Category> = persistentListOf(),
     val titleSuggestionsChipUIData: ImmutableList<ChipUIData> = persistentListOf(),

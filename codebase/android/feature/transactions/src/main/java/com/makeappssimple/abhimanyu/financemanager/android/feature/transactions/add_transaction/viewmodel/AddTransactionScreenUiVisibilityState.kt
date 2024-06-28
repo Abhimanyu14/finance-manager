@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel
 
 import androidx.compose.runtime.Immutable
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 
 @Immutable
 internal sealed class AddTransactionScreenUiVisibilityState(
@@ -62,12 +61,4 @@ internal sealed class AddTransactionScreenUiVisibilityState(
         isAccountToTextFieldVisible = true,
         isTitleSuggestionsVisible = false,
     )
-}
-
-internal fun AddTransactionScreenUiVisibilityState?.orDefault(): AddTransactionScreenUiVisibilityState {
-    return if (this.isNull()) {
-        AddTransactionScreenUiVisibilityState.Expense
-    } else {
-        this
-    }
 }
