@@ -63,10 +63,6 @@ public class TransactionsScreenViewModel @Inject constructor(
         MutableStateFlow(
             value = persistentListOf(),
         )
-    private val categoriesMap: MutableStateFlow<Map<TransactionType, ImmutableList<Category>>> =
-        MutableStateFlow(
-            value = emptyMap(),
-        )
     private val expenseCategories: MutableStateFlow<ImmutableList<Category>?> = MutableStateFlow(
         value = persistentListOf(),
     )
@@ -451,9 +447,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                             }.mapValues { (_, categories) ->
                                 categories.distinct()
                             }.toMap()
-                    }
-                    categoriesMap.update {
-                        updatedCategoriesMap
                     }
                     expenseCategories.update {
                         updatedCategoriesMap[TransactionType.EXPENSE].orEmpty()
