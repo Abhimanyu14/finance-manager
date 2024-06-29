@@ -112,7 +112,7 @@ internal fun AddTransactionScreenUI(
                     SelectCategoryBottomSheet(
                         data = SelectCategoryBottomSheetData(
                             filteredCategories = uiState.filteredCategories,
-                            selectedCategoryId = uiState.uiState.category?.id,
+                            selectedCategoryId = uiState.category?.id,
                         ),
                         handleEvent = { event ->
                             when (event) {
@@ -136,7 +136,7 @@ internal fun AddTransactionScreenUI(
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
-                            selectedAccountId = uiState.uiState.accountFrom?.id,
+                            selectedAccountId = uiState.accountFrom?.id,
                         ),
                         handleEvent = { event ->
                             when (event) {
@@ -160,7 +160,7 @@ internal fun AddTransactionScreenUI(
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
-                            selectedAccountId = uiState.uiState.accountTo?.id,
+                            selectedAccountId = uiState.accountTo?.id,
                         ),
                         handleEvent = { event ->
                             when (event) {
@@ -202,7 +202,7 @@ internal fun AddTransactionScreenUI(
             data = MyDatePickerData(
                 isVisible = uiState.isTransactionDatePickerDialogVisible,
                 endLocalDate = uiState.currentLocalDate,
-                selectedLocalDate = uiState.uiState.transactionDate,
+                selectedLocalDate = uiState.transactionDate,
             ),
             handleEvent = { event ->
                 when (event) {
@@ -223,7 +223,7 @@ internal fun AddTransactionScreenUI(
         MyTimePicker(
             data = MyTimePickerData(
                 isVisible = uiState.isTransactionTimePickerDialogVisible,
-                selectedLocalDate = uiState.uiState.transactionTime,
+                selectedLocalDate = uiState.transactionTime,
             ),
             handleEvent = { event ->
                 when (event) {
@@ -265,7 +265,7 @@ internal fun AddTransactionScreenUI(
                         isLoading = uiState.isLoading,
                         loadingItemSize = 5,
                         items = uiState.transactionTypesForNewTransactionChipUIData,
-                        selectedItemIndex = uiState.uiState.selectedTransactionTypeIndex,
+                        selectedItemIndex = uiState.selectedTransactionTypeIndex,
                     ),
                     handleEvent = { event ->
                         when (event) {
@@ -292,18 +292,18 @@ internal fun AddTransactionScreenUI(
                     ),
                 data = MyOutlinedTextFieldData(
                     isLoading = uiState.isLoading,
-                    textFieldValue = uiState.uiState.amount,
+                    textFieldValue = uiState.amount,
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
-                    supportingText = if (uiState.uiState.amountErrorText.isNotNullOrBlank()) {
+                    supportingText = if (uiState.amountErrorText.isNotNullOrBlank()) {
                         {
                             AnimatedVisibility(
-                                uiState.uiState.amountErrorText.isNotNullOrBlank(),
+                                uiState.amountErrorText.isNotNullOrBlank(),
                             ) {
                                 MyText(
                                     text = stringResource(
                                         id = R.string.screen_add_or_edit_transaction_amount_error_text,
-                                        uiState.uiState.amountErrorText,
+                                        uiState.amountErrorText,
                                     ),
                                     style = MaterialTheme.typography.bodySmall.copy(
                                         color = MaterialTheme.colorScheme.error,
@@ -314,7 +314,7 @@ internal fun AddTransactionScreenUI(
                     } else {
                         null
                     },
-                    isError = uiState.uiState.amountErrorText.isNotNull(),
+                    isError = uiState.amountErrorText.isNotNull(),
                     visualTransformation = AmountCommaVisualTransformation(),
                     keyboardActions = KeyboardActions(
                         onDone = {
@@ -354,7 +354,7 @@ internal fun AddTransactionScreenUI(
                         ),
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
-                        value = uiState.uiState.category?.title.orEmpty(),
+                        value = uiState.category?.title.orEmpty(),
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
                     ),
                     handleEvent = { event ->
@@ -379,7 +379,7 @@ internal fun AddTransactionScreenUI(
                         ),
                     data = MyOutlinedTextFieldData(
                         isLoading = uiState.isLoading,
-                        textFieldValue = uiState.uiState.title,
+                        textFieldValue = uiState.title,
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
                         keyboardActions = KeyboardActions(
@@ -430,7 +430,7 @@ internal fun AddTransactionScreenUI(
                                 clearFocus()
                                 handleUIEvent(
                                     AddTransactionScreenUIEvent.OnTitleUpdated(
-                                        updatedTitle = uiState.uiState.title.copy(
+                                        updatedTitle = uiState.title.copy(
                                             text = uiState.titleSuggestions[event.index],
                                         ),
                                     ),
@@ -454,7 +454,7 @@ internal fun AddTransactionScreenUI(
                         isLoading = uiState.isLoading,
                         loadingItemSize = 5,
                         items = uiState.transactionForValuesChipUIData,
-                        selectedItemIndex = uiState.uiState.selectedTransactionForIndex,
+                        selectedItemIndex = uiState.selectedTransactionForIndex,
                     ),
                     handleEvent = { event ->
                         when (event) {
@@ -482,7 +482,7 @@ internal fun AddTransactionScreenUI(
                         ),
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
-                        value = uiState.uiState.accountFrom?.name.orEmpty(),
+                        value = uiState.accountFrom?.name.orEmpty(),
                         labelTextStringResourceId = uiState.accountFromTextFieldLabelTextStringResourceId,
                     ),
                     handleEvent = { event ->
@@ -507,7 +507,7 @@ internal fun AddTransactionScreenUI(
                         ),
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
-                        value = uiState.uiState.accountTo?.name.orEmpty(),
+                        value = uiState.accountTo?.name.orEmpty(),
                         labelTextStringResourceId = uiState.accountToTextFieldLabelTextStringResourceId,
                     ),
                     handleEvent = { event ->
@@ -529,7 +529,7 @@ internal fun AddTransactionScreenUI(
                     ),
                 data = MyReadOnlyTextFieldData(
                     isLoading = uiState.isLoading,
-                    value = uiState.uiState.transactionDate.formattedDate(),
+                    value = uiState.transactionDate.formattedDate(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 ),
                 handleEvent = { event ->
@@ -550,7 +550,7 @@ internal fun AddTransactionScreenUI(
                     ),
                 data = MyReadOnlyTextFieldData(
                     isLoading = uiState.isLoading,
-                    value = uiState.uiState.transactionTime.formattedTime(),
+                    value = uiState.transactionTime.formattedTime(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
                 ),
                 handleEvent = { event ->

@@ -424,25 +424,16 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 uiStateAndStateEvents.update {
                     AddTransactionScreenUIStateAndStateEvents(
                         state = AddTransactionScreenUIState(
+                            accountFrom = accountFrom,
+                            accountTo = accountTo,
                             screenBottomSheetType = screenBottomSheetType,
-                            isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
-                            isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
-                            isLoading = isLoading,
-                            uiState = AddTransactionScreenUiStateData(
-                                selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                                amount = amount,
-                                title = title,
-                                category = category,
-                                selectedTransactionForIndex = selectedTransactionForIndex,
-                                accountFrom = accountFrom,
-                                accountTo = accountTo,
-                                transactionDate = transactionDate,
-                                transactionTime = transactionTime,
-                                amountErrorText = amountErrorText,
-                            ),
                             uiVisibilityState = uiVisibilityState,
                             isBottomSheetVisible = screenBottomSheetType != AddTransactionScreenBottomSheetType.None,
                             isCtaButtonEnabled = isCtaButtonEnabled,
+                            isLoading = isLoading,
+                            isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
+                            isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
+                            category = category,
                             accountFromTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
                                 R.string.screen_add_or_edit_transaction_account_from
                             } else {
@@ -453,7 +444,22 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             } else {
                                 R.string.screen_add_or_edit_transaction_account
                             },
+                            selectedTransactionForIndex = selectedTransactionForIndex,
+                            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                            accounts = accounts.orEmpty(),
                             filteredCategories = filteredCategories,
+                            titleSuggestionsChipUIData = titleSuggestions
+                                .map { title ->
+                                    ChipUIData(
+                                        text = title,
+                                    )
+                                },
+                            transactionForValuesChipUIData = transactionForValues
+                                .map { transactionFor ->
+                                    ChipUIData(
+                                        text = transactionFor.titleToDisplay,
+                                    )
+                                },
                             transactionTypesForNewTransactionChipUIData = validTransactionTypesForNewTransaction
                                 .map { transactionType ->
                                     ChipUIData(
@@ -461,20 +467,12 @@ public class AddTransactionScreenViewModel @Inject constructor(
                                     )
                                 },
                             titleSuggestions = titleSuggestions,
-                            titleSuggestionsChipUIData = titleSuggestions
-                                .map { title ->
-                                    ChipUIData(
-                                        text = title,
-                                    )
-                                },
-                            accounts = accounts.orEmpty(),
-                            transactionForValuesChipUIData = transactionForValues
-                                .map { transactionFor ->
-                                    ChipUIData(
-                                        text = transactionFor.titleToDisplay,
-                                    )
-                                },
                             currentLocalDate = dateTimeUtil.getCurrentLocalDate().orMin(),
+                            transactionDate = transactionDate,
+                            transactionTime = transactionTime,
+                            amountErrorText = amountErrorText,
+                            amount = amount,
+                            title = title,
                             selectedTransactionType = selectedTransactionType,
                         ),
                         events = AddTransactionScreenUIStateEvents(
@@ -725,17 +723,17 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
 
     private fun insertTransaction() {
-        val amountValue = uiStateAndStateEvents.value.state.uiState.amount.text.toLongOrZero()
+        val amountValue = uiStateAndStateEvents.value.state.amount.text.toLongOrZero()
         val amount = Amount(
             value = amountValue,
         )
         val categoryId = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
             TransactionType.INCOME -> {
-                uiStateAndStateEvents.value.state.uiState.category?.id
+                uiStateAndStateEvents.value.state.category?.id
             }
 
             TransactionType.EXPENSE -> {
-                uiStateAndStateEvents.value.state.uiState.category?.id
+                uiStateAndStateEvents.value.state.category?.id
             }
 
             TransactionType.TRANSFER -> {
@@ -747,11 +745,11 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
 
             TransactionType.INVESTMENT -> {
-                uiStateAndStateEvents.value.state.uiState.category?.id
+                uiStateAndStateEvents.value.state.category?.id
             }
 
             TransactionType.REFUND -> {
-                uiStateAndStateEvents.value.state.uiState.category?.id
+                uiStateAndStateEvents.value.state.category?.id
             }
         }
         val accountFromId = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
@@ -760,11 +758,11 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
 
             TransactionType.EXPENSE -> {
-                uiStateAndStateEvents.value.state.uiState.accountFrom?.id
+                uiStateAndStateEvents.value.state.accountFrom?.id
             }
 
             TransactionType.TRANSFER -> {
-                uiStateAndStateEvents.value.state.uiState.accountFrom?.id
+                uiStateAndStateEvents.value.state.accountFrom?.id
             }
 
             TransactionType.ADJUSTMENT -> {
@@ -772,7 +770,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
 
             TransactionType.INVESTMENT -> {
-                uiStateAndStateEvents.value.state.uiState.accountFrom?.id
+                uiStateAndStateEvents.value.state.accountFrom?.id
             }
 
             TransactionType.REFUND -> {
@@ -781,7 +779,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
         }
         val accountToId = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
             TransactionType.INCOME -> {
-                uiStateAndStateEvents.value.state.uiState.accountTo?.id
+                uiStateAndStateEvents.value.state.accountTo?.id
             }
 
             TransactionType.EXPENSE -> {
@@ -789,7 +787,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
 
             TransactionType.TRANSFER -> {
-                uiStateAndStateEvents.value.state.uiState.accountTo?.id
+                uiStateAndStateEvents.value.state.accountTo?.id
             }
 
             TransactionType.ADJUSTMENT -> {
@@ -801,7 +799,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
 
             TransactionType.REFUND -> {
-                uiStateAndStateEvents.value.state.uiState.accountTo?.id
+                uiStateAndStateEvents.value.state.accountTo?.id
             }
         }
         val title = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
@@ -814,7 +812,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
 
             else -> {
-                uiStateAndStateEvents.value.state.uiState.title.text.capitalizeWords()
+                uiStateAndStateEvents.value.state.title.text.capitalizeWords()
             }
         }
         val transactionForId: Int =
@@ -824,7 +822,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 }
 
                 TransactionType.EXPENSE -> {
-                    uiStateAndStateEvents.value.state.uiState.selectedTransactionForIndex
+                    uiStateAndStateEvents.value.state.selectedTransactionForIndex
                 }
 
                 TransactionType.TRANSFER -> {
@@ -845,18 +843,18 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
         val transactionTimestamp = LocalDateTime
             .of(
-                uiStateAndStateEvents.value.state.uiState.transactionDate,
-                uiStateAndStateEvents.value.state.uiState.transactionTime
+                uiStateAndStateEvents.value.state.transactionDate,
+                uiStateAndStateEvents.value.state.transactionTime
             )
             .toEpochMilli()
 
         val accountFrom = if (accountFromId.isNotNull()) {
-            uiStateAndStateEvents.value.state.uiState.accountFrom
+            uiStateAndStateEvents.value.state.accountFrom
         } else {
             null
         }
         val accountTo = if (accountToId.isNotNull()) {
-            uiStateAndStateEvents.value.state.uiState.accountTo
+            uiStateAndStateEvents.value.state.accountTo
         } else {
             null
         }
