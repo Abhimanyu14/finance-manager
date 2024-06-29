@@ -446,7 +446,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                                 category.transactionType
                             }.mapValues { (_, categories) ->
                                 categories.distinct()
-                            }.toMap()
+                            }
                     }
                     expenseCategories.update {
                         updatedCategoriesMap[TransactionType.EXPENSE].orEmpty()
