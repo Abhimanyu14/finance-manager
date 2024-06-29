@@ -100,8 +100,8 @@ public class AnalysisScreenViewModel @Inject constructor(
     }
 
     private fun observeData() {
-        observeForTransactionDataMappedByCategoryChanges()
         observeForUiStateAndStateEventsChanges()
+        observeForTransactionDataMappedByCategoryChanges()
     }
 
     private fun getOldestTransactionLocalDate(): LocalDate {
