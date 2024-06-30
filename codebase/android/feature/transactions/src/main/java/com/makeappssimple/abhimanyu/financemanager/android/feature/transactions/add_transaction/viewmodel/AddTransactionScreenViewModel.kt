@@ -17,7 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
@@ -28,13 +27,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.UpdateTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -60,7 +57,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -78,7 +74,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-    private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : ScreenViewModel, ViewModel() {
     private val screenArgs = AddTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -723,175 +718,20 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
 
     private fun insertTransaction() {
-        val amountValue = uiStateAndStateEvents.value.state.amount.text.toLongOrZero()
-        val amount = Amount(
-            value = amountValue,
-        )
-        val categoryId = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
-            TransactionType.INCOME -> {
-                uiStateAndStateEvents.value.state.category?.id
-            }
-
-            TransactionType.EXPENSE -> {
-                uiStateAndStateEvents.value.state.category?.id
-            }
-
-            TransactionType.TRANSFER -> {
-                null
-            }
-
-            TransactionType.ADJUSTMENT -> {
-                null
-            }
-
-            TransactionType.INVESTMENT -> {
-                uiStateAndStateEvents.value.state.category?.id
-            }
-
-            TransactionType.REFUND -> {
-                uiStateAndStateEvents.value.state.category?.id
-            }
-        }
-        val accountFromId = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
-            TransactionType.INCOME -> {
-                null
-            }
-
-            TransactionType.EXPENSE -> {
-                uiStateAndStateEvents.value.state.accountFrom?.id
-            }
-
-            TransactionType.TRANSFER -> {
-                uiStateAndStateEvents.value.state.accountFrom?.id
-            }
-
-            TransactionType.ADJUSTMENT -> {
-                null
-            }
-
-            TransactionType.INVESTMENT -> {
-                uiStateAndStateEvents.value.state.accountFrom?.id
-            }
-
-            TransactionType.REFUND -> {
-                null
-            }
-        }
-        val accountToId = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
-            TransactionType.INCOME -> {
-                uiStateAndStateEvents.value.state.accountTo?.id
-            }
-
-            TransactionType.EXPENSE -> {
-                null
-            }
-
-            TransactionType.TRANSFER -> {
-                uiStateAndStateEvents.value.state.accountTo?.id
-            }
-
-            TransactionType.ADJUSTMENT -> {
-                null
-            }
-
-            TransactionType.INVESTMENT -> {
-                null
-            }
-
-            TransactionType.REFUND -> {
-                uiStateAndStateEvents.value.state.accountTo?.id
-            }
-        }
-        val title = when (uiStateAndStateEvents.value.state.selectedTransactionType) {
-            TransactionType.TRANSFER -> {
-                TransactionType.TRANSFER.title
-            }
-
-            TransactionType.REFUND -> {
-                TransactionType.REFUND.title
-            }
-
-            else -> {
-                uiStateAndStateEvents.value.state.title.text.capitalizeWords()
-            }
-        }
-        val transactionForId: Int =
-            when (uiStateAndStateEvents.value.state.selectedTransactionType) {
-                TransactionType.INCOME -> {
-                    1
-                }
-
-                TransactionType.EXPENSE -> {
-                    uiStateAndStateEvents.value.state.selectedTransactionForIndex
-                }
-
-                TransactionType.TRANSFER -> {
-                    1
-                }
-
-                TransactionType.ADJUSTMENT -> {
-                    1
-                }
-
-                TransactionType.INVESTMENT -> {
-                    1
-                }
-
-                TransactionType.REFUND -> {
-                    1
-                }
-            }
-        val transactionTimestamp = LocalDateTime
-            .of(
-                uiStateAndStateEvents.value.state.transactionDate,
-                uiStateAndStateEvents.value.state.transactionTime
-            )
-            .toEpochMilli()
-
-        val accountFrom = if (accountFromId.isNotNull()) {
-            uiStateAndStateEvents.value.state.accountFrom
-        } else {
-            null
-        }
-        val accountTo = if (accountToId.isNotNull()) {
-            uiStateAndStateEvents.value.state.accountTo
-        } else {
-            null
-        }
-        val transaction = Transaction(
-            amount = amount,
-            categoryId = categoryId,
-            originalTransactionId = originalTransactionData?.transaction?.id,
-            accountFromId = accountFromId,
-            accountToId = accountToId,
-            title = title,
-            creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
-            transactionTimestamp = transactionTimestamp,
-            transactionForId = transactionForId,
-            transactionType = uiStateAndStateEvents.value.state.selectedTransactionType,
-        )
-
+        val uiState = uiStateAndStateEvents.value.state
         viewModelScope.launch {
-            val id = insertTransactionUseCase(
-                amountValue = amountValue,
-                accountFrom = accountFrom,
-                accountTo = accountTo,
-                transaction = transaction,
+            insertTransactionUseCase(
+                selectedAccountFrom = uiState.accountFrom,
+                selectedAccountTo = uiState.accountTo,
+                selectedCategoryId = uiState.category?.id,
+                selectedTransactionForId = transactionForValues[uiState.selectedTransactionForIndex].id,
+                selectedTransactionDate = uiState.transactionDate,
+                selectedTransactionTime = uiState.transactionTime,
+                enteredAmountValue = uiState.amount.text.toLongOrZero(),
+                enteredTitle = uiState.title.text.capitalizeWords(),
+                selectedTransactionType = uiState.selectedTransactionType,
+                originalTransaction = originalTransactionData?.transaction,
             )
-
-            // Only for refund transaction
-            originalTransactionData?.transaction?.let { originalTransaction ->
-                val refundTransactionIds = originalTransaction.refundTransactionIds?.run {
-                    originalTransaction.refundTransactionIds?.toMutableList()
-                } ?: mutableListOf()
-                refundTransactionIds.add(id.toInt())
-                updateTransactionUseCase(
-                    originalTransaction = originalTransaction,
-                    updatedTransaction = originalTransaction.copy(
-                        refundTransactionIds = refundTransactionIds,
-                    ),
-                )
-            }
             navigator.navigateUp()
         }
     }

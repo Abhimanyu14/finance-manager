@@ -2,10 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.bottomsheet.EditTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIStateAndStateEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenViewModel
 
 internal class EditTransactionScreenUIEventHandler internal constructor(
-    private val viewModel: EditTransactionScreenViewModel,
     private val uiStateAndStateEvents: EditTransactionScreenUIStateAndStateEvents,
 ) {
     fun handleUIEvent(
@@ -21,19 +19,15 @@ internal class EditTransactionScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionScreenUIEvent.OnCtaButtonClick -> {
-                viewModel.updateTransaction()
+                uiStateAndStateEvents.events.updateTransaction()
             }
 
             is EditTransactionScreenUIEvent.OnClearAmountButtonClick -> {
-                viewModel.clearAmount()
-            }
-
-            is EditTransactionScreenUIEvent.OnClearDescriptionButtonClick -> {
-                viewModel.clearDescription()
+                uiStateAndStateEvents.events.clearAmount()
             }
 
             is EditTransactionScreenUIEvent.OnClearTitleButtonClick -> {
-                viewModel.clearTitle()
+                uiStateAndStateEvents.events.clearTitle()
             }
 
             is EditTransactionScreenUIEvent.OnAccountFromTextFieldClick -> {
@@ -63,49 +57,31 @@ internal class EditTransactionScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                viewModel.navigateUp()
+                uiStateAndStateEvents.events.navigateUp()
             }
 
             is EditTransactionScreenUIEvent.OnAccountFromUpdated -> {
-                viewModel.updateAccountFrom(
-                    updatedAccountFrom = uiEvent.updatedAccountFrom,
-                )
+                uiStateAndStateEvents.events.setAccountFrom(uiEvent.updatedAccountFrom)
             }
 
             is EditTransactionScreenUIEvent.OnAccountToUpdated -> {
-                viewModel.updateAccountTo(
-                    updatedAccountTo = uiEvent.updatedAccountTo,
-                )
+                uiStateAndStateEvents.events.setAccountTo(uiEvent.updatedAccountTo)
             }
 
             is EditTransactionScreenUIEvent.OnAmountUpdated -> {
-                viewModel.updateAmount(
-                    updatedAmount = uiEvent.updatedAmount,
-                )
+                uiStateAndStateEvents.events.setAmount(uiEvent.updatedAmount)
             }
 
             is EditTransactionScreenUIEvent.OnCategoryUpdated -> {
-                viewModel.updateCategory(
-                    updatedCategory = uiEvent.updatedCategory,
-                )
-            }
-
-            is EditTransactionScreenUIEvent.OnDescriptionUpdated -> {
-                viewModel.updateDescription(
-                    updatedDescription = uiEvent.updatedDescription,
-                )
+                uiStateAndStateEvents.events.setCategory(uiEvent.updatedCategory)
             }
 
             is EditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated -> {
-                viewModel.updateSelectedTransactionForIndex(
-                    updatedSelectedTransactionForIndex = uiEvent.updatedSelectedTransactionForIndex,
-                )
+                uiStateAndStateEvents.events.setSelectedTransactionForIndex(uiEvent.updatedSelectedTransactionForIndex)
             }
 
             is EditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                viewModel.updateSelectedTransactionTypeIndex(
-                    updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
-                )
+                uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
             }
 
             is EditTransactionScreenUIEvent.OnTransactionTimePickerDismissed -> {
@@ -117,22 +93,16 @@ internal class EditTransactionScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionScreenUIEvent.OnTitleUpdated -> {
-                viewModel.updateTitle(
-                    updatedTitle = uiEvent.updatedTitle,
-                )
+                uiStateAndStateEvents.events.setTitle(uiEvent.updatedTitle)
             }
 
             is EditTransactionScreenUIEvent.OnTransactionDateUpdated -> {
-                viewModel.updateTransactionDate(
-                    updatedTransactionDate = uiEvent.updatedTransactionDate,
-                )
+                uiStateAndStateEvents.events.setTransactionDate(uiEvent.updatedTransactionDate)
                 uiStateAndStateEvents.events.setIsTransactionDatePickerDialogVisible(false)
             }
 
             is EditTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
-                viewModel.updateTransactionTime(
-                    updatedTransactionTime = uiEvent.updatedTransactionTime,
-                )
+                uiStateAndStateEvents.events.setTransactionTime(uiEvent.updatedTransactionTime)
                 uiStateAndStateEvents.events.setIsTransactionTimePickerDialogVisible(false)
             }
         }

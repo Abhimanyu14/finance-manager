@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import java.time.LocalDate
@@ -22,11 +21,3 @@ internal data class EditTransactionScreenUiStateData(
     val transactionTime: LocalTime = LocalTime.MIN,
     val amountErrorText: String? = null,
 )
-
-internal fun EditTransactionScreenUiStateData?.orDefault(): EditTransactionScreenUiStateData {
-    return if (this.isNull()) {
-        EditTransactionScreenUiStateData()
-    } else {
-        this
-    }
-}

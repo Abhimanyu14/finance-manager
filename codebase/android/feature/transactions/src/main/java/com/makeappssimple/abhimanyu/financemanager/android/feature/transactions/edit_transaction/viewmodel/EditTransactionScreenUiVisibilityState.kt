@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 @Immutable
 internal sealed class EditTransactionScreenUiVisibilityState(
     val isTitleTextFieldVisible: Boolean = false,
-    val isDescriptionTextFieldVisible: Boolean = false,
     val isCategoryTextFieldVisible: Boolean = false,
     val isTransactionForRadioGroupVisible: Boolean = false,
     val isTransactionTypesRadioGroupVisible: Boolean = false,
@@ -16,7 +15,6 @@ internal sealed class EditTransactionScreenUiVisibilityState(
 ) {
     data object Expense : EditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = true,
         isTransactionTypesRadioGroupVisible = true,
@@ -27,7 +25,6 @@ internal sealed class EditTransactionScreenUiVisibilityState(
 
     data object Income : EditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
@@ -38,7 +35,6 @@ internal sealed class EditTransactionScreenUiVisibilityState(
 
     data object Investment : EditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
@@ -49,7 +45,6 @@ internal sealed class EditTransactionScreenUiVisibilityState(
 
     data object Refund : EditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = false,
@@ -60,7 +55,6 @@ internal sealed class EditTransactionScreenUiVisibilityState(
 
     data object Transfer : EditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
-        isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
