@@ -26,7 +26,7 @@ public class AlarmKitImpl(
         if (!isAlarmCancelled) {
             return false
         }
-        
+
         disableBroadcastReceivers()
 
         isAlarmCancelled = setIsReminderEnabledInPreferences(
