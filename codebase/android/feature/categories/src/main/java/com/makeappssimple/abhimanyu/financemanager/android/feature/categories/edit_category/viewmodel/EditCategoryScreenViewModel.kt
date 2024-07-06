@@ -32,7 +32,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -51,15 +50,13 @@ public class EditCategoryScreenViewModel @Inject constructor(
         stringDecoder = stringDecoder,
     )
 
-    private val _categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
+    private val categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
         value = persistentListOf(),
     )
-    private val categories: StateFlow<ImmutableList<Category>> = _categories
 
-    private val _category: MutableStateFlow<Category?> = MutableStateFlow(
+    private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
-    private val category: StateFlow<Category?> = _category
 
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.INCOME,
@@ -224,7 +221,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
 
     private fun getAllCategories() {
         viewModelScope.launch {
-            _categories.update {
+            categories.update {
                 getAllCategoriesUseCase()
             }
         }
@@ -233,7 +230,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
     private fun getOriginalCategory() {
         screenArgs.originalCategoryId?.let { id ->
             viewModelScope.launch {
-                _category.update {
+                category.update {
                     getCategoryUseCase(
                         id = id,
                     )

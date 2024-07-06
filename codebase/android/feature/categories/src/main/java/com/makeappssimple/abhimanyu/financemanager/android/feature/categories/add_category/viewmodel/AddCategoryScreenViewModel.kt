@@ -30,7 +30,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -53,10 +52,9 @@ public class AddCategoryScreenViewModel @Inject constructor(
         TransactionType.EXPENSE,
         TransactionType.INVESTMENT,
     )
-    private val _categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
+    private val categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
         persistentListOf()
     )
-    private val categories: StateFlow<ImmutableList<Category>> = _categories
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -197,7 +195,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
 
     private fun fetchCategories() {
         viewModelScope.launch {
-            _categories.update {
+            categories.update {
                 getAllCategoriesUseCase()
             }
         }

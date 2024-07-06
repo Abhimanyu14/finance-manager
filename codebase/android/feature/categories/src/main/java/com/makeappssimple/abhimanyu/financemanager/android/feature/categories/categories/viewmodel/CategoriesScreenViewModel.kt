@@ -31,7 +31,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -45,12 +44,10 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val _categoriesGridItemDataMap: MutableStateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
+    private val categoriesGridItemDataMap: MutableStateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
         MutableStateFlow(
             value = persistentMapOf(),
         )
-    private val categoriesGridItemDataMap: StateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
-        _categoriesGridItemDataMap
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -171,7 +168,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                                 category = category,
                             )
                         }
-                _categoriesGridItemDataMap.update {
+                categoriesGridItemDataMap.update {
                     persistentMapOf(
                         TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
                         TransactionType.INCOME to incomeCategoriesGridItemDataList,

@@ -104,34 +104,29 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     // region Data source
     private var categories: MutableList<Category> = mutableListOf()
 
-    internal val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
+    private val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
         value = null,
     )
     // endregion
 
     // region valid transaction types for new transaction
-    private val _validTransactionTypesForNewTransaction: MutableStateFlow<ImmutableList<TransactionType>> =
+    private val validTransactionTypesForNewTransaction: MutableStateFlow<ImmutableList<TransactionType>> =
         MutableStateFlow(
             value = persistentListOf(),
         )
-    internal var validTransactionTypesForNewTransaction: StateFlow<ImmutableList<TransactionType>> =
-        _validTransactionTypesForNewTransaction
     // endregion
 
     // region transaction for values
-    private val _transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>> =
+    private val transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>> =
         MutableStateFlow(
             value = persistentListOf(),
         )
-    internal var transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
-        _transactionForValues
     // endregion
 
     // region accounts
-    private val _accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
+    private val accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
         value = persistentListOf(),
     )
-    internal var accounts: StateFlow<ImmutableList<Account>> = _accounts
     // endregion
 
     internal val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
@@ -150,13 +145,13 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
             transactionTime = dateTimeUtil.getCurrentLocalTime(),
         ),
     )
-    internal val uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
+    private val uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
         MutableStateFlow(
             value = EditTransactionScreenUiVisibilityState.Expense,
         )
 
     // Dependant data
-    internal val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
+    private val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
         value = null,
     )
 
@@ -246,7 +241,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         }
     }
 
-    internal val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
+    private val isDataFetchCompleted: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
     )
 
@@ -427,7 +422,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     }
 
     // region UI changes
-    internal fun updateSelectedTransactionTypeIndex(
+    private fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
@@ -440,7 +435,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         )
     }
 
-    internal fun updateAmount(
+    private fun updateAmount(
         updatedAmount: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
@@ -464,7 +459,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         navigator.navigateUp()
     }
 
-    internal fun updateTitle(
+    private fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
@@ -482,7 +477,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         )
     }
 
-    internal fun updateDescription(
+    private fun updateDescription(
         updatedDescription: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
@@ -500,7 +495,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         )
     }
 
-    internal fun updateCategory(
+    private fun updateCategory(
         updatedCategory: Category?,
     ) {
         updateEditTransactionScreenUiState(
@@ -520,7 +515,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         )
     }
 
-    internal fun updateAccountFrom(
+    private fun updateAccountFrom(
         updatedAccountFrom: Account?,
     ) {
         updateEditTransactionScreenUiState(
@@ -530,7 +525,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         )
     }
 
-    internal fun updateAccountTo(
+    private fun updateAccountTo(
         updatedAccountTo: Account?,
     ) {
         updateEditTransactionScreenUiState(
@@ -585,7 +580,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                     categories.addAll(getAllCategoriesUseCase())
                 },
                 async {
-                    _accounts.update {
+                    accounts.update {
                         getAllAccountsUseCase()
                             .sortedWith(
                                 comparator = compareBy<Account> {
@@ -597,7 +592,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                     }
                 },
                 async {
-                    _transactionForValues.update {
+                    transactionForValues.update {
                         getAllTransactionForValuesUseCase()
                     }
                 },
@@ -778,7 +773,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
 
         val transactionTypesRemainingAfterExclusion =
             (TransactionType.entries.toSet() - excludedTransactionTypes).toList()
-        _validTransactionTypesForNewTransaction.update {
+        validTransactionTypesForNewTransaction.update {
             transactionTypesRemainingAfterExclusion.toImmutableList()
         }
 

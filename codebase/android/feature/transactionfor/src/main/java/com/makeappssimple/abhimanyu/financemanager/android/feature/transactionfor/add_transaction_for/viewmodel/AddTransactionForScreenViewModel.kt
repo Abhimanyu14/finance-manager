@@ -20,7 +20,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,12 +30,10 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val _transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>> =
+    private val transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>> =
         MutableStateFlow(
             persistentListOf()
         )
-    private val transactionForValues: StateFlow<ImmutableList<TransactionFor>> =
-        _transactionForValues
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -140,7 +137,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
 
     private fun getAllTransactionForValues() {
         viewModelScope.launch {
-            _transactionForValues.update {
+            transactionForValues.update {
                 getAllTransactionForValuesUseCase()
             }
         }
