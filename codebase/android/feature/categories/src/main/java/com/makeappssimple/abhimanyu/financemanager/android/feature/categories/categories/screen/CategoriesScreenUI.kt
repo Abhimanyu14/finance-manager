@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -40,6 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.event.CategoriesScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIConstants.PAGE_COUNT
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
@@ -54,15 +58,26 @@ internal fun CategoriesScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: CategoriesScreenUIEvent) -> Unit = {},
 ) {
+    val snackbarHostState: SnackbarHostState = remember {
+        SnackbarHostState()
+    }
     val pagerState: PagerState = rememberPagerState(
         pageCount = { PAGE_COUNT },
     )
 
+    val setDefaultCategoryFailedSnackbarText = stringResource(
+        id = R.string.screen_categories_set_default_category_failed,
+    )
+    val setDefaultCategorySuccessfulSnackbarText = stringResource(
+        id = R.string.screen_categories_set_default_category_successful,
+    )
+
     LaunchedEffect(
         key1 = pagerState.currentPage,
-        key2 = handleUIEvent,
+        key2 = pagerState.settledPage,
+        key3 = handleUIEvent,
     ) {
-        handleUIEvent(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(pagerState.currentPage))
+        handleUIEvent(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(pagerState.settledPage))
     }
 
     LaunchedEffect(
@@ -70,6 +85,42 @@ internal fun CategoriesScreenUI(
     ) {
         state.coroutineScope.launch {
             pagerState.animateScrollToPage(uiState.selectedTabIndex)
+        }
+    }
+
+    LaunchedEffect(
+        key1 = uiState.screenSnackbarType,
+    ) {
+        when (uiState.screenSnackbarType) {
+            CategoriesScreenSnackbarType.None -> {}
+
+            CategoriesScreenSnackbarType.SetDefaultCategoryFailed -> {
+                launch {
+                    val result = snackbarHostState.showSnackbar(
+                        message = setDefaultCategoryFailedSnackbarText,
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> {}
+                        SnackbarResult.Dismissed -> {
+                            handleUIEvent(CategoriesScreenUIEvent.OnSnackbarDismissed)
+                        }
+                    }
+                }
+            }
+
+            CategoriesScreenSnackbarType.SetDefaultCategorySuccessful -> {
+                launch {
+                    val result = snackbarHostState.showSnackbar(
+                        message = setDefaultCategorySuccessfulSnackbarText,
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> {}
+                        SnackbarResult.Dismissed -> {
+                            handleUIEvent(CategoriesScreenUIEvent.OnSnackbarDismissed)
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -161,6 +212,7 @@ internal fun CategoriesScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,

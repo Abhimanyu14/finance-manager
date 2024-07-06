@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 
 @Stable
 internal class CategoriesScreenUIStateEvents(
@@ -12,6 +13,7 @@ internal class CategoriesScreenUIStateEvents(
     val navigateToEditCategoryScreen: (categoryId: Int) -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
+    val resetScreenSnackbarType: () -> Unit = {},
     val setCategoryIdToDelete: (updatedCategoryIdToDelete: Int?) -> Unit = {},
     val setClickedItemId: (updatedClickedItemId: Int?) -> Unit = {},
     val setDefaultCategoryIdInDataStore: (
@@ -19,5 +21,6 @@ internal class CategoriesScreenUIStateEvents(
         transactionType: TransactionType,
     ) -> Unit = { _, _ -> },
     val setScreenBottomSheetType: (updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType) -> Unit = {},
+    val setScreenSnackbarType: (CategoriesScreenSnackbarType) -> Unit = {},
     val setSelectedCategoryTypeIndex: (updatedSelectedCategoryTypeIndex: Int) -> Unit = {},
 ) : ScreenUIStateEvents

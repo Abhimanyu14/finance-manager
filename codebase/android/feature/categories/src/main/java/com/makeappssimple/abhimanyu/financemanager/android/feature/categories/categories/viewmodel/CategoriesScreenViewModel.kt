@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIStateEvents
@@ -56,6 +57,10 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val screenBottomSheetType: MutableStateFlow<CategoriesScreenBottomSheetType> =
         MutableStateFlow(
             value = CategoriesScreenBottomSheetType.None,
+        )
+    private val screenSnackbarType: MutableStateFlow<CategoriesScreenSnackbarType> =
+        MutableStateFlow(
+            value = CategoriesScreenSnackbarType.None,
         )
     private val categoryIdToDelete: MutableStateFlow<Int?> = MutableStateFlow(
         value = null,
@@ -197,6 +202,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                 clickedItemId,
                 selectedCategoryTypeIndex,
                 categoriesGridItemDataMap,
+                screenSnackbarType,
             ) {
                     (
                         isLoading,
@@ -205,6 +211,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                         clickedItemId,
                         selectedCategoryTypeIndex,
                         categoriesGridItemDataMap,
+                        screenSnackbarType,
                     ),
                 ->
                 val validTransactionTypes = persistentListOf(
@@ -212,21 +219,23 @@ public class CategoriesScreenViewModel @Inject constructor(
                     TransactionType.INCOME,
                     TransactionType.INVESTMENT,
                 )
+                val tabData = validTransactionTypes.map {
+                    MyTabData(
+                        title = it.title,
+                    )
+                }
 
                 uiStateAndStateEvents.update {
                     CategoriesScreenUIStateAndStateEvents(
                         state = CategoriesScreenUIState(
                             isBottomSheetVisible = screenBottomSheetType != CategoriesScreenBottomSheetType.None,
                             screenBottomSheetType = screenBottomSheetType,
+                            screenSnackbarType = screenSnackbarType,
                             isLoading = isLoading,
                             categoryIdToDelete = categoryIdToDelete,
                             clickedItemId = clickedItemId,
                             selectedTabIndex = selectedCategoryTypeIndex,
-                            tabData = validTransactionTypes.map {
-                                MyTabData(
-                                    title = it.title,
-                                )
-                            },
+                            tabData = tabData,
                             validTransactionTypes = validTransactionTypes,
                             categoriesGridItemDataMap = categoriesGridItemDataMap,
                         ),
@@ -236,10 +245,12 @@ public class CategoriesScreenViewModel @Inject constructor(
                             navigateToEditCategoryScreen = ::navigateToEditCategoryScreen,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                            resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setCategoryIdToDelete = ::setCategoryIdToDelete,
                             setClickedItemId = ::setClickedItemId,
                             setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
+                            setScreenSnackbarType = ::setScreenSnackbarType,
                             setSelectedCategoryTypeIndex = ::setSelectedCategoryTypeIndex,
                         ),
                     )
@@ -315,6 +326,12 @@ public class CategoriesScreenViewModel @Inject constructor(
         )
     }
 
+    private fun resetScreenSnackbarType() {
+        setScreenSnackbarType(
+            updatedCategoriesScreenSnackbarType = CategoriesScreenSnackbarType.None,
+        )
+    }
+
     private fun setCategoryIdToDelete(
         updatedCategoryIdToDelete: Int?,
     ) {
@@ -336,8 +353,7 @@ public class CategoriesScreenViewModel @Inject constructor(
         transactionType: TransactionType,
     ) {
         viewModelScope.launch {
-            @Suppress("UNUSED_VARIABLE")
-            val result = when (transactionType) {
+            val isSetDefaultCategorySuccessful = when (transactionType) {
                 TransactionType.EXPENSE -> {
                     myPreferencesRepository.setDefaultExpenseCategoryId(
                         defaultExpenseCategoryId = defaultCategoryId,
@@ -368,7 +384,15 @@ public class CategoriesScreenViewModel @Inject constructor(
                     false
                 }
             }
-            // TODO(Abhi): Use the result to show snackbar
+            if (isSetDefaultCategorySuccessful) {
+                setScreenSnackbarType(
+                    updatedCategoriesScreenSnackbarType = CategoriesScreenSnackbarType.SetDefaultCategorySuccessful,
+                )
+            } else {
+                setScreenSnackbarType(
+                    updatedCategoriesScreenSnackbarType = CategoriesScreenSnackbarType.SetDefaultCategoryFailed,
+                )
+            }
         }
     }
 
@@ -377,6 +401,14 @@ public class CategoriesScreenViewModel @Inject constructor(
     ) {
         screenBottomSheetType.update {
             updatedCategoriesScreenBottomSheetType
+        }
+    }
+
+    private fun setScreenSnackbarType(
+        updatedCategoriesScreenSnackbarType: CategoriesScreenSnackbarType,
+    ) {
+        screenSnackbarType.update {
+            updatedCategoriesScreenSnackbarType
         }
     }
 

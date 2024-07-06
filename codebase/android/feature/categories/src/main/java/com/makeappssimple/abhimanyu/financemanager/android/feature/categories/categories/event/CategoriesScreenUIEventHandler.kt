@@ -14,6 +14,10 @@ internal class CategoriesScreenUIEventHandler internal constructor(
                 uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 
+            is CategoriesScreenUIEvent.OnSnackbarDismissed -> {
+                uiStateAndStateEvents.events.resetScreenSnackbarType()
+            }
+
             is CategoriesScreenUIEvent.OnFloatingActionButtonClick -> {
                 uiStateAndStateEvents.events.navigateToAddCategoryScreen(uiEvent.transactionType)
             }
