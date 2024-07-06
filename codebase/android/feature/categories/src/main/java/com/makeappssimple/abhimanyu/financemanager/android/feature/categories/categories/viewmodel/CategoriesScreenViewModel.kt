@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.SetDefaultCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.CheckIfCategoryIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -43,6 +44,7 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
+    private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     private val categoriesGridItemDataMap: MutableStateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
@@ -353,37 +355,10 @@ public class CategoriesScreenViewModel @Inject constructor(
         transactionType: TransactionType,
     ) {
         viewModelScope.launch {
-            val isSetDefaultCategorySuccessful = when (transactionType) {
-                TransactionType.EXPENSE -> {
-                    myPreferencesRepository.setDefaultExpenseCategoryId(
-                        defaultExpenseCategoryId = defaultCategoryId,
-                    )
-                }
-
-                TransactionType.INCOME -> {
-                    myPreferencesRepository.setDefaultIncomeCategoryId(
-                        defaultIncomeCategoryId = defaultCategoryId,
-                    )
-                }
-
-                TransactionType.INVESTMENT -> {
-                    myPreferencesRepository.setDefaultInvestmentCategoryId(
-                        defaultInvestmentCategoryId = defaultCategoryId,
-                    )
-                }
-
-                TransactionType.TRANSFER -> {
-                    false
-                }
-
-                TransactionType.ADJUSTMENT -> {
-                    false
-                }
-
-                TransactionType.REFUND -> {
-                    false
-                }
-            }
+            val isSetDefaultCategorySuccessful = setDefaultCategoryUseCase(
+                defaultCategoryId = defaultCategoryId,
+                transactionType = transactionType,
+            )
             if (isSetDefaultCategorySuccessful) {
                 setScreenSnackbarType(
                     updatedCategoriesScreenSnackbarType = CategoriesScreenSnackbarType.SetDefaultCategorySuccessful,
