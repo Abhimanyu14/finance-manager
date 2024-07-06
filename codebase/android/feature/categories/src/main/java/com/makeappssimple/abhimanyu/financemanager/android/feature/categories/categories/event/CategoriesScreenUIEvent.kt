@@ -13,10 +13,6 @@ internal sealed class CategoriesScreenUIEvent : ScreenUIEvent {
         val transactionType: String,
     ) : CategoriesScreenUIEvent()
 
-    data class OnSelectedTabIndexUpdated(
-        val updatedSelectedTabIndex: Int,
-    ) : CategoriesScreenUIEvent()
-
     data class OnCategoriesGridItemClick(
         val isDeleteVisible: Boolean,
         val isEditVisible: Boolean,
@@ -26,7 +22,9 @@ internal sealed class CategoriesScreenUIEvent : ScreenUIEvent {
 
     sealed class OnCategoriesSetAsDefaultConfirmationBottomSheet {
         data object NegativeButtonClick : CategoriesScreenUIEvent()
-        data object PositiveButtonClick : CategoriesScreenUIEvent()
+        data class PositiveButtonClick(
+            val selectedTabIndex: Int,
+        ) : CategoriesScreenUIEvent()
     }
 
     sealed class OnCategoryMenuBottomSheet {

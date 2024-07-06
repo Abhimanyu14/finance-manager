@@ -22,5 +22,4 @@ internal class CategoriesScreenUIStateEvents(
     ) -> Unit = { _, _ -> },
     val setScreenBottomSheetType: (updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType) -> Unit = {},
     val setScreenSnackbarType: (CategoriesScreenSnackbarType) -> Unit = {},
-    val setSelectedCategoryTypeIndex: (updatedSelectedCategoryTypeIndex: Int) -> Unit = {},
 ) : ScreenUIStateEvents

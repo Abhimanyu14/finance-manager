@@ -38,12 +38,6 @@ internal class CategoriesScreenUIEventHandler internal constructor(
                 }
             }
 
-            is CategoriesScreenUIEvent.OnSelectedTabIndexUpdated -> {
-                uiStateAndStateEvents.events.setSelectedCategoryTypeIndex(
-                    uiEvent.updatedSelectedTabIndex,
-                )
-            }
-
             is CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.NegativeButtonClick -> {
                 uiStateAndStateEvents.events.setClickedItemId(null)
                 uiStateAndStateEvents.events.resetScreenBottomSheetType()
@@ -53,7 +47,7 @@ internal class CategoriesScreenUIEventHandler internal constructor(
                 uiStateAndStateEvents.state.clickedItemId?.let { clickedItemIdValue ->
                     uiStateAndStateEvents.events.setDefaultCategoryIdInDataStore(
                         clickedItemIdValue,
-                        uiStateAndStateEvents.state.validTransactionTypes[uiStateAndStateEvents.state.selectedTabIndex],
+                        uiStateAndStateEvents.state.validTransactionTypes[uiEvent.selectedTabIndex],
                     )
                 }
                 uiStateAndStateEvents.events.setClickedItemId(null)

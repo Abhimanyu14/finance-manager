@@ -70,9 +70,6 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val clickedItemId: MutableStateFlow<Int?> = MutableStateFlow(
         value = null,
     )
-    private val selectedCategoryTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = 0,
-    )
     // endregion
 
     internal val uiStateAndStateEvents: MutableStateFlow<CategoriesScreenUIStateAndStateEvents> =
@@ -202,7 +199,6 @@ public class CategoriesScreenViewModel @Inject constructor(
                 screenBottomSheetType,
                 categoryIdToDelete,
                 clickedItemId,
-                selectedCategoryTypeIndex,
                 categoriesGridItemDataMap,
                 screenSnackbarType,
             ) {
@@ -211,7 +207,6 @@ public class CategoriesScreenViewModel @Inject constructor(
                         screenBottomSheetType,
                         categoryIdToDelete,
                         clickedItemId,
-                        selectedCategoryTypeIndex,
                         categoriesGridItemDataMap,
                         screenSnackbarType,
                     ),
@@ -236,7 +231,6 @@ public class CategoriesScreenViewModel @Inject constructor(
                             isLoading = isLoading,
                             categoryIdToDelete = categoryIdToDelete,
                             clickedItemId = clickedItemId,
-                            selectedTabIndex = selectedCategoryTypeIndex,
                             tabData = tabData,
                             validTransactionTypes = validTransactionTypes,
                             categoriesGridItemDataMap = categoriesGridItemDataMap,
@@ -253,7 +247,6 @@ public class CategoriesScreenViewModel @Inject constructor(
                             setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setScreenSnackbarType = ::setScreenSnackbarType,
-                            setSelectedCategoryTypeIndex = ::setSelectedCategoryTypeIndex,
                         ),
                     )
                 }
@@ -384,14 +377,6 @@ public class CategoriesScreenViewModel @Inject constructor(
     ) {
         screenSnackbarType.update {
             updatedCategoriesScreenSnackbarType
-        }
-    }
-
-    private fun setSelectedCategoryTypeIndex(
-        updatedSelectedCategoryTypeIndex: Int,
-    ) {
-        selectedCategoryTypeIndex.update {
-            updatedSelectedCategoryTypeIndex
         }
     }
     // endregion

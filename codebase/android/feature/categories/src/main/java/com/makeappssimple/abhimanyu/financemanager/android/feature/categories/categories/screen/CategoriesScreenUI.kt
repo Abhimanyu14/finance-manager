@@ -10,6 +10,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -58,6 +59,7 @@ internal fun CategoriesScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: CategoriesScreenUIEvent) -> Unit = {},
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val snackbarHostState: SnackbarHostState = remember {
         SnackbarHostState()
     }
@@ -71,22 +73,6 @@ internal fun CategoriesScreenUI(
     val setDefaultCategorySuccessfulSnackbarText = stringResource(
         id = R.string.screen_categories_set_default_category_successful,
     )
-
-    LaunchedEffect(
-        key1 = pagerState.currentPage,
-        key2 = pagerState.settledPage,
-        key3 = handleUIEvent,
-    ) {
-        handleUIEvent(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(pagerState.settledPage))
-    }
-
-    LaunchedEffect(
-        key1 = uiState.selectedTabIndex,
-    ) {
-        state.coroutineScope.launch {
-            pagerState.animateScrollToPage(uiState.selectedTabIndex)
-        }
-    }
 
     LaunchedEffect(
         key1 = uiState.screenSnackbarType,
@@ -163,7 +149,7 @@ internal fun CategoriesScreenUI(
                 is CategoriesScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheet(
                         data = CategoriesSetAsDefaultConfirmationBottomSheetData(
-                            transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
+                            transactionType = uiState.validTransactionTypes[pagerState.settledPage],
                         ),
                         handleEvent = { event ->
                             when (event) {
@@ -172,7 +158,11 @@ internal fun CategoriesScreenUI(
                                 }
 
                                 CategoriesSetAsDefaultConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
-                                    handleUIEvent(CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
+                                    handleUIEvent(
+                                        CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.PositiveButtonClick(
+                                            selectedTabIndex = pagerState.settledPage,
+                                        )
+                                    )
                                 }
                             }
                         },
@@ -232,7 +222,7 @@ internal fun CategoriesScreenUI(
                 onClick = {
                     handleUIEvent(
                         CategoriesScreenUIEvent.OnFloatingActionButtonClick(
-                            transactionType = when (uiState.selectedTabIndex) {
+                            transactionType = when (pagerState.settledPage) {
                                 0 -> {
                                     TransactionType.EXPENSE.title
                                 }
@@ -267,14 +257,12 @@ internal fun CategoriesScreenUI(
                 .navigationBarLandscapeSpacer(),
         ) {
             MyTabRow(
-                selectedTabIndex = uiState.selectedTabIndex,
+                selectedTabIndex = pagerState.currentPage,
                 tabDataList = uiState.tabData,
                 updateSelectedTabIndex = { updatedSelectedTabIndex ->
-                    handleUIEvent(
-                        CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(
-                            updatedSelectedTabIndex = updatedSelectedTabIndex,
-                        )
-                    )
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(updatedSelectedTabIndex)
+                    }
                 },
             )
             HorizontalPager(
