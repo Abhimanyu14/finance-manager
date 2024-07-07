@@ -18,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,10 +40,19 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(),
     )
+    private val titleTextFieldErrorTextStringResourceId: MutableStateFlow<Int?> = MutableStateFlow(
+        value = null,
+    )
     private val screenBottomSheetType: MutableStateFlow<AddTransactionForScreenBottomSheetType> =
         MutableStateFlow(
             value = AddTransactionForScreenBottomSheetType.None,
         )
+    // endregion
+
+    // region observables
+    private val isCtaButtonEnabled: MutableStateFlow<Boolean> = MutableStateFlow(
+        value = false,
+    )
     // endregion
 
     internal val uiStateAndStateEvents: MutableStateFlow<AddTransactionForScreenUIStateAndStateEvents> =
@@ -64,6 +74,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
 
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
+        observeForIsCtaButtonEnabled()
     }
 
     // region getAllTransactionForValues
@@ -82,29 +93,17 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                 isLoading,
                 screenBottomSheetType,
                 title,
+                isCtaButtonEnabled,
+                titleTextFieldErrorTextStringResourceId,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
                         title,
+                        isCtaButtonEnabled,
+                        titleTextFieldErrorTextStringResourceId,
                     ),
                 ->
-                var titleTextFieldErrorTextStringResourceId: Int? = null
-                val isCtaButtonEnabled = if (title.text.isBlank()) {
-                    false
-                } else if (allTransactionForValues.find {
-                        it.title.equalsIgnoringCase(
-                            other = title.text.trim(),
-                        )
-                    }.isNotNull()
-                ) {
-                    titleTextFieldErrorTextStringResourceId =
-                        R.string.screen_add_or_edit_transaction_for_error_exists
-                    false
-                } else {
-                    true
-                }
-
                 uiStateAndStateEvents.update {
                     AddTransactionForScreenUIStateAndStateEvents(
                         state = AddTransactionForScreenUIState(
@@ -122,6 +121,37 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                             setTitle = ::setTitle,
                         ),
                     )
+                }
+            }
+        }
+    }
+    // endregion
+
+    // region observeForIsCtaButtonEnabled
+    private fun observeForIsCtaButtonEnabled() {
+        viewModelScope.launch {
+            title.collectLatest { title ->
+                titleTextFieldErrorTextStringResourceId.update {
+                    null
+                }
+                val updatedIsCtaButtonEnabled = if (title.text.isBlank()) {
+                    false
+                } else if (
+                    allTransactionForValues.find {
+                        it.title.equalsIgnoringCase(
+                            other = title.text.trim(),
+                        )
+                    }.isNotNull()
+                ) {
+                    titleTextFieldErrorTextStringResourceId.update {
+                        R.string.screen_add_or_edit_transaction_for_error_exists
+                    }
+                    false
+                } else {
+                    true
+                }
+                isCtaButtonEnabled.update {
+                    updatedIsCtaButtonEnabled
                 }
             }
         }
