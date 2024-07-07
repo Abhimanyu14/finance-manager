@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -555,24 +554,13 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
             TransactionType.REFUND -> {
                 val maxRefundAmountValue = maxRefundAmount?.value.orZero()
-                if (amountErrorText.isNull() &&
-                    (amount.text.toLongOrZero() > maxRefundAmountValue)
-                ) {
-                    setAmountErrorText(
-                        maxRefundAmount?.run {
-                            this.toString()
-                        }
-                    )
-                    false
-                } else if (amountErrorText.isNotNull() &&
-                    (amount.text.toLongOrZero() <= maxRefundAmountValue)
-                ) {
+                val enteredAmountValue = amount.text.toLongOrZero()
+
+                if (enteredAmountValue > maxRefundAmountValue) {
+                    setAmountErrorText(maxRefundAmount?.toString())
                     false
                 } else {
-                    amount.text.isNotNullOrBlank() &&
-                            title.text.isNotNullOrBlank() &&
-                            amount.text.toIntOrZero().isNotZero() &&
-                            amountErrorText.isNull()
+                    amount.text.toIntOrZero().isNotZero()
                 }
             }
         }
@@ -740,11 +728,16 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun insertTransaction() {
         val uiState = uiStateAndStateEvents.value.state
         viewModelScope.launch {
-            insertTransactionUseCase(
+            val selectedTransactionForId = if (uiState.selectedTransactionForIndex != -1) {
+                transactionForValues[uiState.selectedTransactionForIndex].id
+            } else {
+                -1
+            }
+            val isTransactionInsertedSuccessfully = insertTransactionUseCase(
                 selectedAccountFrom = uiState.accountFrom,
                 selectedAccountTo = uiState.accountTo,
                 selectedCategoryId = uiState.category?.id,
-                selectedTransactionForId = transactionForValues[uiState.selectedTransactionForIndex].id,
+                selectedTransactionForId = selectedTransactionForId,
                 selectedTransactionDate = uiState.transactionDate,
                 selectedTransactionTime = uiState.transactionTime,
                 enteredAmountValue = uiState.amount.text.toLongOrZero(),
@@ -752,6 +745,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 selectedTransactionType = uiState.selectedTransactionType,
                 originalTransaction = originalTransactionData?.transaction,
             )
+            // TODO(Abhi): Use isTransactionInsertedSuccessfully to show snack bar
             navigator.navigateUp()
         }
     }

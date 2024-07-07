@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -84,20 +85,10 @@ public class InsertTransactionUseCase @Inject constructor(
             accountTo = accountTo,
             transaction = transaction,
         )
-
-        // Only for refund transaction
-        originalTransaction?.let {
-            val refundTransactionIds = originalTransaction.refundTransactionIds?.run {
-                originalTransaction.refundTransactionIds?.toMutableList()
-            } ?: mutableListOf()
-            refundTransactionIds.add(id.toInt())
-            updateTransactionUseCase(
-                originalTransaction = originalTransaction,
-                updatedTransaction = originalTransaction.copy(
-                    refundTransactionIds = refundTransactionIds,
-                ),
-            )
-        }
+        updateTransactionForRefundTransaction(
+            id = id,
+            originalTransaction = originalTransaction,
+        )
         return id
     }
 
@@ -252,6 +243,23 @@ public class InsertTransactionUseCase @Inject constructor(
             selectedAccount
         } else {
             null
+        }
+    }
+
+    private suspend fun updateTransactionForRefundTransaction(
+        id: Long,
+        originalTransaction: Transaction?,
+    ) {
+        originalTransaction?.let {
+            val refundTransactionIds = originalTransaction.refundTransactionIds.orEmpty()
+                .toMutableList()
+            refundTransactionIds.add(id.toInt())
+            updateTransactionUseCase(
+                originalTransaction = originalTransaction,
+                updatedTransaction = originalTransaction.copy(
+                    refundTransactionIds = refundTransactionIds,
+                ),
+            )
         }
     }
 }
