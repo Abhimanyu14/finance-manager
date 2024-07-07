@@ -35,6 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDat
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
@@ -328,20 +329,26 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun processInitialDataForRefundTransaction(
         originalTransactionData: TransactionData,
     ) {
-        setCategory(originalTransactionData.category)
-        setAccountFrom(originalTransactionData.accountFrom)
-        setAccountTo(originalTransactionData.accountTo)
         setSelectedTransactionTypeIndex(
             validTransactionTypesForNewTransaction.indexOf(
                 element = TransactionType.REFUND,
             )
         )
+        setAmount(maxRefundAmount.orEmpty().value.toString())
+        setCategory(originalTransactionData.category)
+        setAccountFrom(null)
+        setAccountTo(originalTransactionData.accountFrom)
         setSelectedTransactionForIndex(
             transactionForValues.indexOf(
                 element = transactionForValues.firstOrNull {
                     it.id == originalTransactionData.transaction.id
                 },
             )
+        )
+
+
+        handleSelectedTransactionTypeChange(
+            updatedSelectedTransactionType = TransactionType.REFUND,
         )
     }
 
@@ -677,6 +684,19 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     private fun handleSelectedTransactionTypeChangeToRefund() {
         setUiVisibilityState(AddTransactionScreenUiVisibilityState.Refund)
+
+        setAmount(maxRefundAmount.orEmpty().value.toString())
+        setAccountTo(originalTransactionData?.accountFrom)
+        setTransactionDate(
+            updatedTransactionDate = dateTimeUtil.getLocalDate(
+                timestamp = originalTransactionData?.transaction?.transactionTimestamp.orZero(),
+            ),
+        )
+        setTransactionTime(
+            updatedTransactionTime = dateTimeUtil.getLocalTime(
+                timestamp = originalTransactionData?.transaction?.transactionTimestamp.orZero(),
+            ),
+        )
     }
 
     private fun setUiVisibilityState(
@@ -772,6 +792,16 @@ public class AddTransactionScreenViewModel @Inject constructor(
         }
     }
 
+    private fun setAmount(
+        updatedAmount: String,
+    ) {
+        amount.update {
+            it.copy(
+                text = updatedAmount.filterDigits(),
+            )
+        }
+    }
+
     private fun setCategory(
         updatedCategory: Category?,
     ) {
@@ -825,6 +855,16 @@ public class AddTransactionScreenViewModel @Inject constructor(
     ) {
         title.update {
             updatedTitle
+        }
+    }
+
+    private fun setTitle(
+        updatedTitle: String,
+    ) {
+        title.update {
+            it.copy(
+                text = updatedTitle,
+            )
         }
     }
 

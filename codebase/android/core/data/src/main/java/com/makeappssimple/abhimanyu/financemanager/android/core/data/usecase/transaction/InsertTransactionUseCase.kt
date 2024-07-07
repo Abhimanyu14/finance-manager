@@ -2,17 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -37,7 +33,79 @@ public class InsertTransactionUseCase @Inject constructor(
         val amount = Amount(
             value = enteredAmountValue,
         )
-        val categoryId = when (selectedTransactionType) {
+        val categoryId = getCategoryId(
+            selectedTransactionType = selectedTransactionType,
+            selectedCategoryId = selectedCategoryId,
+        )
+        val accountFromId = getAccountFromId(
+            selectedTransactionType = selectedTransactionType,
+            selectedAccountFrom = selectedAccountFrom,
+        )
+        val accountToId = getAccountToId(
+            selectedTransactionType = selectedTransactionType,
+            selectedAccountTo = selectedAccountTo,
+        )
+        val title = getTitle(
+            selectedTransactionType = selectedTransactionType,
+            enteredTitle = enteredTitle,
+        )
+        val transactionTimestamp = dateTimeUtil.getTimestamp(
+            date = selectedTransactionDate,
+            time = selectedTransactionTime,
+        )
+        val transactionForId: Int = getTransactionForId(
+            selectedTransactionType = selectedTransactionType,
+            selectedTransactionForId = selectedTransactionForId,
+        )
+        val accountFrom = getAccount(
+            accountId = accountFromId,
+            selectedAccount = selectedAccountFrom,
+        )
+        val accountTo = getAccount(
+            accountId = accountToId,
+            selectedAccount = selectedAccountTo,
+        )
+        val transaction = Transaction(
+            amount = amount,
+            categoryId = categoryId,
+            originalTransactionId = originalTransaction?.id,
+            accountFromId = accountFromId,
+            accountToId = accountToId,
+            title = title,
+            creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
+            transactionTimestamp = transactionTimestamp,
+            transactionForId = transactionForId,
+            transactionType = selectedTransactionType,
+        )
+        myPreferencesRepository.setLastDataChangeTimestamp()
+        val id = transactionRepository.insertTransaction(
+            amountValue = enteredAmountValue,
+            accountFrom = accountFrom,
+            accountTo = accountTo,
+            transaction = transaction,
+        )
+
+        // Only for refund transaction
+        originalTransaction?.let {
+            val refundTransactionIds = originalTransaction.refundTransactionIds?.run {
+                originalTransaction.refundTransactionIds?.toMutableList()
+            } ?: mutableListOf()
+            refundTransactionIds.add(id.toInt())
+            updateTransactionUseCase(
+                originalTransaction = originalTransaction,
+                updatedTransaction = originalTransaction.copy(
+                    refundTransactionIds = refundTransactionIds,
+                ),
+            )
+        }
+        return id
+    }
+
+    private fun getCategoryId(
+        selectedTransactionType: TransactionType,
+        selectedCategoryId: Int?,
+    ): Int? {
+        return when (selectedTransactionType) {
             TransactionType.INCOME -> {
                 selectedCategoryId
             }
@@ -62,7 +130,13 @@ public class InsertTransactionUseCase @Inject constructor(
                 selectedCategoryId
             }
         }
-        val accountFromId = when (selectedTransactionType) {
+    }
+
+    private fun getAccountFromId(
+        selectedTransactionType: TransactionType,
+        selectedAccountFrom: Account?,
+    ): Int? {
+        return when (selectedTransactionType) {
             TransactionType.INCOME -> {
                 null
             }
@@ -87,7 +161,13 @@ public class InsertTransactionUseCase @Inject constructor(
                 null
             }
         }
-        val accountToId = when (selectedTransactionType) {
+    }
+
+    private fun getAccountToId(
+        selectedTransactionType: TransactionType,
+        selectedAccountTo: Account?,
+    ): Int? {
+        return when (selectedTransactionType) {
             TransactionType.INCOME -> {
                 selectedAccountTo?.id
             }
@@ -112,7 +192,13 @@ public class InsertTransactionUseCase @Inject constructor(
                 selectedAccountTo?.id
             }
         }
-        val title = when (selectedTransactionType) {
+    }
+
+    private fun getTitle(
+        selectedTransactionType: TransactionType,
+        enteredTitle: String,
+    ): String {
+        return when (selectedTransactionType) {
             TransactionType.TRANSFER -> {
                 TransactionType.TRANSFER.title
             }
@@ -125,7 +211,13 @@ public class InsertTransactionUseCase @Inject constructor(
                 enteredTitle
             }
         }
-        val transactionForId: Int = when (selectedTransactionType) {
+    }
+
+    private fun getTransactionForId(
+        selectedTransactionType: TransactionType,
+        selectedTransactionForId: Int,
+    ): Int {
+        return when (selectedTransactionType) {
             TransactionType.INCOME -> {
                 1
             }
@@ -150,60 +242,16 @@ public class InsertTransactionUseCase @Inject constructor(
                 1
             }
         }
-        val transactionTimestamp =
-            LocalDateTime.of(selectedTransactionDate, selectedTransactionTime).toEpochMilli()
-
-        val accountFrom = if (accountFromId.isNotNull()) {
-            selectedAccountFrom
-        } else {
-            null
-        }
-        val accountTo = if (accountToId.isNotNull()) {
-            selectedAccountTo
-        } else {
-            null
-        }
-        val transaction = Transaction(
-            amount = amount,
-            categoryId = categoryId,
-            originalTransactionId = originalTransaction?.id,
-            accountFromId = accountFromId,
-            accountToId = accountToId,
-            title = title,
-            creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
-            transactionTimestamp = transactionTimestamp,
-            transactionForId = transactionForId,
-            transactionType = selectedTransactionType,
-        )
-
-        myPreferencesRepository.setLastDataChangeTimestamp()
-        val id = 0L
-        transactionRepository.insertTransaction(
-            amountValue = enteredAmountValue,
-            accountFrom = accountFrom,
-            accountTo = accountTo,
-            transaction = transaction,
-        )
-
-        // Only for refund transaction
-        originalTransaction?.let {
-            val refundTransactionIds = originalTransaction.refundTransactionIds?.run {
-                originalTransaction.refundTransactionIds?.toMutableList()
-            } ?: mutableListOf()
-            refundTransactionIds.add(id.toInt())
-            updateTransactionUseCase(
-                originalTransaction = originalTransaction,
-                updatedTransaction = originalTransaction.copy(
-                    refundTransactionIds = refundTransactionIds,
-                ),
-            )
-        }
-        return id
     }
-}
 
-public suspend fun les() {
-    val x = withContext(Dispatchers.IO) {
-
+    private fun getAccount(
+        accountId: Int?,
+        selectedAccount: Account?,
+    ): Account? {
+        return if (accountId.isNotNull()) {
+            selectedAccount
+        } else {
+            null
+        }
     }
 }

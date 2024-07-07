@@ -66,7 +66,6 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     public fun getTimestamp(
         date: LocalDate = getLocalDate(),
         time: LocalTime = getLocalTime(),
-        zoneId: ZoneId = getSystemDefaultZoneId(),
     ): Long
 
     public fun getStartOfDayTimestamp(
