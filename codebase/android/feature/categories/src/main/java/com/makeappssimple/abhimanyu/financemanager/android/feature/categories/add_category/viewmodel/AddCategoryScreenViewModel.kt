@@ -46,6 +46,8 @@ public class AddCategoryScreenViewModel @Inject constructor(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+
+    // region initial data
     private val originalTransactionType: String? = screenArgs.originalTransactionType
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.INCOME,
@@ -55,6 +57,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
     private val categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
         persistentListOf()
     )
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -107,6 +110,14 @@ public class AddCategoryScreenViewModel @Inject constructor(
             }
         }
     }
+
+    // region fetchCategories
+    private suspend fun fetchCategories() {
+        categories.update {
+            getAllCategoriesUseCase()
+        }
+    }
+    // endregion
 
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
@@ -194,14 +205,6 @@ public class AddCategoryScreenViewModel @Inject constructor(
         }
     }
     // endregion
-
-    private fun fetchCategories() {
-        viewModelScope.launch {
-            categories.update {
-                getAllCategoriesUseCase()
-            }
-        }
-    }
 
     // region state events
     private fun clearTitle() {
