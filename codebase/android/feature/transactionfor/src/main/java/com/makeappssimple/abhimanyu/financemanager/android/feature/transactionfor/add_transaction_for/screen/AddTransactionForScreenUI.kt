@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -122,19 +123,21 @@ internal fun AddTransactionForScreenUI(
                     textFieldValue = uiState.title.orEmpty(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
-                    supportingText = if (uiState.titleTextFieldErrorTextStringResourceId.isNotNull()) {
-                        {
-                            MyText(
-                                text = stringResource(
-                                    id = uiState.titleTextFieldErrorTextStringResourceId,
-                                ),
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error,
-                                ),
-                            )
+                    supportingText = {
+                        AnimatedVisibility(
+                            visible = uiState.titleTextFieldErrorTextStringResourceId.isNotNull(),
+                        ) {
+                            uiState.titleTextFieldErrorTextStringResourceId?.let {
+                                MyText(
+                                    text = stringResource(
+                                        id = uiState.titleTextFieldErrorTextStringResourceId,
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        color = MaterialTheme.colorScheme.error,
+                                    ),
+                                )
+                            }
                         }
-                    } else {
-                        null
                     },
                     keyboardActions = KeyboardActions(
                         onDone = {
