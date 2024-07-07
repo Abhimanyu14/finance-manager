@@ -216,9 +216,9 @@ public class ViewTransactionScreenViewModel @Inject constructor(
                         events = ViewTransactionScreenUIStateEvents(
                             deleteTransaction = ::deleteTransaction,
                             navigateUp = ::navigateUp,
-                            navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
                             navigateToEditTransactionScreen = ::navigateToEditTransactionScreen,
                             navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
+                            onRefundButtonClick = ::onRefundButtonClick,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setTransactionIdToDelete = ::setTransactionIdToDelete,
@@ -265,7 +265,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToAddTransactionScreen(
+    private fun onRefundButtonClick(
         transactionId: Int,
     ) {
         navigator.navigateToAddTransactionScreen(

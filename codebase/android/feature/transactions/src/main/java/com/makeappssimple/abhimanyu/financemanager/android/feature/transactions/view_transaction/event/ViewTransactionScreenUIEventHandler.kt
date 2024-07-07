@@ -45,7 +45,7 @@ internal class ViewTransactionScreenUIEventHandler internal constructor(
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick -> {
-                uiStateAndStateEvents.events.navigateToAddTransactionScreen(uiEvent.transactionId)
+                uiStateAndStateEvents.events.onRefundButtonClick(uiEvent.transactionId)
             }
         }
     }
