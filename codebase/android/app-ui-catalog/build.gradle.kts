@@ -32,8 +32,8 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
-
-            isTestCoverageEnabled = false
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
         }
     }
 

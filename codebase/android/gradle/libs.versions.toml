@@ -46,8 +46,8 @@ kakaocup-compose = "0.3.0"
 konsist = "0.15.1"
 
 # Plugins
-agp = "8.4.0"
-plugin-android-library = "8.4.0"
+agp = "8.5.0"
+plugin-android-library = "8.5.0"
 plugin-kotlin-android = "2.0.0"
 plugin-kotlin-jvm = "2.0.0"
 plugin-kotlin-serialization = "2.0.0"
