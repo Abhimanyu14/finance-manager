@@ -24,10 +24,8 @@ internal class ViewTransactionScreenUIEventHandler internal constructor(
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.PositiveButtonClick -> {
-                uiStateAndStateEvents.state.transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                    uiStateAndStateEvents.events.deleteTransaction(transactionIdToDeleteValue)
-                    uiStateAndStateEvents.events.setTransactionIdToDelete(null)
-                }
+                uiStateAndStateEvents.events.deleteTransaction()
+                uiStateAndStateEvents.events.setTransactionIdToDelete(null)
                 uiStateAndStateEvents.events.resetScreenBottomSheetType()
             }
 

@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
@@ -24,7 +25,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.state.ViewTransactionScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -45,26 +45,20 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
-    private var originalTransactionListItemData: MutableStateFlow<TransactionListItemData?> =
-        MutableStateFlow(
-            value = null,
-        )
-    private var refundTransactionListItemData: MutableStateFlow<ImmutableList<TransactionListItemData>> =
-        MutableStateFlow(
-            value = persistentListOf(),
-        )
-    private var currentTransactionListItemData: MutableStateFlow<TransactionListItemData?> =
-        MutableStateFlow(
-            value = null,
-        )
+
+    // region initial data
+    private var transactionIdToDelete: Int? = null
+    private var currentTransactionListItemData: TransactionListItemData? = null
+    private var originalTransactionListItemData: TransactionListItemData? = null
+    private var refundTransactionsListItemData: MutableList<TransactionListItemData> =
+        mutableListOf()
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )
-    private val transactionIdToDelete: MutableStateFlow<Int?> = MutableStateFlow(
-        value = null,
-    )
+
     private val screenBottomSheetType: MutableStateFlow<ViewTransactionScreenBottomSheetType> =
         MutableStateFlow(
             value = ViewTransactionScreenBottomSheetType.None,
@@ -82,8 +76,8 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     }
 
     private fun fetchData() {
-        getCurrentTransactionData()
         viewModelScope.launch {
+            getCurrentTransactionData()
             isLoading.update {
                 false
             }
@@ -94,109 +88,51 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
-    private fun observeForUiStateAndStateEventsChanges() {
-        viewModelScope.launch {
-            combineAndCollectLatest(
-                isLoading,
-                screenBottomSheetType,
-                transactionIdToDelete,
-                refundTransactionListItemData,
-                originalTransactionListItemData,
-                currentTransactionListItemData,
-            ) {
-                    (
-                        isLoading,
-                        screenBottomSheetType,
-                        transactionIdToDelete,
-                        refundTransactionListItemData,
-                        originalTransactionListItemData,
-                        currentTransactionListItemData,
-                    ),
-                ->
-
-                uiStateAndStateEvents.update {
-                    ViewTransactionScreenUIStateAndStateEvents(
-                        state = ViewTransactionScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
-                            isLoading = isLoading,
-                            transactionIdToDelete = transactionIdToDelete,
-                            refundTransactionListItemData = refundTransactionListItemData,
-                            originalTransactionListItemData = originalTransactionListItemData,
-                            transactionListItemData = currentTransactionListItemData,
-                            screenBottomSheetType = screenBottomSheetType,
-                        ),
-                        events = ViewTransactionScreenUIStateEvents(
-                            deleteTransaction = ::deleteTransaction,
-                            navigateUp = ::navigateUp,
-                            navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
-                            navigateToEditTransactionScreen = ::navigateToEditTransactionScreen,
-                            navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setTransactionIdToDelete = ::setTransactionIdToDelete,
-                        ),
-                    )
-                }
-            }
+    private suspend fun getCurrentTransactionData() {
+        val currentTransactionId = screenArgs.currentTransactionId ?: return
+        val transactionData = getTransactionDataUseCase(
+            id = currentTransactionId,
+        ) ?: return // TODO(Abhi): Show error message
+        currentTransactionListItemData = getTransactionListItemData(
+            transactionData = transactionData,
+        )
+        transactionData.transaction.originalTransactionId?.let { transactionId ->
+            getOriginalTransactionData(
+                transactionId = transactionId,
+            )
         }
-    }
-
-    private fun getCurrentTransactionData() {
-        screenArgs.currentTransactionId?.let { id ->
-            viewModelScope.launch {
-                getTransactionDataUseCase(
-                    id = id,
-                )?.let { transactionData ->
-                    currentTransactionListItemData.update {
-                        getTransactionListItemData(
-                            transactionData = transactionData,
-                        )
-                    }
-                    transactionData.transaction.originalTransactionId?.let { transactionId ->
-                        getOriginalTransactionData(
-                            transactionId = transactionId,
-                        )
-                    }
-                    transactionData.transaction.refundTransactionIds?.let { transactionIds ->
-                        getRefundTransactionsData(
-                            transactionIds = transactionIds.toImmutableList(),
-                        )
-                    }
-                }
-            }
+        transactionData.transaction.refundTransactionIds?.let { transactionIds ->
+            getRefundTransactionsData(
+                transactionIds = transactionIds.toImmutableList(),
+            )
         }
     }
 
     private suspend fun getOriginalTransactionData(
         transactionId: Int,
     ) {
-        getTransactionDataUseCase(
+        val transactionData = getTransactionDataUseCase(
             id = transactionId,
-        )?.let { transactionData ->
-            originalTransactionListItemData.value = getTransactionListItemData(
-                transactionData = transactionData,
-            )
-        }
+        ) ?: return // TODO(Abhi): Show error message
+        originalTransactionListItemData = getTransactionListItemData(
+            transactionData = transactionData,
+        )
     }
 
     private suspend fun getRefundTransactionsData(
         transactionIds: ImmutableList<Int>,
     ) {
-        val transactionListItemData = mutableListOf<TransactionListItemData>()
-        transactionIds.forEach { transactionId ->
+        val transactionsListItemData = transactionIds.mapNotNull { transactionId ->
             getTransactionDataUseCase(
                 id = transactionId,
             )?.let { transactionData ->
-                transactionListItemData.add(
-                    getTransactionListItemData(
-                        transactionData = transactionData,
-                    )
-                )
+                getTransactionListItemData(
+                    transactionData = transactionData,
+                ) // TODO(Abhi): Show error message
             }
-        }
-        refundTransactionListItemData.update {
-            transactionListItemData.toImmutableList()
-        }
+        }.toImmutableList()
+        refundTransactionsListItemData.clear()
+        refundTransactionsListItemData.addAll(transactionsListItemData)
     }
 
     private fun getTransactionListItemData(
@@ -254,15 +190,56 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    // region state events
-    private fun deleteTransaction(
-        transactionId: Int,
-    ) {
+    private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
+            combineAndCollectLatest(
+                isLoading,
+                screenBottomSheetType,
+            ) {
+                    (
+                        isLoading,
+                        screenBottomSheetType,
+                    ),
+                ->
+
+                uiStateAndStateEvents.update {
+                    ViewTransactionScreenUIStateAndStateEvents(
+                        state = ViewTransactionScreenUIState(
+                            isBottomSheetVisible = screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
+                            isLoading = isLoading,
+                            refundTransactionsListItemData = refundTransactionsListItemData.orEmpty(),
+                            originalTransactionListItemData = originalTransactionListItemData,
+                            transactionListItemData = currentTransactionListItemData,
+                            screenBottomSheetType = screenBottomSheetType,
+                        ),
+                        events = ViewTransactionScreenUIStateEvents(
+                            deleteTransaction = ::deleteTransaction,
+                            navigateUp = ::navigateUp,
+                            navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
+                            navigateToEditTransactionScreen = ::navigateToEditTransactionScreen,
+                            navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
+                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                            setScreenBottomSheetType = ::setScreenBottomSheetType,
+                            setTransactionIdToDelete = ::setTransactionIdToDelete,
+                        ),
+                    )
+                }
+            }
+        }
+    }
+
+    // region state events
+    private fun deleteTransaction() {
+        viewModelScope.launch {
+            val id = transactionIdToDelete ?: return@launch
             val isTransactionDeleted = deleteTransactionUseCase(
-                id = transactionId,
+                id = id,
             )
+            setTransactionIdToDelete(null)
+            resetScreenBottomSheetType()
             if (isTransactionDeleted) {
+                // TODO(Abhi): Show success message
+                // TODO(Abhi): Change to navigate up only if the current transaction is deleted
                 navigateUp()
             } else {
                 // TODO(Abhi): Show error message
@@ -315,9 +292,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private fun setTransactionIdToDelete(
         updatedTransactionIdToDelete: Int?,
     ) {
-        transactionIdToDelete.update {
-            updatedTransactionIdToDelete
-        }
+        transactionIdToDelete = updatedTransactionIdToDelete
     }
     // endregion
 }

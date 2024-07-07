@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_VIEW_TRANSACTION
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_VIEW_TRANSACTION
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -103,7 +102,7 @@ internal fun ViewTransactionScreenUI(
         ) {
             item {
                 AnimatedVisibility(
-                    visible = uiState.transactionListItemData.isNull(),
+                    visible = uiState.isLoading,
                 ) {
                     MyLinearProgressIndicator()
                 }
@@ -207,8 +206,8 @@ internal fun ViewTransactionScreenUI(
                     )
                 }
             }
-            if (uiState.refundTransactionListItemData.isNotNull() &&
-                uiState.refundTransactionListItemData.isNotEmpty()
+            if (uiState.refundTransactionsListItemData.isNotNull() &&
+                uiState.refundTransactionsListItemData.isNotEmpty()
             ) {
                 item {
                     ViewTransactionSectionHeader(
@@ -218,7 +217,7 @@ internal fun ViewTransactionScreenUI(
                     )
                 }
                 items(
-                    items = uiState.refundTransactionListItemData,
+                    items = uiState.refundTransactionsListItemData,
                     key = { listItem ->
                         listItem.hashCode()
                     },
