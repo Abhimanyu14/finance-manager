@@ -182,12 +182,15 @@ public class EditTransactionScreenViewModel @Inject constructor(
             startLoading()
             joinAll(
                 launch {
+                    accounts.clear()
                     accounts.addAll(getAllAccountsUseCase())
                 },
                 launch {
+                    categories.clear()
                     categories.addAll(getAllCategoriesUseCase())
                 },
                 launch {
+                    transactionForValues.clear()
                     transactionForValues.addAll(getAllTransactionForValuesUseCase())
                 },
             )
@@ -289,6 +292,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
                 TransactionType.INVESTMENT,
             )
         }
+        validTransactionTypesForNewTransaction.clear()
         validTransactionTypesForNewTransaction.addAll(validTransactionTypes)
     }
     // endregion

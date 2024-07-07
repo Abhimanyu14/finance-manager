@@ -577,6 +577,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                     defaultDataIdFromDataStore = myPreferencesRepository.getDefaultDataId()
                 },
                 async {
+                    categories.clear()
                     categories.addAll(getAllCategoriesUseCase())
                 },
                 async {

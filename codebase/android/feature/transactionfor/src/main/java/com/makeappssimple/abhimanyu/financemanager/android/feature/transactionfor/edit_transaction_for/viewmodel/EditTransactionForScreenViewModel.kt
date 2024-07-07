@@ -146,6 +146,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     private suspend fun getAllTransactionForValues() {
+        transactionForValues.clear()
         transactionForValues.addAll(getAllTransactionForValuesUseCase())
     }
 
