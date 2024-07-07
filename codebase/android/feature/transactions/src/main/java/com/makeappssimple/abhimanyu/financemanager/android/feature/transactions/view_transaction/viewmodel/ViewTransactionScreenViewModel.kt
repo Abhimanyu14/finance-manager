@@ -78,9 +78,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             getCurrentTransactionData()
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 
@@ -88,6 +86,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region getCurrentTransactionData
     private suspend fun getCurrentTransactionData() {
         val currentTransactionId = screenArgs.currentTransactionId ?: return
         val transactionData = getTransactionDataUseCase(
@@ -189,7 +188,9 @@ public class ViewTransactionScreenViewModel @Inject constructor(
             transactionForText = transactionData.transactionFor.titleToDisplay,
         )
     }
+    // endregion
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -227,11 +228,27 @@ public class ViewTransactionScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
+
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
+        }
+    }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
+    }
+    // endregion
 
     // region state events
     private fun deleteTransaction() {
         viewModelScope.launch {
             val id = transactionIdToDelete ?: return@launch
+            startLoading()
             val isTransactionDeleted = deleteTransactionUseCase(
                 id = id,
             )
@@ -244,6 +261,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
             } else {
                 // TODO(Abhi): Show error message
             }
+            completeLoading()
         }
     }
 
