@@ -126,6 +126,7 @@ public class EditAccountScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -225,6 +226,7 @@ public class EditAccountScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     private fun getAllAccounts() {
         viewModelScope.launch {

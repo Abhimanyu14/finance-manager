@@ -136,6 +136,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         }
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -180,6 +181,7 @@ public class AnalysisScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     private fun getAnalysisListItemData(
         selectedFilterValue: Filter,

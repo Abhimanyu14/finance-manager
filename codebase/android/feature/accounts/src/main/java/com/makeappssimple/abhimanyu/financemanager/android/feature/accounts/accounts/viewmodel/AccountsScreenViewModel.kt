@@ -94,6 +94,7 @@ public class AccountsScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -212,6 +213,7 @@ public class AccountsScreenViewModel @Inject constructor(
         )
         return accountsScreenUIStateAndStateEvents
     }
+    // endregion
 
     // region state events
     private fun deleteAccount(

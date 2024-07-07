@@ -12,8 +12,6 @@ internal data class AddTransactionForScreenUIState(
     val isBottomSheetVisible: Boolean = false,
     val isCtaButtonEnabled: Boolean = false,
     val isLoading: Boolean = true,
-    @StringRes val appBarTitleTextStringResourceId: Int = -1,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = -1,
     @StringRes val titleTextFieldErrorTextStringResourceId: Int? = null,
     val title: TextFieldValue? = null,
 ) : ScreenUIState

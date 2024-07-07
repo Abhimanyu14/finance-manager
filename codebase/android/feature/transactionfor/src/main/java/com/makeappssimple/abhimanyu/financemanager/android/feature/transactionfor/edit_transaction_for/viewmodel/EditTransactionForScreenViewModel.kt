@@ -89,6 +89,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -142,6 +143,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     private suspend fun getAllTransactionForValues() {
         transactionForValues.addAll(getAllTransactionForValuesUseCase())

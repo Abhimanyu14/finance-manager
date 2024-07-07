@@ -76,6 +76,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -116,6 +117,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     // region state events
     private fun deleteTransactionFor(

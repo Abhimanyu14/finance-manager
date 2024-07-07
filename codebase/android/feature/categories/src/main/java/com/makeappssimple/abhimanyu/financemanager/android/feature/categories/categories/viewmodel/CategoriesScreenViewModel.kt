@@ -192,6 +192,7 @@ public class CategoriesScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -253,6 +254,7 @@ public class CategoriesScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     private fun getCategoriesGridItemData(
         isDefault: Boolean,

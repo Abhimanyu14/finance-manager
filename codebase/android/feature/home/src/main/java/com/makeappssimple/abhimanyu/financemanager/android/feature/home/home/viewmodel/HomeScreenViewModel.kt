@@ -229,6 +229,7 @@ public class HomeScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -309,6 +310,7 @@ public class HomeScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
         return getRecentTransactionDataFlowUseCase().map {

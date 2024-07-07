@@ -52,6 +52,7 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -80,6 +81,7 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     // region state events
     private fun navigateUp() {

@@ -112,6 +112,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -192,6 +193,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     private fun fetchCategories() {
         viewModelScope.launch {

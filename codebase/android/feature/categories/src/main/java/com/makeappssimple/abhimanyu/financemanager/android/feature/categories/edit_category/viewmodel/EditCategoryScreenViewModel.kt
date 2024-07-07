@@ -123,6 +123,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -205,6 +206,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     private fun updateCategory() {
         category.value?.copy(

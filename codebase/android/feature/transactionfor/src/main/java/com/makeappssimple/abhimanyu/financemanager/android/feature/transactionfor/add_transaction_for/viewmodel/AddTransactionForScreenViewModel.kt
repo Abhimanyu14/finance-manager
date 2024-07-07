@@ -17,8 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,10 +28,9 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private val transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>> =
-        MutableStateFlow(
-            persistentListOf()
-        )
+    // region initial data
+    private val allTransactionForValues: MutableList<TransactionFor> = mutableListOf()
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -61,9 +58,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             getAllTransactionForValues()
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 
@@ -71,25 +66,33 @@ public class AddTransactionForScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
     }
 
+    // region getAllTransactionForValues
+    private fun getAllTransactionForValues() {
+        viewModelScope.launch {
+            allTransactionForValues.clear()
+            allTransactionForValues.addAll(getAllTransactionForValuesUseCase())
+        }
+    }
+    // endregion
+
+    // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
                 title,
-                transactionForValues,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
                         title,
-                        transactionForValues,
                     ),
                 ->
                 var titleTextFieldErrorTextStringResourceId: Int? = null
                 val isCtaButtonEnabled = if (title.text.isBlank()) {
                     false
-                } else if (transactionForValues.find {
+                } else if (allTransactionForValues.find {
                         it.title.equalsIgnoringCase(
                             other = title.text.trim(),
                         )
@@ -107,10 +110,8 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                         state = AddTransactionForScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
                             isBottomSheetVisible = screenBottomSheetType != AddTransactionForScreenBottomSheetType.None,
-                            isLoading = transactionForValues.isEmpty(),
+                            isLoading = allTransactionForValues.isEmpty(),
                             isCtaButtonEnabled = isCtaButtonEnabled,
-                            appBarTitleTextStringResourceId = R.string.screen_add_transaction_for_appbar_title,
-                            ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_for_floating_action_button_content_description,
                             title = title,
                             titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
                         ),
@@ -125,7 +126,23 @@ public class AddTransactionForScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
+        }
+    }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
+    }
+    // endregion
+
+    // region state events
     private fun insertTransactionFor(
         transactionFor: TransactionFor,
     ) {
@@ -133,27 +150,6 @@ public class AddTransactionForScreenViewModel @Inject constructor(
             insertTransactionForUseCase(transactionFor)
             navigator.navigateUp()
         }
-    }
-
-    private fun getAllTransactionForValues() {
-        viewModelScope.launch {
-            transactionForValues.update {
-                getAllTransactionForValuesUseCase()
-            }
-        }
-    }
-
-    // region state events
-    private fun navigateToAddTransactionForScreen() {
-        navigator.navigateToAddTransactionForScreen()
-    }
-
-    private fun navigateToEditTransactionForScreen(
-        transactionForId: Int,
-    ) {
-        navigator.navigateToEditTransactionForScreen(
-            transactionForId = transactionForId,
-        )
     }
 
     private fun navigateUp() {
