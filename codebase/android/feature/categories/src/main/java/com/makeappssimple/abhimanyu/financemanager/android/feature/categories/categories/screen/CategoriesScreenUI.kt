@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,9 +58,6 @@ internal fun CategoriesScreenUI(
     handleUIEvent: (uiEvent: CategoriesScreenUIEvent) -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val snackbarHostState: SnackbarHostState = remember {
-        SnackbarHostState()
-    }
     val pagerState: PagerState = rememberPagerState(
         pageCount = { PAGE_COUNT },
     )
@@ -82,7 +77,7 @@ internal fun CategoriesScreenUI(
 
             CategoriesScreenSnackbarType.SetDefaultCategoryFailed -> {
                 launch {
-                    val result = snackbarHostState.showSnackbar(
+                    val result = state.snackbarHostState.showSnackbar(
                         message = setDefaultCategoryFailedSnackbarText,
                     )
                     when (result) {
@@ -96,7 +91,7 @@ internal fun CategoriesScreenUI(
 
             CategoriesScreenSnackbarType.SetDefaultCategorySuccessful -> {
                 launch {
-                    val result = snackbarHostState.showSnackbar(
+                    val result = state.snackbarHostState.showSnackbar(
                         message = setDefaultCategorySuccessfulSnackbarText,
                     )
                     when (result) {
@@ -202,7 +197,7 @@ internal fun CategoriesScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
-        snackbarHostState = snackbarHostState,
+        snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,

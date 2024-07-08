@@ -20,6 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.ic
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
@@ -52,6 +53,10 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val screenBottomSheetType: MutableStateFlow<AddAccountScreenBottomSheetType> =
         MutableStateFlow(
             value = AddAccountScreenBottomSheetType.None,
+        )
+    private val screenSnackbarType: MutableStateFlow<AddAccountScreenSnackbarType> =
+        MutableStateFlow(
+            value = AddAccountScreenSnackbarType.None,
         )
     private val selectedAccountTypeIndex: MutableStateFlow<Int> =
         MutableStateFlow(
@@ -102,6 +107,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                 name,
                 selectedAccountTypeIndex,
                 minimumAccountBalanceAmountValue,
+                screenSnackbarType,
             ) {
                     (
                         isLoading,
@@ -109,6 +115,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                         name,
                         selectedAccountTypeIndex,
                         minimumAccountBalanceAmountValue,
+                        screenSnackbarType,
                     ),
                 ->
 
@@ -133,6 +140,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                     AddAccountScreenUIStateAndStateEvents(
                         state = AddAccountScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
+                            screenSnackbarType = screenSnackbarType,
                             isLoading = false,
                             isCtaButtonEnabled = isValidData,
                             appBarTitleTextStringResourceId = R.string.screen_add_account_appbar_title,
@@ -160,8 +168,11 @@ public class AddAccountScreenViewModel @Inject constructor(
                             insertAccount = ::insertAccount,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                            resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setMinimumAccountBalanceAmountValue = ::setMinimumAccountBalanceAmountValue,
                             setName = ::setName,
+                            setScreenBottomSheetType = ::setScreenBottomSheetType,
+                            setScreenSnackbarType = ::setScreenSnackbarType,
                             setSelectedAccountTypeIndex = ::setSelectedAccountTypeIndex,
                         ),
                     )
@@ -210,6 +221,7 @@ public class AddAccountScreenViewModel @Inject constructor(
             if (isAccountInserted.isEmpty() || isAccountInserted.first() == -1L) {
                 // TODO(Abhi): Show error
             } else {
+
                 navigator.navigateUp()
             }
         }
@@ -222,6 +234,12 @@ public class AddAccountScreenViewModel @Inject constructor(
     private fun resetScreenBottomSheetType() {
         setScreenBottomSheetType(
             updatedAddAccountScreenBottomSheetType = AddAccountScreenBottomSheetType.None,
+        )
+    }
+
+    private fun resetScreenSnackbarType() {
+        setScreenSnackbarType(
+            updatedAddAccountScreenSnackbarType = AddAccountScreenSnackbarType.None,
         )
     }
 
@@ -246,6 +264,14 @@ public class AddAccountScreenViewModel @Inject constructor(
     ) {
         screenBottomSheetType.update {
             updatedAddAccountScreenBottomSheetType
+        }
+    }
+
+    private fun setScreenSnackbarType(
+        updatedAddAccountScreenSnackbarType: AddAccountScreenSnackbarType,
+    ) {
+        screenSnackbarType.update {
+            updatedAddAccountScreenSnackbarType
         }
     }
 

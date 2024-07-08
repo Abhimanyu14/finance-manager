@@ -45,6 +45,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.event.AddAccountScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 
 @Composable
@@ -66,6 +67,14 @@ internal fun AddAccountScreenUI(
         }
     }
 
+    LaunchedEffect(
+        key1 = uiState.screenSnackbarType,
+    ) {
+        when (uiState.screenSnackbarType) {
+            AddAccountScreenSnackbarType.None -> {}
+        }
+    }
+
     MyScaffold(
         modifier = Modifier
             .testTag(
@@ -80,6 +89,7 @@ internal fun AddAccountScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,

@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.state
 
 import android.content.Context
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -22,6 +23,7 @@ public data class CommonScreenUIState(
     val focusManager: FocusManager,
     val focusRequester: FocusRequester,
     val modalBottomSheetState: SheetState,
+    val snackbarHostState: SnackbarHostState,
     val keyboardController: SoftwareKeyboardController?,
 )
 
@@ -36,6 +38,9 @@ public fun rememberCommonScreenUIState(
     modalBottomSheetState: SheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
     ),
+    snackbarHostState: SnackbarHostState = remember {
+        SnackbarHostState()
+    },
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ): CommonScreenUIState {
     return remember {
@@ -45,6 +50,7 @@ public fun rememberCommonScreenUIState(
             focusManager = focusManager,
             focusRequester = focusRequester,
             modalBottomSheetState = modalBottomSheetState,
+            snackbarHostState = snackbarHostState,
             keyboardController = keyboardController,
         )
     }
