@@ -10,6 +10,7 @@
 8. Public Issue Tracker
 9. KMP
 10. CMP
+11. Monochrome icon
 
 # Tech Debt
 
