@@ -115,6 +115,7 @@ internal fun EditCategoryScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = state.snackbarHostState,
         sheetShape = when (uiState.screenBottomSheetType) {
             is EditCategoryScreenBottomSheetType.None -> {
                 BottomSheetShape

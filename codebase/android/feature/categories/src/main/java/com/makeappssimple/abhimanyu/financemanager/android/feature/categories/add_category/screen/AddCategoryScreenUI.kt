@@ -115,6 +115,7 @@ internal fun AddCategoryScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = state.snackbarHostState,
         sheetShape = when (uiState.screenBottomSheetType) {
             is AddCategoryScreenBottomSheetType.None -> {
                 BottomSheetShape

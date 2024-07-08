@@ -191,6 +191,7 @@ internal fun AddTransactionScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_add_transaction_appbar_title,

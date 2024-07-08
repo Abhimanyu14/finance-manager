@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -56,10 +54,6 @@ internal fun SettingsScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: SettingsScreenUIEvent) -> Unit = {},
 ) {
-    val snackbarHostState: SnackbarHostState = remember {
-        SnackbarHostState()
-    }
-
     val restoreDataFailedSnackbarText = stringResource(
         id = R.string.screen_settings_restore_data_failed,
     )
@@ -84,10 +78,10 @@ internal fun SettingsScreenUI(
 
             SettingsScreenSnackbarType.RestoreDataFailed -> {
                 launch {
-                    val result = snackbarHostState.showSnackbar(
+                    val snackbarResult = state.snackbarHostState.showSnackbar(
                         message = restoreDataFailedSnackbarText,
                     )
-                    when (result) {
+                    when (snackbarResult) {
                         SnackbarResult.ActionPerformed -> {}
                         SnackbarResult.Dismissed -> {
                             handleUIEvent(SettingsScreenUIEvent.OnSnackbarDismissed)
@@ -98,10 +92,10 @@ internal fun SettingsScreenUI(
 
             SettingsScreenSnackbarType.CancelReminderFailed -> {
                 launch {
-                    val result = snackbarHostState.showSnackbar(
+                    val snackbarResult = state.snackbarHostState.showSnackbar(
                         message = cancelReminderFailedSnackbarText,
                     )
-                    when (result) {
+                    when (snackbarResult) {
                         SnackbarResult.ActionPerformed -> {}
                         SnackbarResult.Dismissed -> {
                             handleUIEvent(SettingsScreenUIEvent.OnSnackbarDismissed)
@@ -112,10 +106,10 @@ internal fun SettingsScreenUI(
 
             SettingsScreenSnackbarType.CancelReminderSuccessful -> {
                 launch {
-                    val result = snackbarHostState.showSnackbar(
+                    val snackbarResult = state.snackbarHostState.showSnackbar(
                         message = cancelReminderSuccessfulSnackbarText,
                     )
-                    when (result) {
+                    when (snackbarResult) {
                         SnackbarResult.ActionPerformed -> {}
                         SnackbarResult.Dismissed -> {
                             handleUIEvent(SettingsScreenUIEvent.OnSnackbarDismissed)
@@ -140,7 +134,7 @@ internal fun SettingsScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
-        snackbarHostState = snackbarHostState,
+        snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,

@@ -39,6 +39,7 @@ internal fun OpenSourceLicensesScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_open_source_licenses_appbar_title,

@@ -89,6 +89,7 @@ internal fun AddTransactionForScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_add_transaction_for_appbar_title,

@@ -175,6 +175,7 @@ internal fun TransactionsScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = state.snackbarHostState,
         sheetShape = when (uiState.screenBottomSheetType) {
             is TransactionsScreenBottomSheetType.Menu,
             is TransactionsScreenBottomSheetType.None,
