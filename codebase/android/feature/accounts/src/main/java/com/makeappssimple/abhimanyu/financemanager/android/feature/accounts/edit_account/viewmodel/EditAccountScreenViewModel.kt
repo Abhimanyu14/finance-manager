@@ -59,10 +59,12 @@ public class EditAccountScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
 ) : ScreenViewModel, ViewModel() {
+    // region screen args
     private val screenArgs = EditAccountScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+    // endregion
 
     private val accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
         value = persistentListOf(),

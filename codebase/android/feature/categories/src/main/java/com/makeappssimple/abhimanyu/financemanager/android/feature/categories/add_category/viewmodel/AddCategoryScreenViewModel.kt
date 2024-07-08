@@ -42,10 +42,12 @@ public class AddCategoryScreenViewModel @Inject constructor(
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
+    // region screen args
     private val screenArgs = AddCategoryScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+    // endregion
 
     // region initial data
     private val originalTransactionType: String? = screenArgs.originalTransactionType

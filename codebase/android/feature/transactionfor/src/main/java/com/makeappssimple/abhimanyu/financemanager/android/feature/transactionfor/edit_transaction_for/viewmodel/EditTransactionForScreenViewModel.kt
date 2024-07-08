@@ -38,10 +38,12 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : ScreenViewModel, ViewModel() {
+    // region screen args
     private val screenArgs = EditTransactionForScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+    // endregion
 
     private var transactionForValues: ImmutableList<TransactionFor> = persistentListOf()
     private var transactionFor: TransactionFor? = null

@@ -77,10 +77,12 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
+    // region screen args
     private val screenArgs = AddTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+    // endregion
 
     // region initial data
     private var originalTransactionData: TransactionData? = null

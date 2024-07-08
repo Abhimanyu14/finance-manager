@@ -81,10 +81,12 @@ public class EditTransactionScreenViewModel @Inject constructor(
     private val updateAccountBalanceAmountUseCase: UpdateAccountBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : ScreenViewModel, ViewModel() {
+    // region screen args
     private val screenArgs = EditTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+    // endregion
 
     // region initial data
     private var currentTransactionData: TransactionData? = null

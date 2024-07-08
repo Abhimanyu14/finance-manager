@@ -45,10 +45,12 @@ public class EditCategoryScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : ScreenViewModel, ViewModel() {
+    // region screen args
     private val screenArgs = EditCategoryScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+    // endregion
 
     private val categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
         value = persistentListOf(),
