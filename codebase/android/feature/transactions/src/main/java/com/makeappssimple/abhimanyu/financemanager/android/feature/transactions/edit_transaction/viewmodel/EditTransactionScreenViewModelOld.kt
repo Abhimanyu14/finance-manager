@@ -102,7 +102,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     // endregion
 
     // region Data source
-    private var categories: MutableList<Category> = mutableListOf()
+    private var categories: ImmutableList<Category> = persistentListOf()
 
     private val titleSuggestions: MutableStateFlow<ImmutableList<String>?> = MutableStateFlow(
         value = null,
@@ -577,8 +577,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                     defaultDataIdFromDataStore = myPreferencesRepository.getDefaultDataId()
                 },
                 async {
-                    categories.clear()
-                    categories.addAll(getAllCategoriesUseCase())
+                    categories = getAllCategoriesUseCase()
                 },
                 async {
                     accounts.update {
