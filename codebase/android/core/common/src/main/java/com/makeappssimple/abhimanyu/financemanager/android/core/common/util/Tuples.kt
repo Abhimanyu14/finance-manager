@@ -493,3 +493,59 @@ public fun <T> Sexdecuple<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T>.toList
         sixteenth,
     )
 }
+
+/**
+ * Represents a collection of seventeen values.
+ */
+public data class Septendecuple<out A, out B, out C, out D, out E, out F, out G, out H, out I, out J, out K, out L, out M, out N, out O, out P, out Q>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D,
+    val fifth: E,
+    val sixth: F,
+    val seventh: G,
+    val eighth: H,
+    val ninth: I,
+    val tenth: J,
+    val eleventh: K,
+    val twelfth: L,
+    val thirteenth: M,
+    val fourteenth: N,
+    val fifteenth: O,
+    val sixteenth: P,
+    val seventeenth: Q,
+) : Serializable {
+
+    /**
+     * Returns string representation of the [Septendecuple].
+     */
+    override fun toString(): String {
+        return "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth, $tenth, $eleventh, $twelfth, $thirteenth, $fourteenth, $fifteenth, $sixteenth, $seventeenth)"
+    }
+}
+
+/**
+ * Converts this [Septendecuple] into a list.
+ */
+public fun <T> Septendecuple<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T>.toList(): List<T> {
+    return listOf(
+        first,
+        second,
+        third,
+        fourth,
+        fifth,
+        sixth,
+        seventh,
+        eighth,
+        ninth,
+        tenth,
+        eleventh,
+        twelfth,
+        thirteenth,
+        fourteenth,
+        fifteenth,
+        sixteenth,
+        seventeenth
+    )
+}

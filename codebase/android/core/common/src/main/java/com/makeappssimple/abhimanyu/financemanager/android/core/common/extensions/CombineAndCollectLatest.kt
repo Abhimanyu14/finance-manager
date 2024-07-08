@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quad
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quattuordecuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quindecuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quintuple
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Septendecuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Septuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Sexdecuple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Sextuple
@@ -525,6 +526,69 @@ public suspend fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
             value14,
             value15,
             value16
+        )
+    }.collectLatest {
+        action(it)
+    }
+}
+
+public suspend fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> combineAndCollectLatest(
+    flow: Flow<T1>,
+    flow2: Flow<T2>,
+    flow3: Flow<T3>,
+    flow4: Flow<T4>,
+    flow5: Flow<T5>,
+    flow6: Flow<T6>,
+    flow7: Flow<T7>,
+    flow8: Flow<T8>,
+    flow9: Flow<T9>,
+    flow10: Flow<T10>,
+    flow11: Flow<T11>,
+    flow12: Flow<T12>,
+    flow13: Flow<T13>,
+    flow14: Flow<T14>,
+    flow15: Flow<T15>,
+    flow16: Flow<T16>,
+    flow17: Flow<T17>,
+    action: suspend (value: Septendecuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>) -> Unit,
+) {
+    return combine(
+        flow,
+        flow2,
+        flow3,
+        flow4,
+        flow5,
+        flow6,
+        flow7,
+        flow8,
+        flow9,
+        flow10,
+        flow11,
+        flow12,
+        flow13,
+        flow14,
+        flow15,
+        flow16,
+        flow17,
+    ) { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17 ->
+        Septendecuple(
+            value1,
+            value2,
+            value3,
+            value4,
+            value5,
+            value6,
+            value7,
+            value8,
+            value9,
+            value10,
+            value11,
+            value12,
+            value13,
+            value14,
+            value15,
+            value16,
+            value17,
         )
     }.collectLatest {
         action(it)
