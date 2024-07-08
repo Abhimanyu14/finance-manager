@@ -52,6 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -90,11 +91,11 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private var defaultIncomeCategory: Category? = null
     private var defaultInvestmentCategory: Category? = null
 
-    private var accounts: MutableList<Account> = mutableListOf()
-    private var categories: MutableList<Category> = mutableListOf()
-    private var transactionForValues: MutableList<TransactionFor> = mutableListOf()
-    private var validTransactionTypesForNewTransaction: MutableList<TransactionType> =
-        mutableListOf()
+    private var accounts: ImmutableList<Account> = persistentListOf()
+    private var categories: ImmutableList<Category> = persistentListOf()
+    private var transactionForValues: ImmutableList<TransactionFor> = persistentListOf()
+    private var validTransactionTypesForNewTransaction: ImmutableList<TransactionType> =
+        persistentListOf()
     // endregion
 
     // region UI data
@@ -181,16 +182,13 @@ public class AddTransactionScreenViewModel @Inject constructor(
             startLoading()
             joinAll(
                 launch {
-                    accounts.clear()
-                    accounts.addAll(getAllAccountsUseCase())
+                    accounts = getAllAccountsUseCase()
                 },
                 launch {
-                    categories.clear()
-                    categories.addAll(getAllCategoriesUseCase())
+                    categories = getAllCategoriesUseCase()
                 },
                 launch {
-                    transactionForValues.clear()
-                    transactionForValues.addAll(getAllTransactionForValuesUseCase())
+                    transactionForValues = getAllTransactionForValuesUseCase()
                 },
             )
             updateDefaultData()
@@ -291,8 +289,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 TransactionType.INVESTMENT,
             )
         }
-        validTransactionTypesForNewTransaction.clear()
-        validTransactionTypesForNewTransaction.addAll(validTransactionTypes)
+        validTransactionTypesForNewTransaction = validTransactionTypes.toImmutableList()
     }
     // endregion
 
