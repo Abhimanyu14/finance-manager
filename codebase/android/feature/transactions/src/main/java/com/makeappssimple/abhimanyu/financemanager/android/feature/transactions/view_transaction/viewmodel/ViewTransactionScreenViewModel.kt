@@ -25,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.state.ViewTransactionScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -50,8 +51,8 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private var transactionIdToDelete: Int? = null
     private var currentTransactionListItemData: TransactionListItemData? = null
     private var originalTransactionListItemData: TransactionListItemData? = null
-    private var refundTransactionsListItemData: MutableList<TransactionListItemData> =
-        mutableListOf()
+    private var refundTransactionsListItemData: ImmutableList<TransactionListItemData> =
+        persistentListOf()
     // endregion
 
     // region UI data
@@ -121,7 +122,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private suspend fun getRefundTransactionsData(
         transactionIds: ImmutableList<Int>,
     ) {
-        val transactionsListItemData = transactionIds.mapNotNull { transactionId ->
+        refundTransactionsListItemData = transactionIds.mapNotNull { transactionId ->
             getTransactionDataUseCase(
                 id = transactionId,
             )?.let { transactionData ->
@@ -130,8 +131,6 @@ public class ViewTransactionScreenViewModel @Inject constructor(
                 ) // TODO(Abhi): Show error message
             }
         }.toImmutableList()
-        refundTransactionsListItemData.clear()
-        refundTransactionsListItemData.addAll(transactionsListItemData)
     }
 
     private fun getTransactionListItemData(
