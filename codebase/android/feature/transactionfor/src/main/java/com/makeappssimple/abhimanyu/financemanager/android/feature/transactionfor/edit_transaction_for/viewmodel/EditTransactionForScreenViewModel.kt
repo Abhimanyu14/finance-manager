@@ -22,6 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.EditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,7 +43,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
         stringDecoder = stringDecoder,
     )
 
-    private val transactionForValues: MutableList<TransactionFor> = mutableListOf()
+    private var transactionForValues: ImmutableList<TransactionFor> = persistentListOf()
     private var transactionFor: TransactionFor? = null
 
     // region UI data
@@ -146,8 +148,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     private suspend fun getAllTransactionForValues() {
-        transactionForValues.clear()
-        transactionForValues.addAll(getAllTransactionForValuesUseCase())
+        transactionForValues = getAllTransactionForValuesUseCase()
     }
 
     private suspend fun getOriginalTransactionFor() {
