@@ -113,6 +113,10 @@ public class AddCategoryScreenViewModel @Inject constructor(
         }
     }
 
+    private fun observeData() {
+        observeForUiStateAndStateEventsChanges()
+    }
+
     // region fetchCategories
     private suspend fun fetchCategories() {
         categories.update {
@@ -120,10 +124,6 @@ public class AddCategoryScreenViewModel @Inject constructor(
         }
     }
     // endregion
-
-    private fun observeData() {
-        observeForUiStateAndStateEventsChanges()
-    }
 
     // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
