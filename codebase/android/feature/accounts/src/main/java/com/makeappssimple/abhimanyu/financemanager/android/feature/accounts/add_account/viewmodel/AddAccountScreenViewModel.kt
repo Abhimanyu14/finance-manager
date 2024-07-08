@@ -26,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIVisibilityData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
-    private val accounts: MutableList<Account> = mutableListOf()
+    private var accounts: ImmutableList<Account> = persistentListOf()
     private val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
     }
@@ -79,8 +80,7 @@ public class AddAccountScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            accounts.clear()
-            accounts.addAll(getAllAccountsUseCase())
+            accounts = getAllAccountsUseCase()
             isLoading.update {
                 false
             }
