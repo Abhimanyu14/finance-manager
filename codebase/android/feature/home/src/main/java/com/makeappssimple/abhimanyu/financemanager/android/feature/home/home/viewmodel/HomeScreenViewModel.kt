@@ -15,10 +15,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalMinimumBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.ShouldShowBackupCardUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionsBetweenTimestampsUseCase
@@ -60,18 +60,18 @@ private object HomeScreenViewModelConstants {
 public class HomeScreenViewModel @Inject constructor(
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
+    shouldShowBackupCardUseCase: ShouldShowBackupCardUseCase,
     private val backupDataUseCase: BackupDataUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
     private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
-    private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
     private val homeListItemViewData: Flow<ImmutableList<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
-    private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
+    private val isBackupCardVisible: Flow<Boolean> = shouldShowBackupCardUseCase()
     private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
     )
@@ -213,8 +213,7 @@ public class HomeScreenViewModel @Inject constructor(
                 val accountFromName = listItem.accountFrom?.name
                 val accountToName = listItem.accountTo?.name
                 val title: String = listItem.transaction.title
-                val transactionForText: String =
-                    listItem.transactionFor.titleToDisplay
+                val transactionForText: String = listItem.transactionFor.titleToDisplay
 
                 TransactionListItemData(
                     transactionId = listItem.transaction.id,
@@ -228,12 +227,6 @@ public class HomeScreenViewModel @Inject constructor(
                     transactionForText = transactionForText,
                 )
             }
-        }
-    }
-
-    private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
-        return myPreferencesRepository.getDataTimestampFlow().map {
-            it.isNotNull() && (it.lastBackup < it.lastChange)
         }
     }
     // endregion
