@@ -42,10 +42,12 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     @VisibleForTesting internal val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
-    private var screenArgs = ViewTransactionScreenArgs(
+    // region screen args
+    private val screenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
+    // endregion
 
     // region initial data
     private var transactionIdToDelete: Int? = null

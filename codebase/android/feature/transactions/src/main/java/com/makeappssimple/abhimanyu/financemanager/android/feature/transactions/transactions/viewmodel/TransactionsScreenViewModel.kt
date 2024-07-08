@@ -59,6 +59,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : ScreenViewModel, ViewModel() {
+    // region initial data
     private val allTransactionData: MutableStateFlow<ImmutableList<TransactionData>> =
         MutableStateFlow(
             value = persistentListOf(),
@@ -95,6 +96,7 @@ public class TransactionsScreenViewModel @Inject constructor(
         TransactionType.entries.toImmutableList()
     private val sortOptions: ImmutableList<SortOption> = SortOption.entries.toImmutableList()
     private val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -234,6 +236,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region observeForTransactionDetailsListItemViewData
     private fun observeForTransactionDetailsListItemViewData() {
         viewModelScope.launch {
             combineAndCollectLatest(
@@ -405,115 +408,6 @@ public class TransactionsScreenViewModel @Inject constructor(
         }
     }
 
-    private fun observeForAllTransactionData() {
-        viewModelScope.launch {
-            getAllTransactionDataFlowUseCase()
-                .flowOn(
-                    context = dispatcherProvider.io,
-                )
-                .collectLatest { updatedAllTransactionData ->
-                    val updatedAccounts = withContext(
-                        context = dispatcherProvider.default,
-                    ) {
-                        updatedAllTransactionData.flatMap { transactionData ->
-                            listOfNotNull(
-                                transactionData.accountFrom,
-                                transactionData.accountTo,
-                            )
-                        }.distinct()
-                    }
-                    accounts.update {
-                        updatedAccounts
-                    }
-
-                    val updatedOldestTransactionLocalDate = withContext(
-                        context = dispatcherProvider.default,
-                    ) {
-                        dateTimeUtil.getLocalDate(
-                            timestamp = updatedAllTransactionData.minOfOrNull { transactionData ->
-                                transactionData.transaction.transactionTimestamp
-                            }.orZero(),
-                        )
-                    }
-                    oldestTransactionLocalDate.update {
-                        updatedOldestTransactionLocalDate
-                    }
-
-                    allTransactionData.update {
-                        updatedAllTransactionData
-                    }
-                    val updatedCategoriesMap = withContext(
-                        context = dispatcherProvider.default,
-                    ) {
-                        updatedAllTransactionData
-                            .mapNotNull { transactionData ->
-                                transactionData.category
-                            }.groupBy { category ->
-                                category.transactionType
-                            }.mapValues { (_, categories) ->
-                                categories.distinct()
-                            }
-                    }
-                    expenseCategories.update {
-                        updatedCategoriesMap[TransactionType.EXPENSE].orEmpty()
-                    }
-                    incomeCategories.update {
-                        updatedCategoriesMap[TransactionType.INCOME].orEmpty()
-                    }
-                    investmentCategories.update {
-                        updatedCategoriesMap[TransactionType.INVESTMENT].orEmpty()
-                    }
-                }
-        }
-    }
-
-    private fun observeForAllTransactionForValues() {
-        viewModelScope.launch {
-            getAllTransactionForValuesFlowUseCase()
-                .flowOn(
-                    context = dispatcherProvider.io,
-                )
-                .collectLatest { updatedAllTransactionForValues ->
-                    transactionForValues.update {
-                        updatedAllTransactionForValues
-                    }
-                }
-        }
-    }
-
-    private fun navigateToAddTransactionScreen() {
-        navigator.navigateToAddTransactionScreen()
-    }
-
-    private fun navigateToViewTransactionScreen(
-        transactionId: Int,
-    ) {
-        navigator.navigateToViewTransactionScreen(
-            transactionId = transactionId,
-        )
-    }
-
-    private fun updateTransactionForValuesInTransactions(
-        selectedTransactions: ImmutableList<Int>,
-        transactionForId: Int,
-    ) {
-        viewModelScope.launch {
-            val updatedTransactions = allTransactionData.value.map { transactionData ->
-                transactionData.transaction
-            }.filter {
-                it.transactionType == TransactionType.EXPENSE &&
-                        selectedTransactions.contains(it.id)
-            }.map {
-                it.copy(
-                    transactionForId = transactionForId,
-                )
-            }
-            updateTransactionsUseCase(
-                transactions = updatedTransactions.toTypedArray(),
-            )
-        }
-    }
-
     private fun isAvailableAfterSearch(
         searchTextValue: String,
         transactionData: TransactionData,
@@ -625,6 +519,87 @@ public class TransactionsScreenViewModel @Inject constructor(
             ),
         )
     }
+    // endregion
+
+    // region observeForAllTransactionData
+    private fun observeForAllTransactionData() {
+        viewModelScope.launch {
+            getAllTransactionDataFlowUseCase()
+                .flowOn(
+                    context = dispatcherProvider.io,
+                )
+                .collectLatest { updatedAllTransactionData ->
+                    val updatedAccounts = withContext(
+                        context = dispatcherProvider.default,
+                    ) {
+                        updatedAllTransactionData.flatMap { transactionData ->
+                            listOfNotNull(
+                                transactionData.accountFrom,
+                                transactionData.accountTo,
+                            )
+                        }.distinct()
+                    }
+                    accounts.update {
+                        updatedAccounts
+                    }
+
+                    val updatedOldestTransactionLocalDate = withContext(
+                        context = dispatcherProvider.default,
+                    ) {
+                        dateTimeUtil.getLocalDate(
+                            timestamp = updatedAllTransactionData.minOfOrNull { transactionData ->
+                                transactionData.transaction.transactionTimestamp
+                            }.orZero(),
+                        )
+                    }
+                    oldestTransactionLocalDate.update {
+                        updatedOldestTransactionLocalDate
+                    }
+
+                    allTransactionData.update {
+                        updatedAllTransactionData
+                    }
+                    val updatedCategoriesMap = withContext(
+                        context = dispatcherProvider.default,
+                    ) {
+                        updatedAllTransactionData
+                            .mapNotNull { transactionData ->
+                                transactionData.category
+                            }.groupBy { category ->
+                                category.transactionType
+                            }.mapValues { (_, categories) ->
+                                categories.distinct()
+                            }
+                    }
+                    expenseCategories.update {
+                        updatedCategoriesMap[TransactionType.EXPENSE].orEmpty()
+                    }
+                    incomeCategories.update {
+                        updatedCategoriesMap[TransactionType.INCOME].orEmpty()
+                    }
+                    investmentCategories.update {
+                        updatedCategoriesMap[TransactionType.INVESTMENT].orEmpty()
+                    }
+                }
+        }
+    }
+    // endregion
+
+    // region observeForAllTransactionForValues
+    private fun observeForAllTransactionForValues() {
+        viewModelScope.launch {
+            getAllTransactionForValuesFlowUseCase()
+                .flowOn(
+                    context = dispatcherProvider.io,
+                )
+                .collectLatest { updatedAllTransactionForValues ->
+                    transactionForValues.update {
+                        updatedAllTransactionForValues
+                    }
+                }
+        }
+    }
+    // endregion
 
     // region loading
     private fun startLoading() {
@@ -641,10 +616,6 @@ public class TransactionsScreenViewModel @Inject constructor(
     // endregion
 
     // region state events
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
     private fun addToSelectedTransactions(
         transactionId: Int,
     ) {
@@ -653,6 +624,16 @@ public class TransactionsScreenViewModel @Inject constructor(
                 add(transactionId)
             }
         }
+    }
+
+    private fun clearSelectedTransactions() {
+        selectedTransactionIndices.update {
+            mutableListOf()
+        }
+    }
+
+    private fun navigateUp() {
+        navigator.navigateUp()
     }
 
     private fun removeFromSelectedTransactions(
@@ -665,10 +646,16 @@ public class TransactionsScreenViewModel @Inject constructor(
         }
     }
 
-    private fun clearSelectedTransactions() {
-        selectedTransactionIndices.update {
-            mutableListOf()
-        }
+    private fun navigateToAddTransactionScreen() {
+        navigator.navigateToAddTransactionScreen()
+    }
+
+    private fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    ) {
+        navigator.navigateToViewTransactionScreen(
+            transactionId = transactionId,
+        )
     }
 
     private fun selectAllTransactions() {
@@ -724,6 +711,27 @@ public class TransactionsScreenViewModel @Inject constructor(
     ) {
         selectedSortOption.update {
             updatedSelectedSortOption
+        }
+    }
+
+    private fun updateTransactionForValuesInTransactions(
+        selectedTransactions: ImmutableList<Int>,
+        transactionForId: Int,
+    ) {
+        viewModelScope.launch {
+            val updatedTransactions = allTransactionData.value.map { transactionData ->
+                transactionData.transaction
+            }.filter {
+                it.transactionType == TransactionType.EXPENSE &&
+                        selectedTransactions.contains(it.id)
+            }.map {
+                it.copy(
+                    transactionForId = transactionForId,
+                )
+            }
+            updateTransactionsUseCase(
+                transactions = updatedTransactions.toTypedArray(),
+            )
         }
     }
     // endregion

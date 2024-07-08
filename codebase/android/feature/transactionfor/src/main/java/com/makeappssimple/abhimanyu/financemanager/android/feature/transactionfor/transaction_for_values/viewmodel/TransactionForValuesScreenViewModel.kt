@@ -30,6 +30,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
+    // region initial data
     private val transactionForValues: Flow<ImmutableList<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase()
     private val transactionForValuesIsUsedInTransactions: Flow<ImmutableList<Boolean>> =
@@ -40,6 +41,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
                 )
             }
         }
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(

@@ -68,18 +68,16 @@ public class HomeScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
+    // region initial data
     private val homeListItemViewData: Flow<ImmutableList<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
     private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
-
     private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
     )
-
     private val timestamp: MutableStateFlow<Long> = MutableStateFlow(
         value = dateTimeUtil.getCurrentTimeMillis(),
     )
-
     private val overviewCardData: Flow<OverviewCardViewModelData?> = combine(
         flow = overviewTabSelectionIndex,
         flow2 = timestamp,
@@ -174,11 +172,11 @@ public class HomeScreenViewModel @Inject constructor(
             title = title,
         )
     }
-
     private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
     private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -219,6 +217,7 @@ public class HomeScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region backupDataToDocument
     internal fun backupDataToDocument(
         uri: Uri,
     ) {
@@ -232,6 +231,7 @@ public class HomeScreenViewModel @Inject constructor(
             navigator.navigateUp()
         }
     }
+    // endregion
 
     // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {

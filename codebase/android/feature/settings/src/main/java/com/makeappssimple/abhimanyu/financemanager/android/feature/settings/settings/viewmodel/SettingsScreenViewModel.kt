@@ -39,8 +39,10 @@ public class SettingsScreenViewModel @Inject constructor(
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : ScreenViewModel, ViewModel() {
+    // region initial data
     private var appVersion: String = ""
     private val reminder: Flow<Reminder?> = myPreferencesRepository.getReminderFlow()
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -83,6 +85,7 @@ public class SettingsScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region backupDataToDocument
     internal fun backupDataToDocument(
         uri: Uri,
     ) {
@@ -98,7 +101,9 @@ public class SettingsScreenViewModel @Inject constructor(
             navigator.navigateUp()
         }
     }
+    // endregion
 
+    // region restoreDataFromDocument
     internal fun restoreDataFromDocument(
         uri: Uri,
     ) {
@@ -117,6 +122,7 @@ public class SettingsScreenViewModel @Inject constructor(
             }
         }
     }
+    // endregion
 
     // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
