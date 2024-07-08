@@ -5,11 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
@@ -25,17 +23,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toNonSignedString
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.toSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.bottomsheet.HomeScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateAndStateEvents
@@ -179,52 +177,9 @@ public class HomeScreenViewModel @Inject constructor(
 
     private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
         return getRecentTransactionDataFlowUseCase().map {
-            it.map { listItem ->
-                val amountColor: MyColor = listItem.transaction.getAmountTextColor()
-                val amountText: String =
-                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                        listItem.transaction.transactionType == TransactionType.REFUND
-                    ) {
-                        listItem.transaction.amount.toSignedString(
-                            isPositive = listItem.accountTo.isNotNull(),
-                            isNegative = listItem.accountFrom.isNotNull(),
-                        )
-                    } else {
-                        listItem.transaction.amount.toString()
-                    }
-                val dateAndTimeText: String = dateTimeUtil.getReadableDateAndTime(
-                    timestamp = listItem.transaction.transactionTimestamp,
-                )
-                val emoji: String = when (listItem.transaction.transactionType) {
-                    TransactionType.TRANSFER -> {
-                        EmojiConstants.LEFT_RIGHT_ARROW
-                    }
-
-                    TransactionType.ADJUSTMENT -> {
-                        EmojiConstants.EXPRESSIONLESS_FACE
-                    }
-
-                    else -> {
-                        listItem.category?.emoji.orEmpty()
-                    }
-                }
-                val accountFromName = listItem.accountFrom?.name
-                val accountToName = listItem.accountTo?.name
-                val title: String = listItem.transaction.title
-                val transactionForText: String = listItem.transactionFor.titleToDisplay
-
-                TransactionListItemData(
-                    transactionId = listItem.transaction.id,
-                    amountColor = amountColor,
-                    amountText = amountText,
-                    dateAndTimeText = dateAndTimeText,
-                    emoji = emoji,
-                    accountFromName = accountFromName,
-                    accountToName = accountToName,
-                    title = title,
-                    transactionForText = transactionForText,
+            it.map { listItem: TransactionData ->
+                listItem.toTransactionListItemData(
+                    dateTimeUtil = dateTimeUtil,
                 )
             }
         }

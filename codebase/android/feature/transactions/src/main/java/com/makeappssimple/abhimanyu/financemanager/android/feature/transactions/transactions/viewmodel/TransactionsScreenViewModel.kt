@@ -2,13 +2,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.distinct
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
@@ -28,11 +26,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.So
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.areFiltersSelected
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.toSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateAndStateEvents
@@ -336,56 +333,14 @@ public class TransactionsScreenViewModel @Inject constructor(
                         }
                         .mapValues {
                             it.value.map { listItem ->
-                                val amountColor = listItem.transaction.getAmountTextColor()
-                                val amountText =
-                                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                                        listItem.transaction.transactionType == TransactionType.REFUND
-                                    ) {
-                                        listItem.transaction.amount.toSignedString(
-                                            isPositive = listItem.accountTo.isNotNull(),
-                                            isNegative = listItem.accountFrom.isNotNull(),
-                                        )
-                                    } else {
-                                        listItem.transaction.amount.toString()
-                                    }
-                                val dateAndTimeText = dateTimeUtil.getReadableDateAndTime(
-                                    timestamp = listItem.transaction.transactionTimestamp,
-                                )
-                                val emoji = when (listItem.transaction.transactionType) {
-                                    TransactionType.TRANSFER -> {
-                                        EmojiConstants.LEFT_RIGHT_ARROW
-                                    }
-
-                                    TransactionType.ADJUSTMENT -> {
-                                        EmojiConstants.EXPRESSIONLESS_FACE
-                                    }
-
-                                    else -> {
-                                        listItem.category?.emoji
-                                    }
-                                }.orEmpty()
-                                val accountFromName = listItem.accountFrom?.name
-                                val accountToName = listItem.accountTo?.name
-                                val title = listItem.transaction.title
-                                val transactionForText = listItem.transactionFor.titleToDisplay
-
-                                TransactionListItemData(
+                                listItem.toTransactionListItemData(
+                                    dateTimeUtil = dateTimeUtil,
+                                ).copy(
                                     isDeleteButtonEnabled = false,
                                     isDeleteButtonVisible = true,
                                     isEditButtonVisible = false,
                                     isExpanded = false,
                                     isRefundButtonVisible = false,
-                                    transactionId = listItem.transaction.id,
-                                    amountColor = amountColor,
-                                    amountText = amountText,
-                                    dateAndTimeText = dateAndTimeText,
-                                    emoji = emoji,
-                                    accountFromName = accountFromName,
-                                    accountToName = accountToName,
-                                    title = title,
-                                    transactionForText = transactionForText,
                                 )
                             }
                         }

@@ -3,21 +3,18 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.toSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.ViewTransactionScreenArgs
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.bottomsheet.ViewTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.state.ViewTransactionScreenUIState
@@ -143,54 +140,14 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         transactionData: TransactionData,
     ): TransactionListItemData {
         val transaction = transactionData.transaction
-        val amountText: String = when (transaction.transactionType) {
-            TransactionType.INCOME,
-            TransactionType.EXPENSE,
-            TransactionType.ADJUSTMENT,
-            TransactionType.REFUND,
-            -> {
-                transactionData.transaction.amount.toSignedString(
-                    isPositive = transactionData.accountTo.isNotNull(),
-                    isNegative = transactionData.accountFrom.isNotNull(),
-                )
-            }
-
-            else -> {
-                transaction.amount.toString()
-            }
-        }
-        val dateAndTimeText: String = dateTimeUtil.getReadableDateAndTime(
-            timestamp = transaction.transactionTimestamp,
-        )
-        val emoji: String = when (transaction.transactionType) {
-            TransactionType.TRANSFER -> {
-                EmojiConstants.LEFT_RIGHT_ARROW
-            }
-
-            TransactionType.ADJUSTMENT -> {
-                EmojiConstants.EXPRESSIONLESS_FACE
-            }
-
-            else -> {
-                transactionData.category?.emoji.orEmpty()
-            }
-        }
-
-        return TransactionListItemData(
+        return transactionData.toTransactionListItemData(
+            dateTimeUtil = dateTimeUtil,
+        ).copy(
             isDeleteButtonEnabled = transaction.refundTransactionIds.isNullOrEmpty(),
             isDeleteButtonVisible = true,
             isEditButtonVisible = transaction.transactionType != TransactionType.ADJUSTMENT,
             isExpanded = true,
             isRefundButtonVisible = transaction.transactionType == TransactionType.EXPENSE,
-            transactionId = transaction.id,
-            amountColor = transaction.getAmountTextColor(),
-            amountText = amountText,
-            dateAndTimeText = dateAndTimeText,
-            emoji = emoji,
-            accountFromName = transactionData.accountFrom?.name,
-            accountToName = transactionData.accountTo?.name,
-            title = transaction.title,
-            transactionForText = transactionData.transactionFor.titleToDisplay,
         )
     }
     // endregion
