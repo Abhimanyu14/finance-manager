@@ -247,10 +247,58 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         value = false,
     )
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
     }
+
+    private fun fetchData() {
+        viewModelScope.launch {
+            awaitAll(
+                async {
+                    defaultDataIdFromDataStore = myPreferencesRepository.getDefaultDataId()
+                },
+                async {
+                    categories = getAllCategoriesUseCase()
+                },
+                async {
+                    accounts.update {
+                        getAllAccountsUseCase()
+                            .sortedWith(
+                                comparator = compareBy<Account> {
+                                    it.type.sortOrder
+                                }.thenByDescending {
+                                    it.balanceAmount.value
+                                }
+                            )
+                    }
+                },
+                async {
+                    transactionForValues.update {
+                        getAllTransactionForValuesUseCase()
+                    }
+                },
+            )
+            calculateValidTransactionTypesForNewTransaction()
+            setDefaultCategory()
+            setDefaultAccount()
+            if (isAddingRefundTransactionOrEditingAnyTransaction()) {
+                getTransactionDataForAddingRefundTransactionOrEditingAnyTransaction() // TODO(Abhi): Better naming
+            } else {
+                setInitialSelectedTransactionType()
+            }
+            isDataFetchCompleted.update {
+                true
+            }
+        }
+    }
+
+    private fun observeData() {
+        observeSelectedTransactionType()
+        observeSelectedCategory()
+    }
+    // endregion
 
     internal fun updateTransaction() {
         viewModelScope.launch {
@@ -571,52 +619,6 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         uiVisibilityState.value = updatedEditTransactionScreenUiVisibilityState
     }
     // endregion
-
-    private fun fetchData() {
-        viewModelScope.launch {
-            awaitAll(
-                async {
-                    defaultDataIdFromDataStore = myPreferencesRepository.getDefaultDataId()
-                },
-                async {
-                    categories = getAllCategoriesUseCase()
-                },
-                async {
-                    accounts.update {
-                        getAllAccountsUseCase()
-                            .sortedWith(
-                                comparator = compareBy<Account> {
-                                    it.type.sortOrder
-                                }.thenByDescending {
-                                    it.balanceAmount.value
-                                }
-                            )
-                    }
-                },
-                async {
-                    transactionForValues.update {
-                        getAllTransactionForValuesUseCase()
-                    }
-                },
-            )
-            calculateValidTransactionTypesForNewTransaction()
-            setDefaultCategory()
-            setDefaultAccount()
-            if (isAddingRefundTransactionOrEditingAnyTransaction()) {
-                getTransactionDataForAddingRefundTransactionOrEditingAnyTransaction() // TODO(Abhi): Better naming
-            } else {
-                setInitialSelectedTransactionType()
-            }
-            isDataFetchCompleted.update {
-                true
-            }
-        }
-    }
-
-    private fun observeData() {
-        observeSelectedTransactionType()
-        observeSelectedCategory()
-    }
 
     private fun observeSelectedTransactionType() {
         viewModelScope.launch {

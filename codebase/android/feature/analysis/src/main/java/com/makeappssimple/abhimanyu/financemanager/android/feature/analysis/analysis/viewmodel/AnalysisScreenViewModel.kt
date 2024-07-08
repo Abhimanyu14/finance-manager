@@ -88,6 +88,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
@@ -107,6 +108,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
         observeForTransactionDataMappedByCategoryChanges()
     }
+    // endregion
 
     // region getOldestTransactionLocalDate
     private fun getOldestTransactionLocalDate(): LocalDate {

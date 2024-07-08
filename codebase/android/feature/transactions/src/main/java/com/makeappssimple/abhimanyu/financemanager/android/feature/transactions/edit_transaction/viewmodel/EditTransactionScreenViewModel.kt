@@ -177,6 +177,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
@@ -209,6 +210,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         observeForTitleSuggestions()
         observeForSelectedTransactionType()
     }
+    // endregion
 
     // region updateDefaultData
     private suspend fun updateDefaultData() {

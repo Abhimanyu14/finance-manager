@@ -79,6 +79,7 @@ public class CategoriesScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
@@ -193,6 +194,7 @@ public class CategoriesScreenViewModel @Inject constructor(
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
     }
+    // endregion
 
     // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {

@@ -200,10 +200,24 @@ public class HomeScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
     }
+
+    private fun fetchData() {
+        viewModelScope.launch {
+            isLoading.update {
+                false
+            }
+        }
+    }
+
+    private fun observeData() {
+        observeForUiStateAndStateEventsChanges()
+    }
+    // endregion
 
     internal fun backupDataToDocument(
         uri: Uri,
@@ -217,18 +231,6 @@ public class HomeScreenViewModel @Inject constructor(
             }
             navigator.navigateUp()
         }
-    }
-
-    private fun fetchData() {
-        viewModelScope.launch {
-            isLoading.update {
-                false
-            }
-        }
-    }
-
-    private fun observeData() {
-        observeForUiStateAndStateEventsChanges()
     }
 
     // region observeForUiStateAndStateEventsChanges

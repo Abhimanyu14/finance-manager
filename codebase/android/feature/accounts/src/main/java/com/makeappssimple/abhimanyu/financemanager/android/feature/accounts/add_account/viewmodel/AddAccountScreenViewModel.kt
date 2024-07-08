@@ -75,6 +75,7 @@ public class AddAccountScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
@@ -92,6 +93,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
     }
+    // endregion
 
     // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {

@@ -63,10 +63,25 @@ public class SettingsScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
     }
+
+    private fun fetchData() {
+        appVersion = appVersionUtil.getAppVersion()?.versionName.orEmpty()
+        viewModelScope.launch {
+            isLoading.update {
+                false
+            }
+        }
+    }
+
+    private fun observeData() {
+        observeForUiStateAndStateEventsChanges()
+    }
+    // endregion
 
     internal fun backupDataToDocument(
         uri: Uri,
@@ -101,19 +116,6 @@ public class SettingsScreenViewModel @Inject constructor(
                 )
             }
         }
-    }
-
-    private fun fetchData() {
-        appVersion = appVersionUtil.getAppVersion()?.versionName.orEmpty()
-        viewModelScope.launch {
-            isLoading.update {
-                false
-            }
-        }
-    }
-
-    private fun observeData() {
-        observeForUiStateAndStateEventsChanges()
     }
 
     // region observeForUiStateAndStateEventsChanges

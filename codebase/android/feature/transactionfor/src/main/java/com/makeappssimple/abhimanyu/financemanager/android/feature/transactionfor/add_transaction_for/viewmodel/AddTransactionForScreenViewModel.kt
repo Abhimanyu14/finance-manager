@@ -64,6 +64,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
@@ -80,6 +81,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
         observeForIsCtaButtonEnabled()
     }
+    // endregion
 
     // region getAllTransactionForValues
     private fun getAllTransactionForValues() {

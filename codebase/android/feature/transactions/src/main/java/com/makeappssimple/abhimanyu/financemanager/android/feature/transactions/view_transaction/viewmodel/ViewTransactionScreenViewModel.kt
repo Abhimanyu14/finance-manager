@@ -73,6 +73,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region initViewModel
     internal fun initViewModel() {
         fetchData()
         observeData()
@@ -88,6 +89,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
     }
+    // endregion
 
     // region getCurrentTransactionData
     private suspend fun getCurrentTransactionData() {
