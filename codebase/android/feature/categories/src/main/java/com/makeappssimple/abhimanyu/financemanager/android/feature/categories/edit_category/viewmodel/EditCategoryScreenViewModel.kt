@@ -91,10 +91,12 @@ public class EditCategoryScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<EditCategoryScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = EditCategoryScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()

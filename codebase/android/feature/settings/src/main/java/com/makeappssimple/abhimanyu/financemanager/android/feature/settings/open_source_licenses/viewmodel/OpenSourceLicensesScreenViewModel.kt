@@ -30,10 +30,12 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<OpenSourceLicensesScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = OpenSourceLicensesScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()

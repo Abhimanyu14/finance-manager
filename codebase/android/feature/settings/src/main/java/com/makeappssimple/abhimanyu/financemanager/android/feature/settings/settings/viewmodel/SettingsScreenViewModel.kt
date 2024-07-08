@@ -56,10 +56,12 @@ public class SettingsScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<SettingsScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = SettingsScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()

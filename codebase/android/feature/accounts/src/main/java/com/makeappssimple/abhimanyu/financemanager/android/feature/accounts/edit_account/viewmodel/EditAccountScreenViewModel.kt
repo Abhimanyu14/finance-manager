@@ -103,10 +103,12 @@ public class EditAccountScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<EditAccountScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = EditAccountScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()

@@ -193,10 +193,12 @@ public class HomeScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<HomeScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = HomeScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()

@@ -68,10 +68,12 @@ public class AddAccountScreenViewModel @Inject constructor(
         )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<AddAccountScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = AddAccountScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()

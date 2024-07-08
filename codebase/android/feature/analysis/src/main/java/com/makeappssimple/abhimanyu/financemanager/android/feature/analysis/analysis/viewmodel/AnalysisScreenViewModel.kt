@@ -81,10 +81,12 @@ public class AnalysisScreenViewModel @Inject constructor(
     )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<AnalysisScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = AnalysisScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()

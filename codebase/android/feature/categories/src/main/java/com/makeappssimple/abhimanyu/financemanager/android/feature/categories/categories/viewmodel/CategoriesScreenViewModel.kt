@@ -72,10 +72,12 @@ public class CategoriesScreenViewModel @Inject constructor(
     )
     // endregion
 
+    // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<CategoriesScreenUIStateAndStateEvents> =
         MutableStateFlow(
             value = CategoriesScreenUIStateAndStateEvents(),
         )
+    // endregion
 
     internal fun initViewModel() {
         fetchData()
