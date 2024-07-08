@@ -108,7 +108,6 @@ internal class ViewTransactionScreenViewModelTest {
             stringDecoder = stringDecoder,
             dateTimeUtil = dateTimeUtil,
             deleteTransactionUseCase = deleteTransactionUseCase,
-            dispatcherProvider = dispatcherProvider,
             getTransactionDataUseCase = getTransactionDataUseCase,
             navigator = navigator,
         )
