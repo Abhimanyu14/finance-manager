@@ -176,6 +176,66 @@ public class HomeScreenViewModel @Inject constructor(
         getAccountsTotalBalanceAmountValueUseCase()
     private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
+
+    private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
+        return getRecentTransactionDataFlowUseCase().map {
+            it.map { listItem ->
+                val amountColor: MyColor = listItem.transaction.getAmountTextColor()
+                val amountText: String =
+                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
+                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
+                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                        listItem.transaction.transactionType == TransactionType.REFUND
+                    ) {
+                        listItem.transaction.amount.toSignedString(
+                            isPositive = listItem.accountTo.isNotNull(),
+                            isNegative = listItem.accountFrom.isNotNull(),
+                        )
+                    } else {
+                        listItem.transaction.amount.toString()
+                    }
+                val dateAndTimeText: String = dateTimeUtil.getReadableDateAndTime(
+                    timestamp = listItem.transaction.transactionTimestamp,
+                )
+                val emoji: String = when (listItem.transaction.transactionType) {
+                    TransactionType.TRANSFER -> {
+                        EmojiConstants.LEFT_RIGHT_ARROW
+                    }
+
+                    TransactionType.ADJUSTMENT -> {
+                        EmojiConstants.EXPRESSIONLESS_FACE
+                    }
+
+                    else -> {
+                        listItem.category?.emoji.orEmpty()
+                    }
+                }
+                val accountFromName = listItem.accountFrom?.name
+                val accountToName = listItem.accountTo?.name
+                val title: String = listItem.transaction.title
+                val transactionForText: String =
+                    listItem.transactionFor.titleToDisplay
+
+                TransactionListItemData(
+                    transactionId = listItem.transaction.id,
+                    amountColor = amountColor,
+                    amountText = amountText,
+                    dateAndTimeText = dateAndTimeText,
+                    emoji = emoji,
+                    accountFromName = accountFromName,
+                    accountToName = accountToName,
+                    title = title,
+                    transactionForText = transactionForText,
+                )
+            }
+        }
+    }
+
+    private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
+        return myPreferencesRepository.getDataTimestampFlow().map {
+            it.isNotNull() && (it.lastBackup < it.lastChange)
+        }
+    }
     // endregion
 
     // region UI data
@@ -313,66 +373,6 @@ public class HomeScreenViewModel @Inject constructor(
         }
     }
     // endregion
-
-    private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
-        return getRecentTransactionDataFlowUseCase().map {
-            it.map { listItem ->
-                val amountColor: MyColor = listItem.transaction.getAmountTextColor()
-                val amountText: String =
-                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                        listItem.transaction.transactionType == TransactionType.REFUND
-                    ) {
-                        listItem.transaction.amount.toSignedString(
-                            isPositive = listItem.accountTo.isNotNull(),
-                            isNegative = listItem.accountFrom.isNotNull(),
-                        )
-                    } else {
-                        listItem.transaction.amount.toString()
-                    }
-                val dateAndTimeText: String = dateTimeUtil.getReadableDateAndTime(
-                    timestamp = listItem.transaction.transactionTimestamp,
-                )
-                val emoji: String = when (listItem.transaction.transactionType) {
-                    TransactionType.TRANSFER -> {
-                        EmojiConstants.LEFT_RIGHT_ARROW
-                    }
-
-                    TransactionType.ADJUSTMENT -> {
-                        EmojiConstants.EXPRESSIONLESS_FACE
-                    }
-
-                    else -> {
-                        listItem.category?.emoji.orEmpty()
-                    }
-                }
-                val accountFromName = listItem.accountFrom?.name
-                val accountToName = listItem.accountTo?.name
-                val title: String = listItem.transaction.title
-                val transactionForText: String =
-                    listItem.transactionFor.titleToDisplay
-
-                TransactionListItemData(
-                    transactionId = listItem.transaction.id,
-                    amountColor = amountColor,
-                    amountText = amountText,
-                    dateAndTimeText = dateAndTimeText,
-                    emoji = emoji,
-                    accountFromName = accountFromName,
-                    accountToName = accountToName,
-                    title = title,
-                    transactionForText = transactionForText,
-                )
-            }
-        }
-    }
-
-    private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
-        return myPreferencesRepository.getDataTimestampFlow().map {
-            it.isNotNull() && (it.lastBackup < it.lastChange)
-        }
-    }
 
     // region loading
     private fun startLoading() {
