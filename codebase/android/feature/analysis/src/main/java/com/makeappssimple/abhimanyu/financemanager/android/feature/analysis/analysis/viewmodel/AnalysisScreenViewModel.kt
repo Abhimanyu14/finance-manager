@@ -44,6 +44,7 @@ public class AnalysisScreenViewModel @Inject constructor(
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
+    // region initial data
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
@@ -62,6 +63,7 @@ public class AnalysisScreenViewModel @Inject constructor(
 
     private var allTransactionData: ImmutableList<TransactionData> = persistentListOf()
     private var oldestTransactionLocalDate: LocalDate? = null
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -104,6 +106,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         observeForTransactionDataMappedByCategoryChanges()
     }
 
+    // region getOldestTransactionLocalDate
     private fun getOldestTransactionLocalDate(): LocalDate {
         return dateTimeUtil.getLocalDate(
             timestamp = allTransactionData.minOfOrNull { transactionData ->
@@ -111,30 +114,7 @@ public class AnalysisScreenViewModel @Inject constructor(
             }.orZero(),
         )
     }
-
-    private fun observeForTransactionDataMappedByCategoryChanges() {
-        viewModelScope.launch {
-            combineAndCollectLatest(
-                isLoading,
-                selectedTransactionTypeIndex,
-                selectedFilter,
-            ) {
-                    (
-                        isLoading,
-                        selectedTransactionTypeIndex,
-                        selectedFilter,
-                    ),
-                ->
-                analysisListItemData.update {
-                    getAnalysisListItemData(
-                        selectedFilterValue = selectedFilter,
-                        selectedTransactionTypeIndexValue = selectedTransactionTypeIndex,
-                        allTransactionDataValue = allTransactionData,
-                    )
-                }
-            }
-        }
-    }
+    // endregion
 
     // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
@@ -182,6 +162,31 @@ public class AnalysisScreenViewModel @Inject constructor(
         }
     }
     // endregion
+
+    // region observeForTransactionDataMappedByCategoryChanges
+    private fun observeForTransactionDataMappedByCategoryChanges() {
+        viewModelScope.launch {
+            combineAndCollectLatest(
+                isLoading,
+                selectedTransactionTypeIndex,
+                selectedFilter,
+            ) {
+                    (
+                        isLoading,
+                        selectedTransactionTypeIndex,
+                        selectedFilter,
+                    ),
+                ->
+                analysisListItemData.update {
+                    getAnalysisListItemData(
+                        selectedFilterValue = selectedFilter,
+                        selectedTransactionTypeIndexValue = selectedTransactionTypeIndex,
+                        allTransactionDataValue = allTransactionData,
+                    )
+                }
+            }
+        }
+    }
 
     private fun getAnalysisListItemData(
         selectedFilterValue: Filter,
@@ -250,6 +255,7 @@ public class AnalysisScreenViewModel @Inject constructor(
             .toEpochMilli()
         return transactionData.transaction.transactionTimestamp in fromDateStartOfDayTimestamp until toDateStartOfDayTimestamp
     }
+    // endregion
 
     // region state events
     private fun navigateUp() {
