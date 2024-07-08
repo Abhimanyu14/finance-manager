@@ -44,6 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.bottomsheet.AddTransactionScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateEvents
@@ -103,6 +104,10 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val screenBottomSheetType: MutableStateFlow<AddTransactionScreenBottomSheetType> =
         MutableStateFlow(
             value = AddTransactionScreenBottomSheetType.None,
+        )
+    private val screenSnackbarType: MutableStateFlow<AddTransactionScreenSnackbarType> =
+        MutableStateFlow(
+            value = AddTransactionScreenSnackbarType.None,
         )
     private val uiVisibilityState: MutableStateFlow<AddTransactionScreenUiVisibilityState> =
         MutableStateFlow(
@@ -373,6 +378,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
             combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
+                screenSnackbarType,
                 selectedTransactionTypeIndex,
                 amount,
                 title,
@@ -391,6 +397,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     (
                         isLoading,
                         screenBottomSheetType,
+                        screenSnackbarType,
                         selectedTransactionTypeIndex,
                         amount,
                         title,
@@ -432,6 +439,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             accountFrom = accountFrom,
                             accountTo = accountTo,
                             screenBottomSheetType = screenBottomSheetType,
+                            screenSnackbarType = screenSnackbarType,
                             uiVisibilityState = uiVisibilityState,
                             isBottomSheetVisible = screenBottomSheetType != AddTransactionScreenBottomSheetType.None,
                             isCtaButtonEnabled = isCtaButtonEnabled,
@@ -831,6 +839,14 @@ public class AddTransactionScreenViewModel @Inject constructor(
     ) {
         screenBottomSheetType.update {
             updatedAddTransactionScreenBottomSheetType
+        }
+    }
+
+    private fun setScreenSnackbarType(
+        updatedAddTransactionScreenSnackbarType: AddTransactionScreenSnackbarType,
+    ) {
+        screenSnackbarType.update {
+            updatedAddTransactionScreenSnackbarType
         }
     }
 

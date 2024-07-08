@@ -66,6 +66,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.bottomsheet.AddTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.event.AddTransactionScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIState
 import kotlinx.coroutines.delay
 
@@ -85,6 +86,14 @@ internal fun AddTransactionScreenUI(
         ) {
             delay(300) // Source - https://stackoverflow.com/a/72783456/9636037
             state.focusRequester.requestFocus()
+        }
+    }
+
+    LaunchedEffect(
+        key1 = uiState.screenSnackbarType,
+    ) {
+        when (uiState.screenSnackbarType) {
+            AddTransactionScreenSnackbarType.None -> {}
         }
     }
 
