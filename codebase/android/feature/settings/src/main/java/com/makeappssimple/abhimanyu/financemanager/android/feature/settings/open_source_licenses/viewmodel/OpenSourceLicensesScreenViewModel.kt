@@ -45,9 +45,7 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 

@@ -110,9 +110,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
                     )
                 )
             }
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 

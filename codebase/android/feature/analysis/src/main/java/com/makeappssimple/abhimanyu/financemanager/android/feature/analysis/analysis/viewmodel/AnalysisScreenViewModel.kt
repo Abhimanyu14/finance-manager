@@ -98,9 +98,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         viewModelScope.launch {
             allTransactionData = getAllTransactionDataUseCase()
             oldestTransactionLocalDate = getOldestTransactionLocalDate()
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 

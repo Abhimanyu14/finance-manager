@@ -74,9 +74,7 @@ public class SettingsScreenViewModel @Inject constructor(
     private fun fetchData() {
         appVersion = appVersionUtil.getAppVersion()?.versionName.orEmpty()
         viewModelScope.launch {
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 

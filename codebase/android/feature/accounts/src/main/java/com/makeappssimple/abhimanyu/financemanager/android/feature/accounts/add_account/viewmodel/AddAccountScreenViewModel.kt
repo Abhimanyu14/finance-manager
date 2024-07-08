@@ -84,9 +84,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             accounts = getAllAccountsUseCase()
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 

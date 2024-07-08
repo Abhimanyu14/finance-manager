@@ -135,9 +135,7 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 
@@ -298,9 +296,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                         }
                         .also {
                             if (it.isEmpty()) {
-                                isLoading.update {
-                                    false
-                                }
+                                completeLoading()
                             }
                         }
                         .sortedWith(compareBy {
@@ -324,9 +320,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                         })
                         .also {
                             if (it.isEmpty()) {
-                                isLoading.update {
-                                    false
-                                }
+                                completeLoading()
                             }
                         }
                         .groupBy {
@@ -396,9 +390,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                             }
                         }
                         .also {
-                            isLoading.update {
-                                false
-                            }
+                            completeLoading()
                         }
                 }
                 transactionDetailsListItemViewData.update {

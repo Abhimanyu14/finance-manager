@@ -88,9 +88,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                 )
             )
 
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 

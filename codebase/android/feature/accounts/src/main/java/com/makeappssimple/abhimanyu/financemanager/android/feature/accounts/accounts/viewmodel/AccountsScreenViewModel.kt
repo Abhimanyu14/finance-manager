@@ -89,9 +89,7 @@ public class AccountsScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 
