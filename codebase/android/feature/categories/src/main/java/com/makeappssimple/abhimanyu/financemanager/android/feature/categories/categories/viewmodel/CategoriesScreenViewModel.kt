@@ -47,10 +47,12 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
+    // region initial data
     private val categoriesGridItemDataMap: MutableStateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
         MutableStateFlow(
             value = persistentMapOf(),
         )
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -194,6 +196,36 @@ public class CategoriesScreenViewModel @Inject constructor(
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
     }
+
+    private fun getCategoriesGridItemData(
+        isDefault: Boolean,
+        isDeleteEnabled: Boolean,
+        category: Category,
+    ): CategoriesGridItemData {
+        val isEditVisible = !isDefaultExpenseCategory(
+            category = category.title,
+        ) && !isDefaultIncomeCategory(
+            category = category.title,
+        ) && !isDefaultInvestmentCategory(
+            category = category.title,
+        )
+        val isSetAsDefaultVisible = !isDefault
+        val isDeleteVisible = !isDefaultExpenseCategory(
+            category = category.title,
+        ) && !isDefaultIncomeCategory(
+            category = category.title,
+        ) && !isDefaultInvestmentCategory(
+            category = category.title,
+        ) && isDeleteEnabled
+
+        return CategoriesGridItemData(
+            isDeleteVisible = isDeleteVisible,
+            isEditVisible = isEditVisible,
+            isSetAsDefaultVisible = isSetAsDefaultVisible,
+            isSelected = isDefault,
+            category = category,
+        )
+    }
     // endregion
 
     // region observeForUiStateAndStateEventsChanges
@@ -260,35 +292,19 @@ public class CategoriesScreenViewModel @Inject constructor(
     }
     // endregion
 
-    private fun getCategoriesGridItemData(
-        isDefault: Boolean,
-        isDeleteEnabled: Boolean,
-        category: Category,
-    ): CategoriesGridItemData {
-        val isEditVisible = !isDefaultExpenseCategory(
-            category = category.title,
-        ) && !isDefaultIncomeCategory(
-            category = category.title,
-        ) && !isDefaultInvestmentCategory(
-            category = category.title,
-        )
-        val isSetAsDefaultVisible = !isDefault
-        val isDeleteVisible = !isDefaultExpenseCategory(
-            category = category.title,
-        ) && !isDefaultIncomeCategory(
-            category = category.title,
-        ) && !isDefaultInvestmentCategory(
-            category = category.title,
-        ) && isDeleteEnabled
-
-        return CategoriesGridItemData(
-            isDeleteVisible = isDeleteVisible,
-            isEditVisible = isEditVisible,
-            isSetAsDefaultVisible = isSetAsDefaultVisible,
-            isSelected = isDefault,
-            category = category,
-        )
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
+        }
     }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
+    }
+    // endregion
 
     // region state events
     private fun deleteCategory(

@@ -700,6 +700,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region loading
     private fun startLoading() {
         isLoading.update {
             true
@@ -711,6 +712,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
             false
         }
     }
+    // endregion
 
     // region state events
     private fun clearAmount() {

@@ -87,6 +87,20 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
+        }
+    }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
+    }
+    // endregion
+
     // region state events
     private fun navigateUp() {
         navigator.navigateUp()

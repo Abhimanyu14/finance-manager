@@ -48,6 +48,7 @@ public class AccountsScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
+    // region initial data
     private val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataIdFlow().map {
         it?.account
     }
@@ -58,6 +59,7 @@ public class AccountsScreenViewModel @Inject constructor(
         getAccountsTotalBalanceAmountValueUseCase()
     private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -216,6 +218,20 @@ public class AccountsScreenViewModel @Inject constructor(
             ),
         )
         return accountsScreenUIStateAndStateEvents
+    }
+    // endregion
+
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
+        }
+    }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
     }
     // endregion
 

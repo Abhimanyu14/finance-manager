@@ -66,6 +66,7 @@ public class EditAccountScreenViewModel @Inject constructor(
     )
     // endregion
 
+    // region initial data
     private val accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
         value = persistentListOf(),
     )
@@ -75,6 +76,7 @@ public class EditAccountScreenViewModel @Inject constructor(
     private val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
     }
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -120,15 +122,62 @@ public class EditAccountScreenViewModel @Inject constructor(
         viewModelScope.launch {
             getAllAccounts()
             getOriginalAccount()
-
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
+    }
+    // endregion
+
+    // region getAllAccounts
+    private fun getAllAccounts() {
+        viewModelScope.launch {
+            accounts.update {
+                getAllAccountsUseCase()
+            }
+        }
+    }
+    // endregion
+
+    // region getOriginalAccount
+    private fun getOriginalAccount() {
+        val originalAccountId = screenArgs.originalAccountId ?: return
+        viewModelScope.launch {
+            originalAccount.update {
+                getAccountUseCase(
+                    id = originalAccountId,
+                )
+            }
+
+            originalAccount.value?.let { originalAccount ->
+                setSelectedAccountTypeIndex(
+                    validAccountTypes.indexOf(
+                        element = originalAccount.type,
+                    )
+                )
+                setName(
+                    name.value.copy(
+                        text = originalAccount.name,
+                    )
+                )
+                setBalanceAmountValue(
+                    TextFieldValue(
+                        text = originalAccount.balanceAmount.value.toString(),
+                        selection = TextRange(originalAccount.balanceAmount.value.toString().length),
+                    )
+                )
+                originalAccount.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
+                    setMinimumAccountBalanceAmountValue(
+                        TextFieldValue(
+                            text = minimumAccountBalanceAmount.value.toString(),
+                            selection = TextRange(minimumAccountBalanceAmount.value.toString().length),
+                        )
+                    )
+                }
+            }
+        }
     }
     // endregion
 
@@ -234,51 +283,19 @@ public class EditAccountScreenViewModel @Inject constructor(
     }
     // endregion
 
-    private fun getAllAccounts() {
-        viewModelScope.launch {
-            accounts.update {
-                getAllAccountsUseCase()
-            }
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
         }
     }
 
-    private fun getOriginalAccount() {
-        val originalAccountId = screenArgs.originalAccountId ?: return
-        viewModelScope.launch {
-            originalAccount.update {
-                getAccountUseCase(
-                    id = originalAccountId,
-                )
-            }
-
-            originalAccount.value?.let { originalAccount ->
-                setSelectedAccountTypeIndex(
-                    validAccountTypes.indexOf(
-                        element = originalAccount.type,
-                    )
-                )
-                setName(
-                    name.value.copy(
-                        text = originalAccount.name,
-                    )
-                )
-                setBalanceAmountValue(
-                    TextFieldValue(
-                        text = originalAccount.balanceAmount.value.toString(),
-                        selection = TextRange(originalAccount.balanceAmount.value.toString().length),
-                    )
-                )
-                originalAccount.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
-                    setMinimumAccountBalanceAmountValue(
-                        TextFieldValue(
-                            text = minimumAccountBalanceAmount.value.toString(),
-                            selection = TextRange(minimumAccountBalanceAmount.value.toString().length),
-                        )
-                    )
-                }
-            }
+    private fun completeLoading() {
+        isLoading.update {
+            false
         }
     }
+    // endregion
 
     // region state events
     private fun clearMinimumAccountBalanceAmountValue() {

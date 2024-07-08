@@ -52,20 +52,20 @@ public class EditCategoryScreenViewModel @Inject constructor(
     )
     // endregion
 
+    // region initial data
     private val categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
         value = persistentListOf(),
     )
-
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
-
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.INCOME,
         TransactionType.EXPENSE,
         TransactionType.INVESTMENT,
     )
     private val originalTransactionType: String? = screenArgs.originalTransactionType
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -108,7 +108,6 @@ public class EditCategoryScreenViewModel @Inject constructor(
         viewModelScope.launch {
             getAllCategories()
             getOriginalCategory()
-
             originalTransactionType?.let { originalTransactionType ->
                 setSelectedTransactionTypeIndex(
                     validTransactionTypes.indexOf(
@@ -118,14 +117,51 @@ public class EditCategoryScreenViewModel @Inject constructor(
                     )
                 )
             }
-            isLoading.update {
-                false
-            }
+            completeLoading()
         }
     }
 
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
+    }
+    // endregion
+
+    // region getAllCategories
+    private fun getAllCategories() {
+        viewModelScope.launch {
+            categories.update {
+                getAllCategoriesUseCase()
+            }
+        }
+    }
+    // endregion
+
+    // region getOriginalCategory
+    private fun getOriginalCategory() {
+        screenArgs.originalCategoryId?.let { id ->
+            viewModelScope.launch {
+                category.update {
+                    getCategoryUseCase(
+                        id = id,
+                    )
+                }
+
+                category.value.let { category ->
+                    setSelectedTransactionTypeIndex(
+                        validTransactionTypes.indexOf(
+                            element = category?.transactionType,
+                        )
+                    )
+                    setTitle(
+                        title.value.copy(
+                            text = category?.title.orEmpty(),
+                            selection = TextRange(category?.title.orEmpty().length),
+                        )
+                    )
+                    setEmoji(category?.emoji.orEmpty())
+                }
+            }
+        }
     }
     // endregion
 
@@ -214,53 +250,19 @@ public class EditCategoryScreenViewModel @Inject constructor(
     }
     // endregion
 
-    private fun updateCategory() {
-        category.value?.copy(
-            emoji = emoji.value,
-            title = title.value.text,
-            transactionType = validTransactionTypes[selectedTransactionTypeIndex.value],
-        )?.let { category ->
-            viewModelScope.launch {
-                updateCategoriesUseCase(category)
-                navigator.navigateUp()
-            }
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
         }
     }
 
-    private fun getAllCategories() {
-        viewModelScope.launch {
-            categories.update {
-                getAllCategoriesUseCase()
-            }
+    private fun completeLoading() {
+        isLoading.update {
+            false
         }
     }
-
-    private fun getOriginalCategory() {
-        screenArgs.originalCategoryId?.let { id ->
-            viewModelScope.launch {
-                category.update {
-                    getCategoryUseCase(
-                        id = id,
-                    )
-                }
-
-                category.value.let { category ->
-                    setSelectedTransactionTypeIndex(
-                        validTransactionTypes.indexOf(
-                            element = category?.transactionType,
-                        )
-                    )
-                    setTitle(
-                        title.value.copy(
-                            text = category?.title.orEmpty(),
-                            selection = TextRange(category?.title.orEmpty().length),
-                        )
-                    )
-                    setEmoji(category?.emoji.orEmpty())
-                }
-            }
-        }
-    }
+    // endregion
 
     // region state events
     private fun clearTitle() {
@@ -318,6 +320,19 @@ public class EditCategoryScreenViewModel @Inject constructor(
     ) {
         selectedTransactionTypeIndex.update {
             updatedSelectedTransactionTypeIndex
+        }
+    }
+
+    private fun updateCategory() {
+        category.value?.copy(
+            emoji = emoji.value,
+            title = title.value.text,
+            transactionType = validTransactionTypes[selectedTransactionTypeIndex.value],
+        )?.let { category ->
+            viewModelScope.launch {
+                updateCategoriesUseCase(category)
+                navigator.navigateUp()
+            }
         }
     }
     // endregion

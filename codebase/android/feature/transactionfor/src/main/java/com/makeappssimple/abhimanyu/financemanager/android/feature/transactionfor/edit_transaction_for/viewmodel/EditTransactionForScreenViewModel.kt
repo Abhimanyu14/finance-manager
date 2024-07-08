@@ -45,8 +45,10 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     )
     // endregion
 
+    // region initial data
     private var transactionForValues: ImmutableList<TransactionFor> = persistentListOf()
     private var transactionFor: TransactionFor? = null
+    // endregion
 
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -94,6 +96,22 @@ public class EditTransactionForScreenViewModel @Inject constructor(
 
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
+    }
+    // endregion
+
+    // region getAllTransactionForValues
+    private suspend fun getAllTransactionForValues() {
+        transactionForValues = getAllTransactionForValuesUseCase()
+    }
+    // endregion
+
+    // region getOriginalTransactionFor
+    private suspend fun getOriginalTransactionFor() {
+        screenArgs.originalTransactionForId?.let { id ->
+            transactionFor = getTransactionForUseCase(
+                id = id,
+            )
+        }
     }
     // endregion
 
@@ -153,17 +171,19 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     }
     // endregion
 
-    private suspend fun getAllTransactionForValues() {
-        transactionForValues = getAllTransactionForValuesUseCase()
-    }
-
-    private suspend fun getOriginalTransactionFor() {
-        screenArgs.originalTransactionForId?.let { id ->
-            transactionFor = getTransactionForUseCase(
-                id = id,
-            )
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
         }
     }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
+    }
+    // endregion
 
     // region state events
     private fun updateTransactionFor(

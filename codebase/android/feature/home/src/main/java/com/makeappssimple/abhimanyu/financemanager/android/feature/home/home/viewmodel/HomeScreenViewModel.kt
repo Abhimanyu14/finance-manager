@@ -376,6 +376,20 @@ public class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
+        }
+    }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
+    }
+    // endregion
+
     // region state events
     private fun handleOverviewCardAction(
         overviewCardAction: OverviewCardAction,

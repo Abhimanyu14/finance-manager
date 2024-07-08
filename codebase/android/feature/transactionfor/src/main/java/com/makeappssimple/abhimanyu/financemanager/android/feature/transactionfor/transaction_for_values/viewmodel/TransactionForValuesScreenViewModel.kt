@@ -123,6 +123,20 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region loading
+    private fun startLoading() {
+        isLoading.update {
+            true
+        }
+    }
+
+    private fun completeLoading() {
+        isLoading.update {
+            false
+        }
+    }
+    // endregion
+
     // region state events
     private fun deleteTransactionFor(
         id: Int,
