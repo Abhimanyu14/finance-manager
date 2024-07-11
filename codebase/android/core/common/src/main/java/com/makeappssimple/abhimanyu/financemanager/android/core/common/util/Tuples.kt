@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
 import java.io.Serializable
