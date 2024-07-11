@@ -513,9 +513,11 @@ public class TransactionsScreenViewModel @Inject constructor(
                         updatedAllTransactionData
                             .mapNotNull { transactionData ->
                                 transactionData.category
-                            }.groupBy { category ->
+                            }
+                            .groupBy { category ->
                                 category.transactionType
-                            }.mapValues { (_, categories) ->
+                            }
+                            .mapValues { (_, categories) ->
                                 categories.distinct()
                             }
                     }
