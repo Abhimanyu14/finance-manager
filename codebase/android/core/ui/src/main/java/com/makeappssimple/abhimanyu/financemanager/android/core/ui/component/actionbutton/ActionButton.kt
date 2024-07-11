@@ -43,7 +43,7 @@ public fun ActionButton(
 
 @Composable
 private fun ActionButtonUI(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     data: ActionButtonData,
     handleEvent: (event: ActionButtonEvent) -> Unit,
 ) {
