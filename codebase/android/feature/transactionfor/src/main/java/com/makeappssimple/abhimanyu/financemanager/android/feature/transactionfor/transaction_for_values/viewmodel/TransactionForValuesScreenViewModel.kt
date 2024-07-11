@@ -71,6 +71,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
+            startLoading()
             completeLoading()
         }
     }

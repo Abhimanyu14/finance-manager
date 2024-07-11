@@ -185,6 +185,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             startLoading()
+            startLoading()
             joinAll(
                 launch {
                     accounts = getAllAccountsUseCase()

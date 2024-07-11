@@ -100,6 +100,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
+            startLoading()
             fetchCategories()
             originalTransactionType?.let { originalTransactionType ->
                 setSelectedTransactionTypeIndex(

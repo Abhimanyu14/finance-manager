@@ -106,6 +106,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
+            startLoading()
             getAllCategories()
             getOriginalCategory()
             originalTransactionType?.let { originalTransactionType ->

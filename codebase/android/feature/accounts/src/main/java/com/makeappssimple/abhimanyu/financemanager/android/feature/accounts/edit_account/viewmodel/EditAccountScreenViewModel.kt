@@ -120,6 +120,7 @@ public class EditAccountScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
+            startLoading()
             getAllAccounts()
             getOriginalAccount()
             completeLoading()
