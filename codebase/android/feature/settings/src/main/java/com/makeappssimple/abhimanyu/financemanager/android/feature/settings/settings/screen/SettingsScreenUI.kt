@@ -72,6 +72,7 @@ internal fun SettingsScreenUI(
 
     LaunchedEffect(
         key1 = uiState.screenSnackbarType,
+        key2 = handleUIEvent,
     ) {
         when (uiState.screenSnackbarType) {
             SettingsScreenSnackbarType.None -> {}

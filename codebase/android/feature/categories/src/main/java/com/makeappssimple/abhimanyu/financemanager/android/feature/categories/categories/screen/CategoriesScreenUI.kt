@@ -71,6 +71,7 @@ internal fun CategoriesScreenUI(
 
     LaunchedEffect(
         key1 = uiState.screenSnackbarType,
+        key2 = handleUIEvent,
     ) {
         when (uiState.screenSnackbarType) {
             CategoriesScreenSnackbarType.None -> {}
