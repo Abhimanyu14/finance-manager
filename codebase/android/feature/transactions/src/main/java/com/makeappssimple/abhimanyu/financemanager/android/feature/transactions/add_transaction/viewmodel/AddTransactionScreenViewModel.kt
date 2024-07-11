@@ -436,7 +436,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     },
                 )
 
-
                 uiStateAndStateEvents.update {
                     AddTransactionScreenUIStateAndStateEvents(
                         state = AddTransactionScreenUIState(
@@ -608,14 +607,16 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun observeForSelectedTransactionType() {
         viewModelScope.launch {
             selectedTransactionTypeIndex.collectLatest { selectedTransactionTypeIndex ->
+                startLoading()
                 val updatedSelectedTransactionType =
                     validTransactionTypesForNewTransaction.getOrNull(
                         index = selectedTransactionTypeIndex,
-                    ) ?: return@collectLatest
-                startLoading()
-                handleSelectedTransactionTypeChange(
-                    updatedSelectedTransactionType = updatedSelectedTransactionType,
-                )
+                    )
+                if (updatedSelectedTransactionType != null) {
+                    handleSelectedTransactionTypeChange(
+                        updatedSelectedTransactionType = updatedSelectedTransactionType,
+                    )
+                }
                 completeLoading()
             }
         }

@@ -209,8 +209,8 @@ public class ViewTransactionScreenViewModel @Inject constructor(
 
     // region state events
     private fun deleteTransaction() {
+        val id = transactionIdToDelete ?: return
         viewModelScope.launch {
-            val id = transactionIdToDelete ?: return@launch
             startLoading()
             val isTransactionDeleted = deleteTransactionUseCase(
                 id = id,
