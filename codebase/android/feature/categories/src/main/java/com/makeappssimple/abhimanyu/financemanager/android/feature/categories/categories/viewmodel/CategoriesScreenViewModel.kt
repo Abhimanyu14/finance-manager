@@ -187,6 +187,7 @@ public class CategoriesScreenViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
+            startLoading()
             completeLoading()
         }
     }
