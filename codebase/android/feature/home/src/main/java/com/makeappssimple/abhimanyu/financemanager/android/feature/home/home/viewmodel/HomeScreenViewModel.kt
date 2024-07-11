@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
@@ -43,7 +42,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -67,8 +66,6 @@ public class HomeScreenViewModel @Inject constructor(
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
-    private val homeListItemViewData: Flow<ImmutableList<TransactionListItemData>> =
-        getHomeListItemViewDataFromData()
     private val isBackupCardVisible: Flow<Boolean> = shouldShowBackupCardUseCase()
     private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
@@ -174,16 +171,6 @@ public class HomeScreenViewModel @Inject constructor(
         getAccountsTotalBalanceAmountValueUseCase()
     private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
-
-    private fun getHomeListItemViewDataFromData(): Flow<ImmutableList<TransactionListItemData>> {
-        return getRecentTransactionDataFlowUseCase().map {
-            it.map { listItem: TransactionData ->
-                listItem.toTransactionListItemData(
-                    dateTimeUtil = dateTimeUtil,
-                )
-            }
-        }
-    }
     // endregion
 
     // region UI data
@@ -196,6 +183,10 @@ public class HomeScreenViewModel @Inject constructor(
     private val screenBottomSheetType: MutableStateFlow<HomeScreenBottomSheetType> =
         MutableStateFlow(
             value = HomeScreenBottomSheetType.None,
+        )
+    private val homeListItemViewData: MutableStateFlow<ImmutableList<TransactionListItemData>> =
+        MutableStateFlow(
+            value = persistentListOf(),
         )
     // endregion
 
@@ -221,6 +212,7 @@ public class HomeScreenViewModel @Inject constructor(
 
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
+        observeForHomeListItemViewData()
     }
     // endregion
 
@@ -277,7 +269,7 @@ public class HomeScreenViewModel @Inject constructor(
                     HomeScreenUIStateAndStateEvents(
                         state = HomeScreenUIState(
                             isBottomSheetVisible = screenBottomSheetType != HomeScreenBottomSheetType.None,
-                            isBackupCardVisible = isBackupCardVisible.orFalse(),
+                            isBackupCardVisible = isBackupCardVisible,
                             isBalanceVisible = isBalanceVisible,
                             isLoading = isLoading,
                             isRecentTransactionsTrailingTextVisible = homeListItemViewData
@@ -317,6 +309,22 @@ public class HomeScreenViewModel @Inject constructor(
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                         ),
                     )
+                }
+            }
+        }
+    }
+    // endregion
+
+    // region observeForHomeListItemViewData
+    private fun observeForHomeListItemViewData() {
+        viewModelScope.launch {
+            getRecentTransactionDataFlowUseCase().collectLatest { transactionDataList ->
+                homeListItemViewData.update {
+                    transactionDataList.map { transactionData: TransactionData ->
+                        transactionData.toTransactionListItemData(
+                            dateTimeUtil = dateTimeUtil,
+                        )
+                    }
                 }
             }
         }
