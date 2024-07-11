@@ -105,6 +105,10 @@ internal class AddTransactionScreenUIEventHandler(
                 uiStateAndStateEvents.events.setTransactionTime(uiEvent.updatedTransactionTime)
                 uiStateAndStateEvents.events.setIsTransactionTimePickerDialogVisible(false)
             }
+
+            is AddTransactionScreenUIEvent.OnSnackbarDismissed -> {
+                uiStateAndStateEvents.events.resetScreenSnackbarType()
+            }
         }
     }
 }

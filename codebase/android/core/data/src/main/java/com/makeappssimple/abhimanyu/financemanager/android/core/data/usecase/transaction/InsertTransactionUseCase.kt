@@ -30,7 +30,7 @@ public class InsertTransactionUseCase @Inject constructor(
         enteredTitle: String,
         selectedTransactionType: TransactionType,
         originalTransaction: Transaction?,
-    ): Long {
+    ): Boolean {
         val amount = Amount(
             value = enteredAmountValue,
         )
@@ -89,7 +89,7 @@ public class InsertTransactionUseCase @Inject constructor(
             id = id,
             originalTransaction = originalTransaction,
         )
-        return id
+        return id != -1L
     }
 
     private fun getCategoryId(

@@ -10,6 +10,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -69,6 +70,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun AddTransactionScreenUI(
@@ -79,6 +81,12 @@ internal fun AddTransactionScreenUI(
     val clearFocus = {
         state.focusManager.clearFocus()
     }
+    val addTransactionFailedSnackbarText = stringResource(
+        id = R.string.screen_add_or_edit_transaction_add_transaction_failed,
+    )
+    val addTransactionSuccessfulSnackbarText = stringResource(
+        id = R.string.screen_add_or_edit_transaction_add_transaction_successful,
+    )
 
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -93,6 +101,34 @@ internal fun AddTransactionScreenUI(
         key1 = uiState.screenSnackbarType,
     ) {
         when (uiState.screenSnackbarType) {
+            AddTransactionScreenSnackbarType.AddTransactionFailed -> {
+                launch {
+                    val result = state.snackbarHostState.showSnackbar(
+                        message = addTransactionFailedSnackbarText,
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> {}
+                        SnackbarResult.Dismissed -> {
+                            handleUIEvent(AddTransactionScreenUIEvent.OnSnackbarDismissed)
+                        }
+                    }
+                }
+            }
+
+            AddTransactionScreenSnackbarType.AddTransactionSuccessful -> {
+                launch {
+                    val result = state.snackbarHostState.showSnackbar(
+                        message = addTransactionSuccessfulSnackbarText,
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> {}
+                        SnackbarResult.Dismissed -> {
+                            handleUIEvent(AddTransactionScreenUIEvent.OnSnackbarDismissed)
+                        }
+                    }
+                }
+            }
+
             AddTransactionScreenSnackbarType.None -> {}
         }
     }

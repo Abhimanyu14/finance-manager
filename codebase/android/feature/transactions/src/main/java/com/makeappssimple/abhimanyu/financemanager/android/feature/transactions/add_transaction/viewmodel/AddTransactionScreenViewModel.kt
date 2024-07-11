@@ -498,6 +498,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             insertTransaction = ::insertTransaction,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                            resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setAccountFrom = ::setAccountFrom,
                             setAccountTo = ::setAccountTo,
                             setAmount = ::setAmount,
@@ -763,7 +764,11 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 selectedTransactionType = uiState.selectedTransactionType,
                 originalTransaction = originalTransactionData?.transaction,
             )
-            // TODO(Abhi): Use isTransactionInsertedSuccessfully to show snack bar
+            if (isTransactionInsertedSuccessfully) {
+                setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
+            } else {
+                setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionFailed)
+            }
             navigator.navigateUp()
         }
     }
@@ -775,6 +780,12 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun resetScreenBottomSheetType() {
         setScreenBottomSheetType(
             updatedAddTransactionScreenBottomSheetType = AddTransactionScreenBottomSheetType.None,
+        )
+    }
+
+    private fun resetScreenSnackbarType() {
+        setScreenSnackbarType(
+            updatedAddTransactionScreenSnackbarType = AddTransactionScreenSnackbarType.None,
         )
     }
 

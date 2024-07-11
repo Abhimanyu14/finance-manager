@@ -3,5 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenSnackbarType
 
 internal sealed class AddTransactionScreenSnackbarType : ScreenSnackbarType {
+    data object AddTransactionFailed : AddTransactionScreenSnackbarType()
+    data object AddTransactionSuccessful : AddTransactionScreenSnackbarType()
     data object None : AddTransactionScreenSnackbarType()
 }

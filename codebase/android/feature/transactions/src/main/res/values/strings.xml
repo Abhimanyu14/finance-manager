@@ -14,6 +14,8 @@
     <string name="screen_add_or_edit_transaction_account">Account</string>
     <string name="screen_add_or_edit_transaction_account_from">Account From</string>
     <string name="screen_add_or_edit_transaction_account_to">Account To</string>
+    <string name="screen_add_or_edit_transaction_add_transaction_failed">Add Transaction Failed 😕</string>
+    <string name="screen_add_or_edit_transaction_add_transaction_successful">Add Transaction Successful 🙂</string>
     <!-- endregion -->
 
     <!-- region add transaction screen -->

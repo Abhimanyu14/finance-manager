@@ -23,6 +23,7 @@ internal sealed class AddTransactionScreenUIEvent : ScreenUIEvent {
     data object OnAccountToTextFieldClick : AddTransactionScreenUIEvent()
     data object OnTransactionDatePickerDismissed : AddTransactionScreenUIEvent()
     data object OnTransactionTimePickerDismissed : AddTransactionScreenUIEvent()
+    data object OnSnackbarDismissed : AddTransactionScreenUIEvent()
 
     data class OnAmountUpdated(
         val updatedAmount: TextFieldValue,
