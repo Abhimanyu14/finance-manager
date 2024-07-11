@@ -99,6 +99,7 @@ internal fun AddTransactionScreenUI(
 
     LaunchedEffect(
         key1 = uiState.screenSnackbarType,
+        key2 = handleUIEvent,
     ) {
         when (uiState.screenSnackbarType) {
             AddTransactionScreenSnackbarType.AddTransactionFailed -> {
