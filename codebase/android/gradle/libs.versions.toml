@@ -35,7 +35,7 @@ lint = "31.5.0"
 
 # Testing
 junit = "4.13.2"
-test-core = "1.6.1"
+test-core = "1.5.0"
 test-junit = "1.2.1"
 test-runner = "1.6.1"
 mockito-kotlin = "5.3.1"
