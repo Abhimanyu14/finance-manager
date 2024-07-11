@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
@@ -67,106 +66,6 @@ public class HomeScreenViewModel @Inject constructor(
 ) : ScreenViewModel, ViewModel() {
     // region initial data
     private val isBackupCardVisible: Flow<Boolean> = shouldShowBackupCardUseCase()
-    private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
-    )
-    private val timestamp: MutableStateFlow<Long> = MutableStateFlow(
-        value = dateTimeUtil.getCurrentTimeMillis(),
-    )
-    private val overviewCardData: Flow<OverviewCardViewModelData?> = combine(
-        flow = overviewTabSelectionIndex,
-        flow2 = timestamp,
-    ) { overviewTabSelectionIndex, timestamp ->
-        val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex]
-        val transactions = getTransactionsBetweenTimestampsUseCase(
-            startingTimestamp = when (overviewTabOption) {
-                OverviewTabOption.DAY -> {
-                    dateTimeUtil.getStartOfDayTimestamp(
-                        timestamp = timestamp,
-                    )
-                }
-
-                OverviewTabOption.MONTH -> {
-                    dateTimeUtil.getStartOfMonthTimestamp(
-                        timestamp = timestamp,
-                    )
-                }
-
-                OverviewTabOption.YEAR -> {
-                    dateTimeUtil.getStartOfYearTimestamp(
-                        timestamp = timestamp,
-                    )
-                }
-            },
-            endingTimestamp = when (overviewTabOption) {
-                OverviewTabOption.DAY -> {
-                    dateTimeUtil.getEndOfDayTimestamp(
-                        timestamp = timestamp,
-                    )
-                }
-
-                OverviewTabOption.MONTH -> {
-                    dateTimeUtil.getEndOfMonthTimestamp(
-                        timestamp = timestamp,
-                    )
-                }
-
-                OverviewTabOption.YEAR -> {
-                    dateTimeUtil.getEndOfYearTimestamp(
-                        timestamp = timestamp,
-                    )
-                }
-            },
-        )
-
-        val incomeAmount = transactions.filter {
-            it.transactionType == TransactionType.INCOME
-        }.sumOf {
-            it.amount.value
-        }.toFloat()
-
-        val expenseTransactions = transactions.filter {
-            it.transactionType == TransactionType.EXPENSE
-        }
-        val expenseTransactionsWithRefund = mutableListOf<Transaction>()
-        expenseTransactions.forEach { expenseTransaction ->
-            expenseTransactionsWithRefund.add(expenseTransaction)
-            expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
-                refundTransactionIds.forEach { id ->
-                    getTransactionUseCase(id)?.let {
-                        expenseTransactionsWithRefund.add(it)
-                    }
-                }
-            }
-        }
-        val expenseAmount = expenseTransactionsWithRefund.sumOf { transaction ->
-            if (transaction.transactionType == TransactionType.EXPENSE) {
-                abs(transaction.amount.value)
-            } else {
-                -abs(transaction.amount.value)
-            }
-        }.toFloat()
-
-        val title = when (overviewTabOption) {
-            OverviewTabOption.DAY -> {
-                dateTimeUtil.getFormattedDate(timestamp).uppercase()
-            }
-
-            OverviewTabOption.MONTH -> {
-                dateTimeUtil.getFormattedMonth(timestamp).uppercase()
-            }
-
-            OverviewTabOption.YEAR -> {
-                dateTimeUtil.getFormattedYear(timestamp).uppercase()
-            }
-        }
-
-        OverviewCardViewModelData(
-            income = incomeAmount,
-            expense = expenseAmount,
-            title = title,
-        )
-    }
     private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
     private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
@@ -188,6 +87,15 @@ public class HomeScreenViewModel @Inject constructor(
         MutableStateFlow(
             value = persistentListOf(),
         )
+    private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
+        value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
+    )
+    private val selectedTimestamp: MutableStateFlow<Long> = MutableStateFlow(
+        value = dateTimeUtil.getCurrentTimeMillis(),
+    )
+    private val overviewCardData: MutableStateFlow<OverviewCardViewModelData?> = MutableStateFlow(
+        value = null,
+    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -213,6 +121,7 @@ public class HomeScreenViewModel @Inject constructor(
     private fun observeData() {
         observeForUiStateAndStateEventsChanges()
         observeForHomeListItemViewData()
+        observeForOverviewCardData()
     }
     // endregion
 
@@ -331,6 +240,140 @@ public class HomeScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region observeForOverviewCardData
+    private fun observeForOverviewCardData() {
+        viewModelScope.launch {
+            combineAndCollectLatest(
+                overviewTabSelectionIndex,
+                selectedTimestamp,
+            ) { (overviewTabSelectionIndex, timestamp) ->
+                val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex]
+                val transactionsInSelectedTimeRange = getTransactionsInSelectedTimeRange(
+                    overviewTabOption = overviewTabOption,
+                    timestamp = timestamp,
+                )
+
+                overviewCardData.update {
+                    OverviewCardViewModelData(
+                        income = getIncomeAmount(
+                            transactionsInSelectedTimeRange = transactionsInSelectedTimeRange,
+                        ),
+                        expense = getExpenseAmount(
+                            transactionsInSelectedTimeRange = transactionsInSelectedTimeRange,
+                        ),
+                        title = getTitle(
+                            overviewTabOption = overviewTabOption,
+                            timestamp = timestamp
+                        ),
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun getTransactionsInSelectedTimeRange(
+        overviewTabOption: OverviewTabOption,
+        timestamp: Long,
+    ): ImmutableList<Transaction> {
+        return getTransactionsBetweenTimestampsUseCase(
+            startingTimestamp = when (overviewTabOption) {
+                OverviewTabOption.DAY -> {
+                    dateTimeUtil.getStartOfDayTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.MONTH -> {
+                    dateTimeUtil.getStartOfMonthTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.YEAR -> {
+                    dateTimeUtil.getStartOfYearTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+            },
+            endingTimestamp = when (overviewTabOption) {
+                OverviewTabOption.DAY -> {
+                    dateTimeUtil.getEndOfDayTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.MONTH -> {
+                    dateTimeUtil.getEndOfMonthTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.YEAR -> {
+                    dateTimeUtil.getEndOfYearTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+            },
+        )
+    }
+
+    private fun getIncomeAmount(
+        transactionsInSelectedTimeRange: ImmutableList<Transaction>,
+    ): Float {
+        return transactionsInSelectedTimeRange.filter {
+            it.transactionType == TransactionType.INCOME
+        }.sumOf {
+            it.amount.value
+        }.toFloat()
+    }
+
+    private suspend fun getExpenseAmount(
+        transactionsInSelectedTimeRange: ImmutableList<Transaction>,
+    ): Float {
+        val expenseTransactions = transactionsInSelectedTimeRange.filter {
+            it.transactionType == TransactionType.EXPENSE
+        }
+        val expenseTransactionsWithRefund = mutableListOf<Transaction>()
+        expenseTransactions.forEach { expenseTransaction ->
+            expenseTransactionsWithRefund.add(expenseTransaction)
+            expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
+                refundTransactionIds.forEach { id ->
+                    getTransactionUseCase(id)?.let {
+                        expenseTransactionsWithRefund.add(it)
+                    }
+                }
+            }
+        }
+        val expenseAmount = expenseTransactionsWithRefund.sumOf { transaction ->
+            if (transaction.transactionType == TransactionType.EXPENSE) {
+                abs(transaction.amount.value)
+            } else {
+                -abs(transaction.amount.value)
+            }
+        }.toFloat()
+        return expenseAmount
+    }
+
+    private fun getTitle(
+        overviewTabOption: OverviewTabOption,
+        timestamp: Long,
+    ): String {
+        return when (overviewTabOption) {
+            OverviewTabOption.DAY -> {
+                dateTimeUtil.getFormattedDate(timestamp).uppercase()
+            }
+
+            OverviewTabOption.MONTH -> {
+                dateTimeUtil.getFormattedMonth(timestamp).uppercase()
+            }
+
+            OverviewTabOption.YEAR -> {
+                dateTimeUtil.getFormattedYear(timestamp).uppercase()
+            }
+        }
+    }
+    // endregion
+
     // region loading
     private fun startLoading() {
         isLoading.update {
@@ -354,21 +397,21 @@ public class HomeScreenViewModel @Inject constructor(
             OverviewCardAction.NEXT -> {
                 when (overviewTabOption) {
                     OverviewTabOption.DAY -> {
-                        timestamp.value = Instant.ofEpochMilli(timestamp.value)
+                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
                             .toZonedDateTime()
                             .plusDays(1)
                             .toEpochMilli()
                     }
 
                     OverviewTabOption.MONTH -> {
-                        timestamp.value = Instant.ofEpochMilli(timestamp.value)
+                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
                             .toZonedDateTime()
                             .plusMonths(1)
                             .toEpochMilli()
                     }
 
                     OverviewTabOption.YEAR -> {
-                        timestamp.value = Instant.ofEpochMilli(timestamp.value)
+                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
                             .toZonedDateTime()
                             .plusYears(1)
                             .toEpochMilli()
@@ -379,21 +422,21 @@ public class HomeScreenViewModel @Inject constructor(
             OverviewCardAction.PREV -> {
                 when (overviewTabOption) {
                     OverviewTabOption.DAY -> {
-                        timestamp.value = Instant.ofEpochMilli(timestamp.value)
+                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
                             .toZonedDateTime()
                             .minusDays(1)
                             .toEpochMilli()
                     }
 
                     OverviewTabOption.MONTH -> {
-                        timestamp.value = Instant.ofEpochMilli(timestamp.value)
+                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
                             .toZonedDateTime()
                             .minusMonths(1)
                             .toEpochMilli()
                     }
 
                     OverviewTabOption.YEAR -> {
-                        timestamp.value = Instant.ofEpochMilli(timestamp.value)
+                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
                             .toZonedDateTime()
                             .minusYears(1)
                             .toEpochMilli()
