@@ -279,19 +279,30 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     // region updateValidTransactionTypesForNewTransaction
     private fun updateValidTransactionTypesForNewTransaction() {
-        val validTransactionTypes = if (accounts.size > 1) {
-            listOf(
-                TransactionType.INCOME,
-                TransactionType.EXPENSE,
-                TransactionType.TRANSFER,
-                TransactionType.INVESTMENT,
-            )
-        } else {
-            listOf(
-                TransactionType.INCOME,
-                TransactionType.EXPENSE,
-                TransactionType.INVESTMENT,
-            )
+        val originalTransactionId = screenArgs.originalTransactionId
+        val validTransactionTypes = when {
+            originalTransactionId != null -> {
+                listOf(
+                    TransactionType.REFUND,
+                )
+            }
+
+            accounts.size > 1 -> {
+                listOf(
+                    TransactionType.INCOME,
+                    TransactionType.EXPENSE,
+                    TransactionType.TRANSFER,
+                    TransactionType.INVESTMENT,
+                )
+            }
+
+            else -> {
+                listOf(
+                    TransactionType.INCOME,
+                    TransactionType.EXPENSE,
+                    TransactionType.INVESTMENT,
+                )
+            }
         }
         validTransactionTypesForNewTransaction = validTransactionTypes.toImmutableList()
     }
@@ -353,10 +364,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     it.id == originalTransactionData.transaction.id
                 },
             )
-        )
-
-        handleSelectedTransactionTypeChange(
-            updatedSelectedTransactionType = TransactionType.REFUND,
         )
     }
 
