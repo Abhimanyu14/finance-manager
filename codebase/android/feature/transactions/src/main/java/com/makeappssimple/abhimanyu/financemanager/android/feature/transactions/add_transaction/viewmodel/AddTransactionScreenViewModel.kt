@@ -11,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
@@ -103,6 +102,8 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private var uiVisibilityState: AddTransactionScreenUiVisibilityState =
         AddTransactionScreenUiVisibilityState.Expense
     private var filteredCategories: ImmutableList<Category> = persistentListOf()
+    private var amountErrorText: String? = null
+    private var isCtaButtonEnabled: Boolean = false
     // endregion
 
     // region UI data
@@ -417,18 +418,12 @@ public class AddTransactionScreenViewModel @Inject constructor(
                         titleSuggestions,
                     ),
                 ->
-                var amountErrorText: String? = null
-                val isCtaButtonEnabled: Boolean = getIsCtaButtonEnabled(
-                    selectedTransactionType = selectedTransactionType
-                        ?: TransactionType.EXPENSE, // TODO(Abhi): Remove default
+                updateIsCtaButtonEnabledAndAmountErrorText(
+                    selectedTransactionType = selectedTransactionType,
                     amount = amount,
                     title = title,
-                    amountErrorText = amountErrorText,
                     accountFrom = accountFrom,
                     accountTo = accountTo,
-                    setAmountErrorText = {
-                        amountErrorText = it
-                    },
                 )
 
                 uiStateAndStateEvents.update {
@@ -484,8 +479,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             amountErrorText = amountErrorText,
                             amount = amount,
                             title = title,
-                            selectedTransactionType = selectedTransactionType
-                                ?: TransactionType.EXPENSE, // TODO(Abhi): Remove default
                         ),
                         events = AddTransactionScreenUIStateEvents(
                             clearAmount = ::clearAmount,
@@ -513,36 +506,30 @@ public class AddTransactionScreenViewModel @Inject constructor(
         }
     }
 
-    private fun getIsCtaButtonEnabled(
-        selectedTransactionType: TransactionType,
+    private fun updateIsCtaButtonEnabledAndAmountErrorText(
+        selectedTransactionType: TransactionType?,
         amount: TextFieldValue,
         title: TextFieldValue,
-        amountErrorText: String?,
         accountFrom: Account?,
         accountTo: Account?,
-        setAmountErrorText: (updatedAmountErrorText: String?) -> Unit,
-    ): Boolean {
-        setAmountErrorText(null)
-        return when (selectedTransactionType) {
+    ) {
+        amountErrorText = null
+        if (selectedTransactionType == null) {
+            isCtaButtonEnabled = false
+            return
+        }
+
+        isCtaButtonEnabled = when (selectedTransactionType) {
             TransactionType.INCOME -> {
-                amount.text.isNotNullOrBlank() &&
-                        title.text.isNotNullOrBlank() &&
-                        amount.text.toIntOrZero().isNotZero() &&
-                        amountErrorText.isNull()
+                title.text.isNotNullOrBlank() && amount.text.toIntOrZero().isNotZero()
             }
 
             TransactionType.EXPENSE -> {
-                amount.text.isNotNullOrBlank() &&
-                        title.text.isNotNullOrBlank() &&
-                        amount.text.toIntOrZero().isNotZero() &&
-                        amountErrorText.isNull()
+                title.text.isNotNullOrBlank() && amount.text.toIntOrZero().isNotZero()
             }
 
             TransactionType.TRANSFER -> {
-                amount.text.isNotNullOrBlank() &&
-                        accountFrom?.id != accountTo?.id &&
-                        amount.text.toIntOrZero().isNotZero() &&
-                        amountErrorText.isNull()
+                accountFrom?.id != accountTo?.id && amount.text.toIntOrZero().isNotZero()
             }
 
             TransactionType.ADJUSTMENT -> {
@@ -550,18 +537,14 @@ public class AddTransactionScreenViewModel @Inject constructor(
             }
 
             TransactionType.INVESTMENT -> {
-                amount.text.isNotNullOrBlank() &&
-                        title.text.isNotNullOrBlank() &&
-                        amount.text.toIntOrZero().isNotZero() &&
-                        amountErrorText.isNull()
+                title.text.isNotNullOrBlank() && amount.text.toIntOrZero().isNotZero()
             }
 
             TransactionType.REFUND -> {
                 val maxRefundAmountValue = maxRefundAmount?.value.orZero()
                 val enteredAmountValue = amount.text.toLongOrZero()
-
                 if (enteredAmountValue > maxRefundAmountValue) {
-                    setAmountErrorText(maxRefundAmount?.toString())
+                    amountErrorText = maxRefundAmount?.toString()
                     false
                 } else {
                     amount.text.toIntOrZero().isNotZero()
@@ -742,24 +725,33 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
 
     private fun insertTransaction() {
-        val uiState = uiStateAndStateEvents.value.state
+        val selectedAccountFrom = accountFrom.value
+        val selectedAccountTo = accountTo.value
+        val selectedCategoryId = category.value?.id
+        val selectedTransactionForId = if (selectedTransactionForIndex.value != -1) {
+            transactionForValues[selectedTransactionForIndex.value].id
+        } else {
+            -1
+        }
+        val selectedTransactionDate = transactionDate.value
+        val selectedTransactionTime = transactionTime.value
+        val enteredAmountValue = amount.value.text.toLongOrZero()
+        val enteredTitle = title.value.text.capitalizeWords()
+        val selectedTransactionType = this.selectedTransactionType ?: return
+        val originalTransaction = originalTransactionData?.transaction
+
         viewModelScope.launch {
-            val selectedTransactionForId = if (uiState.selectedTransactionForIndex != -1) {
-                transactionForValues[uiState.selectedTransactionForIndex].id
-            } else {
-                -1
-            }
             val isTransactionInsertedSuccessfully = insertTransactionUseCase(
-                selectedAccountFrom = uiState.accountFrom,
-                selectedAccountTo = uiState.accountTo,
-                selectedCategoryId = uiState.category?.id,
+                selectedAccountFrom = selectedAccountFrom,
+                selectedAccountTo = selectedAccountTo,
+                selectedCategoryId = selectedCategoryId,
                 selectedTransactionForId = selectedTransactionForId,
-                selectedTransactionDate = uiState.transactionDate,
-                selectedTransactionTime = uiState.transactionTime,
-                enteredAmountValue = uiState.amount.text.toLongOrZero(),
-                enteredTitle = uiState.title.text.capitalizeWords(),
-                selectedTransactionType = uiState.selectedTransactionType,
-                originalTransaction = originalTransactionData?.transaction,
+                selectedTransactionDate = selectedTransactionDate,
+                selectedTransactionTime = selectedTransactionTime,
+                enteredAmountValue = enteredAmountValue,
+                enteredTitle = enteredTitle,
+                selectedTransactionType = selectedTransactionType,
+                originalTransaction = originalTransaction,
             )
             if (isTransactionInsertedSuccessfully) {
                 setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
