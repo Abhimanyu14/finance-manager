@@ -98,6 +98,11 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private var transactionForValues: ImmutableList<TransactionFor> = persistentListOf()
     private var validTransactionTypesForNewTransaction: ImmutableList<TransactionType> =
         persistentListOf()
+    private var selectedTransactionType: TransactionType? = null
+
+    private var uiVisibilityState: AddTransactionScreenUiVisibilityState =
+        AddTransactionScreenUiVisibilityState.Expense
+    private var filteredCategories: ImmutableList<Category> = persistentListOf()
     // endregion
 
     // region UI data
@@ -111,10 +116,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val screenSnackbarType: MutableStateFlow<AddTransactionScreenSnackbarType> =
         MutableStateFlow(
             value = AddTransactionScreenSnackbarType.None,
-        )
-    private val uiVisibilityState: MutableStateFlow<AddTransactionScreenUiVisibilityState> =
-        MutableStateFlow(
-            value = AddTransactionScreenUiVisibilityState.Expense,
         )
     private val selectedTransactionTypeIndex: MutableStateFlow<Int> =
         MutableStateFlow(
@@ -164,12 +165,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val titleSuggestions: MutableStateFlow<ImmutableList<String>> = MutableStateFlow(
         value = persistentListOf(),
     )
-    private val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
-        value = null,
-    )
-    private val filteredCategories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
-        value = persistentListOf(),
-    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -187,7 +182,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            startLoading()
             startLoading()
             joinAll(
                 launch {
@@ -361,7 +355,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
             )
         )
 
-
         handleSelectedTransactionTypeChange(
             updatedSelectedTransactionType = TransactionType.REFUND,
         )
@@ -397,9 +390,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 selectedTransactionForIndex,
                 transactionDate,
                 transactionTime,
-                uiVisibilityState,
                 titleSuggestions,
-                selectedTransactionType,
             ) {
                     (
                         isLoading,
@@ -416,9 +407,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                         selectedTransactionForIndex,
                         transactionDate,
                         transactionTime,
-                        uiVisibilityState,
                         titleSuggestions,
-                        selectedTransactionType,
                     ),
                 ->
                 var amountErrorText: String? = null
@@ -462,7 +451,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             selectedTransactionForIndex = selectedTransactionForIndex,
                             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                             accounts = accounts.orEmpty(),
-                            filteredCategories = filteredCategories.value,
+                            filteredCategories = filteredCategories,
                             titleSuggestionsChipUIData = titleSuggestions
                                 .map { title ->
                                     ChipUIData(
@@ -643,18 +632,15 @@ public class AddTransactionScreenViewModel @Inject constructor(
                 handleSelectedTransactionTypeChangeToRefund()
             }
         }
-        selectedTransactionType.update {
-            updatedSelectedTransactionType
-        }
+
+        selectedTransactionType = updatedSelectedTransactionType
     }
 
     private fun updateFilteredCategories(
         updatedSelectedTransactionType: TransactionType,
     ) {
-        filteredCategories.update {
-            categories.filter { category ->
-                category.transactionType == updatedSelectedTransactionType
-            }
+        filteredCategories = categories.filter { category ->
+            category.transactionType == updatedSelectedTransactionType
         }
     }
 
@@ -713,9 +699,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun setUiVisibilityState(
         updatedUiVisibilityState: AddTransactionScreenUiVisibilityState,
     ) {
-        uiVisibilityState.update {
-            updatedUiVisibilityState
-        }
+        uiVisibilityState = updatedUiVisibilityState
     }
     // endregion
 
