@@ -167,6 +167,9 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
         value = null,
     )
+    private val filteredCategories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
+        value = persistentListOf(),
+    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -418,14 +421,10 @@ public class AddTransactionScreenViewModel @Inject constructor(
                         selectedTransactionType,
                     ),
                 ->
-
-                selectedTransactionType ?: return@combineAndCollectLatest
                 var amountErrorText: String? = null
-                val filteredCategories: ImmutableList<Category> = getFilteredCategories(
-                    selectedTransactionType = selectedTransactionType,
-                )
                 val isCtaButtonEnabled: Boolean = getIsCtaButtonEnabled(
-                    selectedTransactionType = selectedTransactionType,
+                    selectedTransactionType = selectedTransactionType
+                        ?: TransactionType.EXPENSE, // TODO(Abhi): Remove default
                     amount = amount,
                     title = title,
                     amountErrorText = amountErrorText,
@@ -463,7 +462,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             selectedTransactionForIndex = selectedTransactionForIndex,
                             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                             accounts = accounts.orEmpty(),
-                            filteredCategories = filteredCategories,
+                            filteredCategories = filteredCategories.value,
                             titleSuggestionsChipUIData = titleSuggestions
                                 .map { title ->
                                     ChipUIData(
@@ -489,7 +488,8 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             amountErrorText = amountErrorText,
                             amount = amount,
                             title = title,
-                            selectedTransactionType = selectedTransactionType,
+                            selectedTransactionType = selectedTransactionType
+                                ?: TransactionType.EXPENSE, // TODO(Abhi): Remove default
                         ),
                         events = AddTransactionScreenUIStateEvents(
                             clearAmount = ::clearAmount,
@@ -514,14 +514,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     )
                 }
             }
-        }
-    }
-
-    private fun getFilteredCategories(
-        selectedTransactionType: TransactionType,
-    ): ImmutableList<Category> {
-        return categories.filter { category ->
-            category.transactionType == selectedTransactionType
         }
     }
 
@@ -625,6 +617,9 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun handleSelectedTransactionTypeChange(
         updatedSelectedTransactionType: TransactionType,
     ) {
+        updateFilteredCategories(
+            updatedSelectedTransactionType = updatedSelectedTransactionType,
+        )
         when (updatedSelectedTransactionType) {
             TransactionType.INCOME -> {
                 handleSelectedTransactionTypeChangeToIncome()
@@ -650,6 +645,16 @@ public class AddTransactionScreenViewModel @Inject constructor(
         }
         selectedTransactionType.update {
             updatedSelectedTransactionType
+        }
+    }
+
+    private fun updateFilteredCategories(
+        updatedSelectedTransactionType: TransactionType,
+    ) {
+        filteredCategories.update {
+            categories.filter { category ->
+                category.transactionType == updatedSelectedTransactionType
+            }
         }
     }
 
