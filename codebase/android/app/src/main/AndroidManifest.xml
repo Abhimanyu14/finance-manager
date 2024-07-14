@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Declare permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -16,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp"
         tools:ignore="AllowBackup">
+
         <activity
             android:name=".HiltComponentActivity"
             android:exported="false"
@@ -64,6 +66,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".core.time.TimeChangedReceiver"
             android:exported="false">
@@ -71,7 +74,13 @@
                 <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".core.alarmkitimpl.AlarmReceiver" />
+
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
+
     </application>
 
 </manifest>

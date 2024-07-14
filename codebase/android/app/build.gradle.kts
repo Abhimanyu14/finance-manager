@@ -4,11 +4,11 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinx.kover)
+    alias(libs.plugins.firebase.perf)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
-    // alias(libs.plugins.firebase.perf)
     alias(libs.plugins.about.libraries)
 }
 
@@ -298,6 +298,9 @@ dependencies {
 
     // Firebase crashlytics
     implementation(libs.firebase.crashlytics)
+
+    // Firebase perf
+    implementation(libs.firebase.perf)
 
     detektPlugins(libs.bundles.detekt)
 
