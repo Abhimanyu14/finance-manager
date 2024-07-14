@@ -105,6 +105,10 @@ internal class EditTransactionScreenUIEventHandler internal constructor(
                 uiStateAndStateEvents.events.setTransactionTime(uiEvent.updatedTransactionTime)
                 uiStateAndStateEvents.events.setIsTransactionTimePickerDialogVisible(false)
             }
+
+            is EditTransactionScreenUIEvent.OnSnackbarDismissed -> {
+                uiStateAndStateEvents.events.resetScreenSnackbarType()
+            }
         }
     }
 }

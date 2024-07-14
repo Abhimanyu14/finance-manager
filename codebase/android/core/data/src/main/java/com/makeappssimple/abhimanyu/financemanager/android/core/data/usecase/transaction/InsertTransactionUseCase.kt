@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
@@ -199,7 +200,7 @@ public class InsertTransactionUseCase @Inject constructor(
             }
 
             else -> {
-                enteredTitle
+                enteredTitle.capitalizeWords()
             }
         }
     }

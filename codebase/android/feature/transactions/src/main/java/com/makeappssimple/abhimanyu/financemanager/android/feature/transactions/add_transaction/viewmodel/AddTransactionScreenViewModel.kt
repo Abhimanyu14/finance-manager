@@ -5,7 +5,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
@@ -280,7 +279,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     // region updateValidTransactionTypesForNewTransaction
     private fun updateValidTransactionTypesForNewTransaction() {
-        val originalTransactionId = screenArgs.originalTransactionId
+        val originalTransactionId = getOriginalTransactionId()
         val validTransactionTypes = when {
             originalTransactionId != null -> {
                 listOf(
@@ -328,10 +327,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
         maxRefundAmount = getMaxRefundAmountUseCase(
             id = originalTransactionId,
         )
-    }
-
-    private fun getOriginalTransactionId(): Int? {
-        return screenArgs.originalTransactionId
     }
     // endregion
 
@@ -693,6 +688,12 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region common
+    private fun getOriginalTransactionId(): Int? {
+        return screenArgs.originalTransactionId
+    }
+    // endregion
+
     // region loading
     private fun startLoading() {
         isLoading.update {
@@ -736,7 +737,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
         val selectedTransactionDate = transactionDate.value
         val selectedTransactionTime = transactionTime.value
         val enteredAmountValue = amount.value.text.toLongOrZero()
-        val enteredTitle = title.value.text.capitalizeWords()
+        val enteredTitle = title.value.text
         val selectedTransactionType = this.selectedTransactionType ?: return
         val originalTransaction = originalTransactionData?.transaction
 
@@ -875,16 +876,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
     ) {
         title.update {
             updatedTitle
-        }
-    }
-
-    private fun setTitle(
-        updatedTitle: String,
-    ) {
-        title.update {
-            it.copy(
-                text = updatedTitle,
-            )
         }
     }
 

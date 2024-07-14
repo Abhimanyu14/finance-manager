@@ -49,7 +49,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.EditTransactionScreenArgs
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -68,7 +67,6 @@ import java.time.LocalTime
 import javax.inject.Inject
 import kotlin.math.abs
 
-@HiltViewModel
 public class EditTransactionScreenViewModelOld @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,

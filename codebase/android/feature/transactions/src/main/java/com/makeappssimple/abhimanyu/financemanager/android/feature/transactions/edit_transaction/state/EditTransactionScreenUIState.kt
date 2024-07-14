@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.bottomsheet.EditTransactionScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.snackbar.EditTransactionScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -20,6 +21,7 @@ internal data class EditTransactionScreenUIState(
     val accountFrom: Account? = null,
     val accountTo: Account? = null,
     val screenBottomSheetType: EditTransactionScreenBottomSheetType = EditTransactionScreenBottomSheetType.None,
+    val screenSnackbarType: EditTransactionScreenSnackbarType = EditTransactionScreenSnackbarType.None,
     val uiVisibilityState: EditTransactionScreenUiVisibilityState = EditTransactionScreenUiVisibilityState.Expense,
     val isBottomSheetVisible: Boolean = false,
     val isCtaButtonEnabled: Boolean = false,

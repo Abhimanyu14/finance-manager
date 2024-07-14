@@ -15,6 +15,7 @@ internal class EditTransactionScreenUIStateEvents(
     val clearTitle: () -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
+    val resetScreenSnackbarType: () -> Unit = {},
     val setAccountFrom: (updatedAccountFrom: Account?) -> Unit = {},
     val setAccountTo: (updatedAccountTo: Account?) -> Unit = {},
     val setAmount: (updatedAmount: TextFieldValue) -> Unit = {},
