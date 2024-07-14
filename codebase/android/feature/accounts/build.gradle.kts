@@ -125,6 +125,12 @@ dependencies {
     // KotlinX collections immutable
     implementation(libs.collections.immutable)
 
+    // Firebase BoM
+    implementation(platform(libs.firebase))
+
+    // Firebase perf
+    implementation(libs.firebase.perf)
+
     detektPlugins(libs.bundles.detekt)
 
     // Testing
