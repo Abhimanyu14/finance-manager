@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
