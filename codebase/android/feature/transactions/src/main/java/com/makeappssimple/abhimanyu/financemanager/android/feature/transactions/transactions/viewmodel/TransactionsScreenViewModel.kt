@@ -2,6 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Firebase
+import com.google.firebase.perf.metrics.Trace
+import com.google.firebase.perf.performance
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
@@ -57,6 +60,8 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
+    private var isInitialDataFetchCompleted = false
+    private var performanceScreenInitTrace: Trace? = null
     private val allTransactionData: MutableStateFlow<ImmutableList<TransactionData>> =
         MutableStateFlow(
             value = persistentListOf(),
@@ -126,6 +131,7 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     // region initViewModel
     internal fun initViewModel() {
+        startTrackingScreenInit()
         fetchData()
         observeData()
     }
@@ -181,6 +187,10 @@ public class TransactionsScreenViewModel @Inject constructor(
                         investmentCategories,
                     ),
                 ->
+                if (!isInitialDataFetchCompleted && transactionDetailsListItemViewData.isNotEmpty()) {
+                    stopTrackingScreenInit()
+                    isInitialDataFetchCompleted = true
+                }
 
                 uiStateAndStateEvents.update {
                     TransactionsScreenUIStateAndStateEvents(
@@ -548,6 +558,17 @@ public class TransactionsScreenViewModel @Inject constructor(
                     }
                 }
         }
+    }
+    // endregion
+
+    // region performance tracking
+    private fun startTrackingScreenInit() {
+        performanceScreenInitTrace = Firebase.performance.newTrace("screen_transactions_init")
+        performanceScreenInitTrace?.start()
+    }
+
+    private fun stopTrackingScreenInit() {
+        performanceScreenInitTrace?.stop()
     }
     // endregion
 
