@@ -92,7 +92,7 @@ internal fun EditTransactionForScreenUI(
         snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = R.string.screen_edit_transaction_for_appbar_title,
                 navigationAction = {
                     handleUIEvent(EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
@@ -178,7 +178,7 @@ internal fun EditTransactionForScreenUI(
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled.orFalse(),
                     isLoading = uiState.isLoading,
-                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                    textStringResourceId = R.string.screen_edit_transaction_for_floating_action_button_content_description,
                 ),
                 handleEvent = { event ->
                     when (event) {

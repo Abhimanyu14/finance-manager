@@ -151,8 +151,6 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                             isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
                             isLoading = false,
                             isCtaButtonEnabled = isCtaButtonEnabled,
-                            appBarTitleTextStringResourceId = R.string.screen_edit_transaction_for_appbar_title,
-                            ctaButtonLabelTextStringResourceId = R.string.screen_edit_transaction_for_floating_action_button_content_description,
                             title = title,
                             titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
                         ),
