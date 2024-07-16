@@ -142,10 +142,8 @@ public class AddAccountScreenViewModel @Inject constructor(
                         state = AddAccountScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
                             screenSnackbarType = screenSnackbarType,
-                            isLoading = false,
+                            isLoading = isLoading,
                             isCtaButtonEnabled = isValidData,
-                            appBarTitleTextStringResourceId = R.string.screen_add_account_appbar_title,
-                            ctaButtonLabelTextStringResourceId = R.string.screen_add_account_floating_action_button_content_description,
                             nameTextFieldErrorTextStringResourceId = nameTextFieldErrorTextStringResourceId,
                             selectedAccountTypeIndex = selectedAccountTypeIndex,
                             selectedAccountType = selectedAccountType,

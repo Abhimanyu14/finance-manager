@@ -92,7 +92,7 @@ internal fun AddAccountScreenUI(
         snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = R.string.screen_add_account_appbar_title,
                 navigationAction = {
                     handleUIEvent(AddAccountScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
@@ -252,7 +252,7 @@ internal fun AddAccountScreenUI(
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled,
                     isLoading = uiState.isLoading,
-                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                    textStringResourceId = R.string.screen_add_account_floating_action_button_content_description,
                 ),
                 handleEvent = { event ->
                     when (event) {

@@ -18,8 +18,6 @@ internal data class AddAccountScreenUIState(
     val visibilityData: AddAccountScreenUIVisibilityData = AddAccountScreenUIVisibilityData(),
     val isCtaButtonEnabled: Boolean = false,
     val isLoading: Boolean = true,
-    @StringRes val appBarTitleTextStringResourceId: Int = -1,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = -1,
     @StringRes val nameTextFieldErrorTextStringResourceId: Int? = null,
     val selectedAccountTypeIndex: Int = 0,
     val selectedAccountType: AccountType? = null,
