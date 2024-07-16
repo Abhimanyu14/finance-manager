@@ -244,8 +244,6 @@ public class EditAccountScreenViewModel @Inject constructor(
                             screenBottomSheetType = screenBottomSheetType,
                             isLoading = false,
                             isCtaButtonEnabled = isCtaButtonEnabled,
-                            appBarTitleTextStringResourceId = R.string.screen_edit_account_appbar_title,
-                            ctaButtonLabelTextStringResourceId = R.string.screen_edit_account_floating_action_button_content_description,
                             nameTextFieldErrorTextStringResourceId = nameTextFieldErrorTextStringResourceId,
                             selectedAccountTypeIndex = selectedAccountTypeIndex.orZero(),
                             accountTypesChipUIDataList = validAccountTypes

@@ -115,7 +115,7 @@ internal fun EditAccountScreenUI(
         snackbarHostState = state.snackbarHostState,
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = R.string.screen_edit_account_appbar_title,
                 navigationAction = {
                     handleUIEvent(EditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
@@ -330,7 +330,7 @@ internal fun EditAccountScreenUI(
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled,
                     isLoading = uiState.isLoading,
-                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                    textStringResourceId = R.string.screen_edit_account_floating_action_button_content_description,
                 ),
                 handleEvent = { event ->
                     when (event) {
