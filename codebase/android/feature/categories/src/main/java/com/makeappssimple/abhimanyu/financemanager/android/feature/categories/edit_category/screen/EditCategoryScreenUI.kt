@@ -127,7 +127,7 @@ internal fun EditCategoryScreenUI(
         },
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = R.string.screen_add_category_appbar_title,
                 navigationAction = {
                     handleUIEvent(EditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
@@ -269,7 +269,7 @@ internal fun EditCategoryScreenUI(
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled.orFalse(),
                     isLoading = uiState.isLoading,
-                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                    textStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
                 ),
                 handleEvent = { event ->
                     when (event) {

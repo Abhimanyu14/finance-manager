@@ -16,8 +16,6 @@ internal data class EditCategoryScreenUIState(
     val isCtaButtonEnabled: Boolean = false,
     val isLoading: Boolean = true,
     val isSupportingTextVisible: Boolean = false,
-    @StringRes val appBarTitleTextStringResourceId: Int = -1,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = -1,
     @StringRes val titleTextFieldErrorTextStringResourceId: Int? = null,
     val selectedTransactionTypeIndex: Int? = null,
     val transactionTypesChipUIData: ImmutableList<ChipUIData> = persistentListOf(),
