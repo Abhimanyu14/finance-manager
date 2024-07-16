@@ -190,8 +190,6 @@ public class AddCategoryScreenViewModel @Inject constructor(
                             emojiSearchText = searchText,
                             title = title,
                             titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
-                            appBarTitleTextStringResourceId = R.string.screen_add_category_appbar_title,
-                            ctaButtonLabelTextStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
                         ),
                         events = AddCategoryScreenUIStateEvents(
                             clearTitle = ::clearTitle,
