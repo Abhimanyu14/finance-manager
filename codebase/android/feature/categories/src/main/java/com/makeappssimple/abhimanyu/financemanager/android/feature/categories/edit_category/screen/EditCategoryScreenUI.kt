@@ -53,6 +53,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.bottomsheet.EditCategoryScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.event.EditCategoryScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.stringResourceId
 import kotlinx.coroutines.delay
 
 @Composable
@@ -215,7 +216,7 @@ internal fun EditCategoryScreenUI(
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
                         supportingText = if (uiState.isSupportingTextVisible) {
                             {
-                                uiState.titleTextFieldErrorTextStringResourceId?.let { titleTextFieldErrorTextStringResourceId ->
+                                uiState.titleError.stringResourceId?.let { titleTextFieldErrorTextStringResourceId ->
                                     MyText(
                                         text = stringResource(
                                             id = titleTextFieldErrorTextStringResourceId,
