@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData
 import kotlinx.collections.immutable.ImmutableList
@@ -16,10 +16,23 @@ internal data class EditAccountScreenUIState(
     val visibilityData: EditAccountScreenUIVisibilityData = EditAccountScreenUIVisibilityData(),
     val isCtaButtonEnabled: Boolean = false,
     val isLoading: Boolean = true,
-    @StringRes val nameTextFieldErrorTextStringResourceId: Int? = null,
+    val nameError: EditAccountScreenNameError = EditAccountScreenNameError.None,
     val selectedAccountTypeIndex: Int = -1,
     val accountTypesChipUIDataList: ImmutableList<ChipUIData> = persistentListOf(),
     val balanceAmountValue: TextFieldValue = TextFieldValue(),
     val minimumBalanceAmountValue: TextFieldValue = TextFieldValue(),
     val name: TextFieldValue = TextFieldValue(),
 ) : ScreenUIState
+
+internal sealed class EditAccountScreenNameError {
+    data object AccountExists : EditAccountScreenNameError()
+    data object None : EditAccountScreenNameError()
+}
+
+internal val EditAccountScreenNameError.stringResourceId: Int?
+    get() {
+        return when (this) {
+            EditAccountScreenNameError.AccountExists -> R.string.screen_add_or_edit_account_error_account_exists
+            EditAccountScreenNameError.None -> null
+        }
+    }

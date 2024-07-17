@@ -47,6 +47,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.event.EditAccountScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.stringResourceId
 
 internal enum class EditAccountScreenUIError(
     @StringRes val textStringResourceId: Int,
@@ -182,16 +183,16 @@ internal fun EditAccountScreenUI(
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_account_clear_name,
                         supportingText = if (uiState.visibilityData.nameTextFieldErrorText) {
                             {
-                                MyText(
-                                    text = uiState.nameTextFieldErrorTextStringResourceId?.run {
-                                        stringResource(
-                                            id = uiState.nameTextFieldErrorTextStringResourceId,
-                                        )
-                                    }.orEmpty(),
-                                    style = MaterialTheme.typography.bodySmall.copy(
-                                        color = MaterialTheme.colorScheme.error,
-                                    ),
-                                )
+                                uiState.nameError.stringResourceId?.let { nameTextFieldErrorTextStringResourceId ->
+                                    MyText(
+                                        text = stringResource(
+                                            id = nameTextFieldErrorTextStringResourceId,
+                                        ),
+                                        style = MaterialTheme.typography.bodySmall.copy(
+                                            color = MaterialTheme.colorScheme.error,
+                                        ),
+                                    )
+                                }
                             }
                         } else {
                             null

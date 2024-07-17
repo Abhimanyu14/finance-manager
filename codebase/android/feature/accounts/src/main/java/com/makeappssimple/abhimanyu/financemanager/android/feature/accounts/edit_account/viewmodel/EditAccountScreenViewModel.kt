@@ -32,9 +32,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateEvents
@@ -219,7 +219,7 @@ public class EditAccountScreenViewModel @Inject constructor(
                 }.isNull()
                 val isValidData = name.text.trim() == originalAccount?.name?.trim() || doesNotExist
 
-                var nameTextFieldErrorTextStringResourceId: Int? = null
+                var nameError: EditAccountScreenNameError = EditAccountScreenNameError.None
                 val isCtaButtonEnabled = if (name.text.isBlank()) {
                     false
                 } else if (
@@ -231,8 +231,7 @@ public class EditAccountScreenViewModel @Inject constructor(
                         account = originalAccount.name,
                     ).not()) || !isValidData
                 ) {
-                    nameTextFieldErrorTextStringResourceId =
-                        R.string.screen_add_or_edit_account_error_account_exists
+                    nameError = EditAccountScreenNameError.AccountExists
                     false
                 } else {
                     true
@@ -244,7 +243,7 @@ public class EditAccountScreenViewModel @Inject constructor(
                             screenBottomSheetType = screenBottomSheetType,
                             isLoading = false,
                             isCtaButtonEnabled = isCtaButtonEnabled,
-                            nameTextFieldErrorTextStringResourceId = nameTextFieldErrorTextStringResourceId,
+                            nameError = nameError,
                             selectedAccountTypeIndex = selectedAccountTypeIndex.orZero(),
                             accountTypesChipUIDataList = validAccountTypes
                                 .map { accountType ->
@@ -260,7 +259,7 @@ public class EditAccountScreenViewModel @Inject constructor(
                                 balanceAmountTextField = true,
                                 minimumBalanceAmountTextField = selectedAccount == AccountType.BANK,
                                 nameTextField = accountIsNotCash.orFalse(),
-                                nameTextFieldErrorText = nameTextFieldErrorTextStringResourceId.isNotNull(),
+                                nameTextFieldErrorText = nameError != EditAccountScreenNameError.None,
                                 accountTypesRadioGroup = accountIsNotCash.orFalse(),
                             ),
                         ),
