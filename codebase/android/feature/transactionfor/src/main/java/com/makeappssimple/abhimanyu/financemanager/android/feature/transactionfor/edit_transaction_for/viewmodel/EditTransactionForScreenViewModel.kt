@@ -15,8 +15,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateEvents
@@ -128,7 +128,8 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                         title,
                     ),
                 ->
-                var titleTextFieldErrorTextStringResourceId: Int? = null
+                var titleError: EditTransactionForScreenTitleError =
+                    EditTransactionForScreenTitleError.None
                 val isCtaButtonEnabled = if (title.text.isBlank()) {
                     false
                 } else if (title.text != transactionFor?.title && transactionForValues.find { transactionForValue ->
@@ -137,8 +138,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                         )
                     }.isNotNull()
                 ) {
-                    titleTextFieldErrorTextStringResourceId =
-                        R.string.screen_add_or_edit_transaction_for_error_exists
+                    titleError = EditTransactionForScreenTitleError.TransactionForExists
                     false
                 } else {
                     true
@@ -147,12 +147,12 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                 uiStateAndStateEvents.update {
                     EditTransactionForScreenUIStateAndStateEvents(
                         state = EditTransactionForScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
                             isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
-                            isLoading = false,
+                            isLoading = isLoading,
                             isCtaButtonEnabled = isCtaButtonEnabled,
+                            screenBottomSheetType = screenBottomSheetType,
+                            titleError = titleError,
                             title = title,
-                            titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
                         ),
                         events = EditTransactionForScreenUIStateEvents(
                             navigateUp = ::navigateUp,

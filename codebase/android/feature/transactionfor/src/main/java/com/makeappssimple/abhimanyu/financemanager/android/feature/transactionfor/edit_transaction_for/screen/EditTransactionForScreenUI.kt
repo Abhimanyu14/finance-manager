@@ -21,7 +21,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_TRANSACTION_FOR
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -42,6 +41,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.event.EditTransactionForScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.stringResourceId
 import kotlinx.coroutines.delay
 
 @Composable
@@ -124,19 +124,17 @@ internal fun EditTransactionForScreenUI(
                     textFieldValue = uiState.title.orEmpty(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
-                    supportingText = if (uiState.titleTextFieldErrorTextStringResourceId.isNotNull()) {
-                        {
+                    supportingText = {
+                        uiState.titleError.stringResourceId?.let { titleTextFieldErrorTextStringResourceId ->
                             MyText(
                                 text = stringResource(
-                                    id = uiState.titleTextFieldErrorTextStringResourceId,
+                                    id = titleTextFieldErrorTextStringResourceId,
                                 ),
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.error,
                                 ),
                             )
                         }
-                    } else {
-                        null
                     },
                     keyboardActions = KeyboardActions(
                         onDone = {
