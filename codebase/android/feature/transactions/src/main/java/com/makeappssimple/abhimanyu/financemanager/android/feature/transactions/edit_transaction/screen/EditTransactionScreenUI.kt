@@ -67,6 +67,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.bottomsheet.EditTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.event.EditTransactionScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.stringResourceId
 import kotlinx.coroutines.delay
 
 @Composable
@@ -484,7 +485,7 @@ internal fun EditTransactionScreenUI(
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
                         value = uiState.accountFrom?.name.orEmpty(),
-                        labelTextStringResourceId = uiState.accountFromTextFieldLabelTextStringResourceId,
+                        labelTextStringResourceId = uiState.accountFromText.stringResourceId,
                     ),
                     handleEvent = { event ->
                         when (event) {
@@ -509,7 +510,7 @@ internal fun EditTransactionScreenUI(
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
                         value = uiState.accountTo?.name.orEmpty(),
-                        labelTextStringResourceId = uiState.accountToTextFieldLabelTextStringResourceId,
+                        labelTextStringResourceId = uiState.accountToText.stringResourceId,
                     ),
                     handleEvent = { event ->
                         when (event) {
