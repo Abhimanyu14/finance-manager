@@ -47,6 +47,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.event.AddAccountScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.stringResourceId
 
 @Composable
 internal fun AddAccountScreenUI(
@@ -154,21 +155,17 @@ internal fun AddAccountScreenUI(
                     textFieldValue = uiState.nameTextFieldValue,
                     labelTextStringResourceId = R.string.screen_add_or_edit_account_name,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_account_clear_name,
-                    supportingText = if (uiState.visibilityData.nameTextFieldErrorText) {
-                        {
+                    supportingText = {
+                        uiState.nameError.stringResourceId?.let { nameTextFieldErrorTextStringResourceId ->
                             MyText(
-                                text = uiState.nameTextFieldErrorTextStringResourceId?.run {
-                                    stringResource(
-                                        id = uiState.nameTextFieldErrorTextStringResourceId,
-                                    )
-                                }.orEmpty(),
+                                text = stringResource(
+                                    id = nameTextFieldErrorTextStringResourceId,
+                                ),
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.error,
                                 ),
                             )
                         }
-                    } else {
-                        null
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {

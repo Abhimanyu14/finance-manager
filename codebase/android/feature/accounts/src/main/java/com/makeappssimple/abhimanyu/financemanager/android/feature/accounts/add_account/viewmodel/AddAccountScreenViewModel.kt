@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
@@ -18,9 +17,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
@@ -127,11 +126,11 @@ public class AddAccountScreenViewModel @Inject constructor(
                 }.isNull() || (isDefaultAccount(
                     account = name.text.trim(),
                 ))
-                val nameTextFieldErrorTextStringResourceId: Int? =
+                val nameError: AddAccountScreenNameError =
                     if (name.text.isBlank() || isValidData) {
-                        null
+                        AddAccountScreenNameError.None
                     } else {
-                        R.string.screen_add_or_edit_account_error_account_exists
+                        AddAccountScreenNameError.AccountExists
                     }
                 val selectedAccountType = validAccountTypes.getOrNull(
                     index = selectedAccountTypeIndex,
@@ -144,7 +143,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                             screenSnackbarType = screenSnackbarType,
                             isLoading = isLoading,
                             isCtaButtonEnabled = isValidData,
-                            nameTextFieldErrorTextStringResourceId = nameTextFieldErrorTextStringResourceId,
+                            nameError = nameError,
                             selectedAccountTypeIndex = selectedAccountTypeIndex,
                             selectedAccountType = selectedAccountType,
                             accountTypesChipUIDataList = validAccountTypes
@@ -158,7 +157,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                             nameTextFieldValue = name,
                             visibilityData = AddAccountScreenUIVisibilityData(
                                 minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
-                                nameTextFieldErrorText = nameTextFieldErrorTextStringResourceId.isNotNull(),
+                                nameTextFieldErrorText = nameError != AddAccountScreenNameError.None,
                             ),
                         ),
                         events = AddAccountScreenUIStateEvents(

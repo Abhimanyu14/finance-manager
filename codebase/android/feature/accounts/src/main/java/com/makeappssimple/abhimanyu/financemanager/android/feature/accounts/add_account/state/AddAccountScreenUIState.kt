@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
@@ -18,10 +18,23 @@ internal data class AddAccountScreenUIState(
     val visibilityData: AddAccountScreenUIVisibilityData = AddAccountScreenUIVisibilityData(),
     val isCtaButtonEnabled: Boolean = false,
     val isLoading: Boolean = true,
-    @StringRes val nameTextFieldErrorTextStringResourceId: Int? = null,
+    val nameError: AddAccountScreenNameError = AddAccountScreenNameError.None,
     val selectedAccountTypeIndex: Int = 0,
     val selectedAccountType: AccountType? = null,
     val accountTypesChipUIDataList: ImmutableList<ChipUIData> = persistentListOf(),
     val minimumAccountBalanceTextFieldValue: TextFieldValue = TextFieldValue(),
     val nameTextFieldValue: TextFieldValue = TextFieldValue(),
 ) : ScreenUIState
+
+internal sealed class AddAccountScreenNameError {
+    data object AccountExists : AddAccountScreenNameError()
+    data object None : AddAccountScreenNameError()
+}
+
+internal val AddAccountScreenNameError.stringResourceId: Int?
+    get() {
+        return when (this) {
+            AddAccountScreenNameError.AccountExists -> R.string.screen_add_or_edit_account_error_account_exists
+            AddAccountScreenNameError.None -> null
+        }
+    }
