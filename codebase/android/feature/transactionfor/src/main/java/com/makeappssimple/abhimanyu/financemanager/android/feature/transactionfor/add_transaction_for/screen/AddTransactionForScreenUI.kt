@@ -22,7 +22,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_TRANSACTION_FOR
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
@@ -41,7 +40,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.bottomsheet.AddTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.event.AddTransactionForScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.stringResourceId
 import kotlinx.coroutines.delay
 
 @Composable
@@ -126,12 +127,12 @@ internal fun AddTransactionForScreenUI(
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
                     supportingText = {
                         AnimatedVisibility(
-                            visible = uiState.titleTextFieldErrorTextStringResourceId.isNotNull(),
+                            visible = uiState.titleError != AddTransactionForScreenTitleError.None,
                         ) {
-                            uiState.titleTextFieldErrorTextStringResourceId?.let {
+                            uiState.titleError.stringResourceId?.let { titleTextFieldErrorTextStringResourceId ->
                                 MyText(
                                     text = stringResource(
-                                        id = uiState.titleTextFieldErrorTextStringResourceId,
+                                        id = titleTextFieldErrorTextStringResourceId,
                                     ),
                                     style = MaterialTheme.typography.bodySmall.copy(
                                         color = MaterialTheme.colorScheme.error,

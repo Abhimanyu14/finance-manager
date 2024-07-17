@@ -11,8 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.bottomsheet.AddTransactionForScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateEvents
@@ -42,8 +42,8 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(),
     )
-    private val titleTextFieldErrorTextStringResourceId: MutableStateFlow<Int?> = MutableStateFlow(
-        value = null,
+    private val titleError: MutableStateFlow<AddTransactionForScreenTitleError> = MutableStateFlow(
+        value = AddTransactionForScreenTitleError.None,
     )
     private val screenBottomSheetType: MutableStateFlow<AddTransactionForScreenBottomSheetType> =
         MutableStateFlow(
@@ -100,25 +100,25 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                 screenBottomSheetType,
                 title,
                 isCtaButtonEnabled,
-                titleTextFieldErrorTextStringResourceId,
+                titleError,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
                         title,
                         isCtaButtonEnabled,
-                        titleTextFieldErrorTextStringResourceId,
+                        titleError,
                     ),
                 ->
                 uiStateAndStateEvents.update {
                     AddTransactionForScreenUIStateAndStateEvents(
                         state = AddTransactionForScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
+                            titleError = titleError,
                             isBottomSheetVisible = screenBottomSheetType != AddTransactionForScreenBottomSheetType.None,
-                            isLoading = allTransactionForValues.isEmpty(),
                             isCtaButtonEnabled = isCtaButtonEnabled,
+                            isLoading = allTransactionForValues.isEmpty(),
                             title = title,
-                            titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
                         ),
                         events = AddTransactionForScreenUIStateEvents(
                             insertTransactionFor = ::insertTransactionFor,
@@ -137,8 +137,8 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private fun observeForIsCtaButtonEnabled() {
         viewModelScope.launch {
             title.collectLatest { title ->
-                titleTextFieldErrorTextStringResourceId.update {
-                    null
+                titleError.update {
+                    AddTransactionForScreenTitleError.None
                 }
                 val updatedIsCtaButtonEnabled = if (title.text.isBlank()) {
                     false
@@ -149,8 +149,8 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                         )
                     }.isNotNull()
                 ) {
-                    titleTextFieldErrorTextStringResourceId.update {
-                        R.string.screen_add_or_edit_transaction_for_error_exists
+                    titleError.update {
+                        AddTransactionForScreenTitleError.TransactionForExists
                     }
                     false
                 } else {
