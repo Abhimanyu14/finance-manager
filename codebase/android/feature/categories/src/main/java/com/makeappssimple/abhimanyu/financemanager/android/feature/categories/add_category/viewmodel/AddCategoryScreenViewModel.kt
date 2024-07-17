@@ -20,8 +20,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateEvents
@@ -150,7 +150,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
                         emoji,
                     ),
                 ->
-                var titleTextFieldErrorTextStringResourceId: Int? = null
+                var titleError: AddCategoryScreenTitleError = AddCategoryScreenTitleError.None
                 val isCtaButtonEnabled = if (title.text.isBlank()) {
                     false
                 } else if (isDefaultIncomeCategory(
@@ -165,8 +165,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
                         )
                     }.isNotNull()
                 ) {
-                    titleTextFieldErrorTextStringResourceId =
-                        R.string.screen_add_or_edit_category_error_category_exists
+                    titleError = AddCategoryScreenTitleError.CategoryExists
                     false
                 } else {
                     true
@@ -177,9 +176,10 @@ public class AddCategoryScreenViewModel @Inject constructor(
                         state = AddCategoryScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
                             isBottomSheetVisible = screenBottomSheetType != AddCategoryScreenBottomSheetType.None,
-                            isLoading = validTransactionTypes.isEmpty(),
-                            isSupportingTextVisible = titleTextFieldErrorTextStringResourceId.isNotNull(),
                             isCtaButtonEnabled = isCtaButtonEnabled,
+                            isLoading = validTransactionTypes.isEmpty(),
+                            isSupportingTextVisible = titleError != AddCategoryScreenTitleError.None,
+                            titleError = titleError,
                             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                             transactionTypesChipUIData = validTransactionTypes.map { transactionType ->
                                 ChipUIData(
@@ -189,7 +189,6 @@ public class AddCategoryScreenViewModel @Inject constructor(
                             emoji = emoji,
                             emojiSearchText = searchText,
                             title = title,
-                            titleTextFieldErrorTextStringResourceId = titleTextFieldErrorTextStringResourceId,
                         ),
                         events = AddCategoryScreenUIStateEvents(
                             clearTitle = ::clearTitle,
