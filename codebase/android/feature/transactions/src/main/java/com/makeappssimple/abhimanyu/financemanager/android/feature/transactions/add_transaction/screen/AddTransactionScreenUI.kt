@@ -69,6 +69,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.event.AddTransactionScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.stringResourceId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -530,7 +531,7 @@ internal fun AddTransactionScreenUI(
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
                         value = uiState.accountFrom?.name.orEmpty(),
-                        labelTextStringResourceId = uiState.accountFromTextFieldLabelTextStringResourceId,
+                        labelTextStringResourceId = uiState.accountFromText.stringResourceId,
                     ),
                     handleEvent = { event ->
                         when (event) {
@@ -555,7 +556,7 @@ internal fun AddTransactionScreenUI(
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
                         value = uiState.accountTo?.name.orEmpty(),
-                        labelTextStringResourceId = uiState.accountToTextFieldLabelTextStringResourceId,
+                        labelTextStringResourceId = uiState.accountToText.stringResourceId,
                     ),
                     handleEvent = { event ->
                         when (event) {

@@ -40,9 +40,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.bottomsheet.AddTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AccountFromText
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AccountToText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateEvents
@@ -425,7 +426,17 @@ public class AddTransactionScreenViewModel @Inject constructor(
                     AddTransactionScreenUIStateAndStateEvents(
                         state = AddTransactionScreenUIState(
                             accountFrom = accountFrom,
+                            accountFromText = if (selectedTransactionType == TransactionType.TRANSFER) {
+                                AccountFromText.AccountFrom
+                            } else {
+                                AccountFromText.Account
+                            },
                             accountTo = accountTo,
+                            accountToText = if (selectedTransactionType == TransactionType.TRANSFER) {
+                                AccountToText.AccountTo
+                            } else {
+                                AccountToText.Account
+                            },
                             screenBottomSheetType = screenBottomSheetType,
                             screenSnackbarType = screenSnackbarType,
                             uiVisibilityState = uiVisibilityState,
@@ -435,16 +446,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
                             isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
                             category = category,
-                            accountFromTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
-                                R.string.screen_add_or_edit_transaction_account_from
-                            } else {
-                                R.string.screen_add_or_edit_transaction_account
-                            },
-                            accountToTextFieldLabelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
-                                R.string.screen_add_or_edit_transaction_account_to
-                            } else {
-                                R.string.screen_add_or_edit_transaction_account
-                            },
                             selectedTransactionForIndex = selectedTransactionForIndex,
                             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                             accounts = accounts.orEmpty(),
