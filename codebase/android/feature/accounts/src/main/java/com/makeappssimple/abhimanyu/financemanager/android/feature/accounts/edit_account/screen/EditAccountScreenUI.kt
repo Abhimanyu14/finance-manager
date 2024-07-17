@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,14 +48,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.stringResourceId
 
-internal enum class EditAccountScreenUIError(
-    @StringRes val textStringResourceId: Int,
-) {
-    ACCOUNT_EXISTS(
-        textStringResourceId = R.string.screen_add_or_edit_account_error_account_exists,
-    ),
-}
-
 @Immutable
 internal data class EditAccountScreenUIVisibilityData(
     val balanceAmountTextField: Boolean = false,
@@ -64,12 +55,6 @@ internal data class EditAccountScreenUIVisibilityData(
     val nameTextField: Boolean = false,
     val nameTextFieldErrorText: Boolean = false,
     val accountTypesRadioGroup: Boolean = false,
-)
-
-@Immutable
-internal data class EditAccountScreenUIErrorData(
-    val balanceAmountTextField: EditAccountScreenUIError? = null,
-    val nameTextField: EditAccountScreenUIError? = null,
 )
 
 @Composable
