@@ -9,19 +9,19 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class TransactionsScreenUIStateEvents(
+    val addToSelectedTransactions: (transactionId: Int) -> Unit = {},
+    val clearSelectedTransactions: () -> Unit = {},
+    val navigateToAddTransactionScreen: () -> Unit = {},
+    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit = {},
+    val navigateUp: () -> Unit = {},
+    val removeFromSelectedTransactions: (transactionId: Int) -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
+    val selectAllTransactions: () -> Unit = {},
     val setIsInSelectionMode: (Boolean) -> Unit = {},
     val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit = {},
     val setSearchText: (updatedSearchText: String) -> Unit = {},
     val setSelectedFilter: (updatedSelectedFilter: Filter) -> Unit = {},
     val setSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit = {},
-    val addToSelectedTransactions: (transactionId: Int) -> Unit = {},
-    val removeFromSelectedTransactions: (transactionId: Int) -> Unit = {},
-    val clearSelectedTransactions: () -> Unit = {},
-    val selectAllTransactions: () -> Unit = {},
-    val navigateUp: () -> Unit = {},
-    val navigateToAddTransactionScreen: () -> Unit = {},
-    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit = {},
     val updateTransactionForValuesInTransactions: (
         selectedTransactions: ImmutableList<Int>,
         transactionForId: Int,
