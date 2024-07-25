@@ -5,6 +5,7 @@ import androidx.compose.runtime.Immutable
 @Immutable
 public data class MySearchBarData(
     val autoFocus: Boolean = true,
-    val placeholderText: String,
-    val searchText: String,
+    val isLoading: Boolean = false,
+    val placeholderText: String = "",
+    val searchText: String = "",
 )

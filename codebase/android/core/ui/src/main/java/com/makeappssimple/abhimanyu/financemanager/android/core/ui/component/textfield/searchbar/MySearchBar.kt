@@ -31,9 +31,46 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
+
+private object MySearchBarConstants {
+    val borderWidth = 1.dp
+    val leadingIconPaddingBottom = 2.dp
+    val leadingIconPaddingEnd = 2.dp
+    val leadingIconPaddingStart = 12.dp
+    val leadingIconPaddingTop = 2.dp
+    const val leadingIconScale = 0.75F
+    val loadingUIHeight = 40.dp
+    val loadingUIPadding = 4.dp
+    val loadingUIWidth = 80.dp
+    val padding = 4.dp
+    val shape = CircleShape
+    val textPaddingBottom = 6.dp
+    val textPaddingEnd = 16.dp
+    val textPaddingStart = 16.dp
+    val textPaddingStartWithIcon = 0.dp
+    val textPaddingTop = 6.dp
+}
 
 @Composable
 public fun MySearchBar(
+    modifier: Modifier = Modifier,
+    data: MySearchBarData,
+    handleEvent: (event: MySearchBarEvent) -> Unit = {},
+) {
+    if (data.isLoading) {
+        MySearchBarLoadingUI()
+    } else {
+        MySearchBarUI(
+            modifier = modifier,
+            data = data,
+            handleEvent = handleEvent,
+        )
+    }
+}
+
+@Composable
+private fun MySearchBarUI(
     modifier: Modifier = Modifier,
     data: MySearchBarData,
     handleEvent: (event: MySearchBarEvent) -> Unit = {},
@@ -172,5 +209,22 @@ public fun MySearchBar(
                 },
             )
         },
+    )
+}
+
+@Composable
+private fun MySearchBarLoadingUI(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .height(
+                MySearchBarConstants.loadingUIHeight,
+            )
+            .fillMaxWidth()
+            .clip(
+                shape = MySearchBarConstants.shape,
+            )
+            .shimmer(),
     )
 }

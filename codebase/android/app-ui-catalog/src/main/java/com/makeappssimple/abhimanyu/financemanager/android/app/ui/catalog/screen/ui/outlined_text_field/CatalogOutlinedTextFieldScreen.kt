@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
-public fun CatalogOutlinedTextFieldScreen(
+internal fun CatalogOutlinedTextFieldScreen(
     navigateUp: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()

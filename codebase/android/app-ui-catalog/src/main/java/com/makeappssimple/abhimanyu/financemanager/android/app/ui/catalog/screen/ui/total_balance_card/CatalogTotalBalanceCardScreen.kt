@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 
 @Composable
-public fun CatalogTotalBalanceCardScreen(
+internal fun CatalogTotalBalanceCardScreen(
     navigateUp: () -> Unit,
 ) {
     MyScaffold(

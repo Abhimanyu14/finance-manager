@@ -62,6 +62,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.event.TransactionsScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIState
 
+private object TransactionsScreenUIConstants
+
 @Composable
 internal fun TransactionsScreenUI(
     uiState: TransactionsScreenUIState,
@@ -295,6 +297,7 @@ internal fun TransactionsScreenUI(
                         MySearchBar(
                             data = MySearchBarData(
                                 autoFocus = false,
+                                isLoading = uiState.isLoading,
                                 placeholderText = stringResource(
                                     id = R.string.screen_transactions_searchbar_placeholder,
                                 ),
