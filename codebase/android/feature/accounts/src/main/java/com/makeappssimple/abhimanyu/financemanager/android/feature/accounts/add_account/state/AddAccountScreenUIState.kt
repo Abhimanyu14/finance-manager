@@ -13,14 +13,14 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 internal data class AddAccountScreenUIState(
+    val selectedAccountType: AccountType? = null,
     val screenBottomSheetType: AddAccountScreenBottomSheetType = AddAccountScreenBottomSheetType.None,
+    val nameError: AddAccountScreenNameError = AddAccountScreenNameError.None,
     val screenSnackbarType: AddAccountScreenSnackbarType = AddAccountScreenSnackbarType.None,
     val visibilityData: AddAccountScreenUIVisibilityData = AddAccountScreenUIVisibilityData(),
     val isCtaButtonEnabled: Boolean = false,
     val isLoading: Boolean = true,
-    val nameError: AddAccountScreenNameError = AddAccountScreenNameError.None,
     val selectedAccountTypeIndex: Int = 0,
-    val selectedAccountType: AccountType? = null,
     val accountTypesChipUIDataList: ImmutableList<ChipUIData> = persistentListOf(),
     val minimumAccountBalanceTextFieldValue: TextFieldValue = TextFieldValue(),
     val nameTextFieldValue: TextFieldValue = TextFieldValue(),

@@ -139,13 +139,17 @@ public class AddAccountScreenViewModel @Inject constructor(
                 uiStateAndStateEvents.update {
                     AddAccountScreenUIStateAndStateEvents(
                         state = AddAccountScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
-                            screenSnackbarType = screenSnackbarType,
-                            isLoading = isLoading,
-                            isCtaButtonEnabled = isValidData,
-                            nameError = nameError,
-                            selectedAccountTypeIndex = selectedAccountTypeIndex,
                             selectedAccountType = selectedAccountType,
+                            screenBottomSheetType = screenBottomSheetType,
+                            nameError = nameError,
+                            screenSnackbarType = screenSnackbarType,
+                            visibilityData = AddAccountScreenUIVisibilityData(
+                                minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
+                                nameTextFieldErrorText = nameError != AddAccountScreenNameError.None,
+                            ),
+                            isCtaButtonEnabled = isValidData,
+                            isLoading = isLoading,
+                            selectedAccountTypeIndex = selectedAccountTypeIndex,
                             accountTypesChipUIDataList = validAccountTypes
                                 .map { accountType ->
                                     ChipUIData(
@@ -155,10 +159,6 @@ public class AddAccountScreenViewModel @Inject constructor(
                                 },
                             minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
                             nameTextFieldValue = name,
-                            visibilityData = AddAccountScreenUIVisibilityData(
-                                minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
-                                nameTextFieldErrorText = nameError != AddAccountScreenNameError.None,
-                            ),
                         ),
                         events = AddAccountScreenUIStateEvents(
                             clearMinimumAccountBalanceAmountValue = ::clearMinimumAccountBalanceAmountValue,
