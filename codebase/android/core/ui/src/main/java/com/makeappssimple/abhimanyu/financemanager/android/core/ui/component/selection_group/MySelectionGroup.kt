@@ -23,6 +23,7 @@ public fun MySelectionGroup(
             data.items.mapIndexed { index, chipUIData ->
                 ChipUI(
                     data = chipUIData.copy(
+                        isMultiSelect = true,
                         isSelected = data.selectedItemsIndices.contains(index),
                     ),
                     handleEvent = { event ->
