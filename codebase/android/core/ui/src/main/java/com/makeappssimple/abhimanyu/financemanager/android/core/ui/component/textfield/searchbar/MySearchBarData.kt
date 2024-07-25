@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.searchbar
 
 import androidx.compose.runtime.Immutable
 

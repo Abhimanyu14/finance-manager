@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarContainer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.searchbar.MySearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.searchbar.MySearchBarContainer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.searchbar.MySearchBarData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.searchbar.MySearchBarEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
