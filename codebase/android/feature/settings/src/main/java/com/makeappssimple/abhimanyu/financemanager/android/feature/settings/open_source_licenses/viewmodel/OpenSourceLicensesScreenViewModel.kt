@@ -44,10 +44,7 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
     }
 
     private fun fetchData() {
-        viewModelScope.launch {
-            startLoading()
-            completeLoading()
-        }
+        viewModelScope.launch {}
     }
 
     private fun observeData() {
@@ -70,9 +67,9 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
                 uiStateAndStateEvents.update {
                     OpenSourceLicensesScreenUIStateAndStateEvents(
                         state = OpenSourceLicensesScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
                             isBottomSheetVisible = screenBottomSheetType != OpenSourceLicensesScreenBottomSheetType.None,
                             isLoading = isLoading,
+                            screenBottomSheetType = screenBottomSheetType,
                         ),
                         events = OpenSourceLicensesScreenUIStateEvents(
                             navigateUp = ::navigateUp,

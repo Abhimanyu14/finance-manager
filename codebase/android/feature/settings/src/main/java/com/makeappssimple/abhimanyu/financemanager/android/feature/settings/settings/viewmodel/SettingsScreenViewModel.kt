@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
@@ -21,7 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -73,10 +71,7 @@ public class SettingsScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         appVersion = appVersionUtil.getAppVersion()?.versionName.orEmpty()
-        viewModelScope.launch {
-            startLoading()
-            completeLoading()
-        }
+        viewModelScope.launch {}
     }
 
     private fun observeData() {
@@ -89,15 +84,15 @@ public class SettingsScreenViewModel @Inject constructor(
         uri: Uri,
     ) {
         viewModelScope.launch {
-            isLoading.value = true
-            val isBackupSuccessful = async {
-                backupDataUseCase(
-                    uri = uri,
-                )
-            }.await()
-            Log.e("Abhi", "$isBackupSuccessful")
-            // TODO(Abhi): use the result to show snackbar to the user
-            navigator.navigateUp()
+            startLoading()
+            val isBackupSuccessful = backupDataUseCase(
+                uri = uri,
+            )
+            if (isBackupSuccessful) {
+                navigator.navigateUp()
+            } else {
+                // TODO(Abhi): use the result to show snackbar to the user
+            }
         }
     }
     // endregion
@@ -107,14 +102,14 @@ public class SettingsScreenViewModel @Inject constructor(
         uri: Uri,
     ) {
         viewModelScope.launch {
-            isLoading.value = true
+            startLoading()
             if (restoreDataUseCase(
                     uri = uri,
                 )
             ) {
                 navigator.navigateUp()
             } else {
-                isLoading.value = false
+                completeLoading()
                 setScreenSnackbarType(
                     updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.RestoreDataFailed,
                 )
@@ -227,7 +222,7 @@ public class SettingsScreenViewModel @Inject constructor(
 
     private fun recalculateTotal() {
         viewModelScope.launch {
-            isLoading.value = true
+            startLoading()
             recalculateTotalUseCase()
             navigator.navigateUp()
         }

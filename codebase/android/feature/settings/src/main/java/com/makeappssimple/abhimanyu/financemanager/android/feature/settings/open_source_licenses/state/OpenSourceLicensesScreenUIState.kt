@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open
 
 @Stable
 internal data class OpenSourceLicensesScreenUIState(
-    val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.None,
     val isBottomSheetVisible: Boolean = false,
     val isLoading: Boolean = true,
+    val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.None,
 ) : ScreenUIState

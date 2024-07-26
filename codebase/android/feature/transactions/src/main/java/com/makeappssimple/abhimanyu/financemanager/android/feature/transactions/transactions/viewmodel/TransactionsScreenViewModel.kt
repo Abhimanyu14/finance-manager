@@ -123,7 +123,6 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            startLoading()
             allTransactionForValues = getAllTransactionForValuesUseCase()
         }
     }
