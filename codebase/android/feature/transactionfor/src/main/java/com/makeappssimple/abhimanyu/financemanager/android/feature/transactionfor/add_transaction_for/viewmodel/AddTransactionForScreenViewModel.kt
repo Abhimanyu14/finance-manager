@@ -85,10 +85,8 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     // region getAllTransactionForValues
-    private fun getAllTransactionForValues() {
-        viewModelScope.launch {
-            allTransactionForValues = getAllTransactionForValuesUseCase()
-        }
+    private suspend fun getAllTransactionForValues() {
+        allTransactionForValues = getAllTransactionForValuesUseCase()
     }
     // endregion
 
@@ -117,7 +115,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                             titleError = titleError,
                             isBottomSheetVisible = screenBottomSheetType != AddTransactionForScreenBottomSheetType.None,
                             isCtaButtonEnabled = isCtaButtonEnabled,
-                            isLoading = allTransactionForValues.isEmpty(),
+                            isLoading = isLoading,
                             title = title,
                         ),
                         events = AddTransactionForScreenUIStateEvents(
