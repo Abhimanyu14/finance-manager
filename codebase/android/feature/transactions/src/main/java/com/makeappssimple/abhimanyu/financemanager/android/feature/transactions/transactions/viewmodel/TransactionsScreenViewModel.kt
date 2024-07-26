@@ -71,8 +71,8 @@ public class TransactionsScreenViewModel @Inject constructor(
     private var oldestTransactionLocalDate: LocalDate? = null
     private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
 
-    private val selectedTransactionIndices: MutableStateFlow<MutableList<Int>> = MutableStateFlow(
-        value = mutableListOf(),
+    private val selectedTransactionIndices: MutableStateFlow<ImmutableList<Int>> = MutableStateFlow(
+        value = persistentListOf(),
     )
     private val transactionDetailsListItemViewData: MutableStateFlow<Map<String, ImmutableList<TransactionListItemData>>> =
         MutableStateFlow(
@@ -524,15 +524,15 @@ public class TransactionsScreenViewModel @Inject constructor(
         transactionId: Int,
     ) {
         selectedTransactionIndices.update {
-            it.apply {
+            it.toMutableList().apply {
                 add(transactionId)
-            }
+            }.toImmutableList()
         }
     }
 
     private fun clearSelectedTransactions() {
         selectedTransactionIndices.update {
-            mutableListOf()
+            persistentListOf()
         }
     }
 
@@ -544,9 +544,9 @@ public class TransactionsScreenViewModel @Inject constructor(
         transactionId: Int,
     ) {
         selectedTransactionIndices.update {
-            it.apply {
+            it.toMutableList().apply {
                 remove(transactionId)
-            }
+            }.toImmutableList()
         }
     }
 
@@ -568,7 +568,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                 it.map { transactionListItemData ->
                     transactionListItemData.transactionId
                 }
-            }.toMutableList()
+            }.toImmutableList()
         }
     }
 
