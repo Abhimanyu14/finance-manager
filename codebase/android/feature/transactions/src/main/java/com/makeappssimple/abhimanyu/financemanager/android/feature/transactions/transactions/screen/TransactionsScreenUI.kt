@@ -283,7 +283,7 @@ internal fun TransactionsScreenUI(
                     bottom = TransactionsScreenUIConstants.contentBottomPadding,
                 ),
             ) {
-                if (uiState.transactionDetailsListItemViewData.isEmpty()) {
+                if (uiState.isLoading) {
                     items(
                         count = 10,
                     ) {
@@ -293,58 +293,59 @@ internal fun TransactionsScreenUI(
                             ),
                         )
                     }
-                }
-                uiState.transactionDetailsListItemViewData.forEach { (stickyHeaderText, listItemData) ->
-                    if (stickyHeaderText.isNotBlank()) {
-                        stickyHeader {
-                            StickyHeaderText(
-                                text = stickyHeaderText,
+                } else {
+                    uiState.transactionDetailsListItemViewData.forEach { (stickyHeaderText, listItemData) ->
+                        if (stickyHeaderText.isNotBlank()) {
+                            stickyHeader {
+                                StickyHeaderText(
+                                    text = stickyHeaderText,
+                                )
+                            }
+                        }
+                        itemsIndexed(
+                            items = listItemData,
+                            key = { _, listItem ->
+                                listItem.transactionId
+                            },
+                        ) { _, listItem ->
+                            val isSelected =
+                                uiState.selectedTransactions.contains(listItem.transactionId)
+                            TransactionListItem(
+                                data = listItem.copy(
+                                    isInSelectionMode = uiState.isInSelectionMode,
+                                    isSelected = isSelected,
+                                ),
+                                handleEvent = { event ->
+                                    when (event) {
+                                        is TransactionListItemEvent.OnClick -> {
+                                            handleUIEvent(
+                                                TransactionsScreenUIEvent.OnTransactionListItem.Click(
+                                                    isInSelectionMode = uiState.isInSelectionMode,
+                                                    isSelected = isSelected,
+                                                    transactionId = listItem.transactionId,
+                                                )
+                                            )
+                                        }
+
+                                        is TransactionListItemEvent.OnDeleteButtonClick -> {}
+
+                                        is TransactionListItemEvent.OnEditButtonClick -> {}
+
+                                        is TransactionListItemEvent.OnLongClick -> {
+                                            handleUIEvent(
+                                                TransactionsScreenUIEvent.OnTransactionListItem.LongClick(
+                                                    isInSelectionMode = uiState.isInSelectionMode,
+                                                    isSelected = isSelected,
+                                                    transactionId = listItem.transactionId,
+                                                )
+                                            )
+                                        }
+
+                                        is TransactionListItemEvent.OnRefundButtonClick -> {}
+                                    }
+                                },
                             )
                         }
-                    }
-                    itemsIndexed(
-                        items = listItemData,
-                        key = { _, listItem ->
-                            listItem.transactionId
-                        },
-                    ) { _, listItem ->
-                        val isSelected =
-                            uiState.selectedTransactions.contains(listItem.transactionId)
-                        TransactionListItem(
-                            data = listItem.copy(
-                                isInSelectionMode = uiState.isInSelectionMode,
-                                isSelected = isSelected,
-                            ),
-                            handleEvent = { event ->
-                                when (event) {
-                                    is TransactionListItemEvent.OnClick -> {
-                                        handleUIEvent(
-                                            TransactionsScreenUIEvent.OnTransactionListItem.Click(
-                                                isInSelectionMode = uiState.isInSelectionMode,
-                                                isSelected = isSelected,
-                                                transactionId = listItem.transactionId,
-                                            )
-                                        )
-                                    }
-
-                                    is TransactionListItemEvent.OnDeleteButtonClick -> {}
-
-                                    is TransactionListItemEvent.OnEditButtonClick -> {}
-
-                                    is TransactionListItemEvent.OnLongClick -> {
-                                        handleUIEvent(
-                                            TransactionsScreenUIEvent.OnTransactionListItem.LongClick(
-                                                isInSelectionMode = uiState.isInSelectionMode,
-                                                isSelected = isSelected,
-                                                transactionId = listItem.transactionId,
-                                            )
-                                        )
-                                    }
-
-                                    is TransactionListItemEvent.OnRefundButtonClick -> {}
-                                }
-                            },
-                        )
                     }
                 }
                 item {
