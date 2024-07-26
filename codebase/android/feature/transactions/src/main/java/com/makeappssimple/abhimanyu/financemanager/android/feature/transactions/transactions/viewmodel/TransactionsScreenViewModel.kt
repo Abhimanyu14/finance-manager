@@ -127,7 +127,6 @@ public class TransactionsScreenViewModel @Inject constructor(
         viewModelScope.launch {
             startLoading()
             allTransactionForValues = getAllTransactionForValuesUseCase()
-            completeLoading()
         }
     }
 
@@ -176,7 +175,8 @@ public class TransactionsScreenViewModel @Inject constructor(
                             isSearchSortAndFilterVisible = isInSelectionMode.not() && (
                                     transactionDetailsListItemViewData.isNotEmpty() ||
                                             searchText.isNotEmpty() ||
-                                            selectedFilter.orEmpty().areFiltersSelected()
+                                            selectedFilter.orEmpty().areFiltersSelected() ||
+                                            isLoading
                                     ),
                             selectedFilter = selectedFilter.orEmpty(),
                             selectedTransactions = selectedTransactionIndices.toImmutableList(),
@@ -278,11 +278,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                                     .toImmutableList(),
                             )
                         }
-                        .also {
-                            if (it.isEmpty()) {
-                                completeLoading()
-                            }
-                        }
                         .sortedWith(compareBy {
                             when (selectedSortOption) {
                                 SortOption.AMOUNT_ASC -> {
@@ -302,11 +297,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                                 }
                             }
                         })
-                        .also {
-                            if (it.isEmpty()) {
-                                completeLoading()
-                            }
-                        }
                         .groupBy {
                             if (selectedSortOption == SortOption.LATEST_FIRST ||
                                 selectedSortOption == SortOption.OLDEST_FIRST
@@ -331,9 +321,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                                 )
                             }
                         }
-                        .also {
-                            completeLoading()
-                        }
                 }
                 transactionDetailsListItemViewData.update {
                     updatedAllTransactionData
@@ -341,6 +328,9 @@ public class TransactionsScreenViewModel @Inject constructor(
                 myLogger.logInfo(
                     message = "observeForTransactionDetailsListItemViewData: ${System.currentTimeMillis() - start}",
                 )
+                if (allTransactionData.isNotEmpty()) {
+                    completeLoading()
+                }
             }
         }
     }

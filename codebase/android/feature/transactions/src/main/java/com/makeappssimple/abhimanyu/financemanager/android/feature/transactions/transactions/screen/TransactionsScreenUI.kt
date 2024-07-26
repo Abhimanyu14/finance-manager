@@ -1,11 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -24,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_TRANSACTIONS
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTIONS
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -85,6 +87,10 @@ internal fun TransactionsScreenUI(
                 uiState.isInSelectionMode,
     ) {
         handleUIEvent(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
+    }
+
+    SideEffect {
+        Log.e("Abhi", "TransactionsScreenUI ${uiState.isLoading}")
     }
 
     MyScaffold(
@@ -265,15 +271,10 @@ internal fun TransactionsScreenUI(
                 .navigationBarLandscapeSpacer(),
         ) {
             AnimatedVisibility(
-                visible = uiState.isLoading,
-            ) {
-                MyLinearProgressIndicator()
-            }
-            AnimatedVisibility(
                 visible = uiState.isSearchSortAndFilterVisible,
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.End,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -287,12 +288,11 @@ internal fun TransactionsScreenUI(
                             bottom = 2.dp,
                         ),
                 ) {
-                    AnimatedVisibility(
-                        visible = true,
+                    Box(
                         modifier = Modifier
                             .weight(
                                 weight = 1F,
-                            ),
+                            )
                     ) {
                         MySearchBar(
                             data = MySearchBarData(
@@ -322,6 +322,7 @@ internal fun TransactionsScreenUI(
                     }
                     ActionButton(
                         data = ActionButtonData(
+                            isLoading = uiState.isLoading,
                             imageVector = MyIcons.SwapVert,
                             contentDescriptionStringResourceId = R.string.screen_transactions_sort_button_content_description,
                         ),
@@ -336,6 +337,7 @@ internal fun TransactionsScreenUI(
                     ActionButton(
                         data = ActionButtonData(
                             isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
+                            isLoading = uiState.isLoading,
                             imageVector = MyIcons.FilterAlt,
                             contentDescriptionStringResourceId = R.string.screen_transactions_filter_button_content_description,
                         ),

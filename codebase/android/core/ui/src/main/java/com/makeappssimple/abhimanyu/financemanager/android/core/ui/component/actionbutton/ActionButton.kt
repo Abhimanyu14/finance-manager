@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -18,8 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.lege
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 private object ActionButtonConstants {
-    val loadingUISize = 36.dp
-    val loadingUIPadding = 8.dp
+    val loadingUISize = 40.dp
+    val loadingUIPadding = 4.dp
 }
 
 @Composable
@@ -88,21 +87,21 @@ private fun ActionButtonUI(
 private fun ActionButtonLoadingUI(
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    ElevatedCard(
         modifier = modifier
-            .size(
-                size = DpSize(
-                    width = ActionButtonConstants.loadingUISize,
-                    height = ActionButtonConstants.loadingUISize,
-                ),
-            )
-            .clip(
-                shape = MaterialTheme.shapes.small,
-            )
-            .shimmer()
             .padding(
                 all = ActionButtonConstants.loadingUIPadding,
             ),
-    )
+    ) {
+        Box(
+            modifier = modifier
+                .size(
+                    size = DpSize(
+                        width = ActionButtonConstants.loadingUISize,
+                        height = ActionButtonConstants.loadingUISize,
+                    ),
+                )
+                .shimmer(),
+        )
+    }
 }
-
