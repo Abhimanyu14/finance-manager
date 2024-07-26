@@ -54,13 +54,13 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )
-    private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
     private val screenBottomSheetType: MutableStateFlow<EditTransactionForScreenBottomSheetType> =
         MutableStateFlow(
             value = EditTransactionForScreenBottomSheetType.None,
         )
+    private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+        value = TextFieldValue(),
+    )
     // endregion
 
     // region uiStateAndStateEvents

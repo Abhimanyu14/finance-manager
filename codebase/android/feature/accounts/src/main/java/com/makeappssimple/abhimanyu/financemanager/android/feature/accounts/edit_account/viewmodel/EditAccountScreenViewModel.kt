@@ -79,6 +79,17 @@ public class EditAccountScreenViewModel @Inject constructor(
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )
+    private val balanceAmountValue: MutableStateFlow<TextFieldValue> =
+        MutableStateFlow(
+            value = TextFieldValue(),
+        )
+    private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
+        MutableStateFlow(
+            value = TextFieldValue(),
+        )
+    private val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+        value = TextFieldValue(),
+    )
     private val screenBottomSheetType: MutableStateFlow<EditAccountScreenBottomSheetType> =
         MutableStateFlow(
             value = EditAccountScreenBottomSheetType.None,
@@ -92,17 +103,6 @@ public class EditAccountScreenViewModel @Inject constructor(
             value = validAccountTypesForNewAccount.indexOf(
                 element = AccountType.BANK,
             ),
-        )
-    private val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
-    private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
-        )
-    private val balanceAmountValue: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
         )
     // endregion
 
