@@ -6,8 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetTransactionForUseCase
@@ -16,10 +14,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.usecase.EditTransactionForScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.EditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -33,6 +31,7 @@ import javax.inject.Inject
 public class EditTransactionForScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val editTransactionForScreenDataValidationUseCase: EditTransactionForScreenDataValidationUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val navigator: Navigator,
@@ -135,30 +134,19 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                         title,
                     ),
                 ->
-                var titleError: EditTransactionForScreenTitleError =
-                    EditTransactionForScreenTitleError.None
-                val isCtaButtonEnabled = if (title.text.isBlank()) {
-                    false
-                } else if (title.text != currentTransactionFor?.title && allTransactionForValues.find { transactionForValue ->
-                        transactionForValue.title.equalsIgnoringCase(
-                            other = title.text,
-                        )
-                    }.isNotNull()
-                ) {
-                    titleError = EditTransactionForScreenTitleError.TransactionForExists
-                    false
-                } else {
-                    true
-                }
-
+                val validationState = editTransactionForScreenDataValidationUseCase(
+                    allTransactionForValues = allTransactionForValues,
+                    currentTransactionFor = currentTransactionFor,
+                    enteredTitle = title.text,
+                )
                 uiStateAndStateEvents.update {
                     EditTransactionForScreenUIStateAndStateEvents(
                         state = EditTransactionForScreenUIState(
                             isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
-                            isCtaButtonEnabled = isCtaButtonEnabled,
+                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
                             isLoading = isLoading,
                             screenBottomSheetType = screenBottomSheetType,
-                            titleError = titleError,
+                            titleError = validationState.titleError,
                             title = title,
                         ),
                         events = EditTransactionForScreenUIStateEvents(

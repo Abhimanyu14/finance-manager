@@ -16,9 +16,9 @@ internal data class EditTransactionForScreenUIState(
     val title: TextFieldValue = TextFieldValue(),
 ) : ScreenUIState
 
-internal sealed class EditTransactionForScreenTitleError {
-    data object None : EditTransactionForScreenTitleError()
-    data object TransactionForExists : EditTransactionForScreenTitleError()
+public sealed class EditTransactionForScreenTitleError {
+    public data object None : EditTransactionForScreenTitleError()
+    public data object TransactionForExists : EditTransactionForScreenTitleError()
 }
 
 internal val EditTransactionForScreenTitleError.stringResourceId: Int?

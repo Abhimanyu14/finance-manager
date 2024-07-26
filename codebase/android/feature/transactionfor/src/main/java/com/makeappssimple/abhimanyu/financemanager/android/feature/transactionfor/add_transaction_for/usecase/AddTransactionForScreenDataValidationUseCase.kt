@@ -11,15 +11,15 @@ import javax.inject.Inject
 public class AddTransactionForScreenDataValidationUseCase @Inject constructor() {
     public operator fun invoke(
         allTransactionForValues: ImmutableList<TransactionFor>,
-        title: String,
+        enteredTitle: String,
     ): AddTransactionForScreenDataValidationState {
         val state = AddTransactionForScreenDataValidationState()
-        if (title.isBlank()) {
+        if (enteredTitle.isBlank()) {
             return state
         }
         val isTransactionForTitleAlreadyUsed = allTransactionForValues.find {
             it.title.equalsIgnoringCase(
-                other = title.trim(),
+                other = enteredTitle.trim(),
             )
         }.isNotNull()
         if (isTransactionForTitleAlreadyUsed) {

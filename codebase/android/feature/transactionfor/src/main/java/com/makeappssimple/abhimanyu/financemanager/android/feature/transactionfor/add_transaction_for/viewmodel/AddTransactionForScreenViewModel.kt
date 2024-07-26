@@ -94,7 +94,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                 ->
                 val validationState = addTransactionForScreenDataValidationUseCase(
                     allTransactionForValues = allTransactionForValues,
-                    title = title.text,
+                    enteredTitle = title.text,
                 )
                 uiStateAndStateEvents.update {
                     AddTransactionForScreenUIStateAndStateEvents(
