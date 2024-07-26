@@ -46,8 +46,8 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     // region initial data
-    private var transactionForValues: ImmutableList<TransactionFor> = persistentListOf()
-    private var transactionFor: TransactionFor? = null
+    private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
+    private var currentTransactionFor: TransactionFor? = null
     // endregion
 
     // region UI data
@@ -80,16 +80,8 @@ public class EditTransactionForScreenViewModel @Inject constructor(
         viewModelScope.launch {
             startLoading()
             getAllTransactionForValues()
-            getOriginalTransactionFor()
-
-            setTitle(
-                title.value
-                    .copy(
-                        text = transactionFor?.title.orEmpty(),
-                        selection = TextRange(transactionFor?.title.orEmpty().length),
-                    )
-            )
-
+            getCurrentTransactionFor()
+            processCurrentTransactionFor()
             completeLoading()
         }
     }
@@ -101,17 +93,31 @@ public class EditTransactionForScreenViewModel @Inject constructor(
 
     // region getAllTransactionForValues
     private suspend fun getAllTransactionForValues() {
-        transactionForValues = getAllTransactionForValuesUseCase()
+        allTransactionForValues = getAllTransactionForValuesUseCase()
     }
     // endregion
 
     // region getOriginalTransactionFor
-    private suspend fun getOriginalTransactionFor() {
-        screenArgs.originalTransactionForId?.let { id ->
-            transactionFor = getTransactionForUseCase(
-                id = id,
-            )
-        }
+    private suspend fun getCurrentTransactionFor() {
+        val transactionForId = screenArgs.transactionForId ?: return
+        currentTransactionFor = getTransactionForUseCase(
+            id = transactionForId,
+        )
+    }
+    // endregion
+
+    // region processCurrentTransactionFor
+    private fun processCurrentTransactionFor() {
+        val currentTransactionForValue = currentTransactionFor ?: return
+        setTitle(
+            updatedTitle = title.value
+                .copy(
+                    text = currentTransactionForValue.title,
+                    selection = TextRange(
+                        index = currentTransactionForValue.title.length,
+                    ),
+                ),
+        )
     }
     // endregion
 
@@ -133,7 +139,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                     EditTransactionForScreenTitleError.None
                 val isCtaButtonEnabled = if (title.text.isBlank()) {
                     false
-                } else if (title.text != transactionFor?.title && transactionForValues.find { transactionForValue ->
+                } else if (title.text != currentTransactionFor?.title && allTransactionForValues.find { transactionForValue ->
                         transactionForValue.title.equalsIgnoringCase(
                             other = title.text,
                         )
@@ -187,7 +193,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private fun updateTransactionFor(
         title: String,
     ) {
-        val updatedTransactionFor = transactionFor
+        val updatedTransactionFor = currentTransactionFor
             ?.copy(
                 title = title,
             ) ?: return
