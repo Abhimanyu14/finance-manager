@@ -14,15 +14,11 @@ internal class EditTransactionForScreenUIEventHandler internal constructor(
             }
 
             is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
-                uiStateAndStateEvents.events.updateTransactionFor(uiStateAndStateEvents.state.title.text)
+                uiStateAndStateEvents.events.updateTransactionFor()
             }
 
             is EditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                uiStateAndStateEvents.events.setTitle(
-                    uiStateAndStateEvents.state.title.copy(
-                        text = "",
-                    )
-                )
+                uiStateAndStateEvents.events.clearTitle()
             }
 
             is EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

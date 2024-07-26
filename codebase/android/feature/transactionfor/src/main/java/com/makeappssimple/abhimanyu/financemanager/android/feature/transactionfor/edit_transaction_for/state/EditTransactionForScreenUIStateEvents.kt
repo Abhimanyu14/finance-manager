@@ -7,9 +7,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 
 @Stable
 internal class EditTransactionForScreenUIStateEvents(
+    val clearTitle: () -> Unit = {},
     val navigateUp: () -> Unit = {},
-    val updateTransactionFor: (title: String) -> Unit = {},
-    val setScreenBottomSheetType: (EditTransactionForScreenBottomSheetType) -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
+    val setScreenBottomSheetType: (EditTransactionForScreenBottomSheetType) -> Unit = {},
     val setTitle: (updatedTitle: TextFieldValue) -> Unit = {},
+    val updateTransactionFor: () -> Unit = {},
 ) : ScreenUIStateEvents

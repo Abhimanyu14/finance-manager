@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetTransactionForUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.UpdateTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.UpdateTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -36,7 +36,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val navigator: Navigator,
-    private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
+    private val updateTransactionForUseCase: UpdateTransactionForUseCase,
 ) : ScreenViewModel, ViewModel() {
     // region screen args
     private val screenArgs = EditTransactionForScreenArgs(
@@ -155,13 +155,14 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                     EditTransactionForScreenUIStateAndStateEvents(
                         state = EditTransactionForScreenUIState(
                             isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
-                            isLoading = isLoading,
                             isCtaButtonEnabled = isCtaButtonEnabled,
+                            isLoading = isLoading,
                             screenBottomSheetType = screenBottomSheetType,
                             titleError = titleError,
                             title = title,
                         ),
                         events = EditTransactionForScreenUIStateEvents(
+                            clearTitle = ::clearTitle,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
@@ -190,18 +191,11 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     // region state events
-    private fun updateTransactionFor(
-        title: String,
-    ) {
-        val updatedTransactionFor = currentTransactionFor
-            ?.copy(
-                title = title,
-            ) ?: return
-        viewModelScope.launch {
-            updateTransactionForValuesUseCase(
-                updatedTransactionFor,
+    private fun clearTitle() {
+        title.update {
+            title.value.copy(
+                text = "",
             )
-            navigator.navigateUp()
         }
     }
 
@@ -228,6 +222,22 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     ) {
         title.update {
             updatedTitle
+        }
+    }
+
+    private fun updateTransactionFor() {
+        val currentTransactionForValue = currentTransactionFor ?: return
+        val uiState = uiStateAndStateEvents.value.state
+        viewModelScope.launch {
+            val isTransactionForUpdated = updateTransactionForUseCase(
+                currentTransactionFor = currentTransactionForValue,
+                title = uiState.title.text,
+            )
+            if (isTransactionForUpdated) {
+                navigator.navigateUp()
+            } else {
+                // TODO(Abhi): Show error
+            }
         }
     }
     // endregion
