@@ -27,12 +27,12 @@ internal sealed class TransactionForValuesScreenUIEvent : ScreenUIEvent {
     sealed class OnTransactionForListItem {
         data class Click(
             val isDeleteVisible: Boolean,
-            val transactionForId: Int?,
+            val transactionForId: Int,
         ) : TransactionForValuesScreenUIEvent()
 
         data class MoreOptionsIconButtonClick(
             val isDeleteVisible: Boolean,
-            val transactionForId: Int?,
+            val transactionForId: Int,
         ) : TransactionForValuesScreenUIEvent()
     }
 }

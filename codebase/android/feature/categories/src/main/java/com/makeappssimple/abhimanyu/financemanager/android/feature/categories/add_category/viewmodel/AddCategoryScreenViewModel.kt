@@ -177,7 +177,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
                             screenBottomSheetType = screenBottomSheetType,
                             isBottomSheetVisible = screenBottomSheetType != AddCategoryScreenBottomSheetType.None,
                             isCtaButtonEnabled = isCtaButtonEnabled,
-                            isLoading = validTransactionTypes.isEmpty(),
+                            isLoading = isLoading,
                             isSupportingTextVisible = titleError != AddCategoryScreenTitleError.None,
                             titleError = titleError,
                             selectedTransactionTypeIndex = selectedTransactionTypeIndex,

@@ -44,27 +44,21 @@ internal class TransactionForValuesScreenUIEventHandler internal constructor(
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForListItem.Click -> {
-                uiEvent.transactionForId?.let {
-                    uiStateAndStateEvents.events.setScreenBottomSheetType(
-                        TransactionForValuesScreenBottomSheetType.Menu(
-                            isDeleteVisible = uiEvent.isDeleteVisible,
-                            transactionForId = uiEvent.transactionForId,
-                        )
+                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                    TransactionForValuesScreenBottomSheetType.Menu(
+                        isDeleteVisible = uiEvent.isDeleteVisible,
+                        transactionForId = uiEvent.transactionForId,
                     )
-                }
-                Unit
+                )
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForListItem.MoreOptionsIconButtonClick -> {
-                uiEvent.transactionForId?.let {
-                    uiStateAndStateEvents.events.setScreenBottomSheetType(
-                        TransactionForValuesScreenBottomSheetType.Menu(
-                            isDeleteVisible = uiEvent.isDeleteVisible,
-                            transactionForId = uiEvent.transactionForId,
-                        )
+                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                    TransactionForValuesScreenBottomSheetType.Menu(
+                        isDeleteVisible = uiEvent.isDeleteVisible,
+                        transactionForId = uiEvent.transactionForId,
                     )
-                }
-                Unit
+                )
             }
 
             is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

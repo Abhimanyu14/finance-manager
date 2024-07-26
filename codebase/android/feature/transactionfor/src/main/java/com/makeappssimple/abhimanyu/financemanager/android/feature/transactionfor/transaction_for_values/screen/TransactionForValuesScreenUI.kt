@@ -2,15 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_TRANSACTION_FOR_VALUES
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTION_FOR_VALUES
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyFloatingActionButton
@@ -24,11 +22,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesDeleteConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.bottomsheet.TransactionForValuesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.event.TransactionForValuesScreenUIEvent
@@ -77,8 +73,7 @@ internal fun TransactionForValuesScreenUI(
                 }
 
                 is TransactionForValuesScreenBottomSheetType.Menu -> {
-                    val bottomSheetData =
-                        uiState.screenBottomSheetType
+                    val bottomSheetData = uiState.screenBottomSheetType
                     TransactionForValuesMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         onEditClick = {
@@ -137,29 +132,21 @@ internal fun TransactionForValuesScreenUI(
                 )
                 .navigationBarLandscapeSpacer(),
         ) {
-            itemsIndexed(
-                items = uiState.transactionForValues,
-                key = { _, listItem ->
-                    listItem.id
+            items(
+                items = uiState.transactionForListItemDataList,
+                key = { listItem ->
+                    listItem.transactionForId
                 },
-            ) { index, listItem ->
-                val isDeleteVisible = !isDefaultTransactionFor(
-                    transactionFor = listItem.title,
-                ) && uiState.transactionForValuesIsUsedInTransactions.getOrNull(
-                    index = index,
-                )?.not().orFalse()
+            ) { listItem ->
                 TransactionForListItem(
-                    data = TransactionForListItemData(
-                        title = listItem.title.capitalizeWords(),
-                        isMoreOptionsIconButtonVisible = true,
-                    ),
+                    data = listItem,
                     handleEvent = { event ->
                         when (event) {
                             is TransactionForListItemEvent.OnClick -> {
                                 handleUIEvent(
                                     TransactionForValuesScreenUIEvent.OnTransactionForListItem.Click(
-                                        isDeleteVisible = isDeleteVisible,
-                                        transactionForId = listItem.id,
+                                        isDeleteVisible = listItem.isDeleteBottomSheetMenuItemVisible,
+                                        transactionForId = listItem.transactionForId,
                                     )
                                 )
                             }
@@ -167,8 +154,8 @@ internal fun TransactionForValuesScreenUI(
                             is TransactionForListItemEvent.OnMoreOptionsIconButtonClick -> {
                                 handleUIEvent(
                                     TransactionForValuesScreenUIEvent.OnTransactionForListItem.MoreOptionsIconButtonClick(
-                                        isDeleteVisible = isDeleteVisible,
-                                        transactionForId = listItem.id,
+                                        isDeleteVisible = listItem.isDeleteBottomSheetMenuItemVisible,
+                                        transactionForId = listItem.transactionForId
                                     )
                                 )
                             }
