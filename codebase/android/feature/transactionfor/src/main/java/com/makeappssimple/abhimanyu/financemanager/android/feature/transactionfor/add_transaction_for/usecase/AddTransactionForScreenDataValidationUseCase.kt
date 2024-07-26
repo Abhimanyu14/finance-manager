@@ -1,0 +1,36 @@
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.usecase
+
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenTitleError
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.viewmodel.AddTransactionForScreenDataValidationState
+import kotlinx.collections.immutable.ImmutableList
+import javax.inject.Inject
+
+public class AddTransactionForScreenDataValidationUseCase @Inject constructor() {
+    public operator fun invoke(
+        allTransactionForValues: ImmutableList<TransactionFor>,
+        title: String,
+    ): AddTransactionForScreenDataValidationState {
+        val state = AddTransactionForScreenDataValidationState()
+        if (title.isBlank()) {
+            return state
+        }
+        val isTransactionForTitleAlreadyUsed = allTransactionForValues.find {
+            it.title.equalsIgnoringCase(
+                other = title.trim(),
+            )
+        }.isNotNull()
+        if (isTransactionForTitleAlreadyUsed) {
+            return state
+                .copy(
+                    titleError = AddTransactionForScreenTitleError.TransactionForExists,
+                )
+        }
+        return state
+            .copy(
+                isCtaButtonEnabled = true,
+            )
+    }
+}
