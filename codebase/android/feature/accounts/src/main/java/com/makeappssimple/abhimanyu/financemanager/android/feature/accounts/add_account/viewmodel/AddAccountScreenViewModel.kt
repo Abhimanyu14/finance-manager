@@ -39,10 +39,11 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
-    private var accounts: ImmutableList<Account> = persistentListOf()
-    private val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
-        it != AccountType.CASH
-    }
+    private var allAccounts: ImmutableList<Account> = persistentListOf()
+    private val validAccountTypesForNewAccount: ImmutableList<AccountType> =
+        AccountType.entries.filter {
+            it != AccountType.CASH
+        }
     // endregion
 
     // region UI data
@@ -59,7 +60,7 @@ public class AddAccountScreenViewModel @Inject constructor(
         )
     private val selectedAccountTypeIndex: MutableStateFlow<Int> =
         MutableStateFlow(
-            value = validAccountTypes.indexOf(
+            value = validAccountTypesForNewAccount.indexOf(
                 element = AccountType.BANK,
             ),
         )
@@ -88,7 +89,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             startLoading()
-            accounts = getAllAccountsUseCase()
+            allAccounts = getAllAccountsUseCase()
             completeLoading()
         }
     }
@@ -119,7 +120,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                     ),
                 ->
 
-                val isValidData: Boolean = accounts.find {
+                val isValidData: Boolean = allAccounts.find {
                     it.name.trim().equalsIgnoringCase(
                         other = name.text.trim(),
                     )
@@ -132,7 +133,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                     } else {
                         AddAccountScreenNameError.AccountExists
                     }
-                val selectedAccountType = validAccountTypes.getOrNull(
+                val selectedAccountType = validAccountTypesForNewAccount.getOrNull(
                     index = selectedAccountTypeIndex,
                 )
 
@@ -150,7 +151,7 @@ public class AddAccountScreenViewModel @Inject constructor(
                             isCtaButtonEnabled = isValidData,
                             isLoading = isLoading,
                             selectedAccountTypeIndex = selectedAccountTypeIndex,
-                            accountTypesChipUIDataList = validAccountTypes
+                            accountTypesChipUIDataList = validAccountTypesForNewAccount
                                 .map { accountType ->
                                     ChipUIData(
                                         text = accountType.title,
