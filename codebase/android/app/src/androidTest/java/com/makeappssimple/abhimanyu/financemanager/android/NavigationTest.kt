@@ -7,6 +7,7 @@ import androidx.compose.ui.test.SemanticsNodeInteractionCollection
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -20,6 +21,9 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.printToLog
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SmallTest
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_OVERVIEW_CARD
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_TOTAL_BALANCE_CARD
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ACCOUNTS
@@ -49,12 +53,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTION_FOR_VALUES
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_VIEW_TRANSACTION
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLoggerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.test.TestResult
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R as CoreUiR
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R as AccountsR
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R as CategoriesR
@@ -63,8 +72,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R as
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R as TransactionForR
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R as TransactionsR
 
+private object NavigationTestConstants {
+    const val TIMEOUT = 5_000L
+}
+
 @Ignore("Fix Navigation")
 @HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
+@SmallTest
 public class NavigationTest {
     @get:Rule(order = 0)
     public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
@@ -72,6 +87,9 @@ public class NavigationTest {
     @get:Rule(order = 1)
     public val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity> =
         createAndroidComposeRule<MainActivity>()
+
+    @get:Rule(order = 2)
+    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var context: Context
 
@@ -255,7 +273,11 @@ public class NavigationTest {
 
         composeTestRule.activity.setContent {
             MyAppTheme {
-                MyApp()
+                MyApp(
+                    myLogger = MyLoggerImpl(
+                        buildConfigUtil = BuildConfigUtilImpl(),
+                    ),
+                )
             }
         }
     }
@@ -426,11 +448,14 @@ public class NavigationTest {
     }
 
     @Test
-    public fun settingsScreenTest() {
+    public fun settingsScreenTest(): TestResult = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
 
+        composeTestRule.waitUntil(NavigationTestConstants.TIMEOUT) {
+            settingsScreen.isDisplayed()
+        }
         settingsScreen.assertIsDisplayed()
         settingsScreenContent.assertIsDisplayed()
         settingsCategoriesListItem.onFirst().assertIsDisplayed()
