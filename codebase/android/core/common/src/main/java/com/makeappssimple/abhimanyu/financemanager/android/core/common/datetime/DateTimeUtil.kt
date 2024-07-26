@@ -24,6 +24,14 @@ public interface DateTimeUtil : DateUtil, TimeUtil {
     ): String
 
     /**
+     * Sample format - Monday.
+     */
+    public fun getFormattedDayOfWeek(
+        timestamp: Long,
+        zoneId: ZoneId = getSystemDefaultZoneId(),
+    ): String
+
+    /**
      * Sample format - 30 Mar.
      */
     public fun getFormattedDay(

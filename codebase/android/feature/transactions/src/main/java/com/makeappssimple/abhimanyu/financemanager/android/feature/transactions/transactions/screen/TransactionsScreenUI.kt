@@ -294,11 +294,11 @@ internal fun TransactionsScreenUI(
                         )
                     }
                 }
-                uiState.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
-                    if (date.isNotBlank()) {
+                uiState.transactionDetailsListItemViewData.forEach { (stickyHeaderText, listItemData) ->
+                    if (stickyHeaderText.isNotBlank()) {
                         stickyHeader {
                             StickyHeaderText(
-                                text = date,
+                                text = stickyHeaderText,
                             )
                         }
                     }

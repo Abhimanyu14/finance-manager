@@ -299,9 +299,20 @@ public class TransactionsScreenViewModel @Inject constructor(
                             if (selectedSortOption == SortOption.LATEST_FIRST ||
                                 selectedSortOption == SortOption.OLDEST_FIRST
                             ) {
-                                dateTimeUtil.getFormattedDate(
-                                    timestamp = it.transaction.transactionTimestamp,
+                                val dateTextBuilder = StringBuilder()
+                                dateTextBuilder.append(
+                                    dateTimeUtil.getFormattedDate(
+                                        timestamp = it.transaction.transactionTimestamp,
+                                    )
                                 )
+                                dateTextBuilder.append(" (")
+                                dateTextBuilder.append(
+                                    dateTimeUtil.getFormattedDayOfWeek(
+                                        timestamp = it.transaction.transactionTimestamp,
+                                    )
+                                )
+                                dateTextBuilder.append(")")
+                                dateTextBuilder.toString()
                             } else {
                                 ""
                             }

@@ -43,6 +43,18 @@ internal fun Instant.formattedDate(
 }
 
 /**
+ * Sample format - Monday.
+ */
+internal fun Instant.formattedDayOfWeek(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return DateTimeFormatter
+        .ofPattern("EEEE")
+        .withZone(zoneId)
+        .format(this)
+}
+
+/**
  * Sample format - 30 Mar.
  */
 internal fun Instant.formattedDay(

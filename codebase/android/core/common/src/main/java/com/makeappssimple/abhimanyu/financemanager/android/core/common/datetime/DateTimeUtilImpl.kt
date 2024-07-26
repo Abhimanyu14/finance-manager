@@ -4,6 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDay
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDayOfWeek
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedMonth
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedYear
@@ -56,6 +57,20 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
         return Instant
             .ofEpochMilli(timestamp)
             .formattedDate(
+                zoneId = zoneId,
+            )
+    }
+
+    /**
+     * Sample format - Monday.
+     */
+    override fun getFormattedDayOfWeek(
+        timestamp: Long,
+        zoneId: ZoneId,
+    ): String {
+        return Instant
+            .ofEpochMilli(timestamp)
+            .formattedDayOfWeek(
                 zoneId = zoneId,
             )
     }
