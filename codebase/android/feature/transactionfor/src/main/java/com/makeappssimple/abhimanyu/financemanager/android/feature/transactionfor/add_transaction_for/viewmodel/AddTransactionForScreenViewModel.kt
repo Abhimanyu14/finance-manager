@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class AddTransactionForScreenViewModel @Inject constructor(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
-    private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
+    private val insertTransactionForUseCase: InsertTransactionForUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
@@ -177,12 +177,17 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     // region state events
-    private fun insertTransactionFor(
-        transactionFor: TransactionFor,
-    ) {
+    private fun insertTransactionFor() {
+        val uiState = uiStateAndStateEvents.value.state
         viewModelScope.launch {
-            insertTransactionForUseCase(transactionFor)
-            navigator.navigateUp()
+            val isTransactionForInserted = insertTransactionForUseCase(
+                title = uiState.title?.text.orEmpty(),
+            )
+            if (isTransactionForInserted == -1L) {
+                // TODO(Abhi): Show error
+            } else {
+                navigator.navigateUp()
+            }
         }
     }
 
