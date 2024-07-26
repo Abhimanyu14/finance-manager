@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 
 @Stable
 internal class EditAccountScreenUIStateEvents(
+    val clearBalanceAmountValue: () -> Unit = {},
     val clearMinimumAccountBalanceAmountValue: () -> Unit = {},
     val clearName: () -> Unit = {},
     val navigateUp: () -> Unit = {},

@@ -32,27 +32,15 @@ internal class EditAccountScreenUIEventHandler internal constructor(
             }
 
             is EditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
-                uiStateAndStateEvents.events.setBalanceAmountValue(
-                    uiStateAndStateEvents.state.balanceAmountValue.copy(
-                        text = "",
-                    )
-                )
+                uiStateAndStateEvents.events.clearBalanceAmountValue()
             }
 
             is EditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                uiStateAndStateEvents.events.setMinimumAccountBalanceAmountValue(
-                    uiStateAndStateEvents.state.minimumBalanceAmountValue.copy(
-                        text = "",
-                    )
-                )
+                uiStateAndStateEvents.events.clearMinimumAccountBalanceAmountValue()
             }
 
             is EditAccountScreenUIEvent.OnClearNameButtonClick -> {
-                uiStateAndStateEvents.events.setName(
-                    uiStateAndStateEvents.state.name.copy(
-                        text = "",
-                    )
-                )
+                uiStateAndStateEvents.events.clearName()
             }
 
             is EditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

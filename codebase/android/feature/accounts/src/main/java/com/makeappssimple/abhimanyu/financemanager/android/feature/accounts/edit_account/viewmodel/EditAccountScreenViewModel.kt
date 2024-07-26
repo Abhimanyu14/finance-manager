@@ -255,6 +255,7 @@ public class EditAccountScreenViewModel @Inject constructor(
                             ),
                         ),
                         events = EditAccountScreenUIStateEvents(
+                            clearBalanceAmountValue = ::clearBalanceAmountValue,
                             clearMinimumAccountBalanceAmountValue = ::clearMinimumAccountBalanceAmountValue,
                             clearName = ::clearName,
                             navigateUp = ::navigateUp,
@@ -289,6 +290,15 @@ public class EditAccountScreenViewModel @Inject constructor(
     // endregion
 
     // region state events
+    private fun clearBalanceAmountValue() {
+        setBalanceAmountValue(
+            updatedBalanceAmountValue = balanceAmountValue.value
+                .copy(
+                    text = "",
+                ),
+        )
+    }
+
     private fun clearMinimumAccountBalanceAmountValue() {
         setMinimumAccountBalanceAmountValue(
             updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value
