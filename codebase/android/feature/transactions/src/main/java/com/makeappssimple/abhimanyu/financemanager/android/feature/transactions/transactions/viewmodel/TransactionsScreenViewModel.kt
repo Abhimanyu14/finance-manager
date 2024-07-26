@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.distinct
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
@@ -18,7 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.UpdateTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -47,44 +47,31 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Long.min
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 public class TransactionsScreenViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
-    private val getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
-    private val getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
+    private val getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
+    private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+    private val myLogger: MyLogger,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
     private var isInitialDataFetchCompleted = false
     private var performanceScreenInitTrace: Trace? = null
-    private val allTransactionData: MutableStateFlow<ImmutableList<TransactionData>> =
+    private var allTransactionData: MutableStateFlow<ImmutableList<TransactionData>> =
         MutableStateFlow(
             value = persistentListOf(),
         )
-    private val expenseCategories: MutableStateFlow<ImmutableList<Category>?> = MutableStateFlow(
-        value = persistentListOf(),
-    )
-    private val incomeCategories: MutableStateFlow<ImmutableList<Category>?> = MutableStateFlow(
-        value = persistentListOf(),
-    )
-    private val investmentCategories: MutableStateFlow<ImmutableList<Category>?> = MutableStateFlow(
-        value = persistentListOf(),
-    )
-    private val accounts: MutableStateFlow<ImmutableList<Account>?> = MutableStateFlow(
-        value = persistentListOf(),
-    )
-    private var oldestTransactionLocalDate: MutableStateFlow<LocalDate?> = MutableStateFlow(
-        value = null,
-    )
-    private val transactionForValues: MutableStateFlow<ImmutableList<TransactionFor>> =
-        MutableStateFlow(
-            value = persistentListOf(),
-        )
+    private var categoriesMap: Map<TransactionType, MutableSet<Category>> = mapOf()
+    private var accounts: MutableSet<Account> = mutableSetOf()
+    private var oldestTransactionLocalDate: LocalDate? = null
+    private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
 
     private val selectedTransactionIndices: MutableStateFlow<MutableList<Int>> = MutableStateFlow(
         value = mutableListOf(),
@@ -139,6 +126,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             startLoading()
+            allTransactionForValues = getAllTransactionForValuesUseCase()
             completeLoading()
         }
     }
@@ -147,7 +135,6 @@ public class TransactionsScreenViewModel @Inject constructor(
         observeForUiStateAndStateEventsChanges()
         observeForTransactionDetailsListItemViewData()
         observeForAllTransactionData()
-        observeForAllTransactionForValues()
     }
     // endregion
 
@@ -157,34 +144,22 @@ public class TransactionsScreenViewModel @Inject constructor(
             combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
-                transactionForValues,
                 isInSelectionMode,
                 searchText,
                 selectedFilter,
-                accounts,
-                oldestTransactionLocalDate,
                 selectedSortOption,
                 selectedTransactionIndices,
                 transactionDetailsListItemViewData,
-                expenseCategories,
-                incomeCategories,
-                investmentCategories,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
-                        transactionForValues,
                         isInSelectionMode,
                         searchText,
                         selectedFilter,
-                        accounts,
-                        oldestTransactionLocalDate,
                         selectedSortOption,
                         selectedTransactionIndices,
                         transactionDetailsListItemViewData,
-                        expenseCategories,
-                        incomeCategories,
-                        investmentCategories,
                     ),
                 ->
                 if (!isInitialDataFetchCompleted && transactionDetailsListItemViewData.isNotEmpty()) {
@@ -206,11 +181,14 @@ public class TransactionsScreenViewModel @Inject constructor(
                             selectedFilter = selectedFilter.orEmpty(),
                             selectedTransactions = selectedTransactionIndices.toImmutableList(),
                             sortOptions = sortOptions.orEmpty(),
-                            transactionForValues = transactionForValues.orEmpty(),
-                            accounts = accounts.orEmpty(),
-                            expenseCategories = expenseCategories.orEmpty(),
-                            incomeCategories = incomeCategories.orEmpty(),
-                            investmentCategories = investmentCategories.orEmpty(),
+                            transactionForValues = allTransactionForValues.orEmpty(),
+                            accounts = accounts.toImmutableList(),
+                            expenseCategories = categoriesMap[TransactionType.EXPENSE].orEmpty()
+                                .toImmutableList(),
+                            incomeCategories = categoriesMap[TransactionType.INCOME].orEmpty()
+                                .toImmutableList(),
+                            investmentCategories = categoriesMap[TransactionType.INVESTMENT].orEmpty()
+                                .toImmutableList(),
                             transactionTypes = transactionTypes.orEmpty(),
                             currentLocalDate = currentLocalDate.orMin(),
                             oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
@@ -246,28 +224,23 @@ public class TransactionsScreenViewModel @Inject constructor(
     private fun observeForTransactionDetailsListItemViewData() {
         viewModelScope.launch {
             combineAndCollectLatest(
-                transactionForValues,
                 searchText,
                 selectedFilter,
-                accounts,
-                expenseCategories,
-                incomeCategories,
-                investmentCategories,
                 selectedSortOption,
                 allTransactionData,
             ) {
                     (
-                        transactionForValues,
                         searchText,
                         selectedFilter,
-                        accounts,
-                        expenseCategories,
-                        incomeCategories,
-                        investmentCategories,
                         selectedSortOption,
                         allTransactionData,
                     ),
                 ->
+                val start = System.currentTimeMillis()
+                myLogger.logInfo(
+                    message = "observeForTransactionDetailsListItemViewData: Starting ${System.currentTimeMillis()}",
+                )
+
                 val updatedAllTransactionData = withContext(
                     context = dispatcherProvider.default,
                 ) {
@@ -283,23 +256,26 @@ public class TransactionsScreenViewModel @Inject constructor(
                             ) && isAvailableAfterTransactionForFilter(
                                 selectedTransactionForValuesIndices = selectedFilter.selectedTransactionForValuesIndices,
                                 transactionData = transactionData,
-                                transactionForValuesValue = transactionForValues,
+                                transactionForValuesValue = allTransactionForValues,
                             ) && isAvailableAfterTransactionTypeFilter(
                                 transactionTypes = transactionTypes,
                                 selectedTransactionTypesIndicesValue = selectedFilter.selectedTransactionTypeIndices,
                                 transactionData = transactionData,
                             ) && isAvailableAfterAccountFilter(
                                 selectedAccountsIndicesValue = selectedFilter.selectedAccountsIndices,
-                                accountsValue = accounts.orEmpty(),
+                                accountsValue = accounts.toImmutableList(),
                                 transactionData = transactionData,
                             ) && isAvailableAfterCategoryFilter(
                                 selectedExpenseCategoryIndicesValue = selectedFilter.selectedExpenseCategoryIndices,
                                 selectedIncomeCategoryIndicesValue = selectedFilter.selectedIncomeCategoryIndices,
                                 selectedInvestmentCategoryIndicesValue = selectedFilter.selectedInvestmentCategoryIndices,
-                                expenseCategoriesValue = expenseCategories.orEmpty(),
+                                expenseCategoriesValue = categoriesMap[TransactionType.EXPENSE].orEmpty()
+                                    .toImmutableList(),
                                 transactionData = transactionData,
-                                incomeCategoriesValue = incomeCategories.orEmpty(),
-                                investmentCategoriesValue = investmentCategories.orEmpty(),
+                                incomeCategoriesValue = categoriesMap[TransactionType.INCOME].orEmpty()
+                                    .toImmutableList(),
+                                investmentCategoriesValue = categoriesMap[TransactionType.INVESTMENT].orEmpty()
+                                    .toImmutableList(),
                             )
                         }
                         .also {
@@ -362,6 +338,9 @@ public class TransactionsScreenViewModel @Inject constructor(
                 transactionDetailsListItemViewData.update {
                     updatedAllTransactionData
                 }
+                myLogger.logInfo(
+                    message = "observeForTransactionDetailsListItemViewData: ${System.currentTimeMillis() - start}",
+                )
             }
         }
     }
@@ -487,74 +466,34 @@ public class TransactionsScreenViewModel @Inject constructor(
                     context = dispatcherProvider.io,
                 )
                 .collectLatest { updatedAllTransactionData ->
-                    val updatedAccounts = withContext(
-                        context = dispatcherProvider.default,
-                    ) {
-                        updatedAllTransactionData.flatMap { transactionData ->
-                            listOfNotNull(
-                                transactionData.accountFrom,
-                                transactionData.accountTo,
-                            )
-                        }.distinct()
-                    }
-                    accounts.update {
-                        updatedAccounts
-                    }
+                    val accountsInTransactions = mutableSetOf<Account>()
+                    var oldestTransactionLocalDateValue = Long.MAX_VALUE
+                    val categoriesInTransactionsMap =
+                        mutableMapOf<TransactionType, MutableSet<Category>>()
 
-                    val updatedOldestTransactionLocalDate = withContext(
-                        context = dispatcherProvider.default,
-                    ) {
-                        dateTimeUtil.getLocalDate(
-                            timestamp = updatedAllTransactionData.minOfOrNull { transactionData ->
-                                transactionData.transaction.transactionTimestamp
-                            }.orZero(),
+                    updatedAllTransactionData.forEach { transactionData ->
+                        transactionData.accountFrom?.let {
+                            accountsInTransactions.add(it)
+                        }
+                        transactionData.accountTo?.let {
+                            accountsInTransactions.add(it)
+                        }
+                        oldestTransactionLocalDateValue = min(
+                            oldestTransactionLocalDateValue,
+                            transactionData.transaction.transactionTimestamp
                         )
-                    }
-                    oldestTransactionLocalDate.update {
-                        updatedOldestTransactionLocalDate
+                        transactionData.category?.let {
+                            categoriesInTransactionsMap[it.transactionType]?.add(it)
+                        }
                     }
 
+                    accounts = accountsInTransactions
+                    oldestTransactionLocalDate = dateTimeUtil.getLocalDate(
+                        timestamp = oldestTransactionLocalDateValue.orZero(),
+                    )
+                    categoriesMap = categoriesInTransactionsMap.toMap()
                     allTransactionData.update {
                         updatedAllTransactionData
-                    }
-                    val updatedCategoriesMap = withContext(
-                        context = dispatcherProvider.default,
-                    ) {
-                        updatedAllTransactionData
-                            .mapNotNull { transactionData ->
-                                transactionData.category
-                            }
-                            .groupBy { category ->
-                                category.transactionType
-                            }
-                            .mapValues { (_, categories) ->
-                                categories.distinct()
-                            }
-                    }
-                    expenseCategories.update {
-                        updatedCategoriesMap[TransactionType.EXPENSE].orEmpty()
-                    }
-                    incomeCategories.update {
-                        updatedCategoriesMap[TransactionType.INCOME].orEmpty()
-                    }
-                    investmentCategories.update {
-                        updatedCategoriesMap[TransactionType.INVESTMENT].orEmpty()
-                    }
-                }
-        }
-    }
-    // endregion
-
-    // region observeForAllTransactionForValues
-    private fun observeForAllTransactionForValues() {
-        viewModelScope.launch {
-            getAllTransactionForValuesFlowUseCase()
-                .flowOn(
-                    context = dispatcherProvider.io,
-                )
-                .collectLatest { updatedAllTransactionForValues ->
-                    transactionForValues.update {
-                        updatedAllTransactionForValues
                     }
                 }
         }
