@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
@@ -19,7 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -82,16 +80,9 @@ internal fun TransactionsScreenUI(
     )
 
     BackHandler(
-        // TODO(Abhi): Move this logic outside the UI composable
-        enabled = uiState.searchText.isNotEmpty() ||
-                uiState.selectedFilter.areFiltersSelected() ||
-                uiState.isInSelectionMode,
+        enabled = uiState.isBackHandlerEnabled,
     ) {
         handleUIEvent(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
-    }
-
-    SideEffect {
-        Log.e("Abhi", "TransactionsScreenUI ${uiState.isLoading}")
     }
 
     MyScaffold(

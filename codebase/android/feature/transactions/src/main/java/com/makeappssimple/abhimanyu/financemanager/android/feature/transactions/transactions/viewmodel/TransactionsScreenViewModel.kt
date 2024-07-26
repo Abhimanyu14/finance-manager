@@ -169,6 +169,9 @@ public class TransactionsScreenViewModel @Inject constructor(
                 uiStateAndStateEvents.update {
                     TransactionsScreenUIStateAndStateEvents(
                         state = TransactionsScreenUIState(
+                            isBackHandlerEnabled = searchText.isNotEmpty() ||
+                                    selectedFilter.orEmpty().areFiltersSelected() ||
+                                    isInSelectionMode,
                             isBottomSheetVisible = screenBottomSheetType != TransactionsScreenBottomSheetType.None,
                             isInSelectionMode = isInSelectionMode,
                             isLoading = isLoading,
@@ -236,11 +239,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                         allTransactionData,
                     ),
                 ->
-                val start = System.currentTimeMillis()
-                myLogger.logInfo(
-                    message = "observeForTransactionDetailsListItemViewData: Starting ${System.currentTimeMillis()}",
-                )
-
                 val updatedAllTransactionData = withContext(
                     context = dispatcherProvider.default,
                 ) {
@@ -325,9 +323,6 @@ public class TransactionsScreenViewModel @Inject constructor(
                 transactionDetailsListItemViewData.update {
                     updatedAllTransactionData
                 }
-                myLogger.logInfo(
-                    message = "observeForTransactionDetailsListItemViewData: ${System.currentTimeMillis() - start}",
-                )
                 if (allTransactionData.isNotEmpty()) {
                     completeLoading()
                 }

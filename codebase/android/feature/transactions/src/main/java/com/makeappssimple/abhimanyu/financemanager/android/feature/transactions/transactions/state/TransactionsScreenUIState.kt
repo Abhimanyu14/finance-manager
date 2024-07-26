@@ -16,6 +16,7 @@ import java.time.LocalDate
 
 @Stable
 internal data class TransactionsScreenUIState(
+    val isBackHandlerEnabled: Boolean = false,
     val isBottomSheetVisible: Boolean = false,
     val isInSelectionMode: Boolean = false,
     val isLoading: Boolean = true,
