@@ -28,9 +28,11 @@ public data class Account(
 public fun Account.updateBalanceAmount(
     updatedBalanceAmount: Long,
 ): Account {
-    return this.copy(
-        balanceAmount = this.balanceAmount.copy(
-            value = updatedBalanceAmount,
+    return this
+        .copy(
+            balanceAmount = this.balanceAmount
+                .copy(
+                    value = updatedBalanceAmount,
+                )
         )
-    )
 }

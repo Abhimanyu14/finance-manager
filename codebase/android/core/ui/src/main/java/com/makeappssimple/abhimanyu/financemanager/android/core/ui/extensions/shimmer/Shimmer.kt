@@ -77,15 +77,18 @@ public fun rememberShimmerBrush(
     shimmerColor: Color? = MaterialTheme.colorScheme.primaryContainer,
 ): State<Brush> {
     val shimmerColors = listOf(
-        (backgroundColor ?: MaterialTheme.colorScheme.surfaceVariant).copy(
-            alpha = 0.4F,
-        ),
-        (shimmerColor ?: MaterialTheme.colorScheme.primaryContainer).copy(
-            alpha = 0.8F,
-        ),
-        (backgroundColor ?: MaterialTheme.colorScheme.surfaceVariant).copy(
-            alpha = 0.4F,
-        ),
+        (backgroundColor ?: MaterialTheme.colorScheme.surfaceVariant)
+            .copy(
+                alpha = 0.4F,
+            ),
+        (shimmerColor ?: MaterialTheme.colorScheme.primaryContainer)
+            .copy(
+                alpha = 0.8F,
+            ),
+        (backgroundColor ?: MaterialTheme.colorScheme.surfaceVariant)
+            .copy(
+                alpha = 0.4F,
+            ),
     )
     val transition = rememberInfiniteTransition(
         label = "shimmer_transition",

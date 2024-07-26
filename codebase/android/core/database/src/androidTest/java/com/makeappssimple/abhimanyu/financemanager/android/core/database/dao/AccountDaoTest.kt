@@ -166,12 +166,14 @@ internal class AccountDaoTest {
 
         val testAccountName2 = "IOB"
         accountDao.updateAccounts(
-            testAccounts[1].copy(
-                name = testAccountName2,
-            ),
-            testAccounts[2].copy(
-                id = 6342,
-            ),
+            testAccounts[1]
+                .copy(
+                    name = testAccountName2,
+                ),
+            testAccounts[2]
+                .copy(
+                    id = 6342,
+                ),
         )
         val result = accountDao.getAllAccounts()
 
@@ -200,9 +202,10 @@ internal class AccountDaoTest {
         )
 
         accountDao.deleteAccounts(
-            testAccounts[0].copy(
-                name = "Random", // Data mismatch
-            ),
+            testAccounts[0]
+                .copy(
+                    name = "Random", // Data mismatch
+                ),
             testAccounts[1].copy(
                 id = invalidId,
             ),

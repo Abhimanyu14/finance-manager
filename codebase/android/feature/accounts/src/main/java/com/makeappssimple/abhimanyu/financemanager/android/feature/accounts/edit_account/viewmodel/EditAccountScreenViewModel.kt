@@ -154,9 +154,10 @@ public class EditAccountScreenViewModel @Inject constructor(
                     )
                 )
                 setName(
-                    name.value.copy(
-                        text = originalAccount.name,
-                    )
+                    name.value
+                        .copy(
+                            text = originalAccount.name,
+                        )
                 )
                 setBalanceAmountValue(
                     TextFieldValue(
@@ -290,17 +291,19 @@ public class EditAccountScreenViewModel @Inject constructor(
     // region state events
     private fun clearMinimumAccountBalanceAmountValue() {
         setMinimumAccountBalanceAmountValue(
-            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value.copy(
-                text = "",
-            ),
+            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value
+                .copy(
+                    text = "",
+                ),
         )
     }
 
     private fun clearName() {
         setName(
-            updatedName = name.value.copy(
-                text = "",
-            ),
+            updatedName = name.value
+                .copy(
+                    text = "",
+                ),
         )
     }
 
@@ -379,9 +382,10 @@ public class EditAccountScreenViewModel @Inject constructor(
         val minimumAccountBalanceAmount = if (accountType == AccountType.BANK) {
             (currentAccountValue.minimumAccountBalanceAmount ?: Amount(
                 value = 0L,
-            )).copy(
-                value = minimumAccountBalanceAmountValue.toLongOrZero(),
-            )
+            ))
+                .copy(
+                    value = minimumAccountBalanceAmountValue.toLongOrZero(),
+                )
         } else {
             null
         }

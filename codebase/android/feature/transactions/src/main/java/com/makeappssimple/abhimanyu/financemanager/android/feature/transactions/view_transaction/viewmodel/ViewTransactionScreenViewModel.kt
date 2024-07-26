@@ -143,13 +143,14 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         val transaction = transactionData.transaction
         return transactionData.toTransactionListItemData(
             dateTimeUtil = dateTimeUtil,
-        ).copy(
-            isDeleteButtonEnabled = transaction.refundTransactionIds.isNullOrEmpty(),
-            isDeleteButtonVisible = true,
-            isEditButtonVisible = transaction.transactionType != TransactionType.ADJUSTMENT,
-            isExpanded = true,
-            isRefundButtonVisible = transaction.transactionType == TransactionType.EXPENSE,
         )
+            .copy(
+                isDeleteButtonEnabled = transaction.refundTransactionIds.isNullOrEmpty(),
+                isDeleteButtonVisible = true,
+                isEditButtonVisible = transaction.transactionType != TransactionType.ADJUSTMENT,
+                isExpanded = true,
+                isRefundButtonVisible = transaction.transactionType == TransactionType.EXPENSE,
+            )
     }
     // endregion
 

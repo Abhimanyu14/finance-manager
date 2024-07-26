@@ -43,9 +43,10 @@ public fun MyHorizontalScrollingSelectionGroup(
                 },
             ) { index, data ->
                 ChipUI(
-                    data = data.copy(
-                        isSelected = false,
-                    ),
+                    data = data
+                        .copy(
+                            isSelected = false,
+                        ),
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {

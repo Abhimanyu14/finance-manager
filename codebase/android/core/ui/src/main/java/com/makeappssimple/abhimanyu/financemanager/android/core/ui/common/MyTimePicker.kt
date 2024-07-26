@@ -186,9 +186,10 @@ private fun TimePickerDialog(
                             bottom = 20.dp,
                         ),
                     text = title,
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                    ),
+                    style = MaterialTheme.typography.labelMedium
+                        .copy(
+                            fontWeight = FontWeight.Bold,
+                        ),
                 )
                 content()
                 Row(
@@ -231,12 +232,14 @@ private fun TimePickerTheme(
     content: ComposableContent,
 ) {
     MyAppTheme(
-        lightColorScheme = myLightColorScheme.copy(
-            outline = MaterialTheme.colorScheme.onSurfaceVariant,
-        ),
-        darkColorScheme = myDarkColorScheme.copy(
-            outline = MaterialTheme.colorScheme.onSurfaceVariant,
-        ),
+        lightColorScheme = myLightColorScheme
+            .copy(
+                outline = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
+        darkColorScheme = myDarkColorScheme
+            .copy(
+                outline = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
         content = content,
     )
 }

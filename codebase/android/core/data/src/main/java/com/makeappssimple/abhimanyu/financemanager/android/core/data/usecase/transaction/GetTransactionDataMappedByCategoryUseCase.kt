@@ -39,9 +39,10 @@ public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
             it.amountValue
         }
         return result.map {
-            it.copy(
-                percentage = (it.amountValue.toDouble() / sum) * 100,
-            )
+            it
+                .copy(
+                    percentage = (it.amountValue.toDouble() / sum) * 100,
+                )
         }
     }
 }

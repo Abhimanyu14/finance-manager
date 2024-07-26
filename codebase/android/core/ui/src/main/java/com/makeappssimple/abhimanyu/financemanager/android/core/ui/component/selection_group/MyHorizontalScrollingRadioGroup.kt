@@ -42,9 +42,10 @@ public fun MyHorizontalScrollingRadioGroup(
                 },
             ) { index, chipUIData ->
                 ChipUI(
-                    data = chipUIData.copy(
-                        isSelected = index == data.selectedItemIndex,
-                    ),
+                    data = chipUIData
+                        .copy(
+                            isSelected = index == data.selectedItemIndex,
+                        ),
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {

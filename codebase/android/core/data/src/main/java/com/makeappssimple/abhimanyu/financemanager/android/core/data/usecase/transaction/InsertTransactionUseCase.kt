@@ -257,9 +257,10 @@ public class InsertTransactionUseCase @Inject constructor(
             refundTransactionIds.add(id.toInt())
             updateTransactionUseCase(
                 originalTransaction = originalTransaction,
-                updatedTransaction = originalTransaction.copy(
-                    refundTransactionIds = refundTransactionIds,
-                ),
+                updatedTransaction = originalTransaction
+                    .copy(
+                        refundTransactionIds = refundTransactionIds,
+                    ),
             )
         }
     }

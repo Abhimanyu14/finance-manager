@@ -130,9 +130,10 @@ internal fun EditTransactionForScreenUI(
                                 text = stringResource(
                                     id = titleTextFieldErrorTextStringResourceId,
                                 ),
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error,
-                                ),
+                                style = MaterialTheme.typography.bodySmall
+                                    .copy(
+                                        color = MaterialTheme.colorScheme.error,
+                                    ),
                             )
                         }
                     },

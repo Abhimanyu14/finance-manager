@@ -211,20 +211,22 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                     (uiState.amount.text.toLongOrZero() > maxRefundAmountValue)
                 ) {
                     updateEditTransactionScreenUiState(
-                        updatedEditTransactionScreenUiStateData = uiState.copy(
-                            amountErrorText = maxRefundAmount?.run {
-                                this.toString()
-                            },
-                        )
+                        updatedEditTransactionScreenUiStateData = uiState
+                            .copy(
+                                amountErrorText = maxRefundAmount?.run {
+                                    this.toString()
+                                },
+                            )
                     )
                     false
                 } else if (uiState.amountErrorText.isNotNull() &&
                     (uiState.amount.text.toLongOrZero() <= maxRefundAmountValue)
                 ) {
                     updateEditTransactionScreenUiState(
-                        updatedEditTransactionScreenUiStateData = uiState.copy(
-                            amountErrorText = null,
-                        )
+                        updatedEditTransactionScreenUiStateData = uiState
+                            .copy(
+                                amountErrorText = null,
+                            )
                     )
                     false
                 } else {
@@ -427,18 +429,19 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                         .toEpochMilli()
                     updateTransactionUseCase(
                         originalTransaction = transaction,
-                        updatedTransaction = transaction.copy(
-                            amount = amount,
-                            categoryId = categoryId,
-                            accountFromId = accountFromId,
-                            accountToId = accountToId,
-                            description = uiStateValue.description.text,
-                            title = title,
-                            creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
-                            transactionTimestamp = transactionTimestamp,
-                            transactionForId = transactionForId,
-                            transactionType = selectedTransactionTypeValue,
-                        ),
+                        updatedTransaction = transaction
+                            .copy(
+                                amount = amount,
+                                categoryId = categoryId,
+                                accountFromId = accountFromId,
+                                accountToId = accountToId,
+                                description = uiStateValue.description.text,
+                                title = title,
+                                creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
+                                transactionTimestamp = transactionTimestamp,
+                                transactionForId = transactionForId,
+                                transactionType = selectedTransactionTypeValue,
+                            ),
                     )
 
                     // region transaction account updates
@@ -474,9 +477,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
+                ),
         )
         selectedTransactionType.value = validTransactionTypesForNewTransaction.value.getOrNull(
             index = updatedSelectedTransactionTypeIndex,
@@ -487,19 +491,22 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedAmount: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                amount = updatedAmount.copy(
-                    updatedAmount.text.filterDigits(),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    amount = updatedAmount
+                        .copy(
+                            updatedAmount.text.filterDigits(),
+                        ),
                 ),
-            ),
         )
     }
 
     internal fun clearAmount() {
         updateAmount(
-            updatedAmount = uiState.value.amount.copy(
-                text = "",
-            ),
+            updatedAmount = uiState.value.amount
+                .copy(
+                    text = "",
+                ),
         )
     }
 
@@ -511,17 +518,19 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedTitle: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                title = updatedTitle,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    title = updatedTitle,
+                ),
         )
     }
 
     internal fun clearTitle() {
         updateTitle(
-            updatedTitle = uiState.value.title.copy(
-                text = "",
-            ),
+            updatedTitle = uiState.value.title
+                .copy(
+                    text = "",
+                ),
         )
     }
 
@@ -529,17 +538,19 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedDescription: TextFieldValue,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                description = updatedDescription,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    description = updatedDescription,
+                ),
         )
     }
 
     internal fun clearDescription() {
         updateDescription(
-            updatedDescription = uiState.value.description.copy(
-                text = "",
-            ),
+            updatedDescription = uiState.value.description
+                .copy(
+                    text = "",
+                ),
         )
     }
 
@@ -547,9 +558,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedCategory: Category?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                category = updatedCategory,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    category = updatedCategory,
+                ),
         )
     }
 
@@ -557,9 +569,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                selectedTransactionForIndex = updatedSelectedTransactionForIndex,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    selectedTransactionForIndex = updatedSelectedTransactionForIndex,
+                ),
         )
     }
 
@@ -567,9 +580,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedAccountFrom: Account?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                accountFrom = updatedAccountFrom,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    accountFrom = updatedAccountFrom,
+                ),
         )
     }
 
@@ -577,9 +591,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedAccountTo: Account?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                accountTo = updatedAccountTo,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    accountTo = updatedAccountTo,
+                ),
         )
     }
 
@@ -587,9 +602,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedTransactionDate: LocalDate,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                transactionDate = updatedTransactionDate,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    transactionDate = updatedTransactionDate,
+                ),
         )
     }
 
@@ -597,9 +613,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         updatedTransactionTime: LocalTime,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiStateData = uiState.value.copy(
-                transactionTime = updatedTransactionTime,
-            ),
+            updatedEditTransactionScreenUiStateData = uiState.value
+                .copy(
+                    transactionTime = updatedTransactionTime,
+                ),
         )
     }
 
@@ -845,16 +862,19 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
             selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                 element = originalTransaction.transactionType,
             ),
-            amount = uiState.value.amount.copy(
-                text = abs(originalTransaction.amount.value).toString(),
-                selection = TextRange(abs(originalTransaction.amount.value).toString().length),
-            ),
-            title = uiState.value.title.copy(
-                text = originalTransaction.title,
-            ),
-            description = uiState.value.description.copy(
-                text = originalTransaction.description,
-            ),
+            amount = uiState.value.amount
+                .copy(
+                    text = abs(originalTransaction.amount.value).toString(),
+                    selection = TextRange(abs(originalTransaction.amount.value).toString().length),
+                ),
+            title = uiState.value.title
+                .copy(
+                    text = originalTransaction.title,
+                ),
+            description = uiState.value.description
+                .copy(
+                    text = originalTransaction.description,
+                ),
             category = editingTransactionData?.category,
             selectedTransactionForIndex = transactionForValues.indexOf(
                 element = transactionForValues.firstOrNull {

@@ -319,13 +319,14 @@ public class TransactionsScreenViewModel @Inject constructor(
                             it.value.map { listItem ->
                                 listItem.toTransactionListItemData(
                                     dateTimeUtil = dateTimeUtil,
-                                ).copy(
-                                    isDeleteButtonEnabled = false,
-                                    isDeleteButtonVisible = true,
-                                    isEditButtonVisible = false,
-                                    isExpanded = false,
-                                    isRefundButtonVisible = false,
                                 )
+                                    .copy(
+                                        isDeleteButtonEnabled = false,
+                                        isDeleteButtonVisible = true,
+                                        isEditButtonVisible = false,
+                                        isExpanded = false,
+                                        isRefundButtonVisible = false,
+                                    )
                             }
                         }
                 }
@@ -629,9 +630,10 @@ public class TransactionsScreenViewModel @Inject constructor(
                 it.transactionType == TransactionType.EXPENSE &&
                         selectedTransactions.contains(it.id)
             }.map {
-                it.copy(
-                    transactionForId = transactionForId,
-                )
+                it
+                    .copy(
+                        transactionForId = transactionForId,
+                    )
             }
             updateTransactionsUseCase(
                 transactions = updatedTransactions.toTypedArray(),

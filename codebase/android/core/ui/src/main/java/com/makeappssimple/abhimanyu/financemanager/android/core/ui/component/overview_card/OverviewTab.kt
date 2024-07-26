@@ -233,11 +233,12 @@ private fun OverviewTabIndicator(
                         },
                         y = 0F,
                     ),
-                    size = size.copy(
-                        width = with(density) {
-                            indicatorWidth.toPx()
-                        },
-                    ),
+                    size = size
+                        .copy(
+                            width = with(density) {
+                                indicatorWidth.toPx()
+                            },
+                        ),
                     cornerRadius = CornerRadius(
                         x = size.height / 2,
                         y = size.height / 2,

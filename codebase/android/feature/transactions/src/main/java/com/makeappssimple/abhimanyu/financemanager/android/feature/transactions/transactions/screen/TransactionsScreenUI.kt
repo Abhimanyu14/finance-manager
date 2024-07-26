@@ -311,10 +311,11 @@ internal fun TransactionsScreenUI(
                             val isSelected =
                                 uiState.selectedTransactions.contains(listItem.transactionId)
                             TransactionListItem(
-                                data = listItem.copy(
-                                    isInSelectionMode = uiState.isInSelectionMode,
-                                    isSelected = isSelected,
-                                ),
+                                data = listItem
+                                    .copy(
+                                        isInSelectionMode = uiState.isInSelectionMode,
+                                        isSelected = isSelected,
+                                    ),
                                 handleEvent = { event ->
                                     when (event) {
                                         is TransactionListItemEvent.OnClick -> {

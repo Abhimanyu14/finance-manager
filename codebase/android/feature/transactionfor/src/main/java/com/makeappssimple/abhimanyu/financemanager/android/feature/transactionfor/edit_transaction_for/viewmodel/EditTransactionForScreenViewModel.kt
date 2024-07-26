@@ -83,10 +83,11 @@ public class EditTransactionForScreenViewModel @Inject constructor(
             getOriginalTransactionFor()
 
             setTitle(
-                title.value.copy(
-                    text = transactionFor?.title.orEmpty(),
-                    selection = TextRange(transactionFor?.title.orEmpty().length),
-                )
+                title.value
+                    .copy(
+                        text = transactionFor?.title.orEmpty(),
+                        selection = TextRange(transactionFor?.title.orEmpty().length),
+                    )
             )
 
             completeLoading()
@@ -186,9 +187,10 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private fun updateTransactionFor(
         title: String,
     ) {
-        val updatedTransactionFor = transactionFor?.copy(
-            title = title,
-        ) ?: return
+        val updatedTransactionFor = transactionFor
+            ?.copy(
+                title = title,
+            ) ?: return
         viewModelScope.launch {
             updateTransactionForValuesUseCase(
                 updatedTransactionFor,

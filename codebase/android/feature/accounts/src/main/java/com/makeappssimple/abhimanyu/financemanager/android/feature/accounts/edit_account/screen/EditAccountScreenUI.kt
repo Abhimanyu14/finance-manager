@@ -173,9 +173,10 @@ internal fun EditAccountScreenUI(
                                         text = stringResource(
                                             id = nameTextFieldErrorTextStringResourceId,
                                         ),
-                                        style = MaterialTheme.typography.bodySmall.copy(
-                                            color = MaterialTheme.colorScheme.error,
-                                        ),
+                                        style = MaterialTheme.typography.bodySmall
+                                            .copy(
+                                                color = MaterialTheme.colorScheme.error,
+                                            ),
                                     )
                                 }
                             }

@@ -307,9 +307,10 @@ internal fun EditTransactionScreenUI(
                                         id = R.string.screen_add_or_edit_transaction_amount_error_text,
                                         uiState.amountErrorText,
                                     ),
-                                    style = MaterialTheme.typography.bodySmall.copy(
-                                        color = MaterialTheme.colorScheme.error,
-                                    ),
+                                    style = MaterialTheme.typography.bodySmall
+                                        .copy(
+                                            color = MaterialTheme.colorScheme.error,
+                                        ),
                                 )
                             }
                         }
@@ -432,9 +433,10 @@ internal fun EditTransactionScreenUI(
                                 clearFocus()
                                 handleUIEvent(
                                     EditTransactionScreenUIEvent.OnTitleUpdated(
-                                        updatedTitle = uiState.title.copy(
-                                            text = uiState.titleSuggestions[event.index],
-                                        ),
+                                        updatedTitle = uiState.title
+                                            .copy(
+                                                text = uiState.titleSuggestions[event.index],
+                                            ),
                                     ),
                                 )
                             }

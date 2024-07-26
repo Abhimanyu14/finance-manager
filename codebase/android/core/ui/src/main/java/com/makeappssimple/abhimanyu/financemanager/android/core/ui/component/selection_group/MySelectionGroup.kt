@@ -22,10 +22,11 @@ public fun MySelectionGroup(
         } else {
             data.items.mapIndexed { index, chipUIData ->
                 ChipUI(
-                    data = chipUIData.copy(
-                        isMultiSelect = true,
-                        isSelected = data.selectedItemsIndices.contains(index),
-                    ),
+                    data = chipUIData
+                        .copy(
+                            isMultiSelect = true,
+                            isSelected = data.selectedItemsIndices.contains(index),
+                        ),
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {
