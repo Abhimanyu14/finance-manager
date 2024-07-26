@@ -18,13 +18,7 @@ internal class AddTransactionForScreenUIEventHandler internal constructor(
             }
 
             is AddTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                uiStateAndStateEvents.state.title?.let { title ->
-                    uiStateAndStateEvents.events.setTitle(
-                        title.copy(
-                            text = "",
-                        )
-                    )
-                }
+                uiStateAndStateEvents.events.clearTitle()
             }
 
             is AddTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

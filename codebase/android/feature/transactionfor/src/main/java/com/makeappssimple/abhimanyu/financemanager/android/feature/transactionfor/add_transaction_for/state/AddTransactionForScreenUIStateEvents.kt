@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 internal class AddTransactionForScreenUIStateEvents(
+    val clearTitle: () -> Unit = {},
     val insertTransactionFor: () -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},

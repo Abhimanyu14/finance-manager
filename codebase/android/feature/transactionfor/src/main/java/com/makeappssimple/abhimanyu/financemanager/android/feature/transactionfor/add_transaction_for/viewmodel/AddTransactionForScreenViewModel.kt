@@ -119,6 +119,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                             title = title,
                         ),
                         events = AddTransactionForScreenUIStateEvents(
+                            clearTitle = ::clearTitle,
                             insertTransactionFor = ::insertTransactionFor,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
@@ -177,6 +178,14 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     // region state events
+    private fun clearTitle() {
+        title.update {
+            title.value.copy(
+                text = "",
+            )
+        }
+    }
+
     private fun insertTransactionFor() {
         val uiState = uiStateAndStateEvents.value.state
         viewModelScope.launch {
