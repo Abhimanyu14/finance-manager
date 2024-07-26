@@ -1,12 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,9 +33,29 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Composable
 public fun TransactionListItem(
+    modifier: Modifier = Modifier,
+    data: TransactionListItemData,
+    handleEvent: (event: TransactionListItemEvent) -> Unit = {},
+) {
+    if (data.isLoading) {
+        TransactionListItemLoadingUI(
+            modifier = modifier,
+        )
+    } else {
+        TransactionListItemUI(
+            modifier = modifier,
+            data = data,
+            handleEvent = handleEvent,
+        )
+    }
+}
+
+@Composable
+private fun TransactionListItemUI(
     modifier: Modifier = Modifier,
     data: TransactionListItemData,
     handleEvent: (event: TransactionListItemEvent) -> Unit = {},
@@ -314,4 +336,27 @@ public fun TransactionListItem(
             }
         }
     }
+}
+
+@Composable
+private fun TransactionListItemLoadingUI(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .padding(
+                horizontal = 8.dp,
+                vertical = 4.dp,
+            )
+            .fillMaxWidth()
+            .height(
+                height = 72.dp,
+            )
+            .clip(
+                shape = RoundedCornerShape(
+                    size = 24.dp,
+                ),
+            )
+            .shimmer(),
+    )
 }

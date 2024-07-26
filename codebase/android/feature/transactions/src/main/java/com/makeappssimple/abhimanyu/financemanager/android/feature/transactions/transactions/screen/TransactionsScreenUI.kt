@@ -52,6 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsSortBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.searchbar.MySearchBar
@@ -282,8 +283,8 @@ internal fun TransactionsScreenUI(
                             minHeight = 48.dp,
                         )
                         .padding(
-                            start = 16.dp,
-                            end = 16.dp,
+                            start = 8.dp,
+                            end = 8.dp,
                             top = 6.dp,
                             bottom = 2.dp,
                         ),
@@ -356,6 +357,17 @@ internal fun TransactionsScreenUI(
                     bottom = 72.dp,
                 ),
             ) {
+                if (uiState.transactionDetailsListItemViewData.isEmpty()) {
+                    items(
+                        count = 10,
+                    ) {
+                        TransactionListItem(
+                            data = TransactionListItemData(
+                                isLoading = true,
+                            ),
+                        )
+                    }
+                }
                 uiState.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
                     if (date.isNotBlank()) {
                         stickyHeader {
