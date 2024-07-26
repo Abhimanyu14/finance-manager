@@ -18,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.UpdateTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -57,7 +56,6 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
-    private val myLogger: MyLogger,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : ScreenViewModel, ViewModel() {
