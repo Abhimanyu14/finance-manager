@@ -63,9 +63,10 @@ internal fun OpenSourceLicensesScreenUI(
             showAuthor = true,
             showVersion = true,
             showLicenseBadges = true,
-            colors = LibraryDefaults.libraryColors(
-                backgroundColor = MaterialTheme.colorScheme.background,
-            ),
+            colors = LibraryDefaults
+                .libraryColors(
+                    backgroundColor = MaterialTheme.colorScheme.background,
+                ),
         )
     }
 }
