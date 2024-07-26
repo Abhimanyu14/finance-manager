@@ -63,7 +63,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.event.TransactionsScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIState
 
-private object TransactionsScreenUIConstants
+private object TransactionsScreenUIConstants {
+    val searchSortAndFilterBarMinHeight = 48.dp
+    val searchSortAndFilterBarPaddingBottom = 2.dp
+    val searchSortAndFilterBarPaddingEnd = 8.dp
+    val searchSortAndFilterBarPaddingStart = 8.dp
+    val searchSortAndFilterBarPaddingTop = 6.dp
+    val stickyHeaderTextPaddingBottom = 4.dp
+    val stickyHeaderTextPaddingEnd = 16.dp
+    val stickyHeaderTextPaddingStart = 16.dp
+    val stickyHeaderTextPaddingTop = 8.dp
+    val contentBottomPadding = 72.dp
+}
 
 @Composable
 internal fun TransactionsScreenUI(
@@ -262,90 +273,14 @@ internal fun TransactionsScreenUI(
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {
-            AnimatedVisibility(
-                visible = uiState.isSearchSortAndFilterVisible,
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .defaultMinSize(
-                            minHeight = 48.dp,
-                        )
-                        .padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 6.dp,
-                            bottom = 2.dp,
-                        ),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(
-                                weight = 1F,
-                            )
-                    ) {
-                        MySearchBar(
-                            data = MySearchBarData(
-                                autoFocus = false,
-                                isLoading = uiState.isLoading,
-                                placeholderText = stringResource(
-                                    id = R.string.screen_transactions_searchbar_placeholder,
-                                ),
-                                searchText = uiState.searchText,
-                            ),
-                            handleEvent = { events ->
-                                when (events) {
-                                    is MySearchBarEvent.OnSearch -> {
-                                        state.focusManager.clearFocus()
-                                    }
-
-                                    is MySearchBarEvent.OnSearchTextChange -> {
-                                        handleUIEvent(
-                                            TransactionsScreenUIEvent.OnSearchTextUpdated(
-                                                updatedSearchText = events.updatedSearchText,
-                                            )
-                                        )
-                                    }
-                                }
-                            },
-                        )
-                    }
-                    ActionButton(
-                        data = ActionButtonData(
-                            isLoading = uiState.isLoading,
-                            imageVector = MyIcons.SwapVert,
-                            contentDescriptionStringResourceId = R.string.screen_transactions_sort_button_content_description,
-                        ),
-                        handleEvent = { event ->
-                            when (event) {
-                                is ActionButtonEvent.OnClick -> {
-                                    handleUIEvent(TransactionsScreenUIEvent.OnSortActionButtonClick)
-                                }
-                            }
-                        },
-                    )
-                    ActionButton(
-                        data = ActionButtonData(
-                            isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
-                            isLoading = uiState.isLoading,
-                            imageVector = MyIcons.FilterAlt,
-                            contentDescriptionStringResourceId = R.string.screen_transactions_filter_button_content_description,
-                        ),
-                        handleEvent = { event ->
-                            when (event) {
-                                is ActionButtonEvent.OnClick -> {
-                                    handleUIEvent(TransactionsScreenUIEvent.OnFilterActionButtonClick)
-                                }
-                            }
-                        },
-                    )
-                }
-            }
+            SearchSortAndFilterBar(
+                uiState = uiState,
+                state = state,
+                handleUIEvent = handleUIEvent,
+            )
             LazyColumn(
                 contentPadding = PaddingValues(
-                    bottom = 72.dp,
+                    bottom = TransactionsScreenUIConstants.contentBottomPadding,
                 ),
             ) {
                 if (uiState.transactionDetailsListItemViewData.isEmpty()) {
@@ -362,23 +297,8 @@ internal fun TransactionsScreenUI(
                 uiState.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
                     if (date.isNotBlank()) {
                         stickyHeader {
-                            MyText(
-                                modifier = Modifier
-                                    .background(
-                                        color = MaterialTheme.colorScheme.background,
-                                    )
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        top = 8.dp,
-                                        bottom = 4.dp,
-                                        end = 16.dp,
-                                    ),
+                            StickyHeaderText(
                                 text = date,
-                                style = MaterialTheme.typography.headlineSmall
-                                    .copy(
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                    ),
                             )
                         }
                     }
@@ -433,4 +353,117 @@ internal fun TransactionsScreenUI(
             }
         }
     }
+}
+
+@Composable
+private fun SearchSortAndFilterBar(
+    uiState: TransactionsScreenUIState,
+    state: CommonScreenUIState,
+    handleUIEvent: (uiEvent: TransactionsScreenUIEvent) -> Unit,
+) {
+    AnimatedVisibility(
+        visible = uiState.isSearchSortAndFilterVisible,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .defaultMinSize(
+                    minHeight = TransactionsScreenUIConstants.searchSortAndFilterBarMinHeight,
+                )
+                .padding(
+                    bottom = TransactionsScreenUIConstants.searchSortAndFilterBarPaddingBottom,
+                    end = TransactionsScreenUIConstants.searchSortAndFilterBarPaddingEnd,
+                    start = TransactionsScreenUIConstants.searchSortAndFilterBarPaddingStart,
+                    top = TransactionsScreenUIConstants.searchSortAndFilterBarPaddingTop,
+                ),
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(
+                        weight = 1F,
+                    )
+            ) {
+                MySearchBar(
+                    data = MySearchBarData(
+                        autoFocus = false,
+                        isLoading = uiState.isLoading,
+                        placeholderText = stringResource(
+                            id = R.string.screen_transactions_searchbar_placeholder,
+                        ),
+                        searchText = uiState.searchText,
+                    ),
+                    handleEvent = { events ->
+                        when (events) {
+                            is MySearchBarEvent.OnSearch -> {
+                                state.focusManager.clearFocus()
+                            }
+
+                            is MySearchBarEvent.OnSearchTextChange -> {
+                                handleUIEvent(
+                                    TransactionsScreenUIEvent.OnSearchTextUpdated(
+                                        updatedSearchText = events.updatedSearchText,
+                                    )
+                                )
+                            }
+                        }
+                    },
+                )
+            }
+            ActionButton(
+                data = ActionButtonData(
+                    isLoading = uiState.isLoading,
+                    imageVector = MyIcons.SwapVert,
+                    contentDescriptionStringResourceId = R.string.screen_transactions_sort_button_content_description,
+                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is ActionButtonEvent.OnClick -> {
+                            handleUIEvent(TransactionsScreenUIEvent.OnSortActionButtonClick)
+                        }
+                    }
+                },
+            )
+            ActionButton(
+                data = ActionButtonData(
+                    isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
+                    isLoading = uiState.isLoading,
+                    imageVector = MyIcons.FilterAlt,
+                    contentDescriptionStringResourceId = R.string.screen_transactions_filter_button_content_description,
+                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is ActionButtonEvent.OnClick -> {
+                            handleUIEvent(TransactionsScreenUIEvent.OnFilterActionButtonClick)
+                        }
+                    }
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun StickyHeaderText(
+    text: String,
+) {
+    MyText(
+        modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.background,
+            )
+            .fillMaxWidth()
+            .padding(
+                bottom = TransactionsScreenUIConstants.stickyHeaderTextPaddingBottom,
+                end = TransactionsScreenUIConstants.stickyHeaderTextPaddingEnd,
+                start = TransactionsScreenUIConstants.stickyHeaderTextPaddingStart,
+                top = TransactionsScreenUIConstants.stickyHeaderTextPaddingTop,
+            ),
+        text = text,
+        style = MaterialTheme.typography.headlineSmall
+            .copy(
+                color = MaterialTheme.colorScheme.onBackground,
+            ),
+    )
 }
