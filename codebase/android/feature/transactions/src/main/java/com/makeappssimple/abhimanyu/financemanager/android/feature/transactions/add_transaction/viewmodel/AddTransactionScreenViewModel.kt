@@ -691,7 +691,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     // region common
     private fun getOriginalTransactionId(): Int? {
-        return screenArgs.originalTransactionId
+        return screenArgs.transactionId
     }
     // endregion
 

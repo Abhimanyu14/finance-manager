@@ -804,7 +804,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     }
 
     private suspend fun getTransactionDataForAddingRefundTransactionOrEditingAnyTransaction() {
-        screenArgs.originalTransactionId?.let { id ->
+        screenArgs.transactionId?.let { id ->
             editingTransactionData = getTransactionDataUseCase(
                 id = id,
             )
@@ -834,7 +834,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
 
         var refundedAmountCalculated: Amount? = null
         transactionDataToRefund?.transaction?.refundTransactionIds?.forEach {
-            if (it != screenArgs.originalTransactionId) {
+            if (it != screenArgs.transactionId) {
                 getTransactionDataUseCase(
                     id = it,
                 )?.transaction?.amount?.let { prevRefundedTransactionAmount ->
@@ -961,6 +961,6 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     }
 
     private fun isAddingRefundTransactionOrEditingAnyTransaction(): Boolean {
-        return screenArgs.originalTransactionId.isNotNull()
+        return screenArgs.transactionId.isNotNull()
     }
 }

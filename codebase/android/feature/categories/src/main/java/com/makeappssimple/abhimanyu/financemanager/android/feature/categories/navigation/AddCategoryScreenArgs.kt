@@ -6,13 +6,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
 internal class AddCategoryScreenArgs(
-    val originalTransactionType: String?,
+    val transactionType: String?,
 ) : ScreenArgs {
     constructor(
         savedStateHandle: SavedStateHandle,
         stringDecoder: StringDecoder,
     ) : this(
-        originalTransactionType = savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)?.let {
+        transactionType = savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)?.let {
             stringDecoder.decodeString(
                 encodedString = it,
             )

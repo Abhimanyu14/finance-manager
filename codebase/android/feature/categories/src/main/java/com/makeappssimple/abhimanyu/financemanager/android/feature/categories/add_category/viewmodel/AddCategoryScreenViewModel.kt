@@ -50,7 +50,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
     // endregion
 
     // region initial data
-    private val originalTransactionType: String? = screenArgs.originalTransactionType
+    private val transactionType: String? = screenArgs.transactionType
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.INCOME,
         TransactionType.EXPENSE,
@@ -102,7 +102,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
         viewModelScope.launch {
             startLoading()
             fetchCategories()
-            originalTransactionType?.let { originalTransactionType ->
+            transactionType?.let { originalTransactionType ->
                 setSelectedTransactionTypeIndex(
                     validTransactionTypes.indexOf(
                         element = TransactionType.entries.find { transactionType ->

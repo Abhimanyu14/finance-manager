@@ -93,7 +93,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
 
     // region getCurrentTransactionData
     private suspend fun getCurrentTransactionData() {
-        val currentTransactionId = screenArgs.currentTransactionId ?: return
+        val currentTransactionId = screenArgs.transactionId ?: return
         val transactionData = getTransactionDataUseCase(
             id = currentTransactionId,
         ) ?: return // TODO(Abhi): Show error message

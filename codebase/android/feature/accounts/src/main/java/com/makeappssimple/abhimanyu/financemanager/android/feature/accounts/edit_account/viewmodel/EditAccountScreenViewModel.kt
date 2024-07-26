@@ -16,7 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountsUseCase
@@ -51,7 +50,6 @@ import kotlin.math.abs
 @HiltViewModel
 public class EditAccountScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    stringDecoder: StringDecoder,
     private val dateTimeUtil: DateTimeUtil,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,
@@ -62,7 +60,6 @@ public class EditAccountScreenViewModel @Inject constructor(
     // region screen args
     private val screenArgs = EditAccountScreenArgs(
         savedStateHandle = savedStateHandle,
-        stringDecoder = stringDecoder,
     )
     // endregion
 
@@ -123,7 +120,7 @@ public class EditAccountScreenViewModel @Inject constructor(
         viewModelScope.launch {
             startLoading()
             getAllAccounts()
-            getOriginalAccount()
+            getCurrentAccount()
             completeLoading()
         }
     }
@@ -139,33 +136,33 @@ public class EditAccountScreenViewModel @Inject constructor(
     }
     // endregion
 
-    // region getOriginalAccount
-    private fun getOriginalAccount() {
-        val originalAccountId = screenArgs.originalAccountId ?: return
+    // region getCurrentAccount
+    private fun getCurrentAccount() {
+        val currentAccountId = screenArgs.accountId ?: return
         viewModelScope.launch {
             currentAccount = getAccountUseCase(
-                id = originalAccountId,
+                id = currentAccountId,
             )
 
-            currentAccount?.let { originalAccount ->
+            currentAccount?.let { currentAccount ->
                 setSelectedAccountTypeIndex(
                     validAccountTypesForNewAccount.indexOf(
-                        element = originalAccount.type,
+                        element = currentAccount.type,
                     )
                 )
                 setName(
                     name.value
                         .copy(
-                            text = originalAccount.name,
+                            text = currentAccount.name,
                         )
                 )
                 setBalanceAmountValue(
                     TextFieldValue(
-                        text = originalAccount.balanceAmount.value.toString(),
-                        selection = TextRange(originalAccount.balanceAmount.value.toString().length),
+                        text = currentAccount.balanceAmount.value.toString(),
+                        selection = TextRange(currentAccount.balanceAmount.value.toString().length),
                     )
                 )
-                originalAccount.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
+                currentAccount.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
                     setMinimumAccountBalanceAmountValue(
                         TextFieldValue(
                             text = minimumAccountBalanceAmount.value.toString(),

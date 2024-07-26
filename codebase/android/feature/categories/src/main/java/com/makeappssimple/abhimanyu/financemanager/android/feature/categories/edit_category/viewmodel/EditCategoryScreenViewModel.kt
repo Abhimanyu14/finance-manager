@@ -64,7 +64,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
         TransactionType.EXPENSE,
         TransactionType.INVESTMENT,
     )
-    private val originalTransactionType: String? = screenArgs.originalTransactionType
+    private val transactionType: String? = screenArgs.transactionType
     // endregion
 
     // region UI data
@@ -109,7 +109,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
             startLoading()
             getAllCategories()
             getOriginalCategory()
-            originalTransactionType?.let { originalTransactionType ->
+            transactionType?.let { originalTransactionType ->
                 setSelectedTransactionTypeIndex(
                     validTransactionTypes.indexOf(
                         element = TransactionType.entries.find { transactionType ->
@@ -139,7 +139,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
 
     // region getOriginalCategory
     private fun getOriginalCategory() {
-        screenArgs.originalCategoryId?.let { id ->
+        screenArgs.categoryId?.let { id ->
             viewModelScope.launch {
                 category.update {
                     getCategoryUseCase(

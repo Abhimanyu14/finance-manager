@@ -288,7 +288,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
 
     // region updateValidTransactionTypesForNewTransaction
     private fun updateValidTransactionTypesForNewTransaction() {
-        val originalTransactionId = screenArgs.originalTransactionId
+        val originalTransactionId = screenArgs.transactionId
         val validTransactionTypes = when {
             originalTransactionId != null -> {
                 listOf(
@@ -699,7 +699,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
 
     // region common
     private fun getOriginalTransactionId(): Int? {
-        return screenArgs.originalTransactionId
+        return screenArgs.transactionId
     }
     // endregion
 
