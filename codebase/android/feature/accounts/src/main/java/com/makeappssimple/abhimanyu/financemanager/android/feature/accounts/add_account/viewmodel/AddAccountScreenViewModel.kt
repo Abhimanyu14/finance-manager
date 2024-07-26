@@ -220,7 +220,6 @@ public class AddAccountScreenViewModel @Inject constructor(
             if (isAccountInserted.isEmpty() || isAccountInserted.first() == -1L) {
                 // TODO(Abhi): Show error
             } else {
-
                 navigator.navigateUp()
             }
         }
