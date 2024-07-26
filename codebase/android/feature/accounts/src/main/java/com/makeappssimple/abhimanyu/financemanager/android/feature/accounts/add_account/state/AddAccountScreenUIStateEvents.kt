@@ -17,7 +17,7 @@ internal class AddAccountScreenUIStateEvents(
     val resetScreenSnackbarType: () -> Unit = {},
     val setMinimumAccountBalanceAmountValue: (updatedMinimumAccountBalanceAmountValue: TextFieldValue) -> Unit = {},
     val setName: (updatedName: TextFieldValue) -> Unit = {},
-    val setScreenBottomSheetType: (updatedAddAccountScreenBottomSheetType: AddAccountScreenBottomSheetType) -> Unit = {},
+    val setScreenBottomSheetType: (AddAccountScreenBottomSheetType) -> Unit = {},
     val setScreenSnackbarType: (AddAccountScreenSnackbarType) -> Unit = {},
     val setSelectedAccountTypeIndex: (updatedIndex: Int) -> Unit = {},
 ) : ScreenUIStateEvents

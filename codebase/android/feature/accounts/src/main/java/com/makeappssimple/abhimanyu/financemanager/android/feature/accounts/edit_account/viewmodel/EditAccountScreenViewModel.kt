@@ -30,10 +30,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
@@ -67,15 +67,12 @@ public class EditAccountScreenViewModel @Inject constructor(
     // endregion
 
     // region initial data
-    private val accounts: MutableStateFlow<ImmutableList<Account>> = MutableStateFlow(
-        value = persistentListOf(),
-    )
-    private val originalAccount: MutableStateFlow<Account?> = MutableStateFlow(
-        value = null,
-    )
-    private val validAccountTypes: ImmutableList<AccountType> = AccountType.entries.filter {
-        it != AccountType.CASH
-    }
+    private var allAccounts: ImmutableList<Account> = persistentListOf()
+    private var currentAccount: Account? = null
+    private val validAccountTypesForNewAccount: ImmutableList<AccountType> =
+        AccountType.entries.filter {
+            it != AccountType.CASH
+        }
     // endregion
 
     // region UI data
@@ -86,20 +83,24 @@ public class EditAccountScreenViewModel @Inject constructor(
         MutableStateFlow(
             value = EditAccountScreenBottomSheetType.None,
         )
+    private val screenSnackbarType: MutableStateFlow<EditAccountScreenSnackbarType> =
+        MutableStateFlow(
+            value = EditAccountScreenSnackbarType.None,
+        )
     private val selectedAccountTypeIndex: MutableStateFlow<Int> =
         MutableStateFlow(
-            value = validAccountTypes.indexOf(
+            value = validAccountTypesForNewAccount.indexOf(
                 element = AccountType.BANK,
             ),
         )
     private val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(),
     )
-    private val balanceAmountValue: MutableStateFlow<TextFieldValue> =
+    private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
         MutableStateFlow(
             value = TextFieldValue(),
         )
-    private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
+    private val balanceAmountValue: MutableStateFlow<TextFieldValue> =
         MutableStateFlow(
             value = TextFieldValue(),
         )
@@ -133,12 +134,8 @@ public class EditAccountScreenViewModel @Inject constructor(
     // endregion
 
     // region getAllAccounts
-    private fun getAllAccounts() {
-        viewModelScope.launch {
-            accounts.update {
-                getAllAccountsUseCase()
-            }
-        }
+    private suspend fun getAllAccounts() {
+        allAccounts = getAllAccountsUseCase()
     }
     // endregion
 
@@ -146,15 +143,13 @@ public class EditAccountScreenViewModel @Inject constructor(
     private fun getOriginalAccount() {
         val originalAccountId = screenArgs.originalAccountId ?: return
         viewModelScope.launch {
-            originalAccount.update {
-                getAccountUseCase(
-                    id = originalAccountId,
-                )
-            }
+            currentAccount = getAccountUseCase(
+                id = originalAccountId,
+            )
 
-            originalAccount.value?.let { originalAccount ->
+            currentAccount?.let { originalAccount ->
                 setSelectedAccountTypeIndex(
-                    validAccountTypes.indexOf(
+                    validAccountTypesForNewAccount.indexOf(
                         element = originalAccount.type,
                     )
                 )
@@ -188,47 +183,42 @@ public class EditAccountScreenViewModel @Inject constructor(
             combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
-                accounts,
                 name,
                 selectedAccountTypeIndex,
                 minimumAccountBalanceAmountValue,
-                originalAccount,
                 balanceAmountValue,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
-                        accounts,
                         name,
                         selectedAccountTypeIndex,
                         minimumAccountBalanceAmountValue,
-                        originalAccount,
                         balanceAmountValue,
                     ),
                 ->
 
-                val selectedAccount = validAccountTypes.getOrNull(
+                val selectedAccountType = validAccountTypesForNewAccount.getOrNull(
                     selectedAccountTypeIndex
                 )
-                val accountIsNotCash = originalAccount?.type != AccountType.CASH
-
-                val doesNotExist = accounts.find {
+                val accountIsNotCash = currentAccount?.type != AccountType.CASH
+                val doesNotExist = allAccounts.find {
                     it.name.trim().equalsIgnoringCase(
                         other = name.text.trim(),
                     )
                 }.isNull()
-                val isValidData = name.text.trim() == originalAccount?.name?.trim() || doesNotExist
+                val isValidData = name.text.trim() == currentAccount?.name?.trim() || doesNotExist
 
                 var nameError: EditAccountScreenNameError = EditAccountScreenNameError.None
                 val isCtaButtonEnabled = if (name.text.isBlank()) {
                     false
                 } else if (
-                    (originalAccount.isNull() && isDefaultAccount(
+                    (currentAccount.isNull() && isDefaultAccount(
                         account = name.text.trim(),
-                    )) || (originalAccount.isNotNull() && isDefaultAccount(
+                    )) || (currentAccount.isNotNull() && isDefaultAccount(
                         account = name.text.trim(),
                     ) && isDefaultAccount(
-                        account = originalAccount.name,
+                        account = currentAccount?.name.orEmpty(),
                     ).not()) || !isValidData
                 ) {
                     nameError = EditAccountScreenNameError.AccountExists
@@ -241,23 +231,23 @@ public class EditAccountScreenViewModel @Inject constructor(
                     EditAccountScreenUIStateAndStateEvents(
                         state = EditAccountScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
-                            isLoading = false,
+                            isLoading = isLoading,
                             isCtaButtonEnabled = isCtaButtonEnabled,
                             nameError = nameError,
                             selectedAccountTypeIndex = selectedAccountTypeIndex.orZero(),
-                            accountTypesChipUIDataList = validAccountTypes
+                            accountTypesChipUIDataList = validAccountTypesForNewAccount
                                 .map { accountType ->
                                     ChipUIData(
                                         text = accountType.title,
                                         icon = accountType.icon,
                                     )
                                 },
-                            balanceAmountValue = balanceAmountValue.orEmpty(),
-                            minimumBalanceAmountValue = minimumAccountBalanceAmountValue.orEmpty(),
-                            name = name.orEmpty(),
+                            balanceAmountValue = balanceAmountValue,
+                            minimumBalanceAmountValue = minimumAccountBalanceAmountValue,
+                            name = name,
                             visibilityData = EditAccountScreenUIVisibilityData(
                                 balanceAmountTextField = true,
-                                minimumBalanceAmountTextField = selectedAccount == AccountType.BANK,
+                                minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
                                 nameTextField = accountIsNotCash.orFalse(),
                                 nameTextFieldErrorText = nameError != EditAccountScreenNameError.None,
                                 accountTypesRadioGroup = accountIsNotCash.orFalse(),
@@ -271,6 +261,8 @@ public class EditAccountScreenViewModel @Inject constructor(
                             setMinimumAccountBalanceAmountValue = ::setMinimumAccountBalanceAmountValue,
                             setName = ::setName,
                             setBalanceAmountValue = ::setBalanceAmountValue,
+                            setScreenBottomSheetType = ::setScreenBottomSheetType,
+                            setScreenSnackbarType = ::setScreenSnackbarType,
                             setSelectedAccountTypeIndex = ::setSelectedAccountTypeIndex,
                             updateAccount = ::updateAccount,
                         ),
@@ -354,6 +346,14 @@ public class EditAccountScreenViewModel @Inject constructor(
         }
     }
 
+    private fun setScreenSnackbarType(
+        updatedEditAccountScreenSnackbarType: EditAccountScreenSnackbarType,
+    ) {
+        screenSnackbarType.update {
+            updatedEditAccountScreenSnackbarType
+        }
+    }
+
     private fun setSelectedAccountTypeIndex(
         updatedSelectedAccountTypeIndex: Int,
     ) {
@@ -368,16 +368,16 @@ public class EditAccountScreenViewModel @Inject constructor(
         balanceAmountValue: String,
         minimumAccountBalanceAmountValue: String,
     ) {
-        val originalAccountValue = originalAccount.value ?: return
+        val currentAccountValue = currentAccount ?: return
         val amountChangeValue =
-            balanceAmountValue.toIntOrZero() - originalAccountValue.balanceAmount.value
-        val accountType = if (originalAccountValue.type != AccountType.CASH) {
-            validAccountTypes[selectedAccountTypeIndex]
+            balanceAmountValue.toIntOrZero() - currentAccountValue.balanceAmount.value
+        val accountType = if (currentAccountValue.type != AccountType.CASH) {
+            validAccountTypesForNewAccount[selectedAccountTypeIndex]
         } else {
-            originalAccountValue.type
+            currentAccountValue.type
         }
         val minimumAccountBalanceAmount = if (accountType == AccountType.BANK) {
-            (originalAccountValue.minimumAccountBalanceAmount ?: Amount(
+            (currentAccountValue.minimumAccountBalanceAmount ?: Amount(
                 value = 0L,
             )).copy(
                 value = minimumAccountBalanceAmountValue.toLongOrZero(),
@@ -385,16 +385,16 @@ public class EditAccountScreenViewModel @Inject constructor(
         } else {
             null
         }
-        val updatedAccount = originalAccountValue
+        val updatedAccount = currentAccountValue
             .copy(
-                balanceAmount = originalAccountValue.balanceAmount
+                balanceAmount = currentAccountValue.balanceAmount
                     .copy(
                         value = balanceAmountValue.toLongOrZero(),
                     ),
                 type = accountType,
                 minimumAccountBalanceAmount = minimumAccountBalanceAmount,
                 name = name.ifBlank {
-                    originalAccountValue.name
+                    currentAccountValue.name
                 },
             )
         val accountFromId = if (amountChangeValue < 0L) {
@@ -426,9 +426,7 @@ public class EditAccountScreenViewModel @Inject constructor(
                     ),
                 )
             }
-            updateAccountsUseCase(
-                updatedAccount,
-            )
+            updateAccountsUseCase(updatedAccount)
             navigator.navigateUp()
         }
     }

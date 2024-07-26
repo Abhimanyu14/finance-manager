@@ -89,7 +89,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch {
             startLoading()
-            allAccounts = getAllAccountsUseCase()
+            getAllAccounts()
             completeLoading()
         }
     }
@@ -99,24 +99,30 @@ public class AddAccountScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region getAllAccounts
+    private suspend fun getAllAccounts() {
+        allAccounts = getAllAccountsUseCase()
+    }
+    // endregion
+
     // region observeForUiStateAndStateEventsChanges
     private fun observeForUiStateAndStateEventsChanges() {
         viewModelScope.launch {
             combineAndCollectLatest(
                 isLoading,
                 screenBottomSheetType,
-                name,
-                selectedAccountTypeIndex,
-                minimumAccountBalanceAmountValue,
                 screenSnackbarType,
+                selectedAccountTypeIndex,
+                name,
+                minimumAccountBalanceAmountValue,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
-                        name,
-                        selectedAccountTypeIndex,
-                        minimumAccountBalanceAmountValue,
                         screenSnackbarType,
+                        selectedAccountTypeIndex,
+                        name,
+                        minimumAccountBalanceAmountValue,
                     ),
                 ->
 

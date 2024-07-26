@@ -28,3 +28,9 @@
 
 - If the current transaction is an expense transaction and it has some refund transactions,
   then the transactions which were refunded are called "refund transactions".
+
+## Current Account
+
+### In Edit Account Screen
+
+- The account being edited
