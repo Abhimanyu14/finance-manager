@@ -1,9 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.event
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
 
 internal class AddAccountScreenUIEventHandler internal constructor(
@@ -14,27 +10,7 @@ internal class AddAccountScreenUIEventHandler internal constructor(
     ) {
         when (uiEvent) {
             is AddAccountScreenUIEvent.OnCtaButtonClick -> {
-                uiStateAndStateEvents.state.selectedAccountType?.let { accountType ->
-                    val minimumAccountBalanceAmount =
-                        if (accountType == AccountType.BANK) {
-                            Amount(
-                                value = uiStateAndStateEvents.state.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
-                            )
-                        } else {
-                            null
-                        }
-
-                    uiStateAndStateEvents.events.insertAccount(
-                        Account(
-                            balanceAmount = Amount(
-                                value = 0L,
-                            ),
-                            type = accountType,
-                            minimumAccountBalanceAmount = minimumAccountBalanceAmount,
-                            name = uiStateAndStateEvents.state.nameTextFieldValue.text,
-                        )
-                    )
-                }
+                uiStateAndStateEvents.events.insertAccount()
             }
 
             is AddAccountScreenUIEvent.OnNavigationBackButtonClick -> {

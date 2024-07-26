@@ -8,8 +8,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
@@ -35,7 +36,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class AddAccountScreenViewModel @Inject constructor(
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
-    private val insertAccountsUseCase: InsertAccountsUseCase,
+    private val insertAccountUseCase: InsertAccountUseCase,
     private val navigator: Navigator,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
@@ -218,12 +219,15 @@ public class AddAccountScreenViewModel @Inject constructor(
         )
     }
 
-    private fun insertAccount(
-        account: Account,
-    ) {
+    private fun insertAccount() {
+        val uiState = uiStateAndStateEvents.value.state
         viewModelScope.launch {
-            val isAccountInserted = insertAccountsUseCase(account)
-            if (isAccountInserted.isEmpty() || isAccountInserted.first() == -1L) {
+            val isAccountInserted = insertAccountUseCase(
+                accountType = uiState.selectedAccountType,
+                minimumAccountBalanceAmountValue = uiState.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
+                name = uiState.nameTextFieldValue.text,
+            )
+            if (isAccountInserted == -1L) {
                 // TODO(Abhi): Show error
             } else {
                 navigator.navigateUp()

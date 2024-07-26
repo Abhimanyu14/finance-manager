@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
@@ -11,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 internal class AddAccountScreenUIStateEvents(
     val clearMinimumAccountBalanceAmountValue: () -> Unit = {},
     val clearName: () -> Unit = {},
-    val insertAccount: (account: Account) -> Unit = {},
+    val insertAccount: () -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
     val resetScreenSnackbarType: () -> Unit = {},
