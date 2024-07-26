@@ -204,7 +204,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
 
     private fun observeData() {
-        observeForUiStateAndStateEventsChanges()
+        observeForUiStateAndStateEvents()
         observeForTitleSuggestions()
         observeForSelectedTransactionType()
     }
@@ -376,8 +376,8 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
     // endregion
 
-    // region observeForUiStateAndStateEventsChanges
-    private fun observeForUiStateAndStateEventsChanges() {
+    // region observeForUiStateAndStateEvents
+    private fun observeForUiStateAndStateEvents() {
         viewModelScope.launch {
             combineAndCollectLatest(
                 isLoading,

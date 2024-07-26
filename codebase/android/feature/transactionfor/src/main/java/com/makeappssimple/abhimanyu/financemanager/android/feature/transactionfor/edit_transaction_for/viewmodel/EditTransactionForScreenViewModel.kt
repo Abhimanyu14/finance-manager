@@ -86,7 +86,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     }
 
     private fun observeData() {
-        observeForUiStateAndStateEventsChanges()
+        observeForUiStateAndStateEvents()
     }
     // endregion
 
@@ -120,8 +120,8 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     }
     // endregion
 
-    // region observeForUiStateAndStateEventsChanges
-    private fun observeForUiStateAndStateEventsChanges() {
+    // region observeForUiStateAndStateEvents
+    private fun observeForUiStateAndStateEvents() {
         viewModelScope.launch {
             combineAndCollectLatest(
                 isLoading,

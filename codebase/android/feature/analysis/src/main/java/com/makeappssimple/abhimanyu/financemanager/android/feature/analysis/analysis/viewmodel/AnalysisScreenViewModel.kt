@@ -104,8 +104,8 @@ public class AnalysisScreenViewModel @Inject constructor(
     }
 
     private fun observeData() {
-        observeForUiStateAndStateEventsChanges()
-        observeForTransactionDataMappedByCategoryChanges()
+        observeForUiStateAndStateEvents()
+        observeForTransactionDataMappedByCategory()
     }
     // endregion
 
@@ -119,8 +119,8 @@ public class AnalysisScreenViewModel @Inject constructor(
     }
     // endregion
 
-    // region observeForUiStateAndStateEventsChanges
-    private fun observeForUiStateAndStateEventsChanges() {
+    // region observeForUiStateAndStateEvents
+    private fun observeForUiStateAndStateEvents() {
         viewModelScope.launch {
             combineAndCollectLatest(
                 isLoading,
@@ -166,8 +166,8 @@ public class AnalysisScreenViewModel @Inject constructor(
     }
     // endregion
 
-    // region observeForTransactionDataMappedByCategoryChanges
-    private fun observeForTransactionDataMappedByCategoryChanges() {
+    // region observeForTransactionDataMappedByCategory
+    private fun observeForTransactionDataMappedByCategory() {
         viewModelScope.launch {
             combineAndCollectLatest(
                 isLoading,

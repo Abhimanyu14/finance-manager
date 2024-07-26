@@ -116,7 +116,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
     }
 
     private fun observeData() {
-        observeForUiStateAndStateEventsChanges()
+        observeForUiStateAndStateEvents()
     }
     // endregion
 
@@ -128,8 +128,8 @@ public class AddCategoryScreenViewModel @Inject constructor(
     }
     // endregion
 
-    // region observeForUiStateAndStateEventsChanges
-    private fun observeForUiStateAndStateEventsChanges() {
+    // region observeForUiStateAndStateEvents
+    private fun observeForUiStateAndStateEvents() {
         viewModelScope.launch {
             combineAndCollectLatest(
                 isLoading,
