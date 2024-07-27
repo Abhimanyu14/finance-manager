@@ -19,7 +19,7 @@ internal class SettingsScreenViewTest {
     private lateinit var appVersionText: SemanticsNodeInteraction
 
     @Before
-    internal fun setup() {
+    fun setup() {
         context = ApplicationProvider.getApplicationContext()
 
         linearProgressIndicator = composeTestRule.onNodeWithTag(
@@ -43,8 +43,7 @@ internal class SettingsScreenViewTest {
         )
     }
 
-    @Test
-    internal fun isLoading_isTrue() {
+    @Test fun isLoading_isTrue() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -75,8 +74,7 @@ internal class SettingsScreenViewTest {
         transactionForListItem.assertHasNoClickAction()
     }
 
-    @Test
-    internal fun isLoading_isFalse() {
+    @Test fun isLoading_isFalse() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -107,8 +105,7 @@ internal class SettingsScreenViewTest {
         transactionForListItem.assertHasClickAction()
     }
 
-    @Test
-    internal fun appVersion_isShown() {
+    @Test fun appVersion_isShown() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -127,8 +124,7 @@ internal class SettingsScreenViewTest {
         appVersionText.assertIsDisplayed()
     }
 
-    @Test
-    internal fun appVersion_isNotShown() {
+    @Test fun appVersion_isNotShown() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(

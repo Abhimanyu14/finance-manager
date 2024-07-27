@@ -54,7 +54,7 @@ internal class ViewTransactionScreenViewModelTest {
     private lateinit var viewTransactionScreenViewModel: ViewTransactionScreenViewModel
 
     @Before
-    internal fun setUp() {
+    fun setUp() {
         savedStateHandle = SavedStateHandle()
         stringDecoder = StringDecoderImpl()
         myLogger = FakeMyLoggerImpl()
@@ -73,11 +73,11 @@ internal class ViewTransactionScreenViewModelTest {
     }
 
     @Test
-    internal fun navigateToAddTransactionScreenTest() {
+    fun navigateToAddTransactionScreenTest() {
     }
 
     @Test
-    internal fun navigateToEditTransactionScreenTest() {
+    fun navigateToEditTransactionScreenTest() {
     }
 
     @Test

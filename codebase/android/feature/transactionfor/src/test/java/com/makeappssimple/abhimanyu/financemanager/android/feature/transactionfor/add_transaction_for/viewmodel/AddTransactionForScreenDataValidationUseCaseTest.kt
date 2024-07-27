@@ -12,12 +12,12 @@ internal class AddTransactionForScreenDataValidationUseCaseTest {
     private lateinit var useCase: AddTransactionForScreenDataValidationUseCase
 
     @Before
-    internal fun setUp() {
+    fun setUp() {
         useCase = AddTransactionForScreenDataValidationUseCase()
     }
 
     @Test
-    internal fun enteredTitleIsEmpty_returnsNoErrorWithCtaButtonEnabledFalse() {
+    fun enteredTitleIsEmpty_returnsNoErrorWithCtaButtonEnabledFalse() {
         val result = useCase.invoke(
             allTransactionForValues = persistentListOf(),
             enteredTitle = "",
@@ -31,7 +31,7 @@ internal class AddTransactionForScreenDataValidationUseCaseTest {
     }
 
     @Test
-    internal fun enteredTitleIsBlank_returnsNoErrorWithCtaButtonEnabledFalse() {
+    fun enteredTitleIsBlank_returnsNoErrorWithCtaButtonEnabledFalse() {
         val result = useCase.invoke(
             allTransactionForValues = persistentListOf(),
             enteredTitle = "   ",
@@ -45,7 +45,7 @@ internal class AddTransactionForScreenDataValidationUseCaseTest {
     }
 
     @Test
-    internal fun enteredTitleIsNotBlankAndTransactionForTitleAlreadyUsed_returnsNoErrorWithCtaButtonEnabledFalse() {
+    fun enteredTitleIsNotBlankAndTransactionForTitleAlreadyUsed_returnsNoErrorWithCtaButtonEnabledFalse() {
         val result = useCase.invoke(
             allTransactionForValues = persistentListOf(
                 TransactionFor(
@@ -63,7 +63,7 @@ internal class AddTransactionForScreenDataValidationUseCaseTest {
     }
 
     @Test
-    internal fun enteredTitleIsNotBlankAndTransactionForTitleNotUsed_returnsNoErrorWithCtaButtonEnabledFalse() {
+    fun enteredTitleIsNotBlankAndTransactionForTitleNotUsed_returnsNoErrorWithCtaButtonEnabledFalse() {
         val result = useCase.invoke(
             allTransactionForValues = persistentListOf(),
             enteredTitle = "  Test ",

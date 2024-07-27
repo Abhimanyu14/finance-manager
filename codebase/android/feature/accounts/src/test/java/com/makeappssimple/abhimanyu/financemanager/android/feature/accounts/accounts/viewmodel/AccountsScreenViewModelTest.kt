@@ -20,12 +20,12 @@ internal class AccountsScreenViewModelTest {
 
     /*
     @Before
-    internal fun setUp() {
+    fun setUp() {
     }
     */
 
     @Test
-    internal fun screenUIDataTest() = runTest {
+    fun screenUIDataTest() = runTest {
         Assert.assertEquals(
             4,
             2 + 2,

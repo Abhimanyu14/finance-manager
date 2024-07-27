@@ -6,7 +6,7 @@ import org.junit.Test
 internal class HomeScreenViewModelTest {
 
     @Test
-    internal fun sampleText() {
+    fun sampleText() {
         Assert.assertEquals(4, 2 + 2)
     }
 }

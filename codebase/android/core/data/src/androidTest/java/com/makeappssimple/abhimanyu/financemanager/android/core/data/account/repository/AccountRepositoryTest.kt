@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.fak
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -19,7 +20,6 @@ import org.junit.Test
 import org.mockito.kotlin.verify
 import javax.inject.Inject
 
-@Ignore("Fix Hilt")
 @HiltAndroidTest
 internal class AccountRepositoryTest {
     @get:Rule(order = 0)
@@ -89,11 +89,10 @@ internal class AccountRepositoryTest {
         )
     }
 
-    @Ignore("Fix this test")
     @Test
     fun getAccounts() = runTest {
         accountRepository.getAccounts(
-            ids = listOf(id),
+            ids = listOf(id).toImmutableList(),
         )
 
         verify(
