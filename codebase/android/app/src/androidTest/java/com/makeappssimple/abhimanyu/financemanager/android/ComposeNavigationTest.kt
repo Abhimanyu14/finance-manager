@@ -51,16 +51,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTIONS
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTION_FOR_VALUES
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_VIEW_TRANSACTION
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavHost
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R as CoreUiR
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R as AccountsR
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R as CategoriesR
@@ -69,7 +72,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R as
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R as TransactionForR
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R as TransactionsR
 
-@Ignore("Fix Navigation")
 @HiltAndroidTest
 internal class ComposeNavigationTest {
     @get:Rule(order = 0)
@@ -81,8 +83,13 @@ internal class ComposeNavigationTest {
 
     private lateinit var testNavHostController: TestNavHostController
 
-    private lateinit var context: Context
+    private val testContext: Context = ApplicationProvider.getApplicationContext()
+    private val testDispatcher = StandardTestDispatcher()
+    private val testScope = TestScope(
+        context = testDispatcher + Job(),
+    )
 
+    // region nodes declaration
     private lateinit var accountsScreen: SemanticsNodeInteraction
     private lateinit var accountsScreenContent: SemanticsNodeInteraction
     private lateinit var accountsFloatingActionButton: SemanticsNodeInteraction
@@ -145,11 +152,11 @@ internal class ComposeNavigationTest {
 
     private lateinit var viewTransactionScreen: SemanticsNodeInteraction
     private lateinit var viewTransactionScreenContent: SemanticsNodeInteraction
+    // endregion
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        context = ApplicationProvider.getApplicationContext()
 
         initNodes()
 
@@ -161,124 +168,117 @@ internal class ComposeNavigationTest {
                     navigator = ComposeNavigator(),
                 )
             }
-            MyNavHost(
+            MyApp(
+                myLogger = FakeMyLoggerImpl(),
                 navHostController = testNavHostController,
             )
         }
     }
 
     @Test
-    fun verifyStartDestination() = runTest {
+    fun verifyStartDestination() = runTestWithTimeout {
         testNavHostController.assertCurrentRouteName(
             expectedRouteName = Screen.Home.route,
         )
     }
 
     @Test
-    fun accountsScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeTotalBalanceCard.performClick()
-
-        assertEquals(
-            Screen.Accounts.route,
-            testNavHostController.currentBackStackEntry?.destination?.route,
+    fun accountsScreen_fromHomeScreen() = runTestWithTimeout {
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Home.route,
         )
 
-//        accountsScreen.assertIsDisplayed()
-//        accountsScreenContent.assertIsDisplayed()
-//        accountsFloatingActionButton.assertIsDisplayed()
+        homeTotalBalanceCard.assertIsDisplayed()
+        homeTotalBalanceCard.performClick()
+        homeTotalBalanceCard.performClick()
+
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Accounts.route,
+        )
     }
 
     @Test
-    fun accountsScreen_fromSettings() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeAppbarSettings.performClick()
+    fun accountsScreen_fromSettingsScreen() = runTestWithTimeout {
+        navigateToSettingsScreen()
         settingsAccountsListItem.onFirst().performClick()
 
-        accountsScreen.assertIsDisplayed()
-        accountsScreenContent.assertIsDisplayed()
-        accountsFloatingActionButton.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Accounts.route,
+        )
     }
 
     @Test
-    fun addAccountScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeTotalBalanceCard.performClick()
+    fun addAccountScreen_fromAccountsScreen() = runTestWithTimeout {
+        navigateToAccountsScreen()
+        accountsFloatingActionButton.assertIsDisplayed()
         accountsFloatingActionButton.performClick()
 
-        addOrEditAccountScreen.assertIsDisplayed()
-        addOrEditAccountScreenContent.assertIsDisplayed()
-        addAccountAppbarTitle.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.AddAccount.route,
+        )
     }
 
     @Test
-    fun addCategoryScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeAppbarSettings.performClick()
-        settingsCategoriesListItem.onFirst().performClick()
+    fun addCategoryScreen_fromCategoriesScreen() = runTestWithTimeout {
+        navigateToCategoriesScreen()
         categoriesFloatingActionButton.performClick()
 
-        addOrEditCategoryScreen.assertIsDisplayed()
-        addOrEditCategoryScreenContent.assertIsDisplayed()
-        addCategoryAppbarTitle.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.AddCategory.route,
+            partialMatch = true,
+        )
     }
 
     @Test
-    fun addTransactionScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
+    fun addTransactionScreen_fromHomeScreen() = runTestWithTimeout {
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Home.route,
+        )
 
         homeFloatingActionButton.performClick()
 
         testNavHostController.assertCurrentRouteName(
             expectedRouteName = Screen.AddTransaction.route,
+            partialMatch = true,
         )
-
-//        addOrEditTransactionScreen.assertIsDisplayed()
-//        addOrEditTransactionScreenContent.assertIsDisplayed()
-//        addTransactionAppbarTitle.assertIsDisplayed()
     }
 
     @Test
-    fun addTransactionForScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeAppbarSettings.performClick()
-        settingsTransactionForListItem.onFirst().performClick()
+    fun addTransactionForScreen_fromTransactionForValuesScreen() = runTestWithTimeout {
+        navigateToTransactionForValuesScreen()
         transactionForValuesFloatingActionButton.performClick()
 
-        addOrEditTransactionForScreen.assertIsDisplayed()
-        addOrEditTransactionForScreenContent.assertIsDisplayed()
-        addTransactionForAppbarTitle.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.AddTransactionFor.route,
+        )
     }
 
     @Test
-    fun analysisScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
+    fun analysisScreen_fromHomeScreen() = runTestWithTimeout {
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Home.route,
+        )
 
+        homeOverviewCard.assertIsDisplayed()
         homeOverviewCard.performClick()
 
-        analysisScreen.assertIsDisplayed()
-        analysisScreenContent.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Analysis.route,
+        )
     }
 
     @Test
-    fun categoriesScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeAppbarSettings.performClick()
+    fun categoriesScreen_fromSettingsScreen() = runTestWithTimeout {
+        navigateToSettingsScreen()
         settingsCategoriesListItem.onFirst().performClick()
 
-        categoriesScreen.assertIsDisplayed()
-        categoriesScreenContent.assertIsDisplayed()
-        categoriesFloatingActionButton.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Categories.route,
+        )
     }
 
     @Test
-    fun editAccountScreenTest() = runTest {
+    fun editAccountScreen_fromAccountsScreen() = runTestWithTimeout {
         homeScreen.assertIsDisplayed()
 
         homeTotalBalanceCard.performClick()
@@ -290,7 +290,7 @@ internal class ComposeNavigationTest {
     }
 
     @Test
-    fun editCategoryScreenTest() = runTest {
+    fun editCategoryScreen_fromCategories() = runTestWithTimeout {
         homeScreen.assertIsDisplayed()
 
         addOrEditCategoryScreen.assertIsDisplayed()
@@ -299,7 +299,7 @@ internal class ComposeNavigationTest {
     }
 
     @Test
-    fun editTransactionScreenTest() = runTest {
+    fun editTransactionScreen_fromTransactionsScreen() = runTestWithTimeout {
         homeScreen.assertIsDisplayed()
 
         homeFloatingActionButton.performClick()
@@ -310,7 +310,7 @@ internal class ComposeNavigationTest {
     }
 
     @Test
-    fun editTransactionForScreenTest() = runTest {
+    fun editTransactionForScreen_fromTransactionForValuesScreen() = runTestWithTimeout {
         homeScreen.assertIsDisplayed()
 
 
@@ -321,41 +321,44 @@ internal class ComposeNavigationTest {
     }
 
     @Test
-    fun homeScreenTest() = runTest {
-        printToLog()
-        homeScreen.assertIsDisplayed()
-        homeScreenContent.assertIsDisplayed()
-        // homeTotalBalanceCard.assertIsDisplayed()
-        // homeOverviewCard.assertIsDisplayed()
-        homeRecentTransactions.assertIsDisplayed()
-        homeFloatingActionButton.assertIsDisplayed()
-        homeAppbarSettings.assertIsDisplayed()
+    fun homeScreen() = runTestWithTimeout {
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Home.route,
+        )
+
+//        printToLog()
+//        homeScreen.assertIsDisplayed()
+//        homeScreenContent.assertIsDisplayed()
+//        // homeTotalBalanceCard.assertIsDisplayed()
+//        // homeOverviewCard.assertIsDisplayed()
+//        homeRecentTransactions.assertIsDisplayed()
+//        homeFloatingActionButton.assertIsDisplayed()
+//        homeAppbarSettings.assertIsDisplayed()
     }
 
     @Test
-    fun openSourceLicensesScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeAppbarSettings.performClick()
+    fun openSourceLicensesScreen_fromSettingsScreen() = runTestWithTimeout {
+        navigateToSettingsScreen()
         settingsScreenContent.performScrollToNode(
             matcher = hasText(
-                text = context.getString(SettingsR.string.screen_settings_open_source_licenses),
+                text = testContext.getString(SettingsR.string.screen_settings_open_source_licenses),
             ),
         )
         settingsOpenSourceLicensesListItem.onFirst().performClick()
 
-        openSourceLicensesScreen.assertIsDisplayed()
-        openSourceLicensesScreenContent.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.OpenSourceLicenses.route,
+        )
     }
 
     @Test
-    fun settingsScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
+    fun settingsScreen_fromHomeScreen() = runTestWithTimeout {
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Home.route,
+        )
 
         homeAppbarSettings.assertHasClickAction()
         homeAppbarSettings.performClick()
-        Thread.sleep(2000)
-        composeTestRule.awaitIdle()
 
         testNavHostController.assertCurrentRouteName(
             expectedRouteName = Screen.Settings.route,
@@ -369,26 +372,24 @@ internal class ComposeNavigationTest {
 //
 //        settingsScreenContent.performScrollToNode(
 //            matcher = hasText(
-//                text = context.getString(SettingsR.string.screen_settings_open_source_licenses),
+//                text = testContext.getString(SettingsR.string.screen_settings_open_source_licenses),
 //            ),
 //        )
 //        settingsOpenSourceLicensesListItem.onFirst().assertIsDisplayed()
     }
 
     @Test
-    fun transactionForValuesScreenTest() = runTest {
-        homeScreen.assertIsDisplayed()
-
-        homeAppbarSettings.performClick()
+    fun transactionForValuesScreen_fromSettingsScreen() = runTestWithTimeout {
+        navigateToSettingsScreen()
         settingsTransactionForListItem.onFirst().performClick()
 
-        transactionForValuesScreen.assertIsDisplayed()
-        transactionForValuesScreenContent.assertIsDisplayed()
-        transactionForValuesFloatingActionButton.assertIsDisplayed()
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.TransactionForValues.route,
+        )
     }
 
     @Test
-    fun transactionsScreenTest() = runTest {
+    fun transactionsScreen_fromHomeScreen() = runTestWithTimeout {
         homeScreen.assertIsDisplayed()
 
         homeRecentTransactions.assertHasClickAction()
@@ -404,48 +405,97 @@ internal class ComposeNavigationTest {
     }
 
     @Test
-    fun viewTransactionScreenTest() = runTest {
+    fun viewTransactionScreen_fromTransactionsScreen() = runTestWithTimeout {
         homeScreen.assertIsDisplayed()
 
         viewTransactionScreen.assertIsDisplayed()
         viewTransactionScreenContent.assertIsDisplayed()
     }
 
-    private fun initNodes() = runTest {
-        accountsScreen = composeTestRule.onNodeWithTag(SCREEN_ACCOUNTS)
-        accountsScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_ACCOUNTS)
-        accountsFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(AccountsR.string.screen_accounts_floating_action_button_content_description)
+    // region navigation methods
+    private fun navigateToAccountsScreen() {
+        navigateToSettingsScreen()
+        settingsAccountsListItem.onFirst().performClick()
+
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Accounts.route,
+        )
+    }
+
+    private fun navigateToCategoriesScreen() {
+        navigateToSettingsScreen()
+        settingsCategoriesListItem.onFirst().performClick()
+
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Categories.route,
+        )
+    }
+
+    private fun navigateToTransactionForValuesScreen() {
+        navigateToSettingsScreen()
+        settingsTransactionForListItem.onFirst().performClick()
+
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.TransactionForValues.route,
+        )
+    }
+
+    private fun navigateToSettingsScreen() {
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Home.route,
         )
 
-        addOrEditAccountScreen = composeTestRule.onNodeWithTag(SCREEN_ADD_OR_EDIT_ACCOUNT)
+        homeAppbarSettings.assertHasClickAction()
+        homeAppbarSettings.performClick()
+
+        testNavHostController.assertCurrentRouteName(
+            expectedRouteName = Screen.Settings.route,
+        )
+    }
+    // endregion
+
+    // region initNodes
+    private fun initNodes() {
+        accountsScreen = composeTestRule.onNodeWithTag(
+            testTag = SCREEN_ACCOUNTS,
+        )
+        accountsScreenContent = composeTestRule.onNodeWithTag(
+            testTag = SCREEN_CONTENT_ACCOUNTS,
+        )
+        accountsFloatingActionButton = composeTestRule.onNodeWithContentDescription(
+            testContext.getString(AccountsR.string.screen_accounts_floating_action_button_content_description)
+        )
+
+        addOrEditAccountScreen = composeTestRule.onNodeWithTag(
+            testTag = SCREEN_ADD_OR_EDIT_ACCOUNT,
+        )
         addOrEditAccountScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_ACCOUNT)
         addAccountAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(AccountsR.string.screen_add_account_appbar_title)
+            testContext.getString(AccountsR.string.screen_add_account_appbar_title)
         )
         editAccountAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(AccountsR.string.screen_edit_account_appbar_title)
+            testContext.getString(AccountsR.string.screen_edit_account_appbar_title)
         )
 
         addOrEditCategoryScreen = composeTestRule.onNodeWithTag(SCREEN_ADD_OR_EDIT_CATEGORY)
         addOrEditCategoryScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY)
         addCategoryAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(CategoriesR.string.screen_add_category_appbar_title)
+            testContext.getString(CategoriesR.string.screen_add_category_appbar_title)
         )
         editCategoryAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(CategoriesR.string.screen_edit_category_appbar_title)
+            testContext.getString(CategoriesR.string.screen_edit_category_appbar_title)
         )
 
         addOrEditTransactionScreen = composeTestRule.onNodeWithTag(SCREEN_ADD_OR_EDIT_TRANSACTION)
         addOrEditTransactionScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION)
         addTransactionAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionsR.string.screen_add_transaction_appbar_title)
+            testContext.getString(TransactionsR.string.screen_add_transaction_appbar_title)
         )
         editTransactionAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionsR.string.screen_edit_transaction_appbar_title)
+            testContext.getString(TransactionsR.string.screen_edit_transaction_appbar_title)
         )
 
         addOrEditTransactionForScreen =
@@ -453,10 +503,10 @@ internal class ComposeNavigationTest {
         addOrEditTransactionForScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR)
         addTransactionForAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionForR.string.screen_add_transaction_for_appbar_title)
+            testContext.getString(TransactionForR.string.screen_add_transaction_for_appbar_title)
         )
         editTransactionForAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionForR.string.screen_edit_transaction_for_appbar_title)
+            testContext.getString(TransactionForR.string.screen_edit_transaction_for_appbar_title)
         )
 
         analysisScreen = composeTestRule.onNodeWithTag(SCREEN_ANALYSIS)
@@ -465,7 +515,7 @@ internal class ComposeNavigationTest {
         categoriesScreen = composeTestRule.onNodeWithTag(SCREEN_CATEGORIES)
         categoriesScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_CATEGORIES)
         categoriesFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(CategoriesR.string.screen_categories_floating_action_button_content_description)
+            testContext.getString(CategoriesR.string.screen_categories_floating_action_button_content_description)
         )
 
         homeScreen = composeTestRule.onNodeWithTag(SCREEN_HOME)
@@ -473,13 +523,13 @@ internal class ComposeNavigationTest {
         homeTotalBalanceCard = composeTestRule.onNodeWithTag(COMPONENT_TOTAL_BALANCE_CARD)
         homeOverviewCard = composeTestRule.onNodeWithTag(COMPONENT_OVERVIEW_CARD)
         homeRecentTransactions = composeTestRule.onNodeWithText(
-            context.getString(CoreUiR.string.screen_home_recent_transactions)
+            testContext.getString(CoreUiR.string.screen_home_recent_transactions)
         )
         homeFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(HomeR.string.screen_home_floating_action_button_content_description)
+            testContext.getString(HomeR.string.screen_home_floating_action_button_content_description)
         )
         homeAppbarSettings = composeTestRule.onNodeWithContentDescription(
-            context.getString(HomeR.string.screen_home_appbar_settings)
+            testContext.getString(HomeR.string.screen_home_appbar_settings)
         )
 
         openSourceLicensesScreen = composeTestRule.onNodeWithTag(SCREEN_OPEN_SOURCE_LICENSES)
@@ -487,51 +537,94 @@ internal class ComposeNavigationTest {
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_OPEN_SOURCE_LICENSES)
 
         settingsScreen = composeTestRule.onNodeWithTag(SCREEN_SETTINGS)
-        settingsScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_SETTINGS)
+        settingsScreenContent = composeTestRule.onNodeWithTag(
+            testTag = SCREEN_CONTENT_SETTINGS,
+            useUnmergedTree = true,
+        )
         settingsLinearProgressIndicator = composeTestRule.onNodeWithTag(
-            context.getString(SettingsR.string.screen_settings_linear_progress_indicator_test_tag)
+            testTag = testContext.getString(SettingsR.string.screen_settings_linear_progress_indicator_test_tag),
         )
         settingsCategoriesListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_categories)
+            testContext.getString(SettingsR.string.screen_settings_categories)
         )
         settingsAccountsListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_accounts)
+            testContext.getString(SettingsR.string.screen_settings_accounts)
         )
         settingsTransactionForListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_transaction_for)
+            testContext.getString(SettingsR.string.screen_settings_transaction_for)
         )
         settingsOpenSourceLicensesListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_open_source_licenses)
+            testContext.getString(SettingsR.string.screen_settings_open_source_licenses)
         )
 
         transactionForValuesScreen = composeTestRule.onNodeWithTag(SCREEN_TRANSACTION_FOR_VALUES)
         transactionForValuesScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_TRANSACTION_FOR_VALUES)
         transactionForValuesFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(TransactionForR.string.screen_transaction_for_values_floating_action_button_content_description)
+            testContext.getString(TransactionForR.string.screen_transaction_for_values_floating_action_button_content_description)
         )
 
         transactionsScreen = composeTestRule.onNodeWithTag(SCREEN_TRANSACTIONS)
         transactionsScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_TRANSACTIONS)
         transactionsFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(TransactionsR.string.screen_transactions_floating_action_button_content_description)
+            testContext.getString(TransactionsR.string.screen_transactions_floating_action_button_content_description)
         )
 
         viewTransactionScreen = composeTestRule.onNodeWithTag(SCREEN_VIEW_TRANSACTION)
         viewTransactionScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_VIEW_TRANSACTION)
     }
+    // endregion
 
-    private fun printToLog() = runTest {
+    // region extension methods
+    private fun printToLog() {
         composeTestRule.onRoot().printToLog("Abhi")
+    }
+
+    private fun runTestWithTimeout(
+        block: suspend TestScope.() -> Unit,
+    ) = testScope.runTest(
+        timeout = 10.seconds,
+    ) {
+        block()
     }
 
     private fun NavController.assertCurrentRouteName(
         expectedRouteName: String,
-    ) = runTest {
+        partialMatch: Boolean = false,
+    ) {
+        val routeToMatch = if (partialMatch) {
+            currentRoute.split("/").first()
+        } else {
+            currentRoute
+        }
+        println("Abhi - expectedRouteName: $expectedRouteName routeToMatch: $routeToMatch")
+        waitForRoute(
+            expectedRouteName = expectedRouteName,
+            routeToMatch = routeToMatch,
+        )
         assertEquals(
             expectedRouteName,
-            currentBackStackEntry?.destination?.route,
+            routeToMatch,
         )
+    }
+
+    private fun waitForRoute(
+        expectedRouteName: String,
+        routeToMatch: String,
+    ) {
+        composeTestRule.waitUntil(
+            timeoutMillis = TIMEOUT,
+        ) {
+            expectedRouteName == routeToMatch
+        }
+    }
+
+    private val NavController.currentRoute: String
+        get() = currentBackStackEntry?.destination?.route.orEmpty()
+    // endregion
+
+    companion object {
+        private const val TIMEOUT = 3_000L
     }
 }

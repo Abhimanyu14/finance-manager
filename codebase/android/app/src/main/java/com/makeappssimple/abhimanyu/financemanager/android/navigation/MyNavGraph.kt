@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Command
 import com.makeappssimple.abhimanyu.financemanager.android.viewmodel.MainActivityViewModel
@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.viewmodel.MainActivit
 @Composable
 internal fun MyNavGraph(
     activityViewModel: MainActivityViewModel = hiltViewModel(),
+    navHostController: NavHostController,
 ) {
     val myLogger = LocalMyLogger.current
     myLogger.logInfo(
@@ -23,7 +24,6 @@ internal fun MyNavGraph(
     )
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val keyboardController = LocalSoftwareKeyboardController.current
-    val navHostController = rememberNavController()
 
     LaunchedEffect(
         key1 = lifecycle,

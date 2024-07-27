@@ -20,7 +20,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -389,7 +388,6 @@ internal class MyPreferencesDataSourceTest {
     ) = testScope.runTest(
         timeout = 2.seconds,
     ) {
-        advanceUntilIdle()
         block()
         testDataStore.edit {
             it.clear()
