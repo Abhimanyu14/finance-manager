@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.d
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -46,7 +45,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getAllTransactionForValues(): TestResult = runTest {
+    fun getAllTransactionForValues() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -64,7 +63,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getAllTransactionForValuesFlow(): TestResult = runTest {
+    fun getAllTransactionForValuesFlow() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -86,7 +85,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionForValuesCount(): TestResult = runTest {
+    fun getTransactionForValuesCount() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -100,7 +99,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionFor_returnsDataForValidId(): TestResult = runTest {
+    fun getTransactionFor_returnsDataForValidId() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -116,7 +115,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionFor_returnsNullForInvalidId(): TestResult = runTest {
+    fun getTransactionFor_returnsNullForInvalidId() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -129,7 +128,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun updateTransactionForValues(): TestResult = runTest {
+    fun updateTransactionForValues() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -159,7 +158,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun deleteTransactionFor_deleteDataOfGivenId(): TestResult = runTest {
+    fun deleteTransactionFor_deleteDataOfGivenId() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -180,7 +179,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun deleteTransactionFor_noDeletionForInvalidId(): TestResult = runTest {
+    fun deleteTransactionFor_noDeletionForInvalidId() = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )

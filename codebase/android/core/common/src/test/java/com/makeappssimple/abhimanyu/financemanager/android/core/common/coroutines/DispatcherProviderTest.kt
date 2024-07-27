@@ -5,11 +5,11 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-public class DispatcherProviderTest {
+internal class DispatcherProviderTest {
     private lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         dispatcherProvider = DispatcherProviderImpl(
             defaultDispatcher = Dispatchers.Default,
             ioDispatcher = Dispatchers.IO,
@@ -20,7 +20,7 @@ public class DispatcherProviderTest {
     }
 
     @Test
-    public fun getDefault() {
+    fun getDefault() {
         Assert.assertEquals(
             Dispatchers.Default,
             dispatcherProvider.default,
@@ -28,7 +28,7 @@ public class DispatcherProviderTest {
     }
 
     @Test
-    public fun getIo() {
+    fun getIo() {
         Assert.assertEquals(
             Dispatchers.IO,
             dispatcherProvider.io,
@@ -36,7 +36,7 @@ public class DispatcherProviderTest {
     }
 
     @Test
-    public fun getMain() {
+    fun getMain() {
         Assert.assertEquals(
             Dispatchers.Main,
             dispatcherProvider.main,
@@ -44,7 +44,7 @@ public class DispatcherProviderTest {
     }
 
     @Test
-    public fun getMainImmediate() {
+    fun getMainImmediate() {
         Assert.assertEquals(
             Dispatchers.Main.immediate,
             dispatcherProvider.mainImmediate,
@@ -52,7 +52,7 @@ public class DispatcherProviderTest {
     }
 
     @Test
-    public fun getUnconfined() {
+    fun getUnconfined() {
         Assert.assertEquals(
             Dispatchers.Unconfined,
             dispatcherProvider.unconfined,

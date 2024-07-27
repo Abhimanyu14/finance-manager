@@ -20,7 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDisp
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -83,7 +82,7 @@ internal class ViewTransactionScreenViewModelTest {
 
     @Test
     @Ignore("Fix later")
-    internal fun navigateUpTest(): TestResult = runTest {
+    internal fun navigateUpTest() = runTest {
         navigator = FakeNavigatorImpl()
         initViewModel()
 

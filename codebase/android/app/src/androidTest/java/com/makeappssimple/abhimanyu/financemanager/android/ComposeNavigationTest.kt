@@ -55,7 +55,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Scree
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavHost
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -72,12 +71,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 
 @Ignore("Fix Navigation")
 @HiltAndroidTest
-public class ComposeNavigationTest {
+internal class ComposeNavigationTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    public val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<HiltComponentActivity>, HiltComponentActivity> =
+    val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<HiltComponentActivity>, HiltComponentActivity> =
         createAndroidComposeRule<HiltComponentActivity>()
 
     private lateinit var testNavHostController: TestNavHostController
@@ -148,7 +147,7 @@ public class ComposeNavigationTest {
     private lateinit var viewTransactionScreenContent: SemanticsNodeInteraction
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         hiltRule.inject()
         context = ApplicationProvider.getApplicationContext()
 
@@ -169,14 +168,14 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun verifyStartDestination(): TestResult = runTest {
+    fun verifyStartDestination() = runTest {
         testNavHostController.assertCurrentRouteName(
             expectedRouteName = Screen.Home.route,
         )
     }
 
     @Test
-    public fun accountsScreenTest(): TestResult = runTest {
+    fun accountsScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeTotalBalanceCard.performClick()
@@ -192,7 +191,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun accountsScreen_fromSettings(): TestResult = runTest {
+    fun accountsScreen_fromSettings() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -204,7 +203,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun addAccountScreenTest(): TestResult = runTest {
+    fun addAccountScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeTotalBalanceCard.performClick()
@@ -216,7 +215,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun addCategoryScreenTest(): TestResult = runTest {
+    fun addCategoryScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -229,7 +228,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun addTransactionScreenTest(): TestResult = runTest {
+    fun addTransactionScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeFloatingActionButton.performClick()
@@ -244,7 +243,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun addTransactionForScreenTest(): TestResult = runTest {
+    fun addTransactionForScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -257,7 +256,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun analysisScreenTest(): TestResult = runTest {
+    fun analysisScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeOverviewCard.performClick()
@@ -267,7 +266,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun categoriesScreenTest(): TestResult = runTest {
+    fun categoriesScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -279,7 +278,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun editAccountScreenTest(): TestResult = runTest {
+    fun editAccountScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeTotalBalanceCard.performClick()
@@ -291,7 +290,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun editCategoryScreenTest(): TestResult = runTest {
+    fun editCategoryScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         addOrEditCategoryScreen.assertIsDisplayed()
@@ -300,7 +299,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun editTransactionScreenTest(): TestResult = runTest {
+    fun editTransactionScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeFloatingActionButton.performClick()
@@ -311,7 +310,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun editTransactionForScreenTest(): TestResult = runTest {
+    fun editTransactionForScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
 
@@ -322,7 +321,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun homeScreenTest(): TestResult = runTest {
+    fun homeScreenTest() = runTest {
         printToLog()
         homeScreen.assertIsDisplayed()
         homeScreenContent.assertIsDisplayed()
@@ -334,7 +333,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun openSourceLicensesScreenTest(): TestResult = runTest {
+    fun openSourceLicensesScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -350,7 +349,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun settingsScreenTest(): TestResult = runTest {
+    fun settingsScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.assertHasClickAction()
@@ -377,7 +376,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun transactionForValuesScreenTest(): TestResult = runTest {
+    fun transactionForValuesScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -389,7 +388,7 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun transactionsScreenTest(): TestResult = runTest {
+    fun transactionsScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeRecentTransactions.assertHasClickAction()
@@ -405,14 +404,14 @@ public class ComposeNavigationTest {
     }
 
     @Test
-    public fun viewTransactionScreenTest(): TestResult = runTest {
+    fun viewTransactionScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         viewTransactionScreen.assertIsDisplayed()
         viewTransactionScreenContent.assertIsDisplayed()
     }
 
-    private fun initNodes(): TestResult = runTest {
+    private fun initNodes() = runTest {
         accountsScreen = composeTestRule.onNodeWithTag(SCREEN_ACCOUNTS)
         accountsScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_ACCOUNTS)
         accountsFloatingActionButton = composeTestRule.onNodeWithContentDescription(
@@ -523,13 +522,13 @@ public class ComposeNavigationTest {
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_VIEW_TRANSACTION)
     }
 
-    private fun printToLog(): TestResult = runTest {
+    private fun printToLog() = runTest {
         composeTestRule.onRoot().printToLog("Abhi")
     }
 
     private fun NavController.assertCurrentRouteName(
         expectedRouteName: String,
-    ): TestResult = runTest {
+    ) = runTest {
         assertEquals(
             expectedRouteName,
             currentBackStackEntry?.destination?.route,

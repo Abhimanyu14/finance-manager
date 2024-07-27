@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
-public class DateTimeUtilTest {
+internal class DateTimeUtilTest {
     /*
     // TODO(Abhi): Fix tests
     private val testTimestamp = 1680144857890

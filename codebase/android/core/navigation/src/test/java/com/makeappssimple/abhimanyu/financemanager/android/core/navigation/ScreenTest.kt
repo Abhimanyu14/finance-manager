@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 import org.junit.Assert
 import org.junit.Test
 
-public class ScreenTest {
+internal class ScreenTest {
     private lateinit var screen: Screen
 
     @Test
-    public fun accounts() {
+    fun accounts() {
         screen = Screen.Accounts
         Assert.assertEquals(
             "accounts",
@@ -16,7 +16,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun addAccount() {
+    fun addAccount() {
         screen = Screen.AddAccount
         Assert.assertEquals(
             "add_account",
@@ -25,7 +25,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun addCategory() {
+    fun addCategory() {
         screen = Screen.AddCategory
         Assert.assertEquals(
             "add_category",
@@ -34,7 +34,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun addTransaction() {
+    fun addTransaction() {
         screen = Screen.AddTransaction
         Assert.assertEquals(
             "add_transaction",
@@ -43,7 +43,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun addTransactionFor() {
+    fun addTransactionFor() {
         screen = Screen.AddTransactionFor
         Assert.assertEquals(
             "add_transaction_for",
@@ -52,7 +52,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun analysis() {
+    fun analysis() {
         screen = Screen.Analysis
         Assert.assertEquals(
             "analysis",
@@ -61,7 +61,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun categories() {
+    fun categories() {
         screen = Screen.Categories
         Assert.assertEquals(
             "categories",
@@ -70,7 +70,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun editAccount() {
+    fun editAccount() {
         screen = Screen.EditAccount
         Assert.assertEquals(
             "edit_account",
@@ -79,7 +79,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun editCategory() {
+    fun editCategory() {
         screen = Screen.EditCategory
         Assert.assertEquals(
             "edit_category",
@@ -88,7 +88,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun editTransaction() {
+    fun editTransaction() {
         screen = Screen.EditTransaction
         Assert.assertEquals(
             "edit_transaction",
@@ -97,7 +97,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun editTransactionFor() {
+    fun editTransactionFor() {
         screen = Screen.EditTransactionFor
         Assert.assertEquals(
             "edit_transaction_for",
@@ -106,7 +106,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun home() {
+    fun home() {
         screen = Screen.Home
         Assert.assertEquals(
             "home",
@@ -115,7 +115,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun openSourceLicenses() {
+    fun openSourceLicenses() {
         screen = Screen.OpenSourceLicenses
         Assert.assertEquals(
             "open_source_licenses",
@@ -124,7 +124,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun settings() {
+    fun settings() {
         screen = Screen.Settings
         Assert.assertEquals(
             "settings",
@@ -133,7 +133,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun transactionForValues() {
+    fun transactionForValues() {
         screen = Screen.TransactionForValues
         Assert.assertEquals(
             "transaction_for_values",
@@ -142,7 +142,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun transactions() {
+    fun transactions() {
         screen = Screen.Transactions
         Assert.assertEquals(
             "transactions",
@@ -151,7 +151,7 @@ public class ScreenTest {
     }
 
     @Test
-    public fun viewTransaction() {
+    fun viewTransaction() {
         screen = Screen.ViewTransaction
         Assert.assertEquals(
             "view_transaction",

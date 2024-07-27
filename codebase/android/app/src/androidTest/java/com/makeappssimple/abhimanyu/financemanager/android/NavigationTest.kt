@@ -57,7 +57,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLoggerI
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
@@ -80,16 +79,16 @@ private object NavigationTestConstants {
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-public class NavigationTest {
+internal class NavigationTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    public val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity> =
+    val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity> =
         createAndroidComposeRule<MainActivity>()
 
     @get:Rule(order = 2)
-    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
+    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var context: Context
 
@@ -157,7 +156,7 @@ public class NavigationTest {
     private lateinit var viewTransactionScreenContent: SemanticsNodeInteraction
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         hiltRule.inject()
 
         context = ApplicationProvider.getApplicationContext()
@@ -283,7 +282,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun accountsScreenTest() {
+    fun accountsScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeTotalBalanceCard.performClick()
@@ -294,7 +293,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun accountsScreen_fromSettings() {
+    fun accountsScreen_fromSettings() {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -306,7 +305,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun addAccountScreenTest() {
+    fun addAccountScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeTotalBalanceCard.performClick()
@@ -318,7 +317,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun addCategoryScreenTest() {
+    fun addCategoryScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -331,7 +330,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun addTransactionScreenTest() {
+    fun addTransactionScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeFloatingActionButton.performClick()
@@ -342,7 +341,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun addTransactionForScreenTest() {
+    fun addTransactionForScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -355,7 +354,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun analysisScreenTest() {
+    fun analysisScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeOverviewCard.performClick()
@@ -365,7 +364,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun categoriesScreenTest() {
+    fun categoriesScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -377,7 +376,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun editAccountScreenTest() {
+    fun editAccountScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeTotalBalanceCard.performClick()
@@ -389,7 +388,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun editCategoryScreenTest() {
+    fun editCategoryScreenTest() {
         homeScreen.assertIsDisplayed()
 
         addOrEditCategoryScreen.assertIsDisplayed()
@@ -398,7 +397,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun editTransactionScreenTest() {
+    fun editTransactionScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeFloatingActionButton.performClick()
@@ -409,7 +408,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun editTransactionForScreenTest() {
+    fun editTransactionForScreenTest() {
         homeScreen.assertIsDisplayed()
 
 
@@ -420,7 +419,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun homeScreenTest() {
+    fun homeScreenTest() {
         printToLog()
         homeScreen.assertIsDisplayed()
         homeScreenContent.assertIsDisplayed()
@@ -432,7 +431,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun openSourceLicensesScreenTest() {
+    fun openSourceLicensesScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -448,7 +447,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun settingsScreenTest(): TestResult = runTest {
+    fun settingsScreenTest() = runTest {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -471,7 +470,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun transactionForValuesScreenTest() {
+    fun transactionForValuesScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeAppbarSettings.performClick()
@@ -483,7 +482,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun transactionsScreenTest() {
+    fun transactionsScreenTest() {
         homeScreen.assertIsDisplayed()
 
         homeRecentTransactions.assertHasClickAction()
@@ -495,7 +494,7 @@ public class NavigationTest {
     }
 
     @Test
-    public fun viewTransactionScreenTest() {
+    fun viewTransactionScreenTest() {
         homeScreen.assertIsDisplayed()
 
         viewTransactionScreen.assertIsDisplayed()

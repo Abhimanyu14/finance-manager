@@ -14,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.ge
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.timeInMillis_01_JUN_2022
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -51,7 +50,7 @@ internal class TransactionDaoTest {
     }
 
     @Test
-    fun insertTransactions(): TestResult = runTest {
+    fun insertTransactions() = runTest {
         val transactions = getTestTransactions(
             size = 10,
             frequency = THIRTY_DAYS,
@@ -72,7 +71,7 @@ internal class TransactionDaoTest {
     }
 
     @Test
-    fun getTransactionsBetweenTimestampsFlow(): TestResult = runTest {
+    fun getTransactionsBetweenTimestampsFlow() = runTest {
         val transactions = getTestTransactions(
             size = 100,
             frequency = ONE_HOUR,

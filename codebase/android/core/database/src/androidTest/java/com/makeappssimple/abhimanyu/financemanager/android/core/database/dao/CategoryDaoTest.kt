@@ -10,7 +10,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.C
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -47,7 +46,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getAllCategories(): TestResult = runTest {
+    fun getAllCategories() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -61,7 +60,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getAllCategoriesFlow(): TestResult = runTest {
+    fun getAllCategoriesFlow() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -75,7 +74,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getAllCategoriesCount(): TestResult = runTest {
+    fun getAllCategoriesCount() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -89,7 +88,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getCategory_returnsDataForValidId(): TestResult = runTest {
+    fun getCategory_returnsDataForValidId() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -105,7 +104,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getCategory_returnsNullForInvalidId(): TestResult = runTest {
+    fun getCategory_returnsNullForInvalidId() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -118,7 +117,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategory_deleteDataOfGivenId(): TestResult = runTest {
+    fun deleteCategory_deleteDataOfGivenId() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -139,7 +138,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategory_noDeletionForInvalidId(): TestResult = runTest {
+    fun deleteCategory_noDeletionForInvalidId() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -160,7 +159,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun updateCategories(): TestResult = runTest {
+    fun updateCategories() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -197,7 +196,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategories(): TestResult = runTest {
+    fun deleteCategories() = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )

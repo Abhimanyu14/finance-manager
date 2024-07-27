@@ -10,7 +10,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.A
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -45,7 +44,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAllAccounts(): TestResult = testScope.runTest {
+    fun getAllAccounts() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -60,7 +59,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAllAccountsFlow(): TestResult = testScope.runTest {
+    fun getAllAccountsFlow() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -74,7 +73,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAllAccountsCount(): TestResult = testScope.runTest {
+    fun getAllAccountsCount() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -88,7 +87,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAccount_returnsDataForValidId(): TestResult = testScope.runTest {
+    fun getAccount_returnsDataForValidId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -104,7 +103,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAccount_returnsNullForInvalidId(): TestResult = testScope.runTest {
+    fun getAccount_returnsNullForInvalidId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -117,7 +116,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccount_deleteDataOfGivenId(): TestResult = testScope.runTest {
+    fun deleteAccount_deleteDataOfGivenId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -138,7 +137,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccount_noDeletionForInvalidId(): TestResult = testScope.runTest {
+    fun deleteAccount_noDeletionForInvalidId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -159,7 +158,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun updateAccounts(): TestResult = testScope.runTest {
+    fun updateAccounts() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -196,7 +195,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccounts(): TestResult = testScope.runTest {
+    fun deleteAccounts() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -223,7 +222,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun deleteAllAccounts(): TestResult = testScope.runTest {
+    fun deleteAllAccounts() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )

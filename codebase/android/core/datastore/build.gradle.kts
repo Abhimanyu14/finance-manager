@@ -84,20 +84,31 @@ dependencies {
 
     // JUnit
     testImplementation(libs.junit)
+    androidTestImplementation(libs.junit)
 
     // Android X test
+    testImplementation(libs.bundles.test)
     androidTestImplementation(libs.bundles.test)
 
     // Mockito kotlin
     testImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.mockito.kotlin)
 
     // Coroutines test
     testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.coroutines.test)
 
+    // AndroidX core test
+    testImplementation(libs.core.testing)
+    androidTestImplementation(libs.core.testing)
+
+    // Turbine
+    testImplementation(libs.turbine)
+    androidTestImplementation(libs.turbine)
+
     // Hilt testing
     testImplementation(libs.hilt.android.testing)
-    kspTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.android.compiler)
     kspAndroidTest(libs.hilt.android.compiler)
 }

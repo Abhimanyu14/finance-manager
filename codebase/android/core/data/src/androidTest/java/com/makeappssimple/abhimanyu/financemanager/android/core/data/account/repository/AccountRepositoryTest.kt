@@ -10,7 +10,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.fak
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -60,7 +59,7 @@ internal class AccountRepositoryTest {
 
     @Ignore("Fix this test")
     @Test
-    fun getAllAccounts(): TestResult = runTest {
+    fun getAllAccounts() = runTest {
         accountRepository.getAllAccounts()
 
         verify(
@@ -69,7 +68,7 @@ internal class AccountRepositoryTest {
     }
 
     @Test
-    fun getAllAccountsCount(): TestResult = runTest {
+    fun getAllAccountsCount() = runTest {
         accountRepository.getAllAccountsCount()
 
         verify(
@@ -78,7 +77,7 @@ internal class AccountRepositoryTest {
     }
 
     @Test
-    fun getAccount(): TestResult = runTest {
+    fun getAccount() = runTest {
         accountRepository.getAccount(
             id = id,
         )
@@ -92,7 +91,7 @@ internal class AccountRepositoryTest {
 
     @Ignore("Fix this test")
     @Test
-    fun getAccounts(): TestResult = runTest {
+    fun getAccounts() = runTest {
         accountRepository.getAccounts(
             ids = listOf(id),
         )
@@ -105,7 +104,7 @@ internal class AccountRepositoryTest {
     }
 
     @Test
-    fun insertAccounts(): TestResult = runTest {
+    fun insertAccounts() = runTest {
         accountRepository.insertAccounts(
             accounts = accounts,
         )
@@ -120,7 +119,7 @@ internal class AccountRepositoryTest {
     }
 
     @Test
-    fun updateAccounts(): TestResult = runTest {
+    fun updateAccounts() = runTest {
         accountRepository.updateAccounts(
             accounts = accounts,
         )
@@ -135,7 +134,7 @@ internal class AccountRepositoryTest {
     }
 
     @Test
-    fun deleteAccount(): TestResult = runTest {
+    fun deleteAccount() = runTest {
         accountRepository.deleteAccount(
             id = id,
         )
@@ -148,7 +147,7 @@ internal class AccountRepositoryTest {
     }
 
     @Test
-    fun deleteAccounts(): TestResult = runTest {
+    fun deleteAccounts() = runTest {
         accountRepository.deleteAccounts(
             accounts = accounts,
         )

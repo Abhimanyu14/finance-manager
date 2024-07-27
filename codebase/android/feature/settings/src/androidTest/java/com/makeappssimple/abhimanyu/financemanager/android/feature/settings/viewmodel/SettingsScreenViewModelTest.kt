@@ -77,7 +77,7 @@ internal class SettingsScreenViewModelTest {
     }
 
     @Test
-    internal fun backupDataToDocumentTest(): TestResult = runTest {
+    internal fun backupDataToDocumentTest() = runTest {
         val testUri = Uri.EMPTY
         navigator = FakeNavigatorImpl()
         initViewModel()
@@ -102,7 +102,7 @@ internal class SettingsScreenViewModelTest {
     */
 /*
     @Test
-    internal fun navigateToCategoriesScreenTest(): TestResult = runTest {
+    internal fun navigateToCategoriesScreenTest() = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -124,7 +124,7 @@ internal class SettingsScreenViewModelTest {
     }
 
     @Test
-    internal fun navigateToAccountsScreenTest(): TestResult = runTest {
+    internal fun navigateToAccountsScreenTest() = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -146,7 +146,7 @@ internal class SettingsScreenViewModelTest {
     }
 
     @Test
-    internal fun navigateToTransactionForValuesScreenTest(): TestResult = runTest {
+    internal fun navigateToTransactionForValuesScreenTest() = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -168,7 +168,7 @@ internal class SettingsScreenViewModelTest {
     }
 
     @Test
-    internal fun navigateUpTest(): TestResult = runTest {
+    internal fun navigateUpTest() = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
@@ -190,7 +190,7 @@ internal class SettingsScreenViewModelTest {
     }
 
     @Test
-    internal fun restoreDataFromDocumentTest(): TestResult = runTest {
+    internal fun restoreDataFromDocumentTest() = runTest {
         val testUri = Uri.EMPTY
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
@@ -215,7 +215,7 @@ internal class SettingsScreenViewModelTest {
     }
 
     @Test
-    internal fun recalculateTotalTest(): TestResult = runTest {
+    internal fun recalculateTotalTest() = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )

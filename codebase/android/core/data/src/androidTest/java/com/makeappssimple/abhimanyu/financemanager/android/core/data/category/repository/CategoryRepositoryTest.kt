@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
@@ -21,9 +20,9 @@ import javax.inject.Inject
 
 @Ignore("Fix Hilt")
 @HiltAndroidTest
-public class CategoryRepositoryTest {
+internal class CategoryRepositoryTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     private val categoryDao: CategoryDao = mock()
     private val testId: Int = 1
@@ -31,10 +30,10 @@ public class CategoryRepositoryTest {
     private lateinit var categoryRepository: CategoryRepository
 
     @Inject
-    public lateinit var dispatcherProvider: DispatcherProvider
+    lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         categoryRepository = CategoryRepositoryImpl(
             categoryDao = categoryDao,
             dispatcherProvider = dispatcherProvider,
@@ -42,7 +41,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public fun getAllCategoriesFlow() {
+    fun getAllCategoriesFlow() {
         categoryRepository.getAllCategoriesFlow()
 
         verify(
@@ -52,7 +51,7 @@ public class CategoryRepositoryTest {
 
     @Ignore("Fix this test")
     @Test
-    public fun getAllCategories(): TestResult = runTest {
+    fun getAllCategories() = runTest {
         categoryRepository.getAllCategories()
 
         verify(
@@ -61,7 +60,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public fun getAllCategoriesCount(): TestResult = runTest {
+    fun getAllCategoriesCount() = runTest {
         categoryRepository.getAllCategoriesCount()
 
         verify(
@@ -70,7 +69,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public fun getCategory(): TestResult = runTest {
+    fun getCategory() = runTest {
         categoryRepository.getCategory(
             id = testId,
         )
@@ -83,7 +82,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public fun insertCategories(): TestResult = runTest {
+    fun insertCategories() = runTest {
         categoryRepository.insertCategories(
             categories = testCategories,
         )
@@ -98,7 +97,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public fun updateCategories(): TestResult = runTest {
+    fun updateCategories() = runTest {
         categoryRepository.updateCategories(
             categories = testCategories,
         )
@@ -113,7 +112,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public fun deleteCategory(): TestResult = runTest {
+    fun deleteCategory() = runTest {
         categoryRepository.deleteCategory(
             id = testId,
         )
@@ -126,7 +125,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public fun deleteCategories(): TestResult = runTest {
+    fun deleteCategories() = runTest {
         categoryRepository.deleteCategories(
             categories = testCategories,
         )

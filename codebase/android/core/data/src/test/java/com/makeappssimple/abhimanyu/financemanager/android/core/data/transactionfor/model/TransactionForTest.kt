@@ -6,18 +6,18 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-public class TransactionForTest {
+internal class TransactionForTest {
     private lateinit var transactionFor: TransactionFor
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         transactionFor = TransactionFor(
             title = "Self",
         )
     }
 
     @Test
-    public fun titleToDisplay() {
+    fun titleToDisplay() {
         Assert.assertEquals(
             transactionFor.title.capitalizeWords(),
             transactionFor.titleToDisplay,

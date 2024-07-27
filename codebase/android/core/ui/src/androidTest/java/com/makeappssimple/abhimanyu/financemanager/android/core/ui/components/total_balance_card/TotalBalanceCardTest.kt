@@ -23,12 +23,12 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-public class TotalBalanceCardTest {
+internal class TotalBalanceCardTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    public val composeTestRule: ComposeContentTestRule = createComposeRule()
+    val composeTestRule: ComposeContentTestRule = createComposeRule()
 
     private lateinit var context: Context
 
@@ -36,7 +36,7 @@ public class TotalBalanceCardTest {
     private lateinit var title: SemanticsNodeInteraction
 
     @Before
-    public fun setup() {
+    fun setup() {
         context = ApplicationProvider.getApplicationContext()
 
         balanceAmount = composeTestRule.onNodeWithText("₹1,23,456")
@@ -46,7 +46,7 @@ public class TotalBalanceCardTest {
     }
 
     @Test
-    public fun defaultTest() {
+    fun defaultTest() {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCard(
@@ -64,7 +64,7 @@ public class TotalBalanceCardTest {
     }
 
     @Test
-    public fun hasClick_hasNoClickActionWhenEventIsNull() {
+    fun hasClick_hasNoClickActionWhenEventIsNull() {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCard(
@@ -81,7 +81,7 @@ public class TotalBalanceCardTest {
     }
 
     @Test
-    public fun hasClick_hasClickActionWhenEventIsNotNull() {
+    fun hasClick_hasClickActionWhenEventIsNotNull() {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCard(
@@ -97,7 +97,7 @@ public class TotalBalanceCardTest {
             .assertHasClickAction()
     }
 
-    public companion object {
+    companion object {
         private const val TEST_TOTAL_BALANCE_AMOUNT = 123456L
     }
 }

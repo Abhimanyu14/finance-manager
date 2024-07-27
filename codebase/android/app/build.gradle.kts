@@ -324,8 +324,8 @@ dependencies {
 
     // Hilt testing
     testImplementation(libs.hilt.android.testing)
-    kspTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.android.compiler)
     kspAndroidTest(libs.hilt.android.compiler)
 
     // Jetpack compose UI tests

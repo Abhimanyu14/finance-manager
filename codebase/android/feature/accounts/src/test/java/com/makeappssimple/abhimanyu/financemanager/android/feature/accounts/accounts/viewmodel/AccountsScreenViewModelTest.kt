@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 import app.cash.turbine.turbineScope
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Ignore
@@ -26,7 +25,7 @@ internal class AccountsScreenViewModelTest {
     */
 
     @Test
-    internal fun screenUIDataTest(): TestResult = runTest {
+    internal fun screenUIDataTest() = runTest {
         Assert.assertEquals(
             4,
             2 + 2,

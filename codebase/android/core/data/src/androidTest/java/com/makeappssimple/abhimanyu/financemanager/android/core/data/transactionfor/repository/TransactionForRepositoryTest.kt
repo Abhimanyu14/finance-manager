@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
@@ -21,9 +20,9 @@ import javax.inject.Inject
 
 @Ignore("Fix Hilt")
 @HiltAndroidTest
-public class TransactionForRepositoryTest {
+internal class TransactionForRepositoryTest {
     @get:Rule(order = 0)
-    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+    var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     private val transactionForDao: TransactionForDao = mock()
     private val testId: Int = 1
@@ -31,10 +30,10 @@ public class TransactionForRepositoryTest {
     private lateinit var transactionForRepository: TransactionForRepository
 
     @Inject
-    public lateinit var dispatcherProvider: DispatcherProvider
+    lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         transactionForRepository = TransactionForRepositoryImpl(
             dispatcherProvider = dispatcherProvider,
             transactionForDao = transactionForDao,
@@ -42,7 +41,7 @@ public class TransactionForRepositoryTest {
     }
 
     @Test
-    public fun getAllTransactionForValuesFlow() {
+    fun getAllTransactionForValuesFlow() {
         transactionForRepository.getAllTransactionForValuesFlow()
 
         verify(
@@ -51,7 +50,7 @@ public class TransactionForRepositoryTest {
     }
 
     @Test
-    public fun getTransactionFor(): TestResult = runTest {
+    fun getTransactionFor() = runTest {
         transactionForRepository.getTransactionFor(
             id = testId,
         )
@@ -64,7 +63,7 @@ public class TransactionForRepositoryTest {
     }
 
     @Test
-    public fun insertTransactionForValues(): TestResult = runTest {
+    fun insertTransactionForValues() = runTest {
         transactionForRepository.insertTransactionForValues(
             transactionForValues = testTransactionForValues,
         )
@@ -80,7 +79,7 @@ public class TransactionForRepositoryTest {
     }
 
     @Test
-    public fun updateTransactionForValues(): TestResult = runTest {
+    fun updateTransactionForValues() = runTest {
         transactionForRepository.updateTransactionForValues(
             transactionForValues = testTransactionForValues,
         )
@@ -96,7 +95,7 @@ public class TransactionForRepositoryTest {
     }
 
     @Test
-    public fun deleteTransactionFor(): TestResult = runTest {
+    fun deleteTransactionFor() = runTest {
         transactionForRepository.deleteTransactionFor(
             id = testId,
         )
