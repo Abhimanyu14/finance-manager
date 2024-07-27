@@ -55,7 +55,7 @@ internal class MyPreferencesDataSourceTest {
             scope = testScope.backgroundScope,
             produceFile = {
                 testContext.preferencesDataStoreFile(
-                    name = AppConstants.APP_NAME,
+                    name = AppConstants.DATASTORE_FILE_NAME,
                 )
             },
         )

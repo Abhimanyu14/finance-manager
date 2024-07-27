@@ -42,7 +42,7 @@ public class PreferencesModule {
             ),
             produceFile = {
                 appContext.preferencesDataStoreFile(
-                    name = AppConstants.APP_NAME,
+                    name = AppConstants.DATASTORE_FILE_NAME,
                 )
             },
         )
