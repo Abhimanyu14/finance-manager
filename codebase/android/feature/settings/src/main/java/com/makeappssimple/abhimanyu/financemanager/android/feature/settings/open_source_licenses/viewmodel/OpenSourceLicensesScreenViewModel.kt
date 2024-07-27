@@ -43,9 +43,7 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
         observeData()
     }
 
-    private fun fetchData() {
-        viewModelScope.launch {}
-    }
+    private fun fetchData() {}
 
     private fun observeData() {
         observeForUiStateAndStateEvents()

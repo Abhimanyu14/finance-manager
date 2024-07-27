@@ -65,9 +65,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
         observeData()
     }
 
-    private fun fetchData() {
-        viewModelScope.launch {}
-    }
+    private fun fetchData() {}
 
     private fun observeData() {
         observeForUiStateAndStateEvents()

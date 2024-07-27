@@ -111,9 +111,7 @@ public class HomeScreenViewModel @Inject constructor(
         observeData()
     }
 
-    private fun fetchData() {
-        viewModelScope.launch {}
-    }
+    private fun fetchData() {}
 
     private fun observeData() {
         observeForUiStateAndStateEvents()
@@ -225,6 +223,7 @@ public class HomeScreenViewModel @Inject constructor(
     private fun observeForHomeListItemViewData() {
         viewModelScope.launch {
             getRecentTransactionDataFlowUseCase().collectLatest { transactionDataList ->
+                startLoading()
                 homeListItemViewData.update {
                     transactionDataList.map { transactionData: TransactionData ->
                         transactionData.toTransactionListItemData(
@@ -232,6 +231,7 @@ public class HomeScreenViewModel @Inject constructor(
                         )
                     }
                 }
+                completeLoading()
             }
         }
     }

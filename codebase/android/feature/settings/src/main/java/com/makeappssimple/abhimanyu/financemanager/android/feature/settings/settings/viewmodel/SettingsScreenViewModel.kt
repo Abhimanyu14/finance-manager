@@ -11,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
@@ -20,8 +19,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
@@ -29,17 +28,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class SettingsScreenViewModel @Inject constructor(
-    myPreferencesRepository: MyPreferencesRepository,
     private val alarmKit: AlarmKit,
     private val appVersionUtil: AppVersionUtil,
     private val backupDataUseCase: BackupDataUseCase,
+    private val myPreferencesRepository: MyPreferencesRepository,
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : ScreenViewModel, ViewModel() {
     // region initial data
     private var appVersion: String = ""
-    private val reminder: Flow<Reminder?> = myPreferencesRepository.getReminderFlow()
+    private val isReminderEnabled: MutableStateFlow<Boolean> = MutableStateFlow(
+        value = false,
+    )
     // endregion
 
     // region UI data
@@ -70,12 +71,12 @@ public class SettingsScreenViewModel @Inject constructor(
     }
 
     private fun fetchData() {
-        appVersion = appVersionUtil.getAppVersion()?.versionName.orEmpty()
-        viewModelScope.launch {}
+        getAppVersion()
     }
 
     private fun observeData() {
         observeForUiStateAndStateEvents()
+        observeForReminder()
     }
     // endregion
 
@@ -118,6 +119,12 @@ public class SettingsScreenViewModel @Inject constructor(
     }
     // endregion
 
+    // region getAppVersion
+    private fun getAppVersion() {
+        appVersion = appVersionUtil.getAppVersion()?.versionName.orEmpty()
+    }
+    // endregion
+
     // region observeForUiStateAndStateEvents
     private fun observeForUiStateAndStateEvents() {
         viewModelScope.launch {
@@ -125,13 +132,13 @@ public class SettingsScreenViewModel @Inject constructor(
                 isLoading,
                 screenBottomSheetType,
                 screenSnackbarType,
-                reminder,
+                isReminderEnabled,
             ) {
                     (
                         isLoading,
                         screenBottomSheetType,
                         screenSnackbarType,
-                        reminder,
+                        isReminderEnabled,
                     ),
                 ->
                 uiStateAndStateEvents.update {
@@ -139,7 +146,7 @@ public class SettingsScreenViewModel @Inject constructor(
                         state = SettingsScreenUIState(
                             isBottomSheetVisible = screenBottomSheetType != SettingsScreenBottomSheetType.None,
                             isLoading = isLoading,
-                            isReminderEnabled = reminder?.isEnabled.orFalse(),
+                            isReminderEnabled = isReminderEnabled,
                             screenBottomSheetType = screenBottomSheetType,
                             screenSnackbarType = screenSnackbarType,
                             appVersion = appVersion,
@@ -160,6 +167,20 @@ public class SettingsScreenViewModel @Inject constructor(
                         ),
                     )
                 }
+            }
+        }
+    }
+    // endregion
+
+    // region observeForReminder
+    private fun observeForReminder() {
+        viewModelScope.launch {
+            myPreferencesRepository.getReminderFlow().collectLatest { updatedReminder ->
+                startLoading()
+                isReminderEnabled.update {
+                    updatedReminder?.isEnabled.orFalse()
+                }
+                completeLoading()
             }
         }
     }
