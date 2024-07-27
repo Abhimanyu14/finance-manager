@@ -48,6 +48,7 @@ public class PreferencesModule {
         )
     }
 
+    @Singleton
     @Provides
     public fun providesMyPreferencesDataSource(
         dataStore: DataStore<Preferences>,

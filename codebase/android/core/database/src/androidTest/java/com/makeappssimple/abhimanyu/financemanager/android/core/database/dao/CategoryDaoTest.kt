@@ -32,8 +32,8 @@ internal class CategoryDaoTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         myRoomDatabase = Room
             .inMemoryDatabaseBuilder(
-                context,
-                MyRoomDatabase::class.java,
+                context = context,
+                klass = MyRoomDatabase::class.java,
             )
             .allowMainThreadQueries()
             .build()

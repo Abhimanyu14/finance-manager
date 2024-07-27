@@ -17,6 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 public class RoomModule {
+    @Singleton
     @Provides
     public fun providesInitialDatabasePopulator(
         dispatcherProvider: DispatcherProvider,

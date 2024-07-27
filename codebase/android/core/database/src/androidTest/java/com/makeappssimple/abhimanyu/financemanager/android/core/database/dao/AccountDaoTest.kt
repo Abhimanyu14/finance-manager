@@ -31,10 +31,13 @@ internal class AccountDaoTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        myRoomDatabase = Room.inMemoryDatabaseBuilder(
-            context = context,
-            klass = MyRoomDatabase::class.java,
-        ).build()
+        myRoomDatabase = Room
+            .inMemoryDatabaseBuilder(
+                context = context,
+                klass = MyRoomDatabase::class.java,
+            )
+            .allowMainThreadQueries()
+            .build()
         accountDao = myRoomDatabase.accountDao()
     }
 
