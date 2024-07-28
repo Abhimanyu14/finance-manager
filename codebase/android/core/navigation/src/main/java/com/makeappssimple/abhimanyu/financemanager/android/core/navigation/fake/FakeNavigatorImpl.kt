@@ -13,9 +13,15 @@ public class FakeNavigatorImpl : Navigator {
 
     override fun navigateToAddAccountScreen() {}
 
-    override fun navigateToAddCategoryScreen(transactionType: String) {}
+    override fun navigateToAddCategoryScreen(
+        transactionType: String,
+    ) {
+    }
 
-    override fun navigateToAddTransactionScreen(transactionId: Int?) {}
+    override fun navigateToAddTransactionScreen(
+        transactionId: Int?,
+    ) {
+    }
 
     override fun navigateToAddTransactionForScreen() {}
 
@@ -23,13 +29,25 @@ public class FakeNavigatorImpl : Navigator {
 
     override fun navigateToCategoriesScreen() {}
 
-    override fun navigateToEditAccountScreen(accountId: Int) {}
+    override fun navigateToEditAccountScreen(
+        accountId: Int,
+    ) {
+    }
 
-    override fun navigateToEditCategoryScreen(categoryId: Int) {}
+    override fun navigateToEditCategoryScreen(
+        categoryId: Int,
+    ) {
+    }
 
-    override fun navigateToEditTransactionScreen(transactionId: Int) {}
+    override fun navigateToEditTransactionScreen(
+        transactionId: Int,
+    ) {
+    }
 
-    override fun navigateToEditTransactionForScreen(transactionForId: Int) {}
+    override fun navigateToEditTransactionForScreen(
+        transactionForId: Int,
+    ) {
+    }
 
     override fun navigateToHomeScreen() {}
 
@@ -41,7 +59,10 @@ public class FakeNavigatorImpl : Navigator {
 
     override fun navigateToTransactionsScreen() {}
 
-    override fun navigateToViewTransactionScreen(transactionId: Int) {}
+    override fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    ) {
+    }
 
     override fun navigateUp() {}
 }
