@@ -74,7 +74,7 @@ public abstract class MyRoomDatabase : RoomDatabase() {
 
     public companion object {
         @Volatile
-        private var INSTANCE: MyRoomDatabase? = null
+        private var instance: MyRoomDatabase? = null
 
         /**
          * Reference
@@ -84,18 +84,18 @@ public abstract class MyRoomDatabase : RoomDatabase() {
             context: Context,
             initialDatabasePopulator: InitialDatabasePopulator? = null,
         ): MyRoomDatabase {
-            val tempInstance: MyRoomDatabase? = INSTANCE
+            val tempInstance: MyRoomDatabase? = instance
             if (tempInstance.isNotNull()) {
                 return tempInstance
             }
-            return INSTANCE ?: synchronized(
+            return instance ?: synchronized(
                 lock = this,
             ) {
-                INSTANCE ?: buildDatabase(
+                instance ?: buildDatabase(
                     context = context,
                     initialDatabasePopulator = initialDatabasePopulator
                 ).also {
-                    INSTANCE = it
+                    instance = it
                 }
             }
         }
@@ -114,6 +114,17 @@ public abstract class MyRoomDatabase : RoomDatabase() {
                 override fun onOpen(
                     db: SupportSQLiteDatabase,
                 ) {
+                    /*
+                    // TODO-Abhi: Using Work Manager
+                    val oneTimeWorkRequest: OneTimeWorkRequest =
+                        OneTimeWorkRequestBuilder<InitialDatabasePopulationWorker>()
+                            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                            .build()
+                    WorkManager
+                        .getInstance(context)
+                        .enqueue(oneTimeWorkRequest)
+                    */
+
                     // do something every time database is open
                     Executors
                         .newSingleThreadScheduledExecutor()

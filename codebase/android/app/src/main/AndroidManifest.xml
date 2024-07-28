@@ -81,6 +81,13 @@
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
 
+        <!-- WorkManager - https://developer.android.com/develop/background-work/background-tasks/persistent/configuration/custom-configuration#remove-default -->
+        <!-- If you want to disable android.startup completely. -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove" />
+
     </application>
 
 </manifest>

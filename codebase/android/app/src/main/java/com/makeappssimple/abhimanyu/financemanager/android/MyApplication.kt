@@ -4,11 +4,23 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.makeappssimple.abhimanyu.financemanager.android.core.notificationkit.NotificationConstants
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
-public class MyApplication : Application() {
+public class MyApplication : Application(), Configuration.Provider {
+    @Inject
+    public lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(
+                workerFactory = workerFactory,
+            )
+            .build()
 
     override fun onCreate() {
         super.onCreate()

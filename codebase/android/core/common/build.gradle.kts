@@ -78,7 +78,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 
     // KotlinX serialization
     implementation(libs.serialization)

@@ -73,7 +73,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 
     // KSP
     implementation(libs.ksp)
@@ -110,9 +110,9 @@ dependencies {
     implementation(libs.hilt.android.testing)
     testImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.hilt.android.testing)
-    ksp(libs.hilt.android.compiler)
-    kspTest(libs.hilt.android.compiler)
-    kspAndroidTest(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
 
     // Jetpack compose UI tests
     androidTestImplementation(libs.compose.ui.test.junit4)

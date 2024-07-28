@@ -71,7 +71,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 
     // Testing
 
@@ -89,5 +89,5 @@ dependencies {
 
     // Hilt testing
     implementation(libs.hilt.android.testing)
-    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 }

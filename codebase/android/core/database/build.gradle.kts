@@ -100,7 +100,8 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.work)
+    ksp(libs.hilt.compiler)
 
     // KSP
     implementation(libs.ksp)
@@ -118,6 +119,10 @@ dependencies {
     implementation(libs.bundles.room)
     ksp(libs.room.compiler)
     androidTestImplementation(libs.room.testing)
+
+    // Work manager
+    implementation(libs.work.runtime)
+    androidTestImplementation(libs.work.testing)
 
     detektPlugins(libs.bundles.detekt)
 
