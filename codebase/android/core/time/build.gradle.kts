@@ -74,5 +74,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 }

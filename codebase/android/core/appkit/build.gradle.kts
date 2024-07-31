@@ -54,5 +54,6 @@ android {
 }
 
 dependencies {
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 }

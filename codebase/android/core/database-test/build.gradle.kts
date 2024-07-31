@@ -78,6 +78,12 @@ dependencies {
     // KSP
     implementation(libs.ksp)
 
+    // Room
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
+    androidTestImplementation(libs.room.testing)
+
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 
     // Testing

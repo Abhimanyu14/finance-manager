@@ -78,6 +78,7 @@ dependencies {
     // KSP
     implementation(libs.ksp)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 
     // Testing

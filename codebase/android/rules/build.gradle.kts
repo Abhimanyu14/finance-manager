@@ -59,5 +59,6 @@ dependencies {
     // Detekt API
     compileOnly(libs.detekt.api)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 }

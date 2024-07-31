@@ -62,5 +62,6 @@ dependencies {
     // Androidx core
     implementation(libs.androidx.core)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 }

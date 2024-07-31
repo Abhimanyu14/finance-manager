@@ -78,6 +78,7 @@ dependencies {
     // Data store
     implementation(libs.datastore)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 
     // Testing

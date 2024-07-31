@@ -303,6 +303,7 @@ dependencies {
     // Firebase perf
     implementation(libs.firebase.perf)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 
     // Testing

@@ -87,6 +87,7 @@ dependencies {
     // KotlinX collections immutable
     implementation(libs.collections.immutable)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 
     // Testing

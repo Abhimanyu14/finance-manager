@@ -70,6 +70,7 @@ dependencies {
     // Okhttp logging interceptor
     implementation(libs.okhttp)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 
     // Testing

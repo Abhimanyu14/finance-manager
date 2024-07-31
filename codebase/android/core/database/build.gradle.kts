@@ -124,6 +124,7 @@ dependencies {
     implementation(libs.work.runtime)
     androidTestImplementation(libs.work.testing)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 
     // Testing

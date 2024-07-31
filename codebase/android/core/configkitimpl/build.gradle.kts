@@ -84,5 +84,6 @@ dependencies {
     // Firebase remote config
     implementation(libs.firebase.config)
 
+    // Detekt
     detektPlugins(libs.bundles.detekt)
 }
