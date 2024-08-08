@@ -757,10 +757,10 @@ public class AddTransactionScreenViewModel @Inject constructor(
             )
             if (isTransactionInsertedSuccessfully) {
                 setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
+                navigator.navigateUp()
             } else {
                 setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionFailed)
             }
-            navigator.navigateUp()
         }
     }
 
