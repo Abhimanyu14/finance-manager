@@ -8,8 +8,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalMinimumBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
@@ -25,9 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toNonSignedString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
@@ -43,13 +39,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.Instant
 import javax.inject.Inject
 import kotlin.math.abs
-
-private object HomeScreenViewModelConstants {
-    const val DEFAULT_OVERVIEW_TAB_SELECTION = 1
-}
 
 @HiltViewModel
 public class HomeScreenViewModel @Inject constructor(
@@ -62,39 +53,16 @@ public class HomeScreenViewModel @Inject constructor(
     private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel() {
+) : ScreenViewModel(), HomeScreenUIStateDelegate by HomeScreenUIStateDelegateImpl(
+    dateTimeUtil = dateTimeUtil,
+    navigator = navigator,
+) {
     // region initial data
     private val isBackupCardVisible: Flow<Boolean> = shouldShowBackupCardUseCase()
     private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
     private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
         getAccountsTotalMinimumBalanceAmountValueUseCase()
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val isBalanceVisible: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = false,
-    )
-    private val screenBottomSheetType: MutableStateFlow<HomeScreenBottomSheetType> =
-        MutableStateFlow(
-            value = HomeScreenBottomSheetType.None,
-        )
-    private val homeListItemViewData: MutableStateFlow<ImmutableList<TransactionListItemData>> =
-        MutableStateFlow(
-            value = persistentListOf(),
-        )
-    private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = HomeScreenViewModelConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
-    )
-    private val selectedTimestamp: MutableStateFlow<Long> = MutableStateFlow(
-        value = dateTimeUtil.getCurrentTimeMillis(),
-    )
-    private val overviewCardData: MutableStateFlow<OverviewCardViewModelData?> = MutableStateFlow(
-        value = null,
-    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -366,135 +334,6 @@ public class HomeScreenViewModel @Inject constructor(
             OverviewTabOption.YEAR -> {
                 dateTimeUtil.getFormattedYear(timestamp).uppercase()
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun handleOverviewCardAction(
-        overviewCardAction: OverviewCardAction,
-    ) {
-        val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex.value]
-        when (overviewCardAction) {
-            OverviewCardAction.NEXT -> {
-                when (overviewTabOption) {
-                    OverviewTabOption.DAY -> {
-                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
-                            .toZonedDateTime()
-                            .plusDays(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.MONTH -> {
-                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
-                            .toZonedDateTime()
-                            .plusMonths(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.YEAR -> {
-                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
-                            .toZonedDateTime()
-                            .plusYears(1)
-                            .toEpochMilli()
-                    }
-                }
-            }
-
-            OverviewCardAction.PREV -> {
-                when (overviewTabOption) {
-                    OverviewTabOption.DAY -> {
-                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
-                            .toZonedDateTime()
-                            .minusDays(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.MONTH -> {
-                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
-                            .toZonedDateTime()
-                            .minusMonths(1)
-                            .toEpochMilli()
-                    }
-
-                    OverviewTabOption.YEAR -> {
-                        selectedTimestamp.value = Instant.ofEpochMilli(selectedTimestamp.value)
-                            .toZonedDateTime()
-                            .minusYears(1)
-                            .toEpochMilli()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun navigateToAccountsScreen() {
-        navigator.navigateToAccountsScreen()
-    }
-
-    private fun navigateToAddTransactionScreen() {
-        navigator.navigateToAddTransactionScreen()
-    }
-
-    private fun navigateToAnalysisScreen() {
-        navigator.navigateToAnalysisScreen()
-    }
-
-    private fun navigateToSettingsScreen() {
-        navigator.navigateToSettingsScreen()
-    }
-
-    private fun navigateToTransactionsScreen() {
-        navigator.navigateToTransactionsScreen()
-    }
-
-    private fun navigateToViewTransactionScreen(
-        transactionId: Int,
-    ) {
-        navigator.navigateToViewTransactionScreen(
-            transactionId = transactionId,
-        )
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedHomeScreenBottomSheetType = HomeScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setBalanceVisible(
-        updatedIsBalanceVisible: Boolean,
-    ) {
-        isBalanceVisible.update {
-            updatedIsBalanceVisible
-        }
-    }
-
-    private fun setOverviewTabSelectionIndex(
-        updatedOverviewTabSelectionIndex: Int,
-    ) {
-        overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedHomeScreenBottomSheetType: HomeScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedHomeScreenBottomSheetType
         }
     }
     // endregion
