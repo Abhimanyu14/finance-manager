@@ -64,7 +64,7 @@ public class AnalysisScreenViewModel @Inject constructor(
     private var oldestTransactionLocalDate: LocalDate? = null
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

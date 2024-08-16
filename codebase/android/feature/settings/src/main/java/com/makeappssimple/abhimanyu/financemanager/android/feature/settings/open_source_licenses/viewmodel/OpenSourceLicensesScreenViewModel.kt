@@ -19,7 +19,7 @@ import javax.inject.Inject
 public class OpenSourceLicensesScreenViewModel @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
 ) : ScreenViewModel() {
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

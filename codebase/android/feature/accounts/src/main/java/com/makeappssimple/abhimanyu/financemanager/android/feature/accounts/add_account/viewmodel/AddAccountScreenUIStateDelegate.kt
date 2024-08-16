@@ -14,7 +14,7 @@ internal interface AddAccountScreenUIStateDelegate {
     val validAccountTypesForNewAccount: ImmutableList<AccountType>
     // endregion
 
-    // region UI data
+    // region UI state
     val isLoading: MutableStateFlow<Boolean>
     val screenBottomSheetType: MutableStateFlow<AddAccountScreenBottomSheetType>
     val screenSnackbarType: MutableStateFlow<AddAccountScreenSnackbarType>

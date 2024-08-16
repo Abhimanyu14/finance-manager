@@ -53,7 +53,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
         persistentListOf()
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

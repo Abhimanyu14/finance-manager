@@ -113,7 +113,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     private var isCtaButtonEnabled: Boolean = false
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

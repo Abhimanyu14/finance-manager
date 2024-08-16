@@ -71,7 +71,7 @@ public class EditAccountScreenViewModel @Inject constructor(
         }
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

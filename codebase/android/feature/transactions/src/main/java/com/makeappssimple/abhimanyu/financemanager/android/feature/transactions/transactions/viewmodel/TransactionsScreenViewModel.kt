@@ -84,7 +84,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

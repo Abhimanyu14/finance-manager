@@ -32,7 +32,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

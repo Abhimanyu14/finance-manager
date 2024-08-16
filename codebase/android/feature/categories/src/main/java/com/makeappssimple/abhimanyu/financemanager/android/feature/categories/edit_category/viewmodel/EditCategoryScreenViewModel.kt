@@ -66,7 +66,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
     private val transactionType: String? = screenArgs.transactionType
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

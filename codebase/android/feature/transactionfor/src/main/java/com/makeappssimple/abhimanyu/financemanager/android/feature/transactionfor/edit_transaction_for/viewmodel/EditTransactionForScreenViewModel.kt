@@ -48,7 +48,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private var currentTransactionFor: TransactionFor? = null
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

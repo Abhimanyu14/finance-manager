@@ -71,7 +71,7 @@ public class HomeScreenViewModel @Inject constructor(
         getAccountsTotalMinimumBalanceAmountValueUseCase()
     // endregion
 
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )

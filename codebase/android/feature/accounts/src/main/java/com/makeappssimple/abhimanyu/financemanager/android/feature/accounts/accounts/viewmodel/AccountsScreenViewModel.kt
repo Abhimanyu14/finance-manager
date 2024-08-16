@@ -46,7 +46,7 @@ public class AccountsScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
 ) : ScreenViewModel() {
-    // region UI data
+    // region UI state
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )
