@@ -45,20 +45,11 @@ public class AccountsScreenViewModel @Inject constructor(
     private val getIsAccountsUsedInTransactionFlowUseCase: GetIsAccountsUsedInTransactionFlowUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-) : ScreenViewModel() {
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<AccountsScreenBottomSheetType> =
-        MutableStateFlow(
-            value = AccountsScreenBottomSheetType.None,
-        )
-    private val clickedItemId: MutableStateFlow<Int?> = MutableStateFlow(
-        value = null,
-    )
-    // endregion
-
+) : ScreenViewModel(), AccountsScreenUIStateDelegate by AccountsScreenUIStateDelegateImpl(
+    deleteAccountUseCase = deleteAccountUseCase,
+    myPreferencesRepository = myPreferencesRepository,
+    navigator = navigator,
+) {
     // region observables
     private val accountsListItemDataList: MutableStateFlow<ImmutableList<AccountsListItemData>> =
         MutableStateFlow(
@@ -127,13 +118,23 @@ public class AccountsScreenViewModel @Inject constructor(
                             accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
                         ),
                         events = AccountsScreenUIStateEvents(
-                            deleteAccount = ::deleteAccount,
+                            deleteAccount = {
+                                deleteAccount(
+                                    coroutineScope = viewModelScope,
+                                    accountId = it,
+                                )
+                            },
                             navigateToAddAccountScreen = ::navigateToAddAccountScreen,
                             navigateToEditAccountScreen = ::navigateToEditAccountScreen,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             setClickedItemId = ::setClickedItemId,
-                            setDefaultAccountIdInDataStore = ::setDefaultAccountIdInDataStore,
+                            setDefaultAccountIdInDataStore = {
+                                setDefaultAccountIdInDataStore(
+                                    coroutineScope = viewModelScope,
+                                    accountId = it,
+                                )
+                            },
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                         ),
                     )
@@ -238,83 +239,6 @@ public class AccountsScreenViewModel @Inject constructor(
                 }
                 completeLoading()
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun deleteAccount(
-        accountId: Int,
-    ) {
-        viewModelScope.launch {
-            deleteAccountUseCase(
-                id = accountId,
-            )
-        }
-    }
-
-    private fun navigateToAddAccountScreen() {
-        navigator.navigateToAddAccountScreen()
-    }
-
-    private fun navigateToEditAccountScreen(
-        accountId: Int,
-    ) {
-        navigator.navigateToEditAccountScreen(
-            accountId = accountId,
-        )
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedAccountsScreenBottomSheetType = AccountsScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setClickedItemId(
-        updatedClickedItemId: Int?,
-    ) {
-        clickedItemId.update {
-            updatedClickedItemId
-        }
-    }
-
-    private fun setDefaultAccountIdInDataStore(
-        accountId: Int,
-    ) {
-        viewModelScope.launch {
-            val isDefaultAccountUpdated = myPreferencesRepository.setDefaultAccountId(
-                accountId = accountId,
-            )
-            if (!isDefaultAccountUpdated) {
-                // TODO(Abhi): Use the result to show snackbar
-            }
-        }
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedAccountsScreenBottomSheetType: AccountsScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedAccountsScreenBottomSheetType
         }
     }
     // endregion
