@@ -7,31 +7,23 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
@@ -44,7 +36,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.abs
 
 @HiltViewModel
 public class EditAccountScreenViewModel @Inject constructor(
@@ -55,7 +46,12 @@ public class EditAccountScreenViewModel @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val navigator: Navigator,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
-) : ScreenViewModel() {
+) : ScreenViewModel(), EditAccountScreenUIStateDelegate by EditAccountScreenUIStateDelegateImpl(
+    dateTimeUtil = dateTimeUtil,
+    insertTransactionsUseCase = insertTransactionsUseCase,
+    navigator = navigator,
+    updateAccountsUseCase = updateAccountsUseCase,
+) {
     // region screen args
     private val screenArgs = EditAccountScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -64,42 +60,6 @@ public class EditAccountScreenViewModel @Inject constructor(
 
     // region initial data
     private var allAccounts: ImmutableList<Account> = persistentListOf()
-    private var currentAccount: Account? = null
-    private val validAccountTypesForNewAccount: ImmutableList<AccountType> =
-        AccountType.entries.filter {
-            it != AccountType.CASH
-        }
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val balanceAmountValue: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
-        )
-    private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
-        )
-    private val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
-    private val screenBottomSheetType: MutableStateFlow<EditAccountScreenBottomSheetType> =
-        MutableStateFlow(
-            value = EditAccountScreenBottomSheetType.None,
-        )
-    private val screenSnackbarType: MutableStateFlow<EditAccountScreenSnackbarType> =
-        MutableStateFlow(
-            value = EditAccountScreenSnackbarType.None,
-        )
-    private val selectedAccountTypeIndex: MutableStateFlow<Int> =
-        MutableStateFlow(
-            value = validAccountTypesForNewAccount.indexOf(
-                element = AccountType.BANK,
-            ),
-        )
     // endregion
 
     // region uiStateAndStateEvents
@@ -262,182 +222,24 @@ public class EditAccountScreenViewModel @Inject constructor(
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setScreenSnackbarType = ::setScreenSnackbarType,
                             setSelectedAccountTypeIndex = ::setSelectedAccountTypeIndex,
-                            updateAccount = ::updateAccount,
+                            updateAccount = {
+                                    selectedAccountTypeIndex: Int,
+                                    name: String,
+                                    balanceAmountValue: String,
+                                    minimumAccountBalanceAmountValue: String,
+                                ->
+                                updateAccount(
+                                    coroutineScope = viewModelScope,
+                                    selectedAccountTypeIndex = selectedAccountTypeIndex,
+                                    name = name,
+                                    balanceAmountValue = balanceAmountValue,
+                                    minimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue,
+                                )
+                            },
                         ),
                     )
                 }
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun clearBalanceAmountValue() {
-        setBalanceAmountValue(
-            updatedBalanceAmountValue = balanceAmountValue.value
-                .copy(
-                    text = "",
-                ),
-        )
-    }
-
-    private fun clearMinimumAccountBalanceAmountValue() {
-        setMinimumAccountBalanceAmountValue(
-            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value
-                .copy(
-                    text = "",
-                ),
-        )
-    }
-
-    private fun clearName() {
-        setName(
-            updatedName = name.value
-                .copy(
-                    text = "",
-                ),
-        )
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedEditAccountScreenBottomSheetType = EditAccountScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setMinimumAccountBalanceAmountValue(
-        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
-    ) {
-        minimumAccountBalanceAmountValue.update {
-            updatedMinimumAccountBalanceAmountValue
-        }
-    }
-
-    private fun setBalanceAmountValue(
-        updatedBalanceAmountValue: TextFieldValue,
-    ) {
-        balanceAmountValue.update {
-            updatedBalanceAmountValue
-        }
-    }
-
-    private fun setName(
-        updatedName: TextFieldValue,
-    ) {
-        name.update {
-            updatedName
-        }
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedEditAccountScreenBottomSheetType: EditAccountScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedEditAccountScreenBottomSheetType
-        }
-    }
-
-    private fun setScreenSnackbarType(
-        updatedEditAccountScreenSnackbarType: EditAccountScreenSnackbarType,
-    ) {
-        screenSnackbarType.update {
-            updatedEditAccountScreenSnackbarType
-        }
-    }
-
-    private fun setSelectedAccountTypeIndex(
-        updatedSelectedAccountTypeIndex: Int,
-    ) {
-        selectedAccountTypeIndex.update {
-            updatedSelectedAccountTypeIndex
-        }
-    }
-
-    private fun updateAccount(
-        selectedAccountTypeIndex: Int,
-        name: String,
-        balanceAmountValue: String,
-        minimumAccountBalanceAmountValue: String,
-    ) {
-        val currentAccountValue = currentAccount ?: return
-        val amountChangeValue =
-            balanceAmountValue.toIntOrZero() - currentAccountValue.balanceAmount.value
-        val accountType = if (currentAccountValue.type != AccountType.CASH) {
-            validAccountTypesForNewAccount[selectedAccountTypeIndex]
-        } else {
-            currentAccountValue.type
-        }
-        val minimumAccountBalanceAmount = if (accountType == AccountType.BANK) {
-            (currentAccountValue.minimumAccountBalanceAmount ?: Amount(
-                value = 0L,
-            ))
-                .copy(
-                    value = minimumAccountBalanceAmountValue.toLongOrZero(),
-                )
-        } else {
-            null
-        }
-        val updatedAccount = currentAccountValue
-            .copy(
-                balanceAmount = currentAccountValue.balanceAmount
-                    .copy(
-                        value = balanceAmountValue.toLongOrZero(),
-                    ),
-                type = accountType,
-                minimumAccountBalanceAmount = minimumAccountBalanceAmount,
-                name = name.ifBlank {
-                    currentAccountValue.name
-                },
-            )
-        val accountFromId = if (amountChangeValue < 0L) {
-            updatedAccount.id
-        } else {
-            null
-        }
-        val accountToId = if (amountChangeValue < 0L) {
-            null
-        } else {
-            updatedAccount.id
-        }
-
-        viewModelScope.launch {
-            if (amountChangeValue != 0L) {
-                insertTransactionsUseCase(
-                    Transaction(
-                        amount = Amount(
-                            value = abs(amountChangeValue),
-                        ),
-                        categoryId = null,
-                        accountFromId = accountFromId,
-                        accountToId = accountToId,
-                        description = "",
-                        title = TransactionType.ADJUSTMENT.title,
-                        creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
-                        transactionTimestamp = dateTimeUtil.getCurrentTimeMillis(),
-                        transactionType = TransactionType.ADJUSTMENT,
-                    ),
-                )
-            }
-            updateAccountsUseCase(updatedAccount)
-            navigator.navigateUp()
         }
     }
     // endregion
