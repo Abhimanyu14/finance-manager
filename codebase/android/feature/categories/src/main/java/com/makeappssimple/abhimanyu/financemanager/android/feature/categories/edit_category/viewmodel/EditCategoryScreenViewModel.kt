@@ -1,10 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel
 
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -43,7 +41,10 @@ public class EditCategoryScreenViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
-) : ScreenViewModel() {
+) : ScreenViewModel(), EditCategoryScreenUIStateDelegate by EditCategoryScreenUIStateDelegateImpl(
+    navigator = navigator,
+    updateCategoriesUseCase = updateCategoriesUseCase,
+) {
     // region screen args
     private val screenArgs = EditCategoryScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -55,39 +56,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
     private val categories: MutableStateFlow<ImmutableList<Category>> = MutableStateFlow(
         value = persistentListOf(),
     )
-    private val category: MutableStateFlow<Category?> = MutableStateFlow(
-        value = null,
-    )
-    private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
-        TransactionType.INCOME,
-        TransactionType.EXPENSE,
-        TransactionType.INVESTMENT,
-    )
     private val transactionType: String? = screenArgs.transactionType
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
-    private val searchText: MutableStateFlow<String> = MutableStateFlow(
-        value = "",
-    )
-    private val emoji: MutableStateFlow<String> = MutableStateFlow(
-        value = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,
-    )
-    private val selectedTransactionTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = validTransactionTypes.indexOf(
-            element = TransactionType.EXPENSE,
-        ),
-    )
-    private val screenBottomSheetType: MutableStateFlow<EditCategoryScreenBottomSheetType> =
-        MutableStateFlow(
-            value = EditCategoryScreenBottomSheetType.None,
-        )
     // endregion
 
     // region uiStateAndStateEvents
@@ -238,97 +207,14 @@ public class EditCategoryScreenViewModel @Inject constructor(
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setSearchText = ::setSearchText,
                             setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
-                            updateCategory = ::updateCategory,
+                            updateCategory = {
+                                updateCategory(
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
                         ),
                     )
                 }
-            }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun clearTitle() {
-        title.update {
-            title.value.copy(
-                text = "",
-            )
-        }
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedEditCategoryScreenBottomSheetType = EditCategoryScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setEmoji(
-        updatedEmoji: String,
-    ) {
-        emoji.update {
-            updatedEmoji
-        }
-    }
-
-    private fun setTitle(
-        updatedTitle: TextFieldValue,
-    ) {
-        title.update {
-            updatedTitle
-        }
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedEditCategoryScreenBottomSheetType: EditCategoryScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedEditCategoryScreenBottomSheetType
-        }
-    }
-
-    private fun setSearchText(
-        updatedSearchText: String,
-    ) {
-        searchText.update {
-            updatedSearchText
-        }
-    }
-
-    private fun setSelectedTransactionTypeIndex(
-        updatedSelectedTransactionTypeIndex: Int,
-    ) {
-        selectedTransactionTypeIndex.update {
-            updatedSelectedTransactionTypeIndex
-        }
-    }
-
-    private fun updateCategory() {
-        category.value?.copy(
-            emoji = emoji.value,
-            title = title.value.text,
-            transactionType = validTransactionTypes[selectedTransactionTypeIndex.value],
-        )?.let { category ->
-            viewModelScope.launch {
-                updateCategoriesUseCase(category)
-                navigator.navigateUp()
             }
         }
     }
