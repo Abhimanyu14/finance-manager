@@ -18,17 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 public class OpenSourceLicensesScreenViewModel @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
-) : ScreenViewModel() {
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<OpenSourceLicensesScreenBottomSheetType> =
-        MutableStateFlow(
-            value = OpenSourceLicensesScreenBottomSheetType.None,
-        )
-    // endregion
-
+) : ScreenViewModel(),
+    OpenSourceLicensesScreenUIStateDelegate by OpenSourceLicensesScreenUIStateDelegateImpl(
+        navigator = navigator,
+    ) {
     // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<OpenSourceLicensesScreenUIStateAndStateEvents> =
         MutableStateFlow(
@@ -76,40 +69,6 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
                     )
                 }
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedOpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedOpenSourceLicensesScreenBottomSheetType: OpenSourceLicensesScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedOpenSourceLicensesScreenBottomSheetType
         }
     }
     // endregion
