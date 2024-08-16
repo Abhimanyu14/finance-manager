@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
@@ -29,7 +28,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
@@ -40,7 +38,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.bottomsheet.AddTransactionScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AccountFromText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AccountToText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIState
@@ -56,8 +53,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -74,7 +69,12 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-) : ScreenViewModel() {
+) : ScreenViewModel(),
+    AddTransactionScreenUIStateDelegate by AddTransactionScreenUIStateDelegateImpl(
+        dateTimeUtil = dateTimeUtil,
+        insertTransactionUseCase = insertTransactionUseCase,
+        navigator = navigator,
+    ) {
     // region screen args
     private val screenArgs = AddTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -83,7 +83,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
     // endregion
 
     // region initial data
-    private var originalTransactionData: TransactionData? = null
     private var maxRefundAmount: Amount? = null
 
     private var defaultAccount: Account? = null
@@ -93,72 +92,14 @@ public class AddTransactionScreenViewModel @Inject constructor(
 
     private var accounts: ImmutableList<Account> = persistentListOf()
     private var categories: ImmutableList<Category> = persistentListOf()
-    private var transactionForValues: ImmutableList<TransactionFor> = persistentListOf()
     private var validTransactionTypesForNewTransaction: ImmutableList<TransactionType> =
         persistentListOf()
-    private var selectedTransactionType: TransactionType? = null
 
     private var uiVisibilityState: AddTransactionScreenUiVisibilityState =
         AddTransactionScreenUiVisibilityState.Expense
     private var filteredCategories: ImmutableList<Category> = persistentListOf()
     private var amountErrorText: String? = null
     private var isCtaButtonEnabled: Boolean = false
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<AddTransactionScreenBottomSheetType> =
-        MutableStateFlow(
-            value = AddTransactionScreenBottomSheetType.None,
-        )
-    private val screenSnackbarType: MutableStateFlow<AddTransactionScreenSnackbarType> =
-        MutableStateFlow(
-            value = AddTransactionScreenSnackbarType.None,
-        )
-    private val selectedTransactionTypeIndex: MutableStateFlow<Int> =
-        MutableStateFlow(
-            value = 0,
-        )
-    private val amount: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
-        )
-    private val category: MutableStateFlow<Category?> =
-        MutableStateFlow(
-            value = null,
-        )
-    private val title: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
-        )
-    private val selectedTransactionForIndex: MutableStateFlow<Int> =
-        MutableStateFlow(
-            value = 0,
-        )
-    private val accountFrom: MutableStateFlow<Account?> =
-        MutableStateFlow(
-            value = null,
-        )
-    private val accountTo: MutableStateFlow<Account?> =
-        MutableStateFlow(
-            value = null,
-        )
-    private val transactionDate: MutableStateFlow<LocalDate> =
-        MutableStateFlow(
-            value = dateTimeUtil.getCurrentLocalDate(),
-        )
-    private val transactionTime: MutableStateFlow<LocalTime> =
-        MutableStateFlow(
-            value = dateTimeUtil.getCurrentLocalTime(),
-        )
-    private val isTransactionDatePickerDialogVisible: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = false,
-    )
-    private val isTransactionTimePickerDialogVisible: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = false,
-    )
     // endregion
 
     // region observables
@@ -478,7 +419,11 @@ public class AddTransactionScreenViewModel @Inject constructor(
                         events = AddTransactionScreenUIStateEvents(
                             clearAmount = ::clearAmount,
                             clearTitle = ::clearTitle,
-                            insertTransaction = ::insertTransaction,
+                            insertTransaction = {
+                                insertTransaction(
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             resetScreenSnackbarType = ::resetScreenSnackbarType,
@@ -691,208 +636,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
     // region common
     private fun getOriginalTransactionId(): Int? {
         return screenArgs.transactionId
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun clearAmount() {
-        amount.update {
-            it.copy(
-                text = "",
-            )
-        }
-    }
-
-    private fun clearTitle() {
-        title.update {
-            it.copy(
-                text = "",
-            )
-        }
-    }
-
-    private fun insertTransaction() {
-        val selectedAccountFrom = accountFrom.value
-        val selectedAccountTo = accountTo.value
-        val selectedCategoryId = category.value?.id
-        val selectedTransactionForId = if (selectedTransactionForIndex.value != -1) {
-            transactionForValues[selectedTransactionForIndex.value].id
-        } else {
-            -1
-        }
-        val selectedTransactionDate = transactionDate.value
-        val selectedTransactionTime = transactionTime.value
-        val enteredAmountValue = amount.value.text.toLongOrZero()
-        val enteredTitle = title.value.text
-        val selectedTransactionType = this.selectedTransactionType ?: return
-        val originalTransaction = originalTransactionData?.transaction
-
-        viewModelScope.launch {
-            val isTransactionInsertedSuccessfully = insertTransactionUseCase(
-                selectedAccountFrom = selectedAccountFrom,
-                selectedAccountTo = selectedAccountTo,
-                selectedCategoryId = selectedCategoryId,
-                selectedTransactionForId = selectedTransactionForId,
-                selectedTransactionDate = selectedTransactionDate,
-                selectedTransactionTime = selectedTransactionTime,
-                enteredAmountValue = enteredAmountValue,
-                enteredTitle = enteredTitle,
-                selectedTransactionType = selectedTransactionType,
-                originalTransaction = originalTransaction,
-            )
-            if (isTransactionInsertedSuccessfully) {
-                setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
-                navigator.navigateUp()
-            } else {
-                setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionFailed)
-            }
-        }
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedAddTransactionScreenBottomSheetType = AddTransactionScreenBottomSheetType.None,
-        )
-    }
-
-    private fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
-            updatedAddTransactionScreenSnackbarType = AddTransactionScreenSnackbarType.None,
-        )
-    }
-
-    private fun setAccountFrom(
-        updatedAccountFrom: Account?,
-    ) {
-        accountFrom.update {
-            updatedAccountFrom
-        }
-    }
-
-    private fun setAccountTo(
-        updatedAccountTo: Account?,
-    ) {
-        accountTo.update {
-            updatedAccountTo
-        }
-    }
-
-    private fun setAmount(
-        updatedAmount: TextFieldValue,
-    ) {
-        amount.update {
-            updatedAmount.copy(
-                text = updatedAmount.text.filterDigits(),
-            )
-        }
-    }
-
-    private fun setAmount(
-        updatedAmount: String,
-    ) {
-        amount.update {
-            it.copy(
-                text = updatedAmount.filterDigits(),
-            )
-        }
-    }
-
-    private fun setCategory(
-        updatedCategory: Category?,
-    ) {
-        category.update {
-            updatedCategory
-        }
-    }
-
-    private fun setIsTransactionDatePickerDialogVisible(
-        updatedIsTransactionDatePickerDialogVisible: Boolean,
-    ) {
-        isTransactionDatePickerDialogVisible.update {
-            updatedIsTransactionDatePickerDialogVisible
-        }
-    }
-
-    private fun setIsTransactionTimePickerDialogVisible(
-        updatedIsTransactionTimePickerDialogVisible: Boolean,
-    ) {
-        isTransactionTimePickerDialogVisible.update {
-            updatedIsTransactionTimePickerDialogVisible
-        }
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedAddTransactionScreenBottomSheetType: AddTransactionScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedAddTransactionScreenBottomSheetType
-        }
-    }
-
-    private fun setScreenSnackbarType(
-        updatedAddTransactionScreenSnackbarType: AddTransactionScreenSnackbarType,
-    ) {
-        screenSnackbarType.update {
-            updatedAddTransactionScreenSnackbarType
-        }
-    }
-
-    private fun setSelectedTransactionForIndex(
-        updatedSelectedTransactionForIndex: Int,
-    ) {
-        selectedTransactionForIndex.update {
-            updatedSelectedTransactionForIndex
-        }
-    }
-
-    private fun setSelectedTransactionTypeIndex(
-        updatedSelectedTransactionTypeIndex: Int,
-    ) {
-        selectedTransactionTypeIndex.update {
-            updatedSelectedTransactionTypeIndex
-        }
-    }
-
-    private fun setTitle(
-        updatedTitle: TextFieldValue,
-    ) {
-        title.update {
-            updatedTitle
-        }
-    }
-
-    private fun setTransactionDate(
-        updatedTransactionDate: LocalDate,
-    ) {
-        transactionDate.update {
-            updatedTransactionDate
-        }
-    }
-
-    private fun setTransactionTime(
-        updatedTransactionTime: LocalTime,
-    ) {
-        transactionTime.update {
-            updatedTransactionTime
-        }
     }
     // endregion
 }
