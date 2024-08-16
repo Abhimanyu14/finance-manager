@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.viewmodel
 
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
@@ -35,7 +34,11 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val navigator: Navigator,
     private val updateTransactionForUseCase: UpdateTransactionForUseCase,
-) : ScreenViewModel() {
+) : ScreenViewModel(),
+    EditTransactionForScreenUIStateDelegate by EditTransactionForScreenUIStateDelegateImpl(
+        navigator = navigator,
+        updateTransactionForUseCase = updateTransactionForUseCase,
+    ) {
     // region screen args
     private val screenArgs = EditTransactionForScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -45,20 +48,6 @@ public class EditTransactionForScreenViewModel @Inject constructor(
 
     // region initial data
     private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
-    private var currentTransactionFor: TransactionFor? = null
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<EditTransactionForScreenBottomSheetType> =
-        MutableStateFlow(
-            value = EditTransactionForScreenBottomSheetType.None,
-        )
-    private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -154,76 +143,15 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setTitle = ::setTitle,
-                            updateTransactionFor = ::updateTransactionFor,
+                            updateTransactionFor = {
+                                updateTransactionFor(
+                                    coroutineScope = viewModelScope,
+                                    uiState = uiStateAndStateEvents.value.state
+                                )
+                            },
                         ),
                     )
                 }
-            }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun clearTitle() {
-        title.update {
-            title.value.copy(
-                text = "",
-            )
-        }
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedEditTransactionForScreenBottomSheetType = EditTransactionForScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedEditTransactionForScreenBottomSheetType: EditTransactionForScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedEditTransactionForScreenBottomSheetType
-        }
-    }
-
-    private fun setTitle(
-        updatedTitle: TextFieldValue,
-    ) {
-        title.update {
-            updatedTitle
-        }
-    }
-
-    private fun updateTransactionFor() {
-        val currentTransactionForValue = currentTransactionFor ?: return
-        val uiState = uiStateAndStateEvents.value.state
-        viewModelScope.launch {
-            val isTransactionForUpdated = updateTransactionForUseCase(
-                currentTransactionFor = currentTransactionForValue,
-                title = uiState.title.text,
-            )
-            if (isTransactionForUpdated) {
-                navigator.navigateUp()
-            } else {
-                // TODO(Abhi): Show error
             }
         }
     }
