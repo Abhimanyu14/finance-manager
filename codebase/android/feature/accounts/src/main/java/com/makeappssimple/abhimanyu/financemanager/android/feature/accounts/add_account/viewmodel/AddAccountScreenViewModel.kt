@@ -32,11 +32,10 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val insertAccountUseCase: InsertAccountUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel(),
-    AddAccountScreenUIStateDelegate by AddAccountScreenUIStateDelegateImpl(
-        insertAccountUseCase = insertAccountUseCase,
-        navigator = navigator,
-    ) {
+) : ScreenViewModel(), AddAccountScreenUIStateDelegate by AddAccountScreenUIStateDelegateImpl(
+    insertAccountUseCase = insertAccountUseCase,
+    navigator = navigator,
+) {
     // region initial data
     private var allAccounts: ImmutableList<Account> = persistentListOf()
     // endregion

@@ -42,10 +42,9 @@ public class AnalysisScreenViewModel @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel(),
-    AnalysisScreenUIStateDelegate by AnalysisScreenUIStateDelegateImpl(
-        navigator = navigator,
-    ) {
+) : ScreenViewModel(), AnalysisScreenUIStateDelegate by AnalysisScreenUIStateDelegateImpl(
+    navigator = navigator,
+) {
     // region initial data
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.EXPENSE,
