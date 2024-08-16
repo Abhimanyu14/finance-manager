@@ -21,7 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIStateEvents
@@ -45,32 +44,16 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel() {
+) : ScreenViewModel(), CategoriesScreenUIStateDelegate by CategoriesScreenUIStateDelegateImpl(
+    deleteCategoryUseCase = deleteCategoryUseCase,
+    setDefaultCategoryUseCase = setDefaultCategoryUseCase,
+    navigator = navigator,
+) {
     // region initial data
     private val categoriesGridItemDataMap: MutableStateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =
         MutableStateFlow(
             value = persistentMapOf(),
         )
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<CategoriesScreenBottomSheetType> =
-        MutableStateFlow(
-            value = CategoriesScreenBottomSheetType.None,
-        )
-    private val screenSnackbarType: MutableStateFlow<CategoriesScreenSnackbarType> =
-        MutableStateFlow(
-            value = CategoriesScreenSnackbarType.None,
-        )
-    private val categoryIdToDelete: MutableStateFlow<Int?> = MutableStateFlow(
-        value = null,
-    )
-    private val clickedItemId: MutableStateFlow<Int?> = MutableStateFlow(
-        value = null,
-    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -271,7 +254,12 @@ public class CategoriesScreenViewModel @Inject constructor(
                             categoriesGridItemDataMap = categoriesGridItemDataMap,
                         ),
                         events = CategoriesScreenUIStateEvents(
-                            deleteCategory = ::deleteCategory,
+                            deleteCategory = {
+                                deleteCategory(
+                                    coroutineScope = viewModelScope,
+                                    id = it,
+                                )
+                            },
                             navigateToAddCategoryScreen = ::navigateToAddCategoryScreen,
                             navigateToEditCategoryScreen = ::navigateToEditCategoryScreen,
                             navigateUp = ::navigateUp,
@@ -279,124 +267,22 @@ public class CategoriesScreenViewModel @Inject constructor(
                             resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setCategoryIdToDelete = ::setCategoryIdToDelete,
                             setClickedItemId = ::setClickedItemId,
-                            setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
+                            setDefaultCategoryIdInDataStore = {
+                                    defaultCategoryId: Int,
+                                    transactionType: TransactionType,
+                                ->
+                                setDefaultCategoryIdInDataStore(
+                                    coroutineScope = viewModelScope,
+                                    defaultCategoryId = defaultCategoryId,
+                                    transactionType = transactionType,
+                                )
+                            },
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setScreenSnackbarType = ::setScreenSnackbarType,
                         ),
                     )
                 }
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun deleteCategory(
-        id: Int,
-    ) {
-        viewModelScope.launch {
-            deleteCategoryUseCase(
-                id = id,
-            )
-        }
-    }
-
-    private fun navigateToAddCategoryScreen(
-        transactionType: String,
-    ) {
-        navigator.navigateToAddCategoryScreen(
-            transactionType = transactionType,
-        )
-    }
-
-    private fun navigateToEditCategoryScreen(
-        categoryId: Int,
-    ) {
-        navigator.navigateToEditCategoryScreen(
-            categoryId = categoryId,
-        )
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedCategoriesScreenBottomSheetType = CategoriesScreenBottomSheetType.None,
-        )
-    }
-
-    private fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
-            updatedCategoriesScreenSnackbarType = CategoriesScreenSnackbarType.None,
-        )
-    }
-
-    private fun setCategoryIdToDelete(
-        updatedCategoryIdToDelete: Int?,
-    ) {
-        categoryIdToDelete.update {
-            updatedCategoryIdToDelete
-        }
-    }
-
-    private fun setClickedItemId(
-        updatedClickedItemId: Int?,
-    ) {
-        clickedItemId.update {
-            updatedClickedItemId
-        }
-    }
-
-    private fun setDefaultCategoryIdInDataStore(
-        defaultCategoryId: Int,
-        transactionType: TransactionType,
-    ) {
-        viewModelScope.launch {
-            val isSetDefaultCategorySuccessful = setDefaultCategoryUseCase(
-                defaultCategoryId = defaultCategoryId,
-                transactionType = transactionType,
-            )
-            if (isSetDefaultCategorySuccessful) {
-                setScreenSnackbarType(
-                    updatedCategoriesScreenSnackbarType = CategoriesScreenSnackbarType.SetDefaultCategorySuccessful,
-                )
-            } else {
-                setScreenSnackbarType(
-                    updatedCategoriesScreenSnackbarType = CategoriesScreenSnackbarType.SetDefaultCategoryFailed,
-                )
-            }
-        }
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedCategoriesScreenBottomSheetType: CategoriesScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedCategoriesScreenBottomSheetType
-        }
-    }
-
-    private fun setScreenSnackbarType(
-        updatedCategoriesScreenSnackbarType: CategoriesScreenSnackbarType,
-    ) {
-        screenSnackbarType.update {
-            updatedCategoriesScreenSnackbarType
         }
     }
     // endregion
