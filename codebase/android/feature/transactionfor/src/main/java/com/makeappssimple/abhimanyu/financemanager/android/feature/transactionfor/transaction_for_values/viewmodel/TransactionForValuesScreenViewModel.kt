@@ -32,23 +32,14 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     private val checkIfTransactionForValuesAreUsedInTransactionsUseCase: CheckIfTransactionForValuesAreUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel() {
+) : ScreenViewModel(),
+    TransactionForValuesScreenUIStateDelegate by TransactionForValuesScreenUIStateDelegateImpl(
+        deleteTransactionForUseCase = deleteTransactionForUseCase,
+        navigator = navigator,
+    ) {
     // region initial data
     private var transactionForListItemDataList: ImmutableList<TransactionForListItemData> =
         persistentListOf()
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val transactionForIdToDelete: MutableStateFlow<Int?> = MutableStateFlow(
-        value = null,
-    )
-    private val screenBottomSheetType: MutableStateFlow<TransactionForValuesScreenBottomSheetType> =
-        MutableStateFlow(
-            value = TransactionForValuesScreenBottomSheetType.None,
-        )
     // endregion
 
     // region uiStateAndStateEvents
@@ -96,7 +87,12 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
                             screenBottomSheetType = screenBottomSheetType,
                         ),
                         events = TransactionForValuesScreenUIStateEvents(
-                            deleteTransactionFor = ::deleteTransactionFor,
+                            deleteTransactionFor = {
+                                deleteTransactionFor(
+                                    coroutineScope = viewModelScope,
+                                    id = it,
+                                )
+                            },
                             navigateToAddTransactionForScreen = ::navigateToAddTransactionForScreen,
                             navigateToEditTransactionForScreen = ::navigateToEditTransactionForScreen,
                             navigateUp = ::navigateUp,
@@ -135,73 +131,6 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
                     }
                 completeLoading()
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun deleteTransactionFor(
-        id: Int,
-    ) {
-        viewModelScope.launch {
-            val isTransactionForDeleted = deleteTransactionForUseCase(
-                id = id,
-            )
-            if (!isTransactionForDeleted) {
-                // TODO(Abhi): Show error
-            }
-        }
-    }
-
-    private fun navigateToAddTransactionForScreen() {
-        navigator.navigateToAddTransactionForScreen()
-    }
-
-    private fun navigateToEditTransactionForScreen(
-        transactionForId: Int,
-    ) {
-        navigator.navigateToEditTransactionForScreen(
-            transactionForId = transactionForId,
-        )
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedTransactionForValuesScreenBottomSheetType = TransactionForValuesScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedTransactionForValuesScreenBottomSheetType: TransactionForValuesScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedTransactionForValuesScreenBottomSheetType
-        }
-    }
-
-    private fun setTransactionForIdToDelete(
-        updatedTransactionForIdToDelete: Int?,
-    ) {
-        transactionForIdToDelete.update {
-            updatedTransactionForIdToDelete
         }
     }
     // endregion
