@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.viewmodel
 
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
@@ -27,22 +26,13 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val insertTransactionForUseCase: InsertTransactionForUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel() {
+) : ScreenViewModel(),
+    AddTransactionForScreenUIStateDelegate by AddTransactionForScreenUIStateDelegateImpl(
+        insertTransactionForUseCase = insertTransactionForUseCase,
+        navigator = navigator,
+    ) {
     // region initial data
     private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<AddTransactionForScreenBottomSheetType> =
-        MutableStateFlow(
-            value = AddTransactionForScreenBottomSheetType.None,
-        )
-    private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -107,7 +97,12 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                         ),
                         events = AddTransactionForScreenUIStateEvents(
                             clearTitle = ::clearTitle,
-                            insertTransactionFor = ::insertTransactionFor,
+                            insertTransactionFor = {
+                                insertTransactionFor(
+                                    uiState = uiStateAndStateEvents.value.state,
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             setTitle = ::setTitle,
@@ -115,70 +110,6 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                     )
                 }
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun clearTitle() {
-        title.update {
-            title.value.copy(
-                text = "",
-            )
-        }
-    }
-
-    private fun insertTransactionFor() {
-        val uiState = uiStateAndStateEvents.value.state
-        viewModelScope.launch {
-            val isTransactionForInserted = insertTransactionForUseCase(
-                title = uiState.title?.text.orEmpty(),
-            )
-            if (isTransactionForInserted == -1L) {
-                // TODO(Abhi): Show error
-            } else {
-                navigator.navigateUp()
-            }
-        }
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedAddTransactionForScreenBottomSheetType = AddTransactionForScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedAddTransactionForScreenBottomSheetType: AddTransactionForScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedAddTransactionForScreenBottomSheetType
-        }
-    }
-
-    private fun setTitle(
-        updatedTitle: TextFieldValue,
-    ) {
-        title.update {
-            updatedTitle
         }
     }
     // endregion
