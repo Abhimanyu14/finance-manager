@@ -22,14 +22,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.areFiltersSelected
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIState
@@ -57,53 +55,23 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
-) : ScreenViewModel() {
+) : ScreenViewModel(), TransactionsScreenUIStateDelegate by TransactionsScreenUIStateDelegateImpl(
+    navigator = navigator,
+    updateTransactionsUseCase = updateTransactionsUseCase,
+) {
     // region initial data
     private var isInitialDataFetchCompleted = false
     private var performanceScreenInitTrace: Trace? = null
-    private var allTransactionData: MutableStateFlow<ImmutableList<TransactionData>> =
-        MutableStateFlow(
-            value = persistentListOf(),
-        )
+
     private var categoriesMap: Map<TransactionType, MutableSet<Category>> = mapOf()
     private var accounts: MutableSet<Account> = mutableSetOf()
     private var oldestTransactionLocalDate: LocalDate? = null
     private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
 
-    private val selectedTransactionIndices: MutableStateFlow<ImmutableList<Int>> = MutableStateFlow(
-        value = persistentListOf(),
-    )
-    private val transactionDetailsListItemViewData: MutableStateFlow<Map<String, ImmutableList<TransactionListItemData>>> =
-        MutableStateFlow(
-            value = mutableMapOf(),
-        )
-
     private val transactionTypes: ImmutableList<TransactionType> =
         TransactionType.entries.toImmutableList()
     private val sortOptions: ImmutableList<SortOption> = SortOption.entries.toImmutableList()
     private val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val isInSelectionMode: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = false,
-    )
-    private val searchText: MutableStateFlow<String> = MutableStateFlow(
-        value = "",
-    )
-    private val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
-        value = Filter(),
-    )
-    private val selectedSortOption: MutableStateFlow<SortOption> = MutableStateFlow(
-        value = SortOption.LATEST_FIRST,
-    )
-    private val screenBottomSheetType: MutableStateFlow<TransactionsScreenBottomSheetType> =
-        MutableStateFlow(
-            value = TransactionsScreenBottomSheetType.None,
-        )
     // endregion
 
     // region uiStateAndStateEvents
@@ -210,7 +178,16 @@ public class TransactionsScreenViewModel @Inject constructor(
                             setSearchText = ::setSearchText,
                             setSelectedFilter = ::setSelectedFilter,
                             setSelectedSortOption = ::setSelectedSortOption,
-                            updateTransactionForValuesInTransactions = ::updateTransactionForValuesInTransactions,
+                            updateTransactionForValuesInTransactions = {
+                                    selectedTransactions: ImmutableList<Int>,
+                                    transactionForId: Int,
+                                ->
+                                updateTransactionForValuesInTransactions(
+                                    coroutineScope = viewModelScope,
+                                    selectedTransactions = selectedTransactions,
+                                    transactionForId = transactionForId,
+                                )
+                            },
                         ),
                     )
                 }
@@ -501,142 +478,6 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     private fun stopTrackingScreenInit() {
         performanceScreenInitTrace?.stop()
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun addToSelectedTransactions(
-        transactionId: Int,
-    ) {
-        selectedTransactionIndices.update {
-            it.toMutableList().apply {
-                add(transactionId)
-            }.toImmutableList()
-        }
-    }
-
-    private fun clearSelectedTransactions() {
-        selectedTransactionIndices.update {
-            persistentListOf()
-        }
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun removeFromSelectedTransactions(
-        transactionId: Int,
-    ) {
-        selectedTransactionIndices.update {
-            it.toMutableList().apply {
-                remove(transactionId)
-            }.toImmutableList()
-        }
-    }
-
-    private fun navigateToAddTransactionScreen() {
-        navigator.navigateToAddTransactionScreen()
-    }
-
-    private fun navigateToViewTransactionScreen(
-        transactionId: Int,
-    ) {
-        navigator.navigateToViewTransactionScreen(
-            transactionId = transactionId,
-        )
-    }
-
-    private fun selectAllTransactions() {
-        selectedTransactionIndices.update {
-            transactionDetailsListItemViewData.value.values.flatMap {
-                it.map { transactionListItemData ->
-                    transactionListItemData.transactionId
-                }
-            }.toImmutableList()
-        }
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedTransactionsScreenBottomSheetType = TransactionsScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedTransactionsScreenBottomSheetType: TransactionsScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedTransactionsScreenBottomSheetType
-        }
-    }
-
-    private fun setIsInSelectionMode(
-        updatedIsInSelectionMode: Boolean,
-    ) {
-        isInSelectionMode.update {
-            updatedIsInSelectionMode
-        }
-    }
-
-    private fun setSearchText(
-        updatedSearchText: String,
-    ) {
-        searchText.update {
-            updatedSearchText
-        }
-    }
-
-    private fun setSelectedFilter(
-        updatedSelectedFilter: Filter,
-    ) {
-        selectedFilter.update {
-            updatedSelectedFilter
-        }
-    }
-
-    private fun setSelectedSortOption(
-        updatedSelectedSortOption: SortOption,
-    ) {
-        selectedSortOption.update {
-            updatedSelectedSortOption
-        }
-    }
-
-    private fun updateTransactionForValuesInTransactions(
-        selectedTransactions: ImmutableList<Int>,
-        transactionForId: Int,
-    ) {
-        viewModelScope.launch {
-            val updatedTransactions = allTransactionData.value.map { transactionData ->
-                transactionData.transaction
-            }.filter {
-                it.transactionType == TransactionType.EXPENSE &&
-                        selectedTransactions.contains(it.id)
-            }.map {
-                it
-                    .copy(
-                        transactionForId = transactionForId,
-                    )
-            }
-            updateTransactionsUseCase(
-                transactions = updatedTransactions.toTypedArray(),
-            )
-        }
     }
     // endregion
 }
