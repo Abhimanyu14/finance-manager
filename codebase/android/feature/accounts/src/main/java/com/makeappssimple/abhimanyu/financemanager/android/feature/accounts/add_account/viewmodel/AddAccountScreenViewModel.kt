@@ -1,14 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel
 
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -18,8 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
@@ -38,40 +33,13 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val insertAccountUseCase: InsertAccountUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel, ViewModel(),
+    AddAccountScreenUIStateDelegate by AddAccountScreenUIStateDelegateImpl(
+        insertAccountUseCase = insertAccountUseCase,
+        navigator = navigator,
+    ) {
     // region initial data
     private var allAccounts: ImmutableList<Account> = persistentListOf()
-    private val validAccountTypesForNewAccount: ImmutableList<AccountType> =
-        AccountType.entries.filter {
-            it != AccountType.CASH
-        }
-    // endregion
-
-    // region UI data
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<AddAccountScreenBottomSheetType> =
-        MutableStateFlow(
-            value = AddAccountScreenBottomSheetType.None,
-        )
-    private val screenSnackbarType: MutableStateFlow<AddAccountScreenSnackbarType> =
-        MutableStateFlow(
-            value = AddAccountScreenSnackbarType.None,
-        )
-    private val selectedAccountTypeIndex: MutableStateFlow<Int> =
-        MutableStateFlow(
-            value = validAccountTypesForNewAccount.indexOf(
-                element = AccountType.BANK,
-            ),
-        )
-    private val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
-    private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
-        )
     // endregion
 
     // region uiStateAndStateEvents
@@ -171,7 +139,12 @@ public class AddAccountScreenViewModel @Inject constructor(
                         events = AddAccountScreenUIStateEvents(
                             clearMinimumAccountBalanceAmountValue = ::clearMinimumAccountBalanceAmountValue,
                             clearName = ::clearName,
-                            insertAccount = ::insertAccount,
+                            insertAccount = {
+                                insertAccount(
+                                    uiState = uiStateAndStateEvents.value.state,
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             resetScreenSnackbarType = ::resetScreenSnackbarType,
@@ -184,110 +157,6 @@ public class AddAccountScreenViewModel @Inject constructor(
                     )
                 }
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun clearMinimumAccountBalanceAmountValue() {
-        setMinimumAccountBalanceAmountValue(
-            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value.copy(
-                text = "",
-            ),
-        )
-    }
-
-    private fun clearName() {
-        setName(
-            updatedName = name.value.copy(
-                text = "",
-            ),
-        )
-    }
-
-    private fun insertAccount() {
-        val uiState = uiStateAndStateEvents.value.state
-        viewModelScope.launch {
-            val isAccountInserted = insertAccountUseCase(
-                accountType = uiState.selectedAccountType,
-                minimumAccountBalanceAmountValue = uiState.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
-                name = uiState.nameTextFieldValue.text,
-            )
-            if (isAccountInserted == -1L) {
-                // TODO(Abhi): Show error
-            } else {
-                navigator.navigateUp()
-            }
-        }
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedAddAccountScreenBottomSheetType = AddAccountScreenBottomSheetType.None,
-        )
-    }
-
-    private fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
-            updatedAddAccountScreenSnackbarType = AddAccountScreenSnackbarType.None,
-        )
-    }
-
-    private fun setMinimumAccountBalanceAmountValue(
-        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
-    ) {
-        minimumAccountBalanceAmountValue.update {
-            updatedMinimumAccountBalanceAmountValue
-        }
-    }
-
-    private fun setName(
-        updatedName: TextFieldValue,
-    ) {
-        name.update {
-            updatedName
-        }
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedAddAccountScreenBottomSheetType: AddAccountScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedAddAccountScreenBottomSheetType
-        }
-    }
-
-    private fun setScreenSnackbarType(
-        updatedAddAccountScreenSnackbarType: AddAccountScreenSnackbarType,
-    ) {
-        screenSnackbarType.update {
-            updatedAddAccountScreenSnackbarType
-        }
-    }
-
-    private fun setSelectedAccountTypeIndex(
-        updatedSelectedAccountTypeIndex: Int,
-    ) {
-        selectedAccountTypeIndex.update {
-            updatedSelectedAccountTypeIndex
         }
     }
     // endregion
