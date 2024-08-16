@@ -9,10 +9,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.a
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 public class TransactionForRepositoryImpl(
     private val dispatcherProvider: DispatcherProvider,
@@ -27,7 +25,7 @@ public class TransactionForRepositoryImpl(
     }
 
     override suspend fun getAllTransactionForValues(): ImmutableList<TransactionFor> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionForDao.getAllTransactionForValues().map(
                 transform = TransactionForEntity::asExternalModel,
             )
@@ -37,7 +35,7 @@ public class TransactionForRepositoryImpl(
     override suspend fun getTransactionFor(
         id: Int,
     ): TransactionFor? {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionForDao.getTransactionFor(
                 id = id,
             )?.asExternalModel()
@@ -47,7 +45,7 @@ public class TransactionForRepositoryImpl(
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
     ): ImmutableList<Long> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionForDao.insertTransactionForValues(
                 transactionForValues = transactionForValues.map(
                     transform = TransactionFor::asEntity,
@@ -59,7 +57,7 @@ public class TransactionForRepositoryImpl(
     override suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionFor,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionForDao.updateTransactionForValues(
                 transactionForValues = transactionForValues.map(
                     transform = TransactionFor::asEntity,
@@ -71,19 +69,10 @@ public class TransactionForRepositoryImpl(
     override suspend fun deleteTransactionFor(
         id: Int,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionForDao.deleteTransactionFor(
                 id = id,
             ) == 1
         }
-    }
-
-    private suspend fun <T> executeOnIoDispatcher(
-        block: suspend CoroutineScope.() -> T,
-    ): T {
-        return withContext(
-            context = dispatcherProvider.io,
-            block = block,
-        )
     }
 }

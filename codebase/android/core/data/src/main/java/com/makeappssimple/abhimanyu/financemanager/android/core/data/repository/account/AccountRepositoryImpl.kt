@@ -10,10 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 public class AccountRepositoryImpl(
     private val accountDao: AccountDao,
@@ -28,7 +26,7 @@ public class AccountRepositoryImpl(
     }
 
     override suspend fun getAllAccounts(): ImmutableList<Account> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.getAllAccounts().map(
                 transform = AccountEntity::asExternalModel,
             )
@@ -36,7 +34,7 @@ public class AccountRepositoryImpl(
     }
 
     override suspend fun getAllAccountsCount(): Int {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.getAllAccountsCount()
         }
     }
@@ -44,7 +42,7 @@ public class AccountRepositoryImpl(
     override suspend fun getAccount(
         id: Int,
     ): Account? {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.getAccount(
                 id = id,
             )?.asExternalModel()
@@ -54,7 +52,7 @@ public class AccountRepositoryImpl(
     override suspend fun getAccounts(
         ids: ImmutableList<Int>,
     ): ImmutableList<Account> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.getAccounts(
                 ids = ids,
             ).map(
@@ -66,7 +64,7 @@ public class AccountRepositoryImpl(
     override suspend fun insertAccounts(
         vararg accounts: Account,
     ): ImmutableList<Long> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.insertAccounts(
                 accounts = accounts.map(
                     transform = Account::asEntity,
@@ -79,7 +77,7 @@ public class AccountRepositoryImpl(
     override suspend fun updateAccountBalanceAmount(
         accountsBalanceAmountChange: ImmutableList<Pair<Int, Long>>,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             val accountIds = accountsBalanceAmountChange.map {
                 it.first
             }
@@ -100,7 +98,7 @@ public class AccountRepositoryImpl(
     override suspend fun updateAccounts(
         vararg accounts: Account,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.updateAccounts(
                 accounts = accounts.map(
                     transform = Account::asEntity,
@@ -112,7 +110,7 @@ public class AccountRepositoryImpl(
     override suspend fun deleteAccount(
         id: Int,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.deleteAccount(
                 id = id,
             ) == 1
@@ -122,21 +120,12 @@ public class AccountRepositoryImpl(
     override suspend fun deleteAccounts(
         vararg accounts: Account,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             accountDao.deleteAccounts(
                 accounts = accounts.map(
                     transform = Account::asEntity,
                 ).toTypedArray(),
             ) == accounts.size
         }
-    }
-
-    private suspend fun <T> executeOnIoDispatcher(
-        block: suspend CoroutineScope.() -> T,
-    ): T {
-        return withContext(
-            context = dispatcherProvider.io,
-            block = block,
-        )
     }
 }

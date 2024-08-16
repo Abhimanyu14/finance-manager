@@ -15,10 +15,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 public class TransactionRepositoryImpl(
     private val commonDataSource: CommonDataSource,
@@ -26,7 +24,7 @@ public class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
     override suspend fun getAllTransactions(): ImmutableList<Transaction> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getAllTransactions().map(
                 transform = TransactionEntity::asExternalModel,
             )
@@ -42,7 +40,7 @@ public class TransactionRepositoryImpl(
     }
 
     override suspend fun getAllTransactionData(): ImmutableList<TransactionData> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getAllTransactionData().map(
                 transform = TransactionDataEntity::asExternalModel,
             )
@@ -52,7 +50,7 @@ public class TransactionRepositoryImpl(
     override suspend fun getSearchedTransactionData(
         searchText: String,
     ): ImmutableList<TransactionData> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getSearchedTransactionData(
                 searchText = searchText,
             ).map(
@@ -91,7 +89,7 @@ public class TransactionRepositoryImpl(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): ImmutableList<Transaction> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getTransactionsBetweenTimestamps(
                 startingTimestamp = startingTimestamp,
                 endingTimestamp = endingTimestamp,
@@ -102,7 +100,7 @@ public class TransactionRepositoryImpl(
     }
 
     override suspend fun getTransactionsCount(): Int {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getTransactionsCount()
         }
     }
@@ -112,7 +110,7 @@ public class TransactionRepositoryImpl(
         numberOfSuggestions: Int,
         enteredTitle: String,
     ): ImmutableList<String> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getTitleSuggestions(
                 categoryId = categoryId,
                 numberOfSuggestions = numberOfSuggestions,
@@ -124,7 +122,7 @@ public class TransactionRepositoryImpl(
     override suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.checkIfCategoryIsUsedInTransactions(
                 categoryId = categoryId,
             )
@@ -134,7 +132,7 @@ public class TransactionRepositoryImpl(
     override suspend fun checkIfAccountIsUsedInTransactions(
         accountId: Int,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.checkIfAccountIsUsedInTransactions(
                 accountId = accountId,
             )
@@ -144,7 +142,7 @@ public class TransactionRepositoryImpl(
     override suspend fun checkIfTransactionForIsUsedInTransactions(
         transactionForId: Int,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.checkIfTransactionForIsUsedInTransactions(
                 transactionForId = transactionForId,
             )
@@ -154,7 +152,7 @@ public class TransactionRepositoryImpl(
     override suspend fun getTransaction(
         id: Int,
     ): Transaction? {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getTransaction(
                 id = id,
             )?.asExternalModel()
@@ -164,7 +162,7 @@ public class TransactionRepositoryImpl(
     override suspend fun getTransactionData(
         id: Int,
     ): TransactionData? {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.getTransactionData(
                 id = id,
             )?.asExternalModel()
@@ -177,7 +175,7 @@ public class TransactionRepositoryImpl(
         accountTo: Account?,
         transaction: Transaction,
     ): Long {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             commonDataSource.insertTransaction(
                 amountValue = amountValue,
                 accountFrom = accountFrom?.asEntity(),
@@ -190,7 +188,7 @@ public class TransactionRepositoryImpl(
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
     ): ImmutableList<Long> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.insertTransactions(
                 transactions = transactions.map(
                     transform = Transaction::asEntity,
@@ -202,7 +200,7 @@ public class TransactionRepositoryImpl(
     override suspend fun updateTransaction(
         transaction: Transaction,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.updateTransaction(
                 transaction = transaction.asEntity(),
             ) == 1
@@ -212,7 +210,7 @@ public class TransactionRepositoryImpl(
     override suspend fun updateTransactions(
         vararg transactions: Transaction,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.updateTransactions(
                 transactions = transactions.map(
                     transform = Transaction::asEntity,
@@ -224,7 +222,7 @@ public class TransactionRepositoryImpl(
     override suspend fun deleteTransaction(
         id: Int,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             commonDataSource.deleteTransaction(
                 id = id,
             )
@@ -232,7 +230,7 @@ public class TransactionRepositoryImpl(
     }
 
     override suspend fun deleteAllTransactions(): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             transactionDao.deleteAllTransactions() > 0
         }
     }
@@ -243,7 +241,7 @@ public class TransactionRepositoryImpl(
         transactions: ImmutableList<Transaction>,
         transactionForValues: ImmutableList<TransactionFor>,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             commonDataSource.restoreData(
                 categories = categories.map(
                     transform = Category::asEntity,
@@ -259,14 +257,5 @@ public class TransactionRepositoryImpl(
                 ).toTypedArray(),
             )
         }
-    }
-
-    private suspend fun <T> executeOnIoDispatcher(
-        block: suspend CoroutineScope.() -> T,
-    ): T {
-        return withContext(
-            context = dispatcherProvider.io,
-            block = block,
-        )
     }
 }

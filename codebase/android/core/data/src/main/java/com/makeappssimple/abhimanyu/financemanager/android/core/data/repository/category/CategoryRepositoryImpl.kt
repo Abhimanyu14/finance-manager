@@ -9,10 +9,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.a
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 public class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
@@ -27,7 +25,7 @@ public class CategoryRepositoryImpl(
     }
 
     override suspend fun getAllCategories(): ImmutableList<Category> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             categoryDao.getAllCategories().map(
                 transform = CategoryEntity::asExternalModel,
             )
@@ -35,7 +33,7 @@ public class CategoryRepositoryImpl(
     }
 
     override suspend fun getAllCategoriesCount(): Int {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             categoryDao.getAllCategoriesCount()
         }
     }
@@ -43,7 +41,7 @@ public class CategoryRepositoryImpl(
     override suspend fun getCategory(
         id: Int,
     ): Category? {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             categoryDao.getCategory(
                 id = id,
             )?.asExternalModel()
@@ -53,7 +51,7 @@ public class CategoryRepositoryImpl(
     override suspend fun insertCategories(
         vararg categories: Category,
     ): ImmutableList<Long> {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             categoryDao.insertCategories(
                 categories = categories.map(
                     transform = Category::asEntity,
@@ -65,7 +63,7 @@ public class CategoryRepositoryImpl(
     override suspend fun updateCategories(
         vararg categories: Category,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             categoryDao.updateCategories(
                 categories = categories.map(
                     transform = Category::asEntity,
@@ -77,7 +75,7 @@ public class CategoryRepositoryImpl(
     override suspend fun deleteCategory(
         id: Int,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             categoryDao.deleteCategory(
                 id = id,
             ) == 1
@@ -87,21 +85,12 @@ public class CategoryRepositoryImpl(
     override suspend fun deleteCategories(
         vararg categories: Category,
     ): Boolean {
-        return executeOnIoDispatcher {
+        return dispatcherProvider.executeOnIoDispatcher {
             categoryDao.deleteCategories(
                 categories = categories.map(
                     transform = Category::asEntity,
                 ).toTypedArray(),
             ) == categories.size
         }
-    }
-
-    private suspend fun <T> executeOnIoDispatcher(
-        block: suspend CoroutineScope.() -> T,
-    ): T {
-        return withContext(
-            context = dispatcherProvider.io,
-            block = block,
-        )
     }
 }
