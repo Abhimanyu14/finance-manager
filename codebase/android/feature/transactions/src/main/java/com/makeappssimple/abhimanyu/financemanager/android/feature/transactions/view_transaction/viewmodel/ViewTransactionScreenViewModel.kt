@@ -37,7 +37,11 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     @VisibleForTesting internal val navigator: Navigator,
-) : ScreenViewModel() {
+) : ScreenViewModel(),
+    ViewTransactionScreenUIStateDelegate by ViewTransactionScreenUIStateDelegateImpl(
+        deleteTransactionUseCase = deleteTransactionUseCase,
+        navigator = navigator,
+    ) {
     // region screen args
     private val screenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -46,22 +50,10 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     // endregion
 
     // region initial data
-    private var transactionIdToDelete: Int? = null
     private var currentTransactionListItemData: TransactionListItemData? = null
     private var originalTransactionListItemData: TransactionListItemData? = null
     private var refundTransactionsListItemData: ImmutableList<TransactionListItemData> =
         persistentListOf()
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-
-    private val screenBottomSheetType: MutableStateFlow<ViewTransactionScreenBottomSheetType> =
-        MutableStateFlow(
-            value = ViewTransactionScreenBottomSheetType.None,
-        )
     // endregion
 
     // region uiStateAndStateEvents
@@ -177,103 +169,25 @@ public class ViewTransactionScreenViewModel @Inject constructor(
                             screenBottomSheetType = screenBottomSheetType,
                         ),
                         events = ViewTransactionScreenUIStateEvents(
-                            deleteTransaction = ::deleteTransaction,
+                            deleteTransaction = {
+                                deleteTransaction(
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
                             navigateUp = ::navigateUp,
                             navigateToEditTransactionScreen = ::navigateToEditTransactionScreen,
                             navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
                             onRefundButtonClick = ::onRefundButtonClick,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setTransactionIdToDelete = ::setTransactionIdToDelete,
+                            setTransactionIdToDelete = {
+                                transactionIdToDelete = it
+                            },
                         ),
                     )
                 }
             }
         }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun deleteTransaction() {
-        val id = transactionIdToDelete ?: return
-        viewModelScope.launch {
-            startLoading()
-            val isTransactionDeleted = deleteTransactionUseCase(
-                id = id,
-            )
-            setTransactionIdToDelete(null)
-            resetScreenBottomSheetType()
-            if (isTransactionDeleted) {
-                // TODO(Abhi): Show success message
-                // TODO(Abhi): Change to navigate up only if the current transaction is deleted
-                navigateUp()
-            } else {
-                // TODO(Abhi): Show error message
-            }
-            completeLoading()
-        }
-    }
-
-    private fun onRefundButtonClick(
-        transactionId: Int,
-    ) {
-        navigator.navigateToAddTransactionScreen(
-            transactionId = transactionId,
-        )
-    }
-
-    private fun navigateToEditTransactionScreen(
-        transactionId: Int,
-    ) {
-        navigator.navigateToEditTransactionScreen(
-            transactionId = transactionId,
-        )
-    }
-
-    private fun navigateToViewTransactionScreen(
-        transactionId: Int,
-    ) {
-        navigator.navigateToViewTransactionScreen(
-            transactionId = transactionId,
-        )
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedViewTransactionScreenBottomSheetType = ViewTransactionScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedViewTransactionScreenBottomSheetType: ViewTransactionScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedViewTransactionScreenBottomSheetType
-        }
-    }
-
-    private fun setTransactionIdToDelete(
-        updatedTransactionIdToDelete: Int?,
-    ) {
-        transactionIdToDelete = updatedTransactionIdToDelete
     }
     // endregion
 }
