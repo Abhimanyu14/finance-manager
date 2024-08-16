@@ -42,7 +42,10 @@ public class AnalysisScreenViewModel @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel() {
+) : ScreenViewModel(),
+    AnalysisScreenUIStateDelegate by AnalysisScreenUIStateDelegateImpl(
+        navigator = navigator,
+    ) {
     // region initial data
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.EXPENSE,
@@ -62,22 +65,6 @@ public class AnalysisScreenViewModel @Inject constructor(
 
     private var allTransactionData: ImmutableList<TransactionData> = persistentListOf()
     private var oldestTransactionLocalDate: LocalDate? = null
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
-        value = Filter(),
-    )
-    private val screenBottomSheetType: MutableStateFlow<AnalysisScreenBottomSheetType> =
-        MutableStateFlow(
-            value = AnalysisScreenBottomSheetType.None,
-        )
-    private val selectedTransactionTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = 0,
-    )
     // endregion
 
     // region uiStateAndStateEvents
@@ -256,56 +243,6 @@ public class AnalysisScreenViewModel @Inject constructor(
             .atEndOfDay()
             .toEpochMilli()
         return transactionData.transaction.transactionTimestamp in fromDateStartOfDayTimestamp until toDateStartOfDayTimestamp
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedAnalysisScreenBottomSheetType = AnalysisScreenBottomSheetType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedAnalysisScreenBottomSheetType: AnalysisScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedAnalysisScreenBottomSheetType
-        }
-    }
-
-    private fun setSelectedFilter(
-        updatedSelectedFilter: Filter,
-    ) {
-        selectedFilter.update {
-            updatedSelectedFilter
-        }
-    }
-
-    private fun setSelectedTransactionTypeIndex(
-        updatedSelectedTransactionTypeIndex: Int,
-    ) {
-        selectedTransactionTypeIndex.update {
-            updatedSelectedTransactionTypeIndex
-        }
     }
     // endregion
 }
