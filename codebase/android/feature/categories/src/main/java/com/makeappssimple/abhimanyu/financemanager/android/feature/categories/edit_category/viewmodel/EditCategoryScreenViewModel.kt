@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.e
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
@@ -44,7 +43,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region screen args
     private val screenArgs = EditCategoryScreenArgs(
         savedStateHandle = savedStateHandle,

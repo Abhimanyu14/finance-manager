@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
@@ -43,7 +42,7 @@ public class AnalysisScreenViewModel @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region initial data
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.EXPENSE,

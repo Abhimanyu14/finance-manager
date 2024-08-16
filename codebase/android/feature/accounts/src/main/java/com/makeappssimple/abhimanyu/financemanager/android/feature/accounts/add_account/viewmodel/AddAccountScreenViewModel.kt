@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
@@ -33,7 +32,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val insertAccountUseCase: InsertAccountUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel(),
+) : ScreenViewModel(),
     AddAccountScreenUIStateDelegate by AddAccountScreenUIStateDelegateImpl(
         insertAccountUseCase = insertAccountUseCase,
         navigator = navigator,

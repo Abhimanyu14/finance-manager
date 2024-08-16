@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel
 
 import android.net.Uri
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
@@ -35,7 +34,7 @@ public class SettingsScreenViewModel @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region initial data
     private var appVersion: String = ""
     private val isReminderEnabled: MutableStateFlow<Boolean> = MutableStateFlow(

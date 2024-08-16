@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.viewmodel
 
 import android.net.Uri
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
@@ -63,7 +62,7 @@ public class HomeScreenViewModel @Inject constructor(
     private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region initial data
     private val isBackupCardVisible: Flow<Boolean> = shouldShowBackupCardUseCase()
     private val accountsTotalBalanceAmountValue: Flow<Long> =

@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.perf.metrics.Trace
@@ -58,7 +57,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region initial data
     private var isInitialDataFetchCompleted = false
     private var performanceScreenInitTrace: Trace? = null

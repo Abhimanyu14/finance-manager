@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
@@ -36,7 +35,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val navigator: Navigator,
     private val updateTransactionForUseCase: UpdateTransactionForUseCase,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region screen args
     private val screenArgs = EditTransactionForScreenArgs(
         savedStateHandle = savedStateHandle,

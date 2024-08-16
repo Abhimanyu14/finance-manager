@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
@@ -19,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class OpenSourceLicensesScreenViewModel @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region UI data
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,

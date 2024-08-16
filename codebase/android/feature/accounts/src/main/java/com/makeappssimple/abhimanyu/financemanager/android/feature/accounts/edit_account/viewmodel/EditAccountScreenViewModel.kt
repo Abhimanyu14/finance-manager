@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edi
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
@@ -56,7 +55,7 @@ public class EditAccountScreenViewModel @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val navigator: Navigator,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
-) : ScreenViewModel, ViewModel() {
+) : ScreenViewModel() {
     // region screen args
     private val screenArgs = EditAccountScreenArgs(
         savedStateHandle = savedStateHandle,
