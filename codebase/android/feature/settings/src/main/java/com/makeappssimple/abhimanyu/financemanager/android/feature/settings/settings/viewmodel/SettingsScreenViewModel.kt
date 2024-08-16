@@ -34,26 +34,16 @@ public class SettingsScreenViewModel @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
-) : ScreenViewModel() {
+) : ScreenViewModel(), SettingsScreenUIStateDelegate by SettingsScreenUIStateDelegateImpl(
+    alarmKit = alarmKit,
+    navigator = navigator,
+    recalculateTotalUseCase = recalculateTotalUseCase,
+) {
     // region initial data
     private var appVersion: String = ""
     private val isReminderEnabled: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
     )
-    // endregion
-
-    // region UI state
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
-    private val screenBottomSheetType: MutableStateFlow<SettingsScreenBottomSheetType> =
-        MutableStateFlow(
-            value = SettingsScreenBottomSheetType.None,
-        )
-    private val screenSnackbarType: MutableStateFlow<SettingsScreenSnackbarType> =
-        MutableStateFlow(
-            value = SettingsScreenSnackbarType.None,
-        )
     // endregion
 
     // region uiStateAndStateEvents
@@ -151,14 +141,26 @@ public class SettingsScreenViewModel @Inject constructor(
                             appVersion = appVersion,
                         ),
                         events = SettingsScreenUIStateEvents(
-                            disableReminder = ::disableReminder,
-                            enableReminder = ::enableReminder,
+                            disableReminder = {
+                                disableReminder(
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
+                            enableReminder = {
+                                enableReminder(
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
                             navigateToAccountsScreen = ::navigateToAccountsScreen,
                             navigateToCategoriesScreen = ::navigateToCategoriesScreen,
                             navigateToOpenSourceLicensesScreen = ::navigateToOpenSourceLicensesScreen,
                             navigateToTransactionForValuesScreen = ::navigateToTransactionForValuesScreen,
                             navigateUp = ::navigateUp,
-                            recalculateTotal = ::recalculateTotal,
+                            recalculateTotal = {
+                                recalculateTotal(
+                                    coroutineScope = viewModelScope,
+                                )
+                            },
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
@@ -181,98 +183,6 @@ public class SettingsScreenViewModel @Inject constructor(
                 }
                 completeLoading()
             }
-        }
-    }
-    // endregion
-
-    // region loading
-    private fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    private fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-    // endregion
-
-    // region state events
-    private fun disableReminder() {
-        viewModelScope.launch {
-            if (alarmKit.cancelReminderAlarm()) {
-                setScreenSnackbarType(
-                    updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.CancelReminderSuccessful,
-                )
-            } else {
-                setScreenSnackbarType(
-                    updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.CancelReminderFailed,
-                )
-            }
-        }
-    }
-
-    internal fun enableReminder() {
-        viewModelScope.launch {
-            alarmKit.setReminderAlarm()
-        }
-    }
-
-    private fun navigateToAccountsScreen() {
-        navigator.navigateToAccountsScreen()
-    }
-
-    private fun navigateToCategoriesScreen() {
-        navigator.navigateToCategoriesScreen()
-    }
-
-    private fun navigateToOpenSourceLicensesScreen() {
-        navigator.navigateToOpenSourceLicensesScreen()
-    }
-
-    private fun navigateToTransactionForValuesScreen() {
-        navigator.navigateToTransactionForValuesScreen()
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    private fun recalculateTotal() {
-        viewModelScope.launch {
-            startLoading()
-            recalculateTotalUseCase()
-            navigator.navigateUp()
-        }
-    }
-
-    private fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedSettingsScreenBottomSheetType = SettingsScreenBottomSheetType.None,
-        )
-    }
-
-    private fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
-            updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.None,
-        )
-    }
-
-    private fun setScreenBottomSheetType(
-        updatedSettingsScreenBottomSheetType: SettingsScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedSettingsScreenBottomSheetType
-        }
-    }
-
-    private fun setScreenSnackbarType(
-        updatedSettingsScreenSnackbarType: SettingsScreenSnackbarType,
-    ) {
-        screenSnackbarType.update {
-            updatedSettingsScreenSnackbarType
         }
     }
     // endregion

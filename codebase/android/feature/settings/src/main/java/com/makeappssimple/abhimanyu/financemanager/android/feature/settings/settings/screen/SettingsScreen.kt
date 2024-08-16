@@ -33,6 +33,8 @@ public fun SettingsScreen(
 
     val context = LocalContext.current
 
+    val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
+
     val onDocumentCreated: (Uri?) -> Unit = { uri: Uri? ->
         uri?.let {
             screenViewModel.backupDataToDocument(
@@ -60,7 +62,7 @@ public fun SettingsScreen(
         }
     val onNotificationPermissionRequestResult = { isPermissionGranted: Boolean ->
         if (isPermissionGranted) {
-            screenViewModel.enableReminder()
+            uiStateAndStateEvents.events.enableReminder()
         }
     }
     val notificationsPermissionLauncher: ManagedActivityResultLauncher<String, Boolean> =
@@ -78,8 +80,6 @@ public fun SettingsScreen(
             true
         }
     }
-
-    val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
 
     val screenUIEventHandler = remember(
         key1 = uiStateAndStateEvents,
