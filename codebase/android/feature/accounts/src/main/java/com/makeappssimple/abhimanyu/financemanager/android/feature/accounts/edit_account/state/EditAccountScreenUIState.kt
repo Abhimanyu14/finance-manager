@@ -24,9 +24,9 @@ internal data class EditAccountScreenUIState(
     val name: TextFieldValue = TextFieldValue(),
 ) : ScreenUIState
 
-internal sealed class EditAccountScreenNameError {
-    data object AccountExists : EditAccountScreenNameError()
-    data object None : EditAccountScreenNameError()
+public sealed class EditAccountScreenNameError {
+    public data object AccountExists : EditAccountScreenNameError()
+    public data object None : EditAccountScreenNameError()
 }
 
 internal val EditAccountScreenNameError.stringResourceId: Int?

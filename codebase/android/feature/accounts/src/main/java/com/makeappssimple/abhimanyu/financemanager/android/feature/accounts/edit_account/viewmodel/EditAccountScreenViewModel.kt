@@ -7,11 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
@@ -23,12 +19,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.usecase.EditAccountScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.EditAccountScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -44,6 +40,7 @@ public class EditAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     private val dateTimeUtil: DateTimeUtil,
+    private val editAccountScreenDataValidationUseCase: EditAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
@@ -103,7 +100,7 @@ public class EditAccountScreenViewModel @Inject constructor(
 
     // region getCurrentAccount
     private fun getCurrentAccount() {
-        val currentAccountId = screenArgs.accountId ?: return
+        val currentAccountId = screenArgs.accountId ?: return // TODO(Abhi): Throw exception here
         viewModelScope.launch {
             currentAccount = getAccountUseCase(
                 id = currentAccountId,
@@ -164,39 +161,19 @@ public class EditAccountScreenViewModel @Inject constructor(
                 val selectedAccountType = validAccountTypesForNewAccount.getOrNull(
                     selectedAccountTypeIndex
                 )
-                val accountIsNotCash = currentAccount?.type != AccountType.CASH
-                val doesNotExist = allAccounts.find {
-                    it.name.trim().equalsIgnoringCase(
-                        other = name.text.trim(),
-                    )
-                }.isNull()
-                val isValidData = name.text.trim() == currentAccount?.name?.trim() || doesNotExist
-
-                var nameError: EditAccountScreenNameError = EditAccountScreenNameError.None
-                val isCtaButtonEnabled = if (name.text.isBlank()) {
-                    false
-                } else if (
-                    (currentAccount.isNull() && isDefaultAccount(
-                        account = name.text.trim(),
-                    )) || (currentAccount.isNotNull() && isDefaultAccount(
-                        account = name.text.trim(),
-                    ) && isDefaultAccount(
-                        account = currentAccount?.name.orEmpty(),
-                    ).not()) || !isValidData
-                ) {
-                    nameError = EditAccountScreenNameError.AccountExists
-                    false
-                } else {
-                    true
-                }
+                val validationState = editAccountScreenDataValidationUseCase(
+                    allAccounts = allAccounts,
+                    enteredName = name.text.trim(),
+                    currentAccount = currentAccount,
+                )
 
                 uiStateAndStateEvents.update {
                     EditAccountScreenUIStateAndStateEvents(
                         state = EditAccountScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
                             isLoading = isLoading,
-                            isCtaButtonEnabled = isCtaButtonEnabled,
-                            nameError = nameError,
+                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
+                            nameError = validationState.nameError,
                             selectedAccountTypeIndex = selectedAccountTypeIndex.orZero(),
                             accountTypesChipUIDataList = validAccountTypesForNewAccount
                                 .map { accountType ->
@@ -211,9 +188,9 @@ public class EditAccountScreenViewModel @Inject constructor(
                             visibilityData = EditAccountScreenUIVisibilityData(
                                 balanceAmountTextField = true,
                                 minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
-                                nameTextField = accountIsNotCash.orFalse(),
-                                nameTextFieldErrorText = nameError != EditAccountScreenNameError.None,
-                                accountTypesRadioGroup = accountIsNotCash.orFalse(),
+                                nameTextField = validationState.isCashAccount.not(),
+                                nameTextFieldErrorText = validationState.nameError != EditAccountScreenNameError.None,
+                                accountTypesRadioGroup = validationState.isCashAccount.not(),
                             ),
                         ),
                         events = EditAccountScreenUIStateEvents(
