@@ -39,12 +39,11 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val updateTransactionForUseCase: UpdateTransactionForUseCase,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
-),
-    EditTransactionForScreenUIStateDelegate by EditTransactionForScreenUIStateDelegateImpl(
-        coroutineScope = coroutineScope,
-        navigator = navigator,
-        updateTransactionForUseCase = updateTransactionForUseCase,
-    ) {
+), EditTransactionForScreenUIStateDelegate by EditTransactionForScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
+    navigator = navigator,
+    updateTransactionForUseCase = updateTransactionForUseCase,
+) {
     // region screen args
     private val screenArgs = EditTransactionForScreenArgs(
         savedStateHandle = savedStateHandle,

@@ -37,12 +37,11 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     private val navigator: Navigator,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
-),
-    TransactionForValuesScreenUIStateDelegate by TransactionForValuesScreenUIStateDelegateImpl(
-        coroutineScope = coroutineScope,
-        deleteTransactionForUseCase = deleteTransactionForUseCase,
-        navigator = navigator,
-    ) {
+), TransactionForValuesScreenUIStateDelegate by TransactionForValuesScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
+    deleteTransactionForUseCase = deleteTransactionForUseCase,
+    navigator = navigator,
+) {
     // region initial data
     private var transactionForListItemDataList: ImmutableList<TransactionForListItemData> =
         persistentListOf()

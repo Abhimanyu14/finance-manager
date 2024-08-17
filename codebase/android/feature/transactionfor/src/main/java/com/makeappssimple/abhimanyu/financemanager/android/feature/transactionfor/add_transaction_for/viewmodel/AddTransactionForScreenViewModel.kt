@@ -31,12 +31,11 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private val navigator: Navigator,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
-),
-    AddTransactionForScreenUIStateDelegate by AddTransactionForScreenUIStateDelegateImpl(
-        coroutineScope = coroutineScope,
-        insertTransactionForUseCase = insertTransactionForUseCase,
-        navigator = navigator,
-    ) {
+), AddTransactionForScreenUIStateDelegate by AddTransactionForScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
+    insertTransactionForUseCase = insertTransactionForUseCase,
+    navigator = navigator,
+) {
     // region initial data
     private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()
     // endregion

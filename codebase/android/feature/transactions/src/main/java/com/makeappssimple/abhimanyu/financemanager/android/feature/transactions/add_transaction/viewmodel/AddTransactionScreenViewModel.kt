@@ -74,13 +74,12 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private val navigator: Navigator,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
-),
-    AddTransactionScreenUIStateDelegate by AddTransactionScreenUIStateDelegateImpl(
-        dateTimeUtil = dateTimeUtil,
-        coroutineScope = coroutineScope,
-        insertTransactionUseCase = insertTransactionUseCase,
-        navigator = navigator,
-    ) {
+), AddTransactionScreenUIStateDelegate by AddTransactionScreenUIStateDelegateImpl(
+    dateTimeUtil = dateTimeUtil,
+    coroutineScope = coroutineScope,
+    insertTransactionUseCase = insertTransactionUseCase,
+    navigator = navigator,
+) {
     // region screen args
     private val screenArgs = AddTransactionScreenArgs(
         savedStateHandle = savedStateHandle,

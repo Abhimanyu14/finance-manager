@@ -42,12 +42,11 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
-),
-    ViewTransactionScreenUIStateDelegate by ViewTransactionScreenUIStateDelegateImpl(
-        coroutineScope = coroutineScope,
-        deleteTransactionUseCase = deleteTransactionUseCase,
-        navigator = navigator,
-    ) {
+), ViewTransactionScreenUIStateDelegate by ViewTransactionScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
+    deleteTransactionUseCase = deleteTransactionUseCase,
+    navigator = navigator,
+) {
     // region screen args
     private val screenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,

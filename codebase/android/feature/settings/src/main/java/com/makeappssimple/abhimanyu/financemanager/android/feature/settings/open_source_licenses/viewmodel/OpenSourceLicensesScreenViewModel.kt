@@ -23,10 +23,9 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
-),
-    OpenSourceLicensesScreenUIStateDelegate by OpenSourceLicensesScreenUIStateDelegateImpl(
-        navigator = navigator,
-    ) {
+), OpenSourceLicensesScreenUIStateDelegate by OpenSourceLicensesScreenUIStateDelegateImpl(
+    navigator = navigator,
+) {
     // region uiStateAndStateEvents
     internal val uiStateAndStateEvents: MutableStateFlow<OpenSourceLicensesScreenUIStateAndStateEvents> =
         MutableStateFlow(
