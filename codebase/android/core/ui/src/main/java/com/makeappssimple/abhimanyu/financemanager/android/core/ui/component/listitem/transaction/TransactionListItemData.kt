@@ -39,7 +39,7 @@ public fun TransactionData.toTransactionListItemData(
         TransactionType.EXPENSE,
         TransactionType.ADJUSTMENT,
         TransactionType.REFUND,
-        -> {
+            -> {
             transaction.amount.toSignedString(
                 isPositive = accountTo.isNotNull(),
                 isNegative = accountFrom.isNotNull(),
