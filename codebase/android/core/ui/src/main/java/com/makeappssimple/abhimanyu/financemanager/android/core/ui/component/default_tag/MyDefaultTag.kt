@@ -12,6 +12,11 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
+private object MyDefaultTagConstants {
+    val paddingHorizontal = 8.dp
+    val paddingVertical = 1.dp
+}
+
 @Composable
 public fun MyDefaultTag(
     modifier: Modifier = Modifier,
@@ -25,8 +30,8 @@ public fun MyDefaultTag(
                 color = MaterialTheme.colorScheme.primary,
             )
             .padding(
-                horizontal = 8.dp,
-                vertical = 1.dp,
+                horizontal = MyDefaultTagConstants.paddingHorizontal,
+                vertical = MyDefaultTagConstants.paddingVertical,
             ),
         text = stringResource(
             id = R.string.default_tag,
