@@ -38,7 +38,6 @@ internal interface AccountsScreenUIStateDelegate {
     )
 
     fun setDefaultAccountIdInDataStore(
-        coroutineScope: CoroutineScope,
         accountId: Int,
     )
 

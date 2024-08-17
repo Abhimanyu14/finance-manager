@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
@@ -27,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.anal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,10 +41,13 @@ private object AnalysisScreenViewModelConstants {
 
 @HiltViewModel
 public class AnalysisScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel(), AnalysisScreenUIStateDelegate by AnalysisScreenUIStateDelegateImpl(
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+), AnalysisScreenUIStateDelegate by AnalysisScreenUIStateDelegateImpl(
     navigator = navigator,
 ) {
     // region initial data

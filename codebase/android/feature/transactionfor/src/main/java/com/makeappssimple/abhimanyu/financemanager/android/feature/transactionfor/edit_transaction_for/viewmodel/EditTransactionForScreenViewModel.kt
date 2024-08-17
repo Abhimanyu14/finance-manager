@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.ui.text.TextRange
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
@@ -20,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -27,6 +29,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class EditTransactionForScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val editTransactionForScreenDataValidationUseCase: EditTransactionForScreenDataValidationUseCase,
@@ -34,7 +37,9 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val navigator: Navigator,
     private val updateTransactionForUseCase: UpdateTransactionForUseCase,
-) : ScreenViewModel(),
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+),
     EditTransactionForScreenUIStateDelegate by EditTransactionForScreenUIStateDelegateImpl(
         navigator = navigator,
         updateTransactionForUseCase = updateTransactionForUseCase,

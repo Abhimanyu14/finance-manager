@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.mapIndexed
@@ -20,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -28,11 +30,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class TransactionForValuesScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     private val getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val checkIfTransactionForValuesAreUsedInTransactionsUseCase: CheckIfTransactionForValuesAreUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel(),
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+),
     TransactionForValuesScreenUIStateDelegate by TransactionForValuesScreenUIStateDelegateImpl(
         deleteTransactionForUseCase = deleteTransactionForUseCase,
         navigator = navigator,

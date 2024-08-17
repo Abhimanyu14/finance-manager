@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
@@ -34,6 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.sta
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -44,6 +46,7 @@ import kotlin.math.abs
 
 @HiltViewModel
 public class HomeScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     shouldShowBackupCardUseCase: ShouldShowBackupCardUseCase,
@@ -53,7 +56,9 @@ public class HomeScreenViewModel @Inject constructor(
     private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel(), HomeScreenUIStateDelegate by HomeScreenUIStateDelegateImpl(
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+), HomeScreenUIStateDelegate by HomeScreenUIStateDelegateImpl(
     dateTimeUtil = dateTimeUtil,
     navigator = navigator,
 ) {

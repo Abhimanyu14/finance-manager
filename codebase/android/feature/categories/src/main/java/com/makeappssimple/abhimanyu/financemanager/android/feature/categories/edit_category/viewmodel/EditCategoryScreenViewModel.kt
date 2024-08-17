@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.e
 import androidx.compose.ui.text.TextRange
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -28,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.na
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,13 +37,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class EditCategoryScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
-) : ScreenViewModel(), EditCategoryScreenUIStateDelegate by EditCategoryScreenUIStateDelegateImpl(
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+), EditCategoryScreenUIStateDelegate by EditCategoryScreenUIStateDelegateImpl(
     navigator = navigator,
     updateCategoriesUseCase = updateCategoriesUseCase,
 ) {

@@ -5,6 +5,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.perf.metrics.Trace
 import com.google.firebase.perf.performance
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
@@ -37,6 +38,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
@@ -49,13 +51,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class TransactionsScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     private val dispatcherProvider: DispatcherProvider,
     private val dateTimeUtil: DateTimeUtil,
     private val getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
-) : ScreenViewModel(), TransactionsScreenUIStateDelegate by TransactionsScreenUIStateDelegateImpl(
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+), TransactionsScreenUIStateDelegate by TransactionsScreenUIStateDelegateImpl(
     navigator = navigator,
     updateTransactionsUseCase = updateTransactionsUseCase,
 ) {

@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.groupBy
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -29,6 +30,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -38,13 +40,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class CategoriesScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel(), CategoriesScreenUIStateDelegate by CategoriesScreenUIStateDelegateImpl(
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+), CategoriesScreenUIStateDelegate by CategoriesScreenUIStateDelegateImpl(
     deleteCategoryUseCase = deleteCategoryUseCase,
     setDefaultCategoryUseCase = setDefaultCategoryUseCase,
     navigator = navigator,

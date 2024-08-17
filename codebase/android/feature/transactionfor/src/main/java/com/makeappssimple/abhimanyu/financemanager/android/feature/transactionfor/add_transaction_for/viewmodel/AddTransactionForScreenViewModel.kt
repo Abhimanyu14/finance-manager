@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForUseCase
@@ -15,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -22,11 +24,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class AddTransactionForScreenViewModel @Inject constructor(
+    @ApplicationScope coroutineScope: CoroutineScope,
     private val addTransactionForScreenDataValidationUseCase: AddTransactionForScreenDataValidationUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val insertTransactionForUseCase: InsertTransactionForUseCase,
     private val navigator: Navigator,
-) : ScreenViewModel(),
+) : ScreenViewModel(
+    viewModelScope = coroutineScope,
+),
     AddTransactionForScreenUIStateDelegate by AddTransactionForScreenUIStateDelegateImpl(
         insertTransactionForUseCase = insertTransactionForUseCase,
         navigator = navigator,

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class AccountsScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
@@ -84,7 +85,6 @@ internal class AccountsScreenUIStateDelegateImpl(
     }
 
     override fun setDefaultAccountIdInDataStore(
-        coroutineScope: CoroutineScope,
         accountId: Int,
     ) {
         coroutineScope.launch {
