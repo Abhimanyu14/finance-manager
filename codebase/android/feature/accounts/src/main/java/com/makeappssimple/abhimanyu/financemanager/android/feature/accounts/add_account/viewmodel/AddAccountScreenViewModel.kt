@@ -3,8 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
@@ -14,12 +12,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.usecase.AddAccountScreenDataValidationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -32,6 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class AddAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    private val addAccountScreenDataValidationUseCase: AddAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val insertAccountUseCase: InsertAccountUseCase,
     private val navigator: Navigator,
@@ -99,19 +98,10 @@ public class AddAccountScreenViewModel @Inject constructor(
                     ),
                 ->
 
-                val isValidData: Boolean = allAccounts.find {
-                    it.name.trim().equalsIgnoringCase(
-                        other = name.text.trim(),
-                    )
-                }.isNull() || (isDefaultAccount(
-                    account = name.text.trim(),
-                ))
-                val nameError: AddAccountScreenNameError =
-                    if (name.text.isBlank() || isValidData) {
-                        AddAccountScreenNameError.None
-                    } else {
-                        AddAccountScreenNameError.AccountExists
-                    }
+                val validationState = addAccountScreenDataValidationUseCase(
+                    allAccounts = allAccounts,
+                    enteredName = name.text.trim(),
+                )
                 val selectedAccountType = validAccountTypesForNewAccount.getOrNull(
                     index = selectedAccountTypeIndex,
                 )
@@ -121,13 +111,13 @@ public class AddAccountScreenViewModel @Inject constructor(
                         state = AddAccountScreenUIState(
                             selectedAccountType = selectedAccountType,
                             screenBottomSheetType = screenBottomSheetType,
-                            nameError = nameError,
+                            nameError = validationState.nameError,
                             screenSnackbarType = screenSnackbarType,
                             visibilityData = AddAccountScreenUIVisibilityData(
                                 minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
-                                nameTextFieldErrorText = nameError != AddAccountScreenNameError.None,
+                                nameTextFieldErrorText = validationState.nameError != AddAccountScreenNameError.None,
                             ),
-                            isCtaButtonEnabled = isValidData,
+                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
                             isLoading = isLoading,
                             selectedAccountTypeIndex = selectedAccountTypeIndex,
                             accountTypesChipUIDataList = validAccountTypesForNewAccount
