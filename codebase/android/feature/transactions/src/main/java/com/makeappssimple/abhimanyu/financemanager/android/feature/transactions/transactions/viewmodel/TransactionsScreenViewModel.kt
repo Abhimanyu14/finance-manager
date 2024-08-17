@@ -61,6 +61,7 @@ public class TransactionsScreenViewModel @Inject constructor(
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), TransactionsScreenUIStateDelegate by TransactionsScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
     navigator = navigator,
     updateTransactionsUseCase = updateTransactionsUseCase,
 ) {
@@ -183,16 +184,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                             setSearchText = ::setSearchText,
                             setSelectedFilter = ::setSelectedFilter,
                             setSelectedSortOption = ::setSelectedSortOption,
-                            updateTransactionForValuesInTransactions = {
-                                    selectedTransactions: ImmutableList<Int>,
-                                    transactionForId: Int,
-                                ->
-                                updateTransactionForValuesInTransactions(
-                                    coroutineScope = viewModelScope,
-                                    selectedTransactions = selectedTransactions,
-                                    transactionForId = transactionForId,
-                                )
-                            },
+                            updateTransactionForValuesInTransactions = ::updateTransactionForValuesInTransactions,
                         ),
                     )
                 }

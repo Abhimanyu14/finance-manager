@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.bottomsheet.AddTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.LocalDate
 import java.time.LocalTime
@@ -49,9 +48,7 @@ internal interface AddTransactionScreenUIStateDelegate {
 
     fun clearTitle()
 
-    fun insertTransaction(
-        coroutineScope: CoroutineScope,
-    )
+    fun insertTransaction()
 
     fun navigateUp()
 

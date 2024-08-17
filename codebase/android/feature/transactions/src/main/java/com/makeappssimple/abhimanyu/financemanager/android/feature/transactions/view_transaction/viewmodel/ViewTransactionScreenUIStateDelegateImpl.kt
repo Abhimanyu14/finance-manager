@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class ViewTransactionScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val navigator: Navigator,
 ) : ViewTransactionScreenUIStateDelegate {
@@ -42,9 +43,7 @@ internal class ViewTransactionScreenUIStateDelegateImpl(
     // endregion
 
     // region state events
-    override fun deleteTransaction(
-        coroutineScope: CoroutineScope,
-    ) {
+    override fun deleteTransaction() {
         val id = transactionIdToDelete ?: return
         coroutineScope.launch {
             startLoading()

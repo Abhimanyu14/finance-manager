@@ -124,12 +124,7 @@ public class AccountsScreenViewModel @Inject constructor(
                             accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
                         ),
                         events = AccountsScreenUIStateEvents(
-                            deleteAccount = {
-                                deleteAccount(
-                                    coroutineScope = viewModelScope,
-                                    accountId = it,
-                                )
-                            },
+                            deleteAccount = ::deleteAccount,
                             navigateToAddAccountScreen = ::navigateToAddAccountScreen,
                             navigateToEditAccountScreen = ::navigateToEditAccountScreen,
                             navigateUp = ::navigateUp,

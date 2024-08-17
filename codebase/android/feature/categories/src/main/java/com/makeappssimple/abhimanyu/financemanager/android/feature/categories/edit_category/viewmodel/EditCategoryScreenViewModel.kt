@@ -47,6 +47,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditCategoryScreenUIStateDelegate by EditCategoryScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
     navigator = navigator,
     updateCategoriesUseCase = updateCategoriesUseCase,
 ) {
@@ -212,11 +213,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setSearchText = ::setSearchText,
                             setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
-                            updateCategory = {
-                                updateCategory(
-                                    coroutineScope = viewModelScope,
-                                )
-                            },
+                            updateCategory = ::updateCategory,
                         ),
                     )
                 }

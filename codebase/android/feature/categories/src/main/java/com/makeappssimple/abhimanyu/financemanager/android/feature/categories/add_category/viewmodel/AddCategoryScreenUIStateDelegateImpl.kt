@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class AddCategoryScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val navigator: Navigator,
 ) : AddCategoryScreenUIStateDelegate {
@@ -73,9 +74,7 @@ internal class AddCategoryScreenUIStateDelegateImpl(
         }
     }
 
-    override fun insertCategory(
-        coroutineScope: CoroutineScope,
-    ) {
+    override fun insertCategory() {
         val category = Category(
             emoji = emoji.value,
             title = title.value.text,

@@ -50,6 +50,7 @@ public class CategoriesScreenViewModel @Inject constructor(
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), CategoriesScreenUIStateDelegate by CategoriesScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
     deleteCategoryUseCase = deleteCategoryUseCase,
     setDefaultCategoryUseCase = setDefaultCategoryUseCase,
     navigator = navigator,
@@ -259,12 +260,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                             categoriesGridItemDataMap = categoriesGridItemDataMap,
                         ),
                         events = CategoriesScreenUIStateEvents(
-                            deleteCategory = {
-                                deleteCategory(
-                                    coroutineScope = viewModelScope,
-                                    id = it,
-                                )
-                            },
+                            deleteCategory = ::deleteCategory,
                             navigateToAddCategoryScreen = ::navigateToAddCategoryScreen,
                             navigateToEditCategoryScreen = ::navigateToEditCategoryScreen,
                             navigateUp = ::navigateUp,
@@ -272,16 +268,7 @@ public class CategoriesScreenViewModel @Inject constructor(
                             resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setCategoryIdToDelete = ::setCategoryIdToDelete,
                             setClickedItemId = ::setClickedItemId,
-                            setDefaultCategoryIdInDataStore = {
-                                    defaultCategoryId: Int,
-                                    transactionType: TransactionType,
-                                ->
-                                setDefaultCategoryIdInDataStore(
-                                    coroutineScope = viewModelScope,
-                                    defaultCategoryId = defaultCategoryId,
-                                    transactionType = transactionType,
-                                )
-                            },
+                            setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setScreenSnackbarType = ::setScreenSnackbarType,
                         ),

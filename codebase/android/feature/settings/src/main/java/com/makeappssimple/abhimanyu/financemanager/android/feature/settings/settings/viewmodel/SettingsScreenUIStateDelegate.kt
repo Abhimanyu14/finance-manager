@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.snackbar.SettingsScreenSnackbarType
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface SettingsScreenUIStateDelegate {
@@ -19,13 +18,9 @@ internal interface SettingsScreenUIStateDelegate {
     // endregion
 
     // region state events
-    fun disableReminder(
-        coroutineScope: CoroutineScope,
-    )
+    fun disableReminder()
 
-    fun enableReminder(
-        coroutineScope: CoroutineScope,
-    )
+    fun enableReminder()
 
     fun navigateToAccountsScreen()
 
@@ -37,9 +32,7 @@ internal interface SettingsScreenUIStateDelegate {
 
     fun navigateUp()
 
-    fun recalculateTotal(
-        coroutineScope: CoroutineScope,
-    )
+    fun recalculateTotal()
 
     fun resetScreenBottomSheetType()
 

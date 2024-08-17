@@ -44,7 +44,6 @@ internal class AccountsScreenUIStateDelegateImpl(
 
     // region state events
     override fun deleteAccount(
-        coroutineScope: CoroutineScope,
         accountId: Int,
     ) {
         coroutineScope.launch {

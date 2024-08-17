@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class TransactionForValuesScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val navigator: Navigator,
 ) : TransactionForValuesScreenUIStateDelegate {
@@ -41,7 +42,6 @@ internal class TransactionForValuesScreenUIStateDelegateImpl(
 
     // region state events
     override fun deleteTransactionFor(
-        coroutineScope: CoroutineScope,
         id: Int,
     ) {
         coroutineScope.launch {

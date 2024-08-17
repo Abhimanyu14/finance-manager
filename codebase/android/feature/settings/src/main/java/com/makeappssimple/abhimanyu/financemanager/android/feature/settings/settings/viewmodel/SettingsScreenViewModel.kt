@@ -41,6 +41,7 @@ public class SettingsScreenViewModel @Inject constructor(
     viewModelScope = coroutineScope,
 ), SettingsScreenUIStateDelegate by SettingsScreenUIStateDelegateImpl(
     alarmKit = alarmKit,
+    coroutineScope = coroutineScope,
     navigator = navigator,
     recalculateTotalUseCase = recalculateTotalUseCase,
 ) {
@@ -146,26 +147,14 @@ public class SettingsScreenViewModel @Inject constructor(
                             appVersion = appVersion,
                         ),
                         events = SettingsScreenUIStateEvents(
-                            disableReminder = {
-                                disableReminder(
-                                    coroutineScope = viewModelScope,
-                                )
-                            },
-                            enableReminder = {
-                                enableReminder(
-                                    coroutineScope = viewModelScope,
-                                )
-                            },
+                            disableReminder = ::disableReminder,
+                            enableReminder = ::enableReminder,
                             navigateToAccountsScreen = ::navigateToAccountsScreen,
                             navigateToCategoriesScreen = ::navigateToCategoriesScreen,
                             navigateToOpenSourceLicensesScreen = ::navigateToOpenSourceLicensesScreen,
                             navigateToTransactionForValuesScreen = ::navigateToTransactionForValuesScreen,
                             navigateUp = ::navigateUp,
-                            recalculateTotal = {
-                                recalculateTotal(
-                                    coroutineScope = viewModelScope,
-                                )
-                            },
+                            recalculateTotal = ::recalculateTotal,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             resetScreenSnackbarType = ::resetScreenSnackbarType,
                             setScreenBottomSheetType = ::setScreenBottomSheetType,

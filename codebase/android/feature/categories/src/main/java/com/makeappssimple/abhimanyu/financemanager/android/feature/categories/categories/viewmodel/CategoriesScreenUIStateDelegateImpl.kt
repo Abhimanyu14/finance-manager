@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class CategoriesScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
     private val navigator: Navigator,
@@ -52,7 +53,6 @@ internal class CategoriesScreenUIStateDelegateImpl(
 
     // region state events
     override fun deleteCategory(
-        coroutineScope: CoroutineScope,
         id: Int,
     ) {
         coroutineScope.launch {
@@ -111,7 +111,6 @@ internal class CategoriesScreenUIStateDelegateImpl(
     }
 
     override fun setDefaultCategoryIdInDataStore(
-        coroutineScope: CoroutineScope,
         defaultCategoryId: Int,
         transactionType: TransactionType,
     ) {

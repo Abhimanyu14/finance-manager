@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.bottomsheet.ViewTransactionScreenBottomSheetType
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface ViewTransactionScreenUIStateDelegate {
@@ -21,9 +20,7 @@ internal interface ViewTransactionScreenUIStateDelegate {
     // endregion
 
     // region state events
-    fun deleteTransaction(
-        coroutineScope: CoroutineScope,
-    )
+    fun deleteTransaction()
 
     fun onRefundButtonClick(
         transactionId: Int,

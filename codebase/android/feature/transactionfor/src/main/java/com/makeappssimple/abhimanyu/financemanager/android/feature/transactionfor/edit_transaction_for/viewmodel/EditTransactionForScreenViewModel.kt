@@ -41,6 +41,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     viewModelScope = coroutineScope,
 ),
     EditTransactionForScreenUIStateDelegate by EditTransactionForScreenUIStateDelegateImpl(
+        coroutineScope = coroutineScope,
         navigator = navigator,
         updateTransactionForUseCase = updateTransactionForUseCase,
     ) {
@@ -150,7 +151,6 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                             setTitle = ::setTitle,
                             updateTransactionFor = {
                                 updateTransactionFor(
-                                    coroutineScope = viewModelScope,
                                     uiState = uiStateAndStateEvents.value.state
                                 )
                             },

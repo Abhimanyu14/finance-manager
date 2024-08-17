@@ -77,6 +77,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
 ),
     AddTransactionScreenUIStateDelegate by AddTransactionScreenUIStateDelegateImpl(
         dateTimeUtil = dateTimeUtil,
+        coroutineScope = coroutineScope,
         insertTransactionUseCase = insertTransactionUseCase,
         navigator = navigator,
     ) {
@@ -424,11 +425,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                         events = AddTransactionScreenUIStateEvents(
                             clearAmount = ::clearAmount,
                             clearTitle = ::clearTitle,
-                            insertTransaction = {
-                                insertTransaction(
-                                    coroutineScope = viewModelScope,
-                                )
-                            },
+                            insertTransaction = ::insertTransaction,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             resetScreenSnackbarType = ::resetScreenSnackbarType,

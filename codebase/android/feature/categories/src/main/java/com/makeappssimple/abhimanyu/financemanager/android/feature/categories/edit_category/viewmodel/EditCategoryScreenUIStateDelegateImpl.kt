@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class EditCategoryScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : EditCategoryScreenUIStateDelegate {
@@ -126,9 +127,7 @@ internal class EditCategoryScreenUIStateDelegateImpl(
         }
     }
 
-    override fun updateCategory(
-        coroutineScope: CoroutineScope,
-    ) {
+    override fun updateCategory() {
         category.value?.copy(
             emoji = emoji.value,
             title = title.value.text,

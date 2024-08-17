@@ -52,6 +52,7 @@ public class EditAccountScreenViewModel @Inject constructor(
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditAccountScreenUIStateDelegate by EditAccountScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
     dateTimeUtil = dateTimeUtil,
     insertTransactionsUseCase = insertTransactionsUseCase,
     navigator = navigator,
@@ -227,20 +228,7 @@ public class EditAccountScreenViewModel @Inject constructor(
                             setScreenBottomSheetType = ::setScreenBottomSheetType,
                             setScreenSnackbarType = ::setScreenSnackbarType,
                             setSelectedAccountTypeIndex = ::setSelectedAccountTypeIndex,
-                            updateAccount = {
-                                    selectedAccountTypeIndex: Int,
-                                    name: String,
-                                    balanceAmountValue: String,
-                                    minimumAccountBalanceAmountValue: String,
-                                ->
-                                updateAccount(
-                                    coroutineScope = viewModelScope,
-                                    selectedAccountTypeIndex = selectedAccountTypeIndex,
-                                    name = name,
-                                    balanceAmountValue = balanceAmountValue,
-                                    minimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue,
-                                )
-                            },
+                            updateAccount = ::updateAccount,
                         ),
                     )
                 }

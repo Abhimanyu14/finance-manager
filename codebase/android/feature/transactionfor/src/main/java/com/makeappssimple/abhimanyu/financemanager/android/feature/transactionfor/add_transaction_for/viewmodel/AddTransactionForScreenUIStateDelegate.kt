@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.bottomsheet.AddTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface AddTransactionForScreenUIStateDelegate {
@@ -24,7 +23,6 @@ internal interface AddTransactionForScreenUIStateDelegate {
 
     fun insertTransactionFor(
         uiState: AddTransactionForScreenUIState,
-        coroutineScope: CoroutineScope,
     )
 
     fun navigateUp()

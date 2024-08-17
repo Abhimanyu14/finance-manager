@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface AddAccountScreenUIStateDelegate {
@@ -36,7 +35,6 @@ internal interface AddAccountScreenUIStateDelegate {
 
     fun insertAccount(
         uiState: AddAccountScreenUIState,
-        coroutineScope: CoroutineScope,
     )
 
     fun navigateUp()

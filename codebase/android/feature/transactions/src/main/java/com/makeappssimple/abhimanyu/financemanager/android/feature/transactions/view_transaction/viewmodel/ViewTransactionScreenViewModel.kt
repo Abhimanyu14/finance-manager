@@ -44,6 +44,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     viewModelScope = coroutineScope,
 ),
     ViewTransactionScreenUIStateDelegate by ViewTransactionScreenUIStateDelegateImpl(
+        coroutineScope = coroutineScope,
         deleteTransactionUseCase = deleteTransactionUseCase,
         navigator = navigator,
     ) {
@@ -174,11 +175,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
                             screenBottomSheetType = screenBottomSheetType,
                         ),
                         events = ViewTransactionScreenUIStateEvents(
-                            deleteTransaction = {
-                                deleteTransaction(
-                                    coroutineScope = viewModelScope,
-                                )
-                            },
+                            deleteTransaction = ::deleteTransaction,
                             navigateUp = ::navigateUp,
                             navigateToEditTransactionScreen = ::navigateToEditTransactionScreen,
                             navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,

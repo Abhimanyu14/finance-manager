@@ -33,6 +33,7 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     viewModelScope = coroutineScope,
 ),
     AddTransactionForScreenUIStateDelegate by AddTransactionForScreenUIStateDelegateImpl(
+        coroutineScope = coroutineScope,
         insertTransactionForUseCase = insertTransactionForUseCase,
         navigator = navigator,
     ) {
@@ -105,7 +106,6 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                             insertTransactionFor = {
                                 insertTransactionFor(
                                     uiState = uiStateAndStateEvents.value.state,
-                                    coroutineScope = viewModelScope,
                                 )
                             },
                             navigateUp = ::navigateUp,

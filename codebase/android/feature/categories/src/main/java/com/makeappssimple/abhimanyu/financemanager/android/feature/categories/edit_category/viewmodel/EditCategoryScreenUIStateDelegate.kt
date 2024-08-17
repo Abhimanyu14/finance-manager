@@ -5,7 +5,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.bottomsheet.EditCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface EditCategoryScreenUIStateDelegate {
@@ -56,9 +55,7 @@ internal interface EditCategoryScreenUIStateDelegate {
         updatedSelectedTransactionTypeIndex: Int,
     )
 
-    fun updateCategory(
-        coroutineScope: CoroutineScope,
-    )
+    fun updateCategory()
     // endregion
 }
 

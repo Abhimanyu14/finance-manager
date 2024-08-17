@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class EditTransactionForScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val navigator: Navigator,
     private val updateTransactionForUseCase: UpdateTransactionForUseCase,
 ) : EditTransactionForScreenUIStateDelegate {
@@ -82,7 +83,6 @@ internal class EditTransactionForScreenUIStateDelegateImpl(
     }
 
     override fun updateTransactionFor(
-        coroutineScope: CoroutineScope,
         uiState: EditTransactionForScreenUIState,
     ) {
         val currentTransactionForValue = currentTransactionFor ?: return

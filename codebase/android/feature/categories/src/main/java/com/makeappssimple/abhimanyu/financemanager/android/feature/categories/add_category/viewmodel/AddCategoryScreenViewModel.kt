@@ -44,6 +44,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddCategoryScreenUIStateDelegate by AddCategoryScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
     insertCategoriesUseCase = insertCategoriesUseCase,
     navigator = navigator,
 ) {
@@ -168,11 +169,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
                         ),
                         events = AddCategoryScreenUIStateEvents(
                             clearTitle = ::clearTitle,
-                            insertCategory = {
-                                insertCategory(
-                                    coroutineScope = viewModelScope,
-                                )
-                            },
+                            insertCategory = ::insertCategory,
                             navigateUp = ::navigateUp,
                             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
                             setEmoji = ::setEmoji,

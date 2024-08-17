@@ -24,6 +24,7 @@ import java.time.LocalTime
 
 internal class AddTransactionScreenUIStateDelegateImpl(
     dateTimeUtil: DateTimeUtil,
+    private val coroutineScope: CoroutineScope,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val navigator: Navigator,
 ) : AddTransactionScreenUIStateDelegate {
@@ -120,9 +121,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun insertTransaction(
-        coroutineScope: CoroutineScope,
-    ) {
+    override fun insertTransaction() {
         val selectedAccountFrom = accountFrom.value
         val selectedAccountTo = accountTo.value
         val selectedCategoryId = category.value?.id

@@ -38,6 +38,7 @@ public class AddAccountScreenViewModel @Inject constructor(
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddAccountScreenUIStateDelegate by AddAccountScreenUIStateDelegateImpl(
+    coroutineScope = coroutineScope,
     insertAccountUseCase = insertAccountUseCase,
     navigator = navigator,
 ) {
@@ -145,7 +146,6 @@ public class AddAccountScreenViewModel @Inject constructor(
                             insertAccount = {
                                 insertAccount(
                                     uiState = uiStateAndStateEvents.value.state,
-                                    coroutineScope = viewModelScope,
                                 )
                             },
                             navigateUp = ::navigateUp,

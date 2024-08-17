@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class AddTransactionForScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val insertTransactionForUseCase: InsertTransactionForUseCase,
     private val navigator: Navigator,
 ) : AddTransactionForScreenUIStateDelegate {
@@ -52,7 +53,6 @@ internal class AddTransactionForScreenUIStateDelegateImpl(
 
     override fun insertTransactionFor(
         uiState: AddTransactionForScreenUIState,
-        coroutineScope: CoroutineScope,
     ) {
         coroutineScope.launch {
             val isTransactionForInserted = insertTransactionForUseCase(

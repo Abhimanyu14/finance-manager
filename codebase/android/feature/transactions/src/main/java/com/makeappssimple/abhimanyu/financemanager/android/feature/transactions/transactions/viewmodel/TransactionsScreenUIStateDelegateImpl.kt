@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class TransactionsScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : TransactionsScreenUIStateDelegate {
@@ -171,7 +172,6 @@ internal class TransactionsScreenUIStateDelegateImpl(
     }
 
     override fun updateTransactionForValuesInTransactions(
-        coroutineScope: CoroutineScope,
         selectedTransactions: ImmutableList<Int>,
         transactionForId: Int,
     ) {

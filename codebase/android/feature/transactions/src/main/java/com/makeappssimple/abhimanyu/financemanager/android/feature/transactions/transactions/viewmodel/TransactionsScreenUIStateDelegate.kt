@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.So
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface TransactionsScreenUIStateDelegate {
@@ -75,7 +74,6 @@ internal interface TransactionsScreenUIStateDelegate {
     )
 
     fun updateTransactionForValuesInTransactions(
-        coroutineScope: CoroutineScope,
         selectedTransactions: ImmutableList<Int>,
         transactionForId: Int,
     )

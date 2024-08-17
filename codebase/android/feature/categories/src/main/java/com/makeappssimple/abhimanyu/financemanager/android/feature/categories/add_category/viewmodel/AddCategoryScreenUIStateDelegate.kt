@@ -4,7 +4,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface AddCategoryScreenUIStateDelegate {
@@ -30,9 +29,7 @@ internal interface AddCategoryScreenUIStateDelegate {
     // region state events
     fun clearTitle()
 
-    fun insertCategory(
-        coroutineScope: CoroutineScope,
-    )
+    fun insertCategory()
 
     fun navigateUp()
 

@@ -4,7 +4,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface EditTransactionForScreenUIStateDelegate {
@@ -40,7 +39,6 @@ internal interface EditTransactionForScreenUIStateDelegate {
     )
 
     fun updateTransactionFor(
-        coroutineScope: CoroutineScope,
         uiState: EditTransactionForScreenUIState,
     )
     // endregion

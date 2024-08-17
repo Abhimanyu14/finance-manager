@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface EditAccountScreenUIStateDelegate {
@@ -67,7 +66,6 @@ internal interface EditAccountScreenUIStateDelegate {
     )
 
     fun updateAccount(
-        coroutineScope: CoroutineScope,
         selectedAccountTypeIndex: Int,
         name: String,
         balanceAmountValue: String,

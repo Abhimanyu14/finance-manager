@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 internal class SettingsScreenUIStateDelegateImpl(
     private val alarmKit: AlarmKit,
+    private val coroutineScope: CoroutineScope,
     private val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
 ) : SettingsScreenUIStateDelegate {
@@ -44,9 +45,7 @@ internal class SettingsScreenUIStateDelegateImpl(
     // endregion
 
     // region state events
-    override fun disableReminder(
-        coroutineScope: CoroutineScope,
-    ) {
+    override fun disableReminder() {
         coroutineScope.launch {
             if (alarmKit.cancelReminderAlarm()) {
                 setScreenSnackbarType(
@@ -60,9 +59,7 @@ internal class SettingsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun enableReminder(
-        coroutineScope: CoroutineScope,
-    ) {
+    override fun enableReminder() {
         coroutineScope.launch {
             alarmKit.setReminderAlarm()
         }
@@ -88,9 +85,7 @@ internal class SettingsScreenUIStateDelegateImpl(
         navigator.navigateUp()
     }
 
-    override fun recalculateTotal(
-        coroutineScope: CoroutineScope,
-    ) {
+    override fun recalculateTotal() {
         coroutineScope.launch {
             startLoading()
             recalculateTotalUseCase()

@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface CategoriesScreenUIStateDelegate {
@@ -23,7 +22,6 @@ internal interface CategoriesScreenUIStateDelegate {
 
     // region state events
     fun deleteCategory(
-        coroutineScope: CoroutineScope,
         id: Int,
     )
 
@@ -50,7 +48,6 @@ internal interface CategoriesScreenUIStateDelegate {
     )
 
     fun setDefaultCategoryIdInDataStore(
-        coroutineScope: CoroutineScope,
         defaultCategoryId: Int,
         transactionType: TransactionType,
     )

@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface AccountsScreenUIStateDelegate {
@@ -19,7 +18,6 @@ internal interface AccountsScreenUIStateDelegate {
 
     // region state events
     fun deleteAccount(
-        coroutineScope: CoroutineScope,
         accountId: Int,
     )
 

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class AddAccountScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val insertAccountUseCase: InsertAccountUseCase,
     private val navigator: Navigator,
 ) : AddAccountScreenUIStateDelegate {
@@ -86,7 +87,6 @@ internal class AddAccountScreenUIStateDelegateImpl(
 
     override fun insertAccount(
         uiState: AddAccountScreenUIState,
-        coroutineScope: CoroutineScope,
     ) {
         coroutineScope.launch {
             val isAccountInserted = insertAccountUseCase(

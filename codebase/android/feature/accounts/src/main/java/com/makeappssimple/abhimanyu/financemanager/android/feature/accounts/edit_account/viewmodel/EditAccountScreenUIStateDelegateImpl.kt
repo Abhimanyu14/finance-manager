@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 internal class EditAccountScreenUIStateDelegateImpl(
+    private val coroutineScope: CoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val navigator: Navigator,
@@ -168,7 +169,6 @@ internal class EditAccountScreenUIStateDelegateImpl(
     }
 
     override fun updateAccount(
-        coroutineScope: CoroutineScope,
         selectedAccountTypeIndex: Int,
         name: String,
         balanceAmountValue: String,

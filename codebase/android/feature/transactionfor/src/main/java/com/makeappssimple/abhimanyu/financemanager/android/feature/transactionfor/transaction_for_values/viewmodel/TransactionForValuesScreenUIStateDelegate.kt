@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.bottomsheet.TransactionForValuesScreenBottomSheetType
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface TransactionForValuesScreenUIStateDelegate {
@@ -19,7 +18,6 @@ internal interface TransactionForValuesScreenUIStateDelegate {
 
     // region state events
     fun deleteTransactionFor(
-        coroutineScope: CoroutineScope,
         id: Int,
     )
 
