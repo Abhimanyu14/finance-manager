@@ -4,8 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
@@ -15,14 +13,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.usecase.AddCategoryScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -38,6 +34,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val addCategoryScreenDataValidationUseCase: AddCategoryScreenDataValidationUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val navigator: Navigator,
@@ -127,36 +124,19 @@ public class AddCategoryScreenViewModel @Inject constructor(
                         emoji,
                     ),
                 ->
-                var titleError: AddCategoryScreenTitleError = AddCategoryScreenTitleError.None
-                val isCtaButtonEnabled = if (title.text.isBlank()) {
-                    false
-                } else if (isDefaultIncomeCategory(
-                        category = title.text.trim(),
-                    ) || isDefaultExpenseCategory(
-                        category = title.text.trim(),
-                    ) || isDefaultInvestmentCategory(
-                        category = title.text.trim(),
-                    ) || categories.find {
-                        it.title.equalsIgnoringCase(
-                            other = title.text.trim(),
-                        )
-                    }.isNotNull()
-                ) {
-                    titleError = AddCategoryScreenTitleError.CategoryExists
-                    false
-                } else {
-                    true
-                }
-
+                val validationState = addCategoryScreenDataValidationUseCase(
+                    categories = categories,
+                    enteredTitle = title.text.trim(),
+                )
                 uiStateAndStateEvents.update {
                     AddCategoryScreenUIStateAndStateEvents(
                         state = AddCategoryScreenUIState(
                             screenBottomSheetType = screenBottomSheetType,
                             isBottomSheetVisible = screenBottomSheetType != AddCategoryScreenBottomSheetType.None,
-                            isCtaButtonEnabled = isCtaButtonEnabled,
+                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
                             isLoading = isLoading,
-                            isSupportingTextVisible = titleError != AddCategoryScreenTitleError.None,
-                            titleError = titleError,
+                            isSupportingTextVisible = validationState.titleError != AddCategoryScreenTitleError.None,
+                            titleError = validationState.titleError,
                             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                             transactionTypesChipUIData = validTransactionTypes.map { transactionType ->
                                 ChipUIData(

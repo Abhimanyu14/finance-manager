@@ -25,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ed
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.usecase.EditCategoryScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.EditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -40,6 +41,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val editCategoryScreenDataValidationUseCase: EditCategoryScreenDataValidationUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val navigator: Navigator,
@@ -164,6 +166,11 @@ public class EditCategoryScreenViewModel @Inject constructor(
                         category,
                     ),
                 ->
+                val validationState = editCategoryScreenDataValidationUseCase(
+                    categories = categories,
+                    enteredTitle = title.text.trim(),
+                    currentCategory = category,
+                )
                 var titleError: EditCategoryScreenTitleError = EditCategoryScreenTitleError.None
                 val isCtaButtonEnabled = if (title.text.isBlank()) {
                     false
