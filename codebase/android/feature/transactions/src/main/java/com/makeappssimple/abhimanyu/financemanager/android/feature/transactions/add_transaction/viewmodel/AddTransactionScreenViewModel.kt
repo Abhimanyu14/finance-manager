@@ -1,20 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel
 
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
@@ -44,6 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.state.AddTransactionScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.usecase.AddTransactionScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -62,6 +58,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val addTransactionScreenDataValidationUseCase: AddTransactionScreenDataValidationUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
@@ -103,8 +100,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private var uiVisibilityState: AddTransactionScreenUiVisibilityState =
         AddTransactionScreenUiVisibilityState.Expense
     private var filteredCategories: ImmutableList<Category> = persistentListOf()
-    private var amountErrorText: String? = null
-    private var isCtaButtonEnabled: Boolean = false
     // endregion
 
     // region observables
@@ -359,14 +354,14 @@ public class AddTransactionScreenViewModel @Inject constructor(
                         titleSuggestions,
                     ),
                 ->
-                updateIsCtaButtonEnabledAndAmountErrorText(
-                    selectedTransactionType = selectedTransactionType,
-                    amount = amount,
-                    title = title,
+                val validationState = addTransactionScreenDataValidationUseCase(
                     accountFrom = accountFrom,
                     accountTo = accountTo,
+                    maxRefundAmount = maxRefundAmount,
+                    amount = amount.text,
+                    title = title.text,
+                    selectedTransactionType = selectedTransactionType,
                 )
-
                 uiStateAndStateEvents.update {
                     AddTransactionScreenUIStateAndStateEvents(
                         state = AddTransactionScreenUIState(
@@ -386,7 +381,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             screenSnackbarType = screenSnackbarType,
                             uiVisibilityState = uiVisibilityState,
                             isBottomSheetVisible = screenBottomSheetType != AddTransactionScreenBottomSheetType.None,
-                            isCtaButtonEnabled = isCtaButtonEnabled,
+                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
                             isLoading = isLoading,
                             isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
                             isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
@@ -417,7 +412,7 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             currentLocalDate = dateTimeUtil.getCurrentLocalDate().orMin(),
                             transactionDate = transactionDate,
                             transactionTime = transactionTime,
-                            amountErrorText = amountErrorText,
+                            amountErrorText = validationState.amountErrorText,
                             amount = amount,
                             title = title,
                         ),
@@ -442,53 +437,6 @@ public class AddTransactionScreenViewModel @Inject constructor(
                             setTransactionTime = ::setTransactionTime,
                         ),
                     )
-                }
-            }
-        }
-    }
-
-    private fun updateIsCtaButtonEnabledAndAmountErrorText(
-        selectedTransactionType: TransactionType?,
-        amount: TextFieldValue,
-        title: TextFieldValue,
-        accountFrom: Account?,
-        accountTo: Account?,
-    ) {
-        amountErrorText = null
-        if (selectedTransactionType == null) {
-            isCtaButtonEnabled = false
-            return
-        }
-
-        isCtaButtonEnabled = when (selectedTransactionType) {
-            TransactionType.INCOME -> {
-                title.text.isNotNullOrBlank() && amount.text.toIntOrZero().isNotZero()
-            }
-
-            TransactionType.EXPENSE -> {
-                title.text.isNotNullOrBlank() && amount.text.toIntOrZero().isNotZero()
-            }
-
-            TransactionType.TRANSFER -> {
-                accountFrom?.id != accountTo?.id && amount.text.toIntOrZero().isNotZero()
-            }
-
-            TransactionType.ADJUSTMENT -> {
-                false
-            }
-
-            TransactionType.INVESTMENT -> {
-                title.text.isNotNullOrBlank() && amount.text.toIntOrZero().isNotZero()
-            }
-
-            TransactionType.REFUND -> {
-                val maxRefundAmountValue = maxRefundAmount?.value.orZero()
-                val enteredAmountValue = amount.text.toLongOrZero()
-                if (enteredAmountValue > maxRefundAmountValue) {
-                    amountErrorText = maxRefundAmount?.toString()
-                    false
-                } else {
-                    amount.text.toIntOrZero().isNotZero()
                 }
             }
         }
