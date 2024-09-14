@@ -6,12 +6,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acco
 
 @Immutable
 internal data class AccountsScreenUIStateEvents(
-    val deleteAccount: (accountId: Int) -> Unit = {},
+    val deleteAccount: () -> Unit = {},
     val navigateToAddAccountScreen: () -> Unit = {},
     val navigateToEditAccountScreen: (accountId: Int) -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
     val setClickedItemId: (Int?) -> Unit = {},
-    val setDefaultAccountIdInDataStore: (accountId: Int) -> Unit = {},
+    val setDefaultAccountIdInDataStore: () -> Unit = {},
     val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit = {},
 ) : ScreenUIStateEvents

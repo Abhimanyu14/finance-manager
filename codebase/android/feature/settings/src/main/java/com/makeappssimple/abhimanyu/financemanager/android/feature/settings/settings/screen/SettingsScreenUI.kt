@@ -387,11 +387,19 @@ private fun getSettingsListItemData(
             handleEvent = { event ->
                 when (event) {
                     is SettingsListItemContentEvent.OnCheckedChange -> {
-                        handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
+                        if (uiState.isReminderEnabled.orFalse()) {
+                            handleUIEvent(SettingsScreenUIEvent.OnReminderEnabled)
+                        } else {
+                            handleUIEvent(SettingsScreenUIEvent.OnReminderEnabled)
+                        }
                     }
 
                     is SettingsListItemContentEvent.OnClick -> {
-                        handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
+                        if (uiState.isReminderEnabled.orFalse()) {
+                            handleUIEvent(SettingsScreenUIEvent.OnReminderEnabled)
+                        } else {
+                            handleUIEvent(SettingsScreenUIEvent.OnReminderEnabled)
+                        }
                     }
                 }
             },

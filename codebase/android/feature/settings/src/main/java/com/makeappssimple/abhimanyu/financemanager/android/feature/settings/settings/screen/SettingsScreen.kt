@@ -86,7 +86,7 @@ public fun SettingsScreen(
     ) {
         SettingsScreenUIEventHandler(
             hasNotificationPermission = hasNotificationPermission,
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
             createDocument = { handler: (uri: Uri?) -> Unit ->
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },

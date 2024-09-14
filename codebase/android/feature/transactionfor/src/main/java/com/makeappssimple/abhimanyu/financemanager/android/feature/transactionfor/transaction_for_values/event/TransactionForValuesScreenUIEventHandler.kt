@@ -1,50 +1,48 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.event
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.bottomsheet.TransactionForValuesScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.state.TransactionForValuesScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.state.TransactionForValuesScreenUIStateEvents
 
 internal class TransactionForValuesScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: TransactionForValuesScreenUIStateAndStateEvents,
+    private val uiStateEvents: TransactionForValuesScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: TransactionForValuesScreenUIEvent,
     ) {
         when (uiEvent) {
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.NegativeButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
-                uiStateAndStateEvents.events.setTransactionForIdToDelete(null)
+                uiStateEvents.resetScreenBottomSheetType()
+                uiStateEvents.setTransactionForIdToDelete(null)
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
-                uiStateAndStateEvents.state.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                    uiStateAndStateEvents.events.deleteTransactionFor(transactionForIdToDeleteValue)
-                    uiStateAndStateEvents.events.setTransactionForIdToDelete(null)
-                }
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.deleteTransactionFor()
+                uiStateEvents.setTransactionForIdToDelete(null)
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is TransactionForValuesScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick -> {
-                uiStateAndStateEvents.events.navigateToAddTransactionForScreen()
+                uiStateEvents.navigateToAddTransactionForScreen()
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.DeleteButtonClick -> {
-                uiStateAndStateEvents.events.setTransactionForIdToDelete(uiEvent.transactionForId)
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setTransactionForIdToDelete(uiEvent.transactionForId)
+                uiStateEvents.setScreenBottomSheetType(
                     TransactionForValuesScreenBottomSheetType.DeleteConfirmation
                 )
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
-                uiStateAndStateEvents.events.navigateToEditTransactionForScreen(uiEvent.transactionForId)
+                uiStateEvents.resetScreenBottomSheetType()
+                uiStateEvents.navigateToEditTransactionForScreen(uiEvent.transactionForId)
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForListItem.Click -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setScreenBottomSheetType(
                     TransactionForValuesScreenBottomSheetType.Menu(
                         isDeleteVisible = uiEvent.isDeleteVisible,
                         transactionForId = uiEvent.transactionForId,
@@ -53,7 +51,7 @@ internal class TransactionForValuesScreenUIEventHandler internal constructor(
             }
 
             is TransactionForValuesScreenUIEvent.OnTransactionForListItem.MoreOptionsIconButtonClick -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setScreenBottomSheetType(
                     TransactionForValuesScreenBottomSheetType.Menu(
                         isDeleteVisible = uiEvent.isDeleteVisible,
                         transactionForId = uiEvent.transactionForId,
@@ -62,7 +60,7 @@ internal class TransactionForValuesScreenUIEventHandler internal constructor(
             }
 
             is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
         }
     }

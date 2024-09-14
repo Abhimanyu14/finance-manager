@@ -26,7 +26,7 @@ public fun AddAccountScreen(
         key1 = uiStateAndStateEvents,
     ) {
         AddAccountScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

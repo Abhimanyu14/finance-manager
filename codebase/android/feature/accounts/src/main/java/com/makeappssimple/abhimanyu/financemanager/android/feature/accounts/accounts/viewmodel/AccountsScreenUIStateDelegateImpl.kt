@@ -43,13 +43,13 @@ internal class AccountsScreenUIStateDelegateImpl(
     // endregion
 
     // region state events
-    override fun deleteAccount(
-        accountId: Int,
-    ) {
+    override fun deleteAccount() {
         coroutineScope.launch {
-            deleteAccountUseCase(
-                id = accountId,
-            )
+            clickedItemId.value?.let { id ->
+                deleteAccountUseCase(
+                    id = id,
+                )
+            }
         }
     }
 
@@ -83,15 +83,15 @@ internal class AccountsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setDefaultAccountIdInDataStore(
-        accountId: Int,
-    ) {
+    override fun setDefaultAccountIdInDataStore() {
         coroutineScope.launch {
-            val isDefaultAccountUpdated = myPreferencesRepository.setDefaultAccountId(
-                accountId = accountId,
-            )
-            if (!isDefaultAccountUpdated) {
-                // TODO(Abhi): Use the result to show snackbar
+            clickedItemId.value?.let { accountId ->
+                val isDefaultAccountUpdated = myPreferencesRepository.setDefaultAccountId(
+                    accountId = accountId,
+                )
+                if (!isDefaultAccountUpdated) {
+                    // TODO(Abhi): Use the result to show snackbar
+                }
             }
         }
     }

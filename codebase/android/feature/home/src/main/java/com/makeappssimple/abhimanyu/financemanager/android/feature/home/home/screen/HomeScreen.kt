@@ -43,7 +43,7 @@ public fun HomeScreen(
         key1 = uiStateAndStateEvents,
     ) {
         HomeScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
             createDocument = { handler: (uri: Uri?) -> Unit ->
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },

@@ -1,20 +1,20 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.event
 
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIStateEvents
 
 internal class OpenSourceLicensesScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: OpenSourceLicensesScreenUIStateAndStateEvents,
+    private val uiStateEvents: OpenSourceLicensesScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: OpenSourceLicensesScreenUIEvent,
     ) {
         when (uiEvent) {
             is OpenSourceLicensesScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is OpenSourceLicensesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
         }
     }

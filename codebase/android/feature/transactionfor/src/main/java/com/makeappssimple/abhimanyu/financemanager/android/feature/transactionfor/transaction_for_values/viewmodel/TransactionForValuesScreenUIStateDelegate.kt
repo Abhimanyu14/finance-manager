@@ -17,9 +17,7 @@ internal interface TransactionForValuesScreenUIStateDelegate {
     // endregion
 
     // region state events
-    fun deleteTransactionFor(
-        id: Int,
-    )
+    fun deleteTransactionFor()
 
     fun navigateToAddTransactionForScreen()
 

@@ -17,9 +17,7 @@ internal interface AccountsScreenUIStateDelegate {
     // endregion
 
     // region state events
-    fun deleteAccount(
-        accountId: Int,
-    )
+    fun deleteAccount()
 
     fun navigateToAddAccountScreen()
 
@@ -35,9 +33,7 @@ internal interface AccountsScreenUIStateDelegate {
         updatedClickedItemId: Int?,
     )
 
-    fun setDefaultAccountIdInDataStore(
-        accountId: Int,
-    )
+    fun setDefaultAccountIdInDataStore()
 
     fun setScreenBottomSheetType(
         updatedAccountsScreenBottomSheetType: AccountsScreenBottomSheetType,

@@ -26,7 +26,7 @@ public fun AccountsScreen(
         key1 = uiStateAndStateEvents,
     ) {
         AccountsScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

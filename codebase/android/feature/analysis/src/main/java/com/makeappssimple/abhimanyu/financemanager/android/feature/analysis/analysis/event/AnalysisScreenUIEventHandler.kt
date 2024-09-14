@@ -1,34 +1,34 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.event
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateEvents
 
 internal class AnalysisScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: AnalysisScreenUIStateAndStateEvents,
+    private val uiStateEvents: AnalysisScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: AnalysisScreenUIEvent,
     ) {
         when (uiEvent) {
             is AnalysisScreenUIEvent.OnFilterActionButtonClick -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
+                uiStateEvents.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
             }
 
             is AnalysisScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
 
             is AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick -> {
-                uiStateAndStateEvents.events.setSelectedFilter(uiEvent.updatedSelectedFilter)
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.setSelectedFilter(uiEvent.updatedSelectedFilter)
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is AnalysisScreenUIEvent.OnTransactionTypeChange -> {
-                uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
+                uiStateEvents.setSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
             }
         }
     }

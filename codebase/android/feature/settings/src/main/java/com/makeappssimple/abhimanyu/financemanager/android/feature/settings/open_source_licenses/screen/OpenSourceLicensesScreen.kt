@@ -26,7 +26,7 @@ public fun OpenSourceLicensesScreen(
         key1 = uiStateAndStateEvents,
     ) {
         OpenSourceLicensesScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

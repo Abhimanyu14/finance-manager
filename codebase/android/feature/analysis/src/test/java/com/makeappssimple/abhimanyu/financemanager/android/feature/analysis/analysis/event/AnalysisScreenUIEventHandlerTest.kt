@@ -21,7 +21,7 @@ internal class AnalysisScreenUIEventHandlerTest {
     @Before
     fun setUp() {
         analysisScreenUIEventHandler = AnalysisScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

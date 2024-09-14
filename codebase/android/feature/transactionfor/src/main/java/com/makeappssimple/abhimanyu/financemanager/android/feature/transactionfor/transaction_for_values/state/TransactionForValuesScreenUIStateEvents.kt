@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 
 @Immutable
 internal class TransactionForValuesScreenUIStateEvents(
-    val deleteTransactionFor: (id: Int) -> Unit = {},
+    val deleteTransactionFor: () -> Unit = {},
     val navigateToAddTransactionForScreen: () -> Unit = {},
     val navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit = {},
     val navigateUp: () -> Unit = {},

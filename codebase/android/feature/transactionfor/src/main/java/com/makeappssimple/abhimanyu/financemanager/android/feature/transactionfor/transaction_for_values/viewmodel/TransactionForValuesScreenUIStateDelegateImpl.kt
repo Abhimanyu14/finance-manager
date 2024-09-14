@@ -42,14 +42,15 @@ internal class TransactionForValuesScreenUIStateDelegateImpl(
 
     // region state events
     override fun deleteTransactionFor(
-        id: Int,
     ) {
         coroutineScope.launch {
-            val isTransactionForDeleted = deleteTransactionForUseCase(
-                id = id,
-            )
-            if (!isTransactionForDeleted) {
-                // TODO(Abhi): Show error
+            transactionForIdToDelete.value?.let { id ->
+                val isTransactionForDeleted = deleteTransactionForUseCase(
+                    id = id,
+                )
+                if (!isTransactionForDeleted) {
+                    // TODO(Abhi): Show error
+                }
             }
         }
     }

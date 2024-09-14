@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.event
 
 import android.net.Uri
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateEvents
 
 internal class HomeScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: HomeScreenUIStateAndStateEvents,
+    private val uiStateEvents: HomeScreenUIStateEvents,
     private val createDocument: ((uri: Uri?) -> Unit) -> Unit,
 ) {
     fun handleUIEvent(
@@ -12,49 +12,47 @@ internal class HomeScreenUIEventHandler internal constructor(
     ) {
         when (uiEvent) {
             is HomeScreenUIEvent.OnBackupCardClick -> {
-                createDocument {
-
-                }
+                createDocument {}
             }
 
             is HomeScreenUIEvent.OnTotalBalanceCardClick -> {
-                uiStateAndStateEvents.events.navigateToAccountsScreen()
+                uiStateEvents.navigateToAccountsScreen()
             }
 
             is HomeScreenUIEvent.OnTotalBalanceCardViewBalanceClick -> {
-                uiStateAndStateEvents.events.setBalanceVisible(true)
+                uiStateEvents.setBalanceVisible(true)
             }
 
             is HomeScreenUIEvent.OnFloatingActionButtonClick -> {
-                uiStateAndStateEvents.events.navigateToAddTransactionScreen()
+                uiStateEvents.navigateToAddTransactionScreen()
             }
 
             is HomeScreenUIEvent.OnOverviewCard.Click -> {
-                uiStateAndStateEvents.events.navigateToAnalysisScreen()
+                uiStateEvents.navigateToAnalysisScreen()
             }
 
             is HomeScreenUIEvent.OnTopAppBarSettingsButtonClick -> {
-                uiStateAndStateEvents.events.navigateToSettingsScreen()
+                uiStateEvents.navigateToSettingsScreen()
             }
 
             is HomeScreenUIEvent.OnHomeRecentTransactionsClick -> {
-                uiStateAndStateEvents.events.navigateToTransactionsScreen()
+                uiStateEvents.navigateToTransactionsScreen()
             }
 
             is HomeScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is HomeScreenUIEvent.OnTransactionListItemClick -> {
-                uiStateAndStateEvents.events.navigateToViewTransactionScreen(uiEvent.transactionId)
+                uiStateEvents.navigateToViewTransactionScreen(uiEvent.transactionId)
             }
 
             is HomeScreenUIEvent.OnOverviewCard.Action -> {
-                uiStateAndStateEvents.events.handleOverviewCardAction(uiEvent.overviewCardAction)
+                uiStateEvents.handleOverviewCardAction(uiEvent.overviewCardAction)
             }
 
             is HomeScreenUIEvent.OnOverviewCard.TabClick -> {
-                uiStateAndStateEvents.events.setOverviewTabSelectionIndex(uiEvent.index)
+                uiStateEvents.setOverviewTabSelectionIndex(uiEvent.index)
             }
         }
     }

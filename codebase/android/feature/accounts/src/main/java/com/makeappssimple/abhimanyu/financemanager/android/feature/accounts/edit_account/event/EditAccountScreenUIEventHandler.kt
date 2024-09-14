@@ -1,26 +1,21 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.event
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateEvents
 
 internal class EditAccountScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: EditAccountScreenUIStateAndStateEvents,
+    private val uiStateEvents: EditAccountScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: EditAccountScreenUIEvent,
     ) {
         when (uiEvent) {
             is EditAccountScreenUIEvent.OnCtaButtonClick -> {
-                uiStateAndStateEvents.events.updateAccount(
-                    uiStateAndStateEvents.state.selectedAccountTypeIndex,
-                    uiStateAndStateEvents.state.name.text,
-                    uiStateAndStateEvents.state.balanceAmountValue.text,
-                    uiStateAndStateEvents.state.minimumBalanceAmountValue.text,
-                )
+                uiStateEvents.updateAccount()
             }
 
             is EditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
-                uiStateAndStateEvents.events.setBalanceAmountValue(
+                uiStateEvents.setBalanceAmountValue(
                     uiEvent.updatedBalanceAmountValue.copy(
                         text = uiEvent.updatedBalanceAmountValue.text.filterDigits(),
                     )
@@ -28,35 +23,35 @@ internal class EditAccountScreenUIEventHandler internal constructor(
             }
 
             is EditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is EditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
-                uiStateAndStateEvents.events.clearBalanceAmountValue()
+                uiStateEvents.clearBalanceAmountValue()
             }
 
             is EditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                uiStateAndStateEvents.events.clearMinimumAccountBalanceAmountValue()
+                uiStateEvents.clearMinimumAccountBalanceAmountValue()
             }
 
             is EditAccountScreenUIEvent.OnClearNameButtonClick -> {
-                uiStateAndStateEvents.events.clearName()
+                uiStateEvents.clearName()
             }
 
             is EditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
 
             is EditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                uiStateAndStateEvents.events.setMinimumAccountBalanceAmountValue(uiEvent.updatedMinimumAccountBalanceAmountValue)
+                uiStateEvents.setMinimumAccountBalanceAmountValue(uiEvent.updatedMinimumAccountBalanceAmountValue)
             }
 
             is EditAccountScreenUIEvent.OnNameUpdated -> {
-                uiStateAndStateEvents.events.setName(uiEvent.updatedName)
+                uiStateEvents.setName(uiEvent.updatedName)
             }
 
             is EditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                uiStateAndStateEvents.events.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
+                uiStateEvents.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
             }
         }
     }

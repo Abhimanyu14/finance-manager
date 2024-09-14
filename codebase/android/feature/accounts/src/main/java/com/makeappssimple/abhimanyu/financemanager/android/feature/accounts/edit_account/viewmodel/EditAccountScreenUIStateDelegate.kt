@@ -65,11 +65,6 @@ internal interface EditAccountScreenUIStateDelegate {
         updatedSelectedAccountTypeIndex: Int,
     )
 
-    fun updateAccount(
-        selectedAccountTypeIndex: Int,
-        name: String,
-        balanceAmountValue: String,
-        minimumAccountBalanceAmountValue: String,
-    )
+    fun updateAccount()
     // endregion
 }

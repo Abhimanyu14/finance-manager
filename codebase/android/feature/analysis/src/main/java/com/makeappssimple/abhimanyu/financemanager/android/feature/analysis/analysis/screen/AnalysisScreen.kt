@@ -26,7 +26,7 @@ public fun AnalysisScreen(
         key1 = uiStateAndStateEvents,
     ) {
         AnalysisScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

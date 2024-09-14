@@ -1,46 +1,46 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.event
 
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
 
 internal class AddAccountScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: AddAccountScreenUIStateAndStateEvents,
+    private val uiStateEvents: AddAccountScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: AddAccountScreenUIEvent,
     ) {
         when (uiEvent) {
             is AddAccountScreenUIEvent.OnCtaButtonClick -> {
-                uiStateAndStateEvents.events.insertAccount()
+                uiStateEvents.insertAccount()
             }
 
             is AddAccountScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is AddAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                uiStateAndStateEvents.events.clearMinimumAccountBalanceAmountValue()
+                uiStateEvents.clearMinimumAccountBalanceAmountValue()
             }
 
             is AddAccountScreenUIEvent.OnClearNameButtonClick -> {
-                uiStateAndStateEvents.events.clearName()
+                uiStateEvents.clearName()
             }
 
             is AddAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
 
             is AddAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                uiStateAndStateEvents.events.setMinimumAccountBalanceAmountValue(
+                uiStateEvents.setMinimumAccountBalanceAmountValue(
                     uiEvent.updatedMinimumAccountBalanceAmountValue,
                 )
             }
 
             is AddAccountScreenUIEvent.OnNameUpdated -> {
-                uiStateAndStateEvents.events.setName(uiEvent.updatedName)
+                uiStateEvents.setName(uiEvent.updatedName)
             }
 
             is AddAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                uiStateAndStateEvents.events.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
+                uiStateEvents.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
             }
 
             else -> {

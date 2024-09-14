@@ -5,7 +5,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Fi
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
-import kotlinx.collections.immutable.ImmutableList
 
 @Stable
 internal class TransactionsScreenUIStateEvents(
@@ -22,8 +21,5 @@ internal class TransactionsScreenUIStateEvents(
     val setSearchText: (updatedSearchText: String) -> Unit = {},
     val setSelectedFilter: (updatedSelectedFilter: Filter) -> Unit = {},
     val setSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit = {},
-    val updateTransactionForValuesInTransactions: (
-        selectedTransactions: ImmutableList<Int>,
-        transactionForId: Int,
-    ) -> Unit = { _, _ -> },
+    val updateTransactionForValuesInTransactions: (transactionForId: Int) -> Unit = {},
 ) : ScreenUIStateEvents

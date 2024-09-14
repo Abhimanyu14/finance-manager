@@ -26,7 +26,7 @@ public fun TransactionForValuesScreen(
         key1 = uiStateAndStateEvents,
     ) {
         TransactionForValuesScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

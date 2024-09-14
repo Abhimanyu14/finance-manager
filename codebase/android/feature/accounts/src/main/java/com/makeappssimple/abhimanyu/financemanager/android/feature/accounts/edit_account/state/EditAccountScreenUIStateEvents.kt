@@ -19,10 +19,5 @@ internal class EditAccountScreenUIStateEvents(
     val setScreenBottomSheetType: (EditAccountScreenBottomSheetType) -> Unit = {},
     val setScreenSnackbarType: (EditAccountScreenSnackbarType) -> Unit = {},
     val setSelectedAccountTypeIndex: (updatedSelectedAccountTypeIndex: Int) -> Unit = {},
-    val updateAccount: (
-        selectedAccountTypeIndex: Int,
-        name: String,
-        balanceAmountValue: String,
-        minimumAccountBalanceAmountValue: String,
-    ) -> Unit = { _, _, _, _ -> },
+    val updateAccount: () -> Unit = {},
 ) : ScreenUIStateEvents

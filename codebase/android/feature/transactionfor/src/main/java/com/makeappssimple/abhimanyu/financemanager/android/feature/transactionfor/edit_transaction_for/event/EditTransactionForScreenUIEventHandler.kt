@@ -1,32 +1,32 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.event
 
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateEvents
 
 internal class EditTransactionForScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: EditTransactionForScreenUIStateAndStateEvents,
+    private val uiStateEvents: EditTransactionForScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: EditTransactionForScreenUIEvent,
     ) {
         when (uiEvent) {
             is EditTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is EditTransactionForScreenUIEvent.OnCtaButtonClick -> {
-                uiStateAndStateEvents.events.updateTransactionFor()
+                uiStateEvents.updateTransactionFor()
             }
 
             is EditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                uiStateAndStateEvents.events.clearTitle()
+                uiStateEvents.clearTitle()
             }
 
             is EditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
 
             is EditTransactionForScreenUIEvent.OnTitleUpdated -> {
-                uiStateAndStateEvents.events.setTitle(uiEvent.updatedTitle)
+                uiStateEvents.setTitle(uiEvent.updatedTitle)
             }
         }
     }

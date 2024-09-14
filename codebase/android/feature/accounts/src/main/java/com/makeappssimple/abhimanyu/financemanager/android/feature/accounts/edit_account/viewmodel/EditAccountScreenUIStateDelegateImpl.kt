@@ -168,12 +168,12 @@ internal class EditAccountScreenUIStateDelegateImpl(
         }
     }
 
-    override fun updateAccount(
-        selectedAccountTypeIndex: Int,
-        name: String,
-        balanceAmountValue: String,
-        minimumAccountBalanceAmountValue: String,
-    ) {
+    override fun updateAccount() {
+        val selectedAccountTypeIndex: Int = selectedAccountTypeIndex.value
+        val name: String = name.value.text
+        val balanceAmountValue: String = balanceAmountValue.value.text
+        val minimumAccountBalanceAmountValue: String = minimumAccountBalanceAmountValue.value.text
+
         val currentAccountValue = currentAccount ?: return
         val amountChangeValue =
             balanceAmountValue.toIntOrZero() - currentAccountValue.balanceAmount.value

@@ -172,9 +172,9 @@ internal class TransactionsScreenUIStateDelegateImpl(
     }
 
     override fun updateTransactionForValuesInTransactions(
-        selectedTransactions: ImmutableList<Int>,
         transactionForId: Int,
     ) {
+        val selectedTransactions: ImmutableList<Int> = selectedTransactionIndices.value
         coroutineScope.launch {
             val updatedTransactions = allTransactionData.value.map { transactionData ->
                 transactionData.transaction

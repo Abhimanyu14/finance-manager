@@ -26,7 +26,7 @@ public fun EditAccountScreen(
         key1 = uiStateAndStateEvents,
     ) {
         EditAccountScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

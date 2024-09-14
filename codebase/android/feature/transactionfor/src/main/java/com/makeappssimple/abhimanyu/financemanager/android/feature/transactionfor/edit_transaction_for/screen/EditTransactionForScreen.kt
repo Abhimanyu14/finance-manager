@@ -26,7 +26,7 @@ public fun EditTransactionForScreen(
         key1 = uiStateAndStateEvents,
     ) {
         EditTransactionForScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

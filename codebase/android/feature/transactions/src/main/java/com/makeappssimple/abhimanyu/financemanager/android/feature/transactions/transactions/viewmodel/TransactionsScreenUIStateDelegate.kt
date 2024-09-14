@@ -74,7 +74,6 @@ internal interface TransactionsScreenUIStateDelegate {
     )
 
     fun updateTransactionForValuesInTransactions(
-        selectedTransactions: ImmutableList<Int>,
         transactionForId: Int,
     )
     // endregion

@@ -2,12 +2,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import android.net.Uri
 import android.os.Build
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 
 internal class SettingsScreenUIEventHandler internal constructor(
     private val hasNotificationPermission: Boolean,
-    private val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents,
+    private val uiStateEvents: SettingsScreenUIStateEvents,
     private val createDocument: ((uri: Uri?) -> Unit) -> Unit,
     private val openDocument: () -> Unit,
     private val requestNotificationsPermission: () -> Unit,
@@ -17,7 +16,7 @@ internal class SettingsScreenUIEventHandler internal constructor(
     ) {
         when (uiEvent) {
             is SettingsScreenUIEvent.OnAccountsListItemClick -> {
-                uiStateAndStateEvents.events.navigateToAccountsScreen()
+                uiStateEvents.navigateToAccountsScreen()
             }
 
             is SettingsScreenUIEvent.OnBackupDataListItemClick -> {
@@ -27,19 +26,19 @@ internal class SettingsScreenUIEventHandler internal constructor(
             }
 
             is SettingsScreenUIEvent.OnCategoriesListItemClick -> {
-                uiStateAndStateEvents.events.navigateToCategoriesScreen()
+                uiStateEvents.navigateToCategoriesScreen()
             }
 
             is SettingsScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
-                uiStateAndStateEvents.events.navigateToOpenSourceLicensesScreen()
+                uiStateEvents.navigateToOpenSourceLicensesScreen()
             }
 
             is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
-                uiStateAndStateEvents.events.recalculateTotal()
+                uiStateEvents.recalculateTotal()
             }
 
             is SettingsScreenUIEvent.OnRestoreDataListItemClick -> {
@@ -47,27 +46,27 @@ internal class SettingsScreenUIEventHandler internal constructor(
             }
 
             is SettingsScreenUIEvent.OnSnackbarDismissed -> {
-                uiStateAndStateEvents.events.resetScreenSnackbarType()
+                uiStateEvents.resetScreenSnackbarType()
             }
 
-            is SettingsScreenUIEvent.OnToggleReminder -> {
-                if (uiStateAndStateEvents.state.isReminderEnabled.orFalse()) {
-                    uiStateAndStateEvents.events.disableReminder()
+            is SettingsScreenUIEvent.OnReminderEnabled -> {
+                uiStateEvents.disableReminder()
+            }
+
+            is SettingsScreenUIEvent.OnReminderDisabled -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
+                    requestNotificationsPermission()
                 } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
-                        requestNotificationsPermission()
-                    } else {
-                        uiStateAndStateEvents.events.enableReminder()
-                    }
+                    uiStateEvents.enableReminder()
                 }
             }
 
             is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
 
             is SettingsScreenUIEvent.OnTransactionForListItemClick -> {
-                uiStateAndStateEvents.events.navigateToTransactionForValuesScreen()
+                uiStateEvents.navigateToTransactionForValuesScreen()
             }
         }
     }

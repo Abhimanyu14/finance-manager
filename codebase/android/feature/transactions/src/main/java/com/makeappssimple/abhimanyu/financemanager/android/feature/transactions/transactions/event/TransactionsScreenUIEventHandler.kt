@@ -2,114 +2,113 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateEvents
 
 internal class TransactionsScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: TransactionsScreenUIStateAndStateEvents,
+    private val uiStateEvents: TransactionsScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: TransactionsScreenUIEvent,
     ) {
         when (uiEvent) {
             is TransactionsScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is TransactionsScreenUIEvent.OnSelectionModeTopAppBarMoreOptionsButtonClick -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.Menu
                 )
             }
 
             is TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.setIsInSelectionMode(false)
-                uiStateAndStateEvents.events.clearSelectedTransactions()
+                uiStateEvents.setIsInSelectionMode(false)
+                uiStateEvents.clearSelectedTransactions()
             }
 
             is TransactionsScreenUIEvent.OnFilterActionButtonClick -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.Filters
                 )
             }
 
             is TransactionsScreenUIEvent.OnSortActionButtonClick -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.Sort
                 )
             }
 
             is TransactionsScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.setSearchText("")
-                uiStateAndStateEvents.events.setSelectedFilter(Filter())
-                uiStateAndStateEvents.events.setIsInSelectionMode(false)
-                uiStateAndStateEvents.events.clearSelectedTransactions()
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.setSearchText("")
+                uiStateEvents.setSelectedFilter(Filter())
+                uiStateEvents.setIsInSelectionMode(false)
+                uiStateEvents.clearSelectedTransactions()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is TransactionsScreenUIEvent.OnTransactionListItem.Click -> {
                 if (uiEvent.isInSelectionMode) {
                     if (uiEvent.isSelected) {
-                        uiStateAndStateEvents.events.removeFromSelectedTransactions(uiEvent.transactionId)
+                        uiStateEvents.removeFromSelectedTransactions(uiEvent.transactionId)
                     } else {
-                        uiStateAndStateEvents.events.addToSelectedTransactions(uiEvent.transactionId)
+                        uiStateEvents.addToSelectedTransactions(uiEvent.transactionId)
                     }
                 } else {
-                    uiStateAndStateEvents.events.navigateToViewTransactionScreen(uiEvent.transactionId)
+                    uiStateEvents.navigateToViewTransactionScreen(uiEvent.transactionId)
                 }
             }
 
             is TransactionsScreenUIEvent.OnTransactionListItem.LongClick -> {
                 if (uiEvent.isInSelectionMode) {
                     if (uiEvent.isSelected) {
-                        uiStateAndStateEvents.events.removeFromSelectedTransactions(uiEvent.transactionId)
+                        uiStateEvents.removeFromSelectedTransactions(uiEvent.transactionId)
                     } else {
-                        uiStateAndStateEvents.events.addToSelectedTransactions(uiEvent.transactionId)
+                        uiStateEvents.addToSelectedTransactions(uiEvent.transactionId)
                     }
                 } else {
-                    uiStateAndStateEvents.events.setIsInSelectionMode(true)
-                    uiStateAndStateEvents.events.addToSelectedTransactions(uiEvent.transactionId)
+                    uiStateEvents.setIsInSelectionMode(true)
+                    uiStateEvents.addToSelectedTransactions(uiEvent.transactionId)
                 }
             }
 
             is TransactionsScreenUIEvent.OnFloatingActionButtonClick -> {
-                uiStateAndStateEvents.events.navigateToAddTransactionScreen()
+                uiStateEvents.navigateToAddTransactionScreen()
             }
 
             is TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
 
             is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
-                uiStateAndStateEvents.events.selectAllTransactions()
+                uiStateEvents.resetScreenBottomSheetType()
+                uiStateEvents.selectAllTransactions()
             }
 
             is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.UpdateTransactionForButtonClick -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.SelectTransactionFor
                 )
             }
 
             is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
-                uiStateAndStateEvents.events.setSearchText(uiEvent.updatedSearchText)
+                uiStateEvents.setSearchText(uiEvent.updatedSearchText)
             }
 
             is TransactionsScreenUIEvent.OnSelectedFilterUpdated -> {
-                uiStateAndStateEvents.events.setSelectedFilter(uiEvent.updatedSelectedFilter)
+                uiStateEvents.setSelectedFilter(uiEvent.updatedSelectedFilter)
             }
 
             is TransactionsScreenUIEvent.OnSelectedSortOptionUpdated -> {
-                uiStateAndStateEvents.events.setSelectedSortOption(uiEvent.updatedSelectedSortOption)
+                uiStateEvents.setSelectedSortOption(uiEvent.updatedSelectedSortOption)
             }
 
             is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
-                uiStateAndStateEvents.events.setIsInSelectionMode(false)
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
-                uiStateAndStateEvents.events.updateTransactionForValuesInTransactions(
-                    uiStateAndStateEvents.state.selectedTransactions,
+                uiStateEvents.setIsInSelectionMode(false)
+                uiStateEvents.resetScreenBottomSheetType()
+                uiStateEvents.updateTransactionForValuesInTransactions(
                     uiEvent.updatedTransactionForValues,
                 )
-                uiStateAndStateEvents.events.clearSelectedTransactions()
+                uiStateEvents.clearSelectedTransactions()
             }
         }
     }

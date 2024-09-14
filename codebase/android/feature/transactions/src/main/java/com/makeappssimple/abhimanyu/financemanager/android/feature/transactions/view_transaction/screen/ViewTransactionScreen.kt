@@ -26,7 +26,7 @@ public fun ViewTransactionScreen(
         key1 = uiStateAndStateEvents,
     ) {
         ViewTransactionScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

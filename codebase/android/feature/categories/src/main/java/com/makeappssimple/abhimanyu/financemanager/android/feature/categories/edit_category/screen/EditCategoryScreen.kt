@@ -26,7 +26,7 @@ public fun EditCategoryScreen(
         key1 = uiStateAndStateEvents,
     ) {
         EditCategoryScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 
