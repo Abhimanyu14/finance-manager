@@ -1,58 +1,56 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.event
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateEvents
 
 internal class AddCategoryScreenUIEventHandler internal constructor(
-    private val uiStateAndStateEvents: AddCategoryScreenUIStateAndStateEvents,
+    private val uiStateEvents: AddCategoryScreenUIStateEvents,
 ) {
     fun handleUIEvent(
         uiEvent: AddCategoryScreenUIEvent,
     ) {
         when (uiEvent) {
             is AddCategoryScreenUIEvent.OnBottomSheetDismissed -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
-                uiStateAndStateEvents.events.setSearchText("")
+                uiStateEvents.resetScreenBottomSheetType()
+                uiStateEvents.clearSearchText()
             }
 
             is AddCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateAndStateEvents.events.resetScreenBottomSheetType()
+                uiStateEvents.resetScreenBottomSheetType()
             }
 
             is AddCategoryScreenUIEvent.OnCtaButtonClick -> {
-                uiStateAndStateEvents.state.selectedTransactionTypeIndex?.let { _ ->
-                    uiStateAndStateEvents.events.insertCategory()
-                }
+                uiStateEvents.insertCategory()
             }
 
             is AddCategoryScreenUIEvent.OnClearTitleButtonClick -> {
-                uiStateAndStateEvents.events.clearTitle()
+                uiStateEvents.clearTitle()
             }
 
             is AddCategoryScreenUIEvent.OnEmojiCircleClick -> {
-                uiStateAndStateEvents.events.setScreenBottomSheetType(
+                uiStateEvents.setScreenBottomSheetType(
                     AddCategoryScreenBottomSheetType.SelectEmoji
                 )
             }
 
             is AddCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                uiStateAndStateEvents.events.navigateUp()
+                uiStateEvents.navigateUp()
             }
 
             is AddCategoryScreenUIEvent.OnEmojiUpdated -> {
-                uiStateAndStateEvents.events.setEmoji(uiEvent.updatedEmoji)
+                uiStateEvents.setEmoji(uiEvent.updatedEmoji)
             }
 
             is AddCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                uiStateAndStateEvents.events.setSearchText(uiEvent.updatedSearchText)
+                uiStateEvents.setSearchText(uiEvent.updatedSearchText)
             }
 
             is AddCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                uiStateAndStateEvents.events.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
+                uiStateEvents.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
             }
 
             is AddCategoryScreenUIEvent.OnTitleUpdated -> {
-                uiStateAndStateEvents.events.setTitle(uiEvent.updatedTitle)
+                uiStateEvents.setTitle(uiEvent.updatedTitle)
             }
         }
     }

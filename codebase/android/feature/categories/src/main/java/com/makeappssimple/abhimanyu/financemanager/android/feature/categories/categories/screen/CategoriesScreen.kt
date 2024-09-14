@@ -26,7 +26,7 @@ public fun CategoriesScreen(
         key1 = uiStateAndStateEvents,
     ) {
         CategoriesScreenUIEventHandler(
-            uiStateAndStateEvents = uiStateAndStateEvents,
+            uiStateEvents = uiStateAndStateEvents.events,
         )
     }
 

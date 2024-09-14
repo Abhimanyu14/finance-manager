@@ -124,7 +124,7 @@ public fun MyScaffold(
             dragHandle = {},
             scrimColor = scrimColor,
             onDismissRequest = onNavigationBackButtonClick,
-            windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Bottom),
+            contentWindowInsets = { WindowInsets.systemBars.only(WindowInsetsSides.Bottom) },
         ) {
             val screenHeight = LocalConfiguration.current.screenHeightDp.dp
             val navigationBarsHeight =

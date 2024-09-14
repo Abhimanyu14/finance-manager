@@ -28,11 +28,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -217,64 +217,79 @@ public class CategoriesScreenViewModel @Inject constructor(
 
     // region observeForUiStateAndStateEvents
     private fun observeForUiStateAndStateEvents() {
-        viewModelScope.launch {
-            combineAndCollectLatest(
-                isLoading,
-                screenBottomSheetType,
-                categoryIdToDelete,
-                clickedItemId,
-                categoriesGridItemDataMap,
-                screenSnackbarType,
-            ) {
-                    (
-                        isLoading,
-                        screenBottomSheetType,
-                        categoryIdToDelete,
-                        clickedItemId,
-                        categoriesGridItemDataMap,
-                        screenSnackbarType,
-                    ),
-                ->
-                val validTransactionTypes = persistentListOf(
-                    TransactionType.EXPENSE,
-                    TransactionType.INCOME,
-                    TransactionType.INVESTMENT,
-                )
-                val tabData = validTransactionTypes.map {
-                    MyTabData(
-                        title = it.title,
-                    )
-                }
+        observeForIsLoading()
+        observeForRefreshSignal()
+        observeForCategoriesGridItemDataMap()
+    }
 
-                uiStateAndStateEvents.update {
-                    CategoriesScreenUIStateAndStateEvents(
-                        state = CategoriesScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != CategoriesScreenBottomSheetType.None,
-                            screenBottomSheetType = screenBottomSheetType,
-                            screenSnackbarType = screenSnackbarType,
-                            isLoading = isLoading,
-                            categoryIdToDelete = categoryIdToDelete,
-                            clickedItemId = clickedItemId,
-                            tabData = tabData,
-                            validTransactionTypes = validTransactionTypes,
-                            categoriesGridItemDataMap = categoriesGridItemDataMap,
-                        ),
-                        events = CategoriesScreenUIStateEvents(
-                            deleteCategory = ::deleteCategory,
-                            navigateToAddCategoryScreen = ::navigateToAddCategoryScreen,
-                            navigateToEditCategoryScreen = ::navigateToEditCategoryScreen,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            resetScreenSnackbarType = ::resetScreenSnackbarType,
-                            setCategoryIdToDelete = ::setCategoryIdToDelete,
-                            setClickedItemId = ::setClickedItemId,
-                            setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setScreenSnackbarType = ::setScreenSnackbarType,
-                        ),
-                    )
-                }
+    private fun observeForIsLoading() {
+        viewModelScope.launch {
+            isLoading.collectLatest { isLoading ->
+                updateUiStateAndStateEvents(
+                    isLoading = isLoading,
+                    categoriesGridItemDataMap = categoriesGridItemDataMap.value,
+                )
             }
+        }
+    }
+
+    private fun observeForRefreshSignal() {
+        viewModelScope.launch {
+            refreshSignal.collectLatest {
+                updateUiStateAndStateEvents(
+                    categoriesGridItemDataMap = categoriesGridItemDataMap.value,
+                )
+            }
+        }
+    }
+
+    private fun observeForCategoriesGridItemDataMap() {
+        viewModelScope.launch {
+            categoriesGridItemDataMap.collectLatest { categoriesGridItemDataMap ->
+                updateUiStateAndStateEvents(
+                    categoriesGridItemDataMap = categoriesGridItemDataMap,
+                )
+            }
+        }
+    }
+
+    private fun updateUiStateAndStateEvents(
+        isLoading: Boolean = false,
+        categoriesGridItemDataMap: ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>,
+    ) {
+        val tabData = validTransactionTypes.map {
+            MyTabData(
+                title = it.title,
+            )
+        }
+
+        uiStateAndStateEvents.update {
+            CategoriesScreenUIStateAndStateEvents(
+                state = CategoriesScreenUIState(
+                    isBottomSheetVisible = screenBottomSheetType != CategoriesScreenBottomSheetType.None,
+                    screenBottomSheetType = screenBottomSheetType,
+                    screenSnackbarType = screenSnackbarType,
+                    isLoading = isLoading,
+                    categoryIdToDelete = categoryIdToDelete,
+                    clickedItemId = clickedItemId,
+                    tabData = tabData,
+                    validTransactionTypes = validTransactionTypes,
+                    categoriesGridItemDataMap = categoriesGridItemDataMap,
+                ),
+                events = CategoriesScreenUIStateEvents(
+                    deleteCategory = ::deleteCategory,
+                    navigateToAddCategoryScreen = ::navigateToAddCategoryScreen,
+                    navigateToEditCategoryScreen = ::navigateToEditCategoryScreen,
+                    navigateUp = ::navigateUp,
+                    resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+                    resetScreenSnackbarType = ::resetScreenSnackbarType,
+                    setCategoryIdToDelete = ::updateCategoryIdToDelete,
+                    setClickedItemId = ::updateClickedItemId,
+                    setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
+                    setScreenBottomSheetType = ::updateScreenBottomSheetType,
+                    setScreenSnackbarType = ::updateScreenSnackbarType,
+                ),
+            )
         }
     }
     // endregion

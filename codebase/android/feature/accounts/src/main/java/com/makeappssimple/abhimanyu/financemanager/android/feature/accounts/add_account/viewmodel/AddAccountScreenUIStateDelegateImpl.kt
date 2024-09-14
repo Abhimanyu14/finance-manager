@@ -31,27 +31,41 @@ internal class AddAccountScreenUIStateDelegateImpl(
     override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
         value = true,
     )
-    override val screenBottomSheetType: MutableStateFlow<AddAccountScreenBottomSheetType> =
-        MutableStateFlow(
-            value = AddAccountScreenBottomSheetType.None,
+    override var screenBottomSheetType: AddAccountScreenBottomSheetType =
+        AddAccountScreenBottomSheetType.None
+        set(value) {
+            withLoading {
+                field = value
+            }
+        }
+    override var screenSnackbarType: AddAccountScreenSnackbarType =
+        AddAccountScreenSnackbarType.None
+        set(value) {
+            withLoading {
+                field = value
+            }
+        }
+    override var selectedAccountTypeIndex = validAccountTypesForNewAccount
+        .indexOf(
+            element = AccountType.BANK,
         )
-    override val screenSnackbarType: MutableStateFlow<AddAccountScreenSnackbarType> =
-        MutableStateFlow(
-            value = AddAccountScreenSnackbarType.None,
-        )
-    override val selectedAccountTypeIndex: MutableStateFlow<Int> =
-        MutableStateFlow(
-            value = validAccountTypesForNewAccount.indexOf(
-                element = AccountType.BANK,
-            ),
-        )
-    override val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
-        value = TextFieldValue(),
-    )
-    override val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
-        MutableStateFlow(
-            value = TextFieldValue(),
-        )
+        set(value) {
+            withLoading {
+                field = value
+            }
+        }
+    override var name = TextFieldValue()
+        set(value) {
+            withLoading {
+                field = value
+            }
+        }
+    override var minimumAccountBalanceAmountValue = TextFieldValue()
+        set(value) {
+            withLoading {
+                field = value
+            }
+        }
     // endregion
 
     // region loading
@@ -66,96 +80,50 @@ internal class AddAccountScreenUIStateDelegateImpl(
             false
         }
     }
+
+    override fun <T> withLoading(
+        block: () -> T,
+    ): T {
+        startLoading()
+        val result = block()
+        completeLoading()
+        return result
+    }
+
+    override suspend fun <T> withLoadingSuspend(
+        block: suspend () -> T,
+    ): T {
+        startLoading()
+        try {
+            return block()
+        } finally {
+            completeLoading()
+        }
+    }
     // endregion
 
     // region state events
-    override fun clearMinimumAccountBalanceAmountValue() {
-        setMinimumAccountBalanceAmountValue(
-            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value.copy(
-                text = "",
-            ),
-        )
-    }
-
-    override fun clearName() {
-        setName(
-            updatedName = name.value.copy(
-                text = "",
-            ),
-        )
-    }
-
     override fun insertAccount(
         uiState: AddAccountScreenUIState,
     ) {
-        coroutineScope.launch {
-            val isAccountInserted = insertAccountUseCase(
-                accountType = uiState.selectedAccountType,
-                minimumAccountBalanceAmountValue = uiState.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
-                name = uiState.nameTextFieldValue.text,
-            )
-            if (isAccountInserted == -1L) {
-                // TODO(Abhi): Show error
-            } else {
-                navigator.navigateUp()
+        withLoading {
+            coroutineScope.launch {
+                val isAccountInserted = insertAccountUseCase(
+                    accountType = uiState.selectedAccountType,
+                    minimumAccountBalanceAmountValue = uiState.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
+                    name = uiState.nameTextFieldValue.text,
+                )
+                if (isAccountInserted == -1L) {
+                    // TODO(Abhi): Show error
+                } else {
+                    navigateUp()
+                }
             }
         }
     }
 
     override fun navigateUp() {
         navigator.navigateUp()
-    }
-
-    override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
-            updatedAddAccountScreenBottomSheetType = AddAccountScreenBottomSheetType.None,
-        )
-    }
-
-    override fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
-            updatedAddAccountScreenSnackbarType = AddAccountScreenSnackbarType.None,
-        )
-    }
-
-    override fun setMinimumAccountBalanceAmountValue(
-        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
-    ) {
-        minimumAccountBalanceAmountValue.update {
-            updatedMinimumAccountBalanceAmountValue
-        }
-    }
-
-    override fun setName(
-        updatedName: TextFieldValue,
-    ) {
-        name.update {
-            updatedName
-        }
-    }
-
-    override fun setScreenBottomSheetType(
-        updatedAddAccountScreenBottomSheetType: AddAccountScreenBottomSheetType,
-    ) {
-        screenBottomSheetType.update {
-            updatedAddAccountScreenBottomSheetType
-        }
-    }
-
-    override fun setScreenSnackbarType(
-        updatedAddAccountScreenSnackbarType: AddAccountScreenSnackbarType,
-    ) {
-        screenSnackbarType.update {
-            updatedAddAccountScreenSnackbarType
-        }
-    }
-
-    override fun setSelectedAccountTypeIndex(
-        updatedSelectedAccountTypeIndex: Int,
-    ) {
-        selectedAccountTypeIndex.update {
-            updatedSelectedAccountTypeIndex
-        }
     }
     // endregion
 }

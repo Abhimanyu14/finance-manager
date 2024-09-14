@@ -3,27 +3,44 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface CategoriesScreenUIStateDelegate {
+    // region initial data
+    val validTransactionTypes: PersistentList<TransactionType>
+    // endregion
+
     // region UI state
+    val refreshSignal: MutableSharedFlow<Unit>
     val isLoading: MutableStateFlow<Boolean>
-    val screenBottomSheetType: MutableStateFlow<CategoriesScreenBottomSheetType>
-    val screenSnackbarType: MutableStateFlow<CategoriesScreenSnackbarType>
-    val categoryIdToDelete: MutableStateFlow<Int?>
-    val clickedItemId: MutableStateFlow<Int?>
+    val screenBottomSheetType: CategoriesScreenBottomSheetType
+    val screenSnackbarType: CategoriesScreenSnackbarType
+    val categoryIdToDelete: Int?
+    val clickedItemId: Int?
+    // endregion
+
+    // region refresh
+    fun refresh()
     // endregion
 
     // region loading
     fun startLoading()
 
     fun completeLoading()
+
+    fun <T> withLoading(
+        block: () -> T,
+    ): T
+
+    suspend fun <T> withLoadingSuspend(
+        block: suspend () -> T,
+    ): T
     // endregion
 
     // region state events
-    fun deleteCategory(
-        id: Int,
-    )
+    fun deleteCategory()
 
     fun navigateToAddCategoryScreen(
         transactionType: String,
@@ -39,24 +56,23 @@ internal interface CategoriesScreenUIStateDelegate {
 
     fun resetScreenSnackbarType()
 
-    fun setCategoryIdToDelete(
+    fun setDefaultCategoryIdInDataStore(
+        selectedTabIndex: Int,
+    )
+
+    fun updateCategoryIdToDelete(
         updatedCategoryIdToDelete: Int?,
     )
 
-    fun setClickedItemId(
+    fun updateClickedItemId(
         updatedClickedItemId: Int?,
     )
 
-    fun setDefaultCategoryIdInDataStore(
-        defaultCategoryId: Int,
-        transactionType: TransactionType,
-    )
-
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedCategoriesScreenBottomSheetType: CategoriesScreenBottomSheetType,
     )
 
-    fun setScreenSnackbarType(
+    fun updateScreenSnackbarType(
         updatedCategoriesScreenSnackbarType: CategoriesScreenSnackbarType,
     )
     // endregion

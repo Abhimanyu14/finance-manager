@@ -4,6 +4,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface AddCategoryScreenUIStateDelegate {
@@ -12,21 +13,36 @@ internal interface AddCategoryScreenUIStateDelegate {
     // endregion
 
     // region UI state
+    val refreshSignal: MutableSharedFlow<Unit>
     val isLoading: MutableStateFlow<Boolean>
-    val title: MutableStateFlow<TextFieldValue>
-    val searchText: MutableStateFlow<String>
-    val emoji: MutableStateFlow<String>
-    val selectedTransactionTypeIndex: MutableStateFlow<Int>
-    val screenBottomSheetType: MutableStateFlow<AddCategoryScreenBottomSheetType>
+    val title: TextFieldValue
+    val searchText: String
+    val emoji: String
+    val selectedTransactionTypeIndex: Int
+    val screenBottomSheetType: AddCategoryScreenBottomSheetType
+    // endregion
+
+    // region refresh
+    fun refresh()
     // endregion
 
     // region loading
     fun startLoading()
 
     fun completeLoading()
+
+    fun <T> withLoading(
+        block: () -> T,
+    ): T
+
+    suspend fun <T> withLoadingSuspend(
+        block: suspend () -> T,
+    ): T
     // endregion
 
     // region state events
+    fun clearSearchText()
+
     fun clearTitle()
 
     fun insertCategory()
@@ -35,24 +51,24 @@ internal interface AddCategoryScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setEmoji(
+    fun updateEmoji(
         updatedEmoji: String,
     )
 
-    fun setTitle(
-        updatedTitle: TextFieldValue,
-    )
-
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedAddCategoryScreenBottomSheetType: AddCategoryScreenBottomSheetType,
     )
 
-    fun setSearchText(
+    fun updateSearchText(
         updatedSearchText: String,
     )
 
-    fun setSelectedTransactionTypeIndex(
+    fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
+    )
+
+    fun updateTitle(
+        updatedTitle: TextFieldValue,
     )
     // endregion
 }

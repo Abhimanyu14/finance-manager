@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
@@ -12,6 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
@@ -23,6 +24,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -80,24 +82,7 @@ public class AddAccountScreenViewModel @Inject constructor(
     // region observeForUiStateAndStateEvents
     private fun observeForUiStateAndStateEvents() {
         viewModelScope.launch {
-            combineAndCollectLatest(
-                isLoading,
-                screenBottomSheetType,
-                screenSnackbarType,
-                selectedAccountTypeIndex,
-                name,
-                minimumAccountBalanceAmountValue,
-            ) {
-                    (
-                        isLoading,
-                        screenBottomSheetType,
-                        screenSnackbarType,
-                        selectedAccountTypeIndex,
-                        name,
-                        minimumAccountBalanceAmountValue,
-                    ),
-                ->
-
+            isLoading.collectLatest { isLoading ->
                 val validationState = addAccountScreenDataValidationUseCase(
                     allAccounts = allAccounts,
                     enteredName = name.text.trim(),
@@ -131,21 +116,44 @@ public class AddAccountScreenViewModel @Inject constructor(
                             nameTextFieldValue = name,
                         ),
                         events = AddAccountScreenUIStateEvents(
-                            clearMinimumAccountBalanceAmountValue = ::clearMinimumAccountBalanceAmountValue,
-                            clearName = ::clearName,
+                            clearMinimumAccountBalanceAmountValue = {
+                                minimumAccountBalanceAmountValue =
+                                    minimumAccountBalanceAmountValue.copy(
+                                        text = "",
+                                    )
+                            },
+                            clearName = {
+                                name = name.copy(
+                                    text = "",
+                                )
+                            },
                             insertAccount = {
                                 insertAccount(
                                     uiState = uiStateAndStateEvents.value.state,
                                 )
                             },
                             navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            resetScreenSnackbarType = ::resetScreenSnackbarType,
-                            setMinimumAccountBalanceAmountValue = ::setMinimumAccountBalanceAmountValue,
-                            setName = ::setName,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setScreenSnackbarType = ::setScreenSnackbarType,
-                            setSelectedAccountTypeIndex = ::setSelectedAccountTypeIndex,
+                            resetScreenBottomSheetType = {
+                                screenBottomSheetType = AddAccountScreenBottomSheetType.None
+                            },
+                            resetScreenSnackbarType = {
+                                screenSnackbarType = AddAccountScreenSnackbarType.None
+                            },
+                            setMinimumAccountBalanceAmountValue = {
+                                minimumAccountBalanceAmountValue = it
+                            },
+                            setName = {
+                                name = it
+                            },
+                            setScreenBottomSheetType = {
+                                screenBottomSheetType = it
+                            },
+                            setScreenSnackbarType = {
+                                screenSnackbarType = it
+                            },
+                            setSelectedAccountTypeIndex = {
+                                selectedAccountTypeIndex = it
+                            },
                         ),
                     )
                 }
