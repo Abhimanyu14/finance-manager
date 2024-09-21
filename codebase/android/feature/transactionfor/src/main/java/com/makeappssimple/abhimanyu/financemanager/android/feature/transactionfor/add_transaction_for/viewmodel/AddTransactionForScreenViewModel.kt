@@ -66,9 +66,9 @@ public class AddTransactionForScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            startLoading()
-            getAllTransactionForValues()
-            completeLoading()
+            withLoadingSuspend {
+                getAllTransactionForValues()
+            }
         }
     }
 

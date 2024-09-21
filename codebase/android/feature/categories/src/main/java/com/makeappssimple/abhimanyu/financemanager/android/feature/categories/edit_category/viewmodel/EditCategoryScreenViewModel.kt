@@ -92,19 +92,19 @@ public class EditCategoryScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            startLoading()
-            getAllCategories()
-            getOriginalCategory()
-            transactionType?.let { originalTransactionType ->
-                setSelectedTransactionTypeIndex(
-                    validTransactionTypes.indexOf(
-                        element = TransactionType.entries.find { transactionType ->
-                            transactionType.title == originalTransactionType
-                        },
+            withLoadingSuspend {
+                getAllCategories()
+                getOriginalCategory()
+                transactionType?.let { originalTransactionType ->
+                    setSelectedTransactionTypeIndex(
+                        validTransactionTypes.indexOf(
+                            element = TransactionType.entries.find { transactionType ->
+                                transactionType.title == originalTransactionType
+                            },
+                        )
                     )
-                )
+                }
             }
-            completeLoading()
         }
     }
 

@@ -82,11 +82,11 @@ public class EditTransactionForScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            startLoading()
-            getAllTransactionForValues()
-            getCurrentTransactionFor()
-            processCurrentTransactionFor()
-            completeLoading()
+            withLoadingSuspend {
+                getAllTransactionForValues()
+                getCurrentTransactionFor()
+                processCurrentTransactionFor()
+            }
         }
     }
 

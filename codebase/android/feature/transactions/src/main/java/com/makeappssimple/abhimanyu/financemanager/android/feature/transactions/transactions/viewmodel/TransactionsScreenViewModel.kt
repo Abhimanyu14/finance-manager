@@ -111,7 +111,9 @@ public class TransactionsScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            allTransactionForValues = getAllTransactionForValuesUseCase()
+            withLoadingSuspend {
+                allTransactionForValues = getAllTransactionForValuesUseCase()
+            }
         }
     }
 
