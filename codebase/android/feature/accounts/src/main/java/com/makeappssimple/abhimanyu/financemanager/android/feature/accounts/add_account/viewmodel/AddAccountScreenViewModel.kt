@@ -53,10 +53,9 @@ public class AddAccountScreenViewModel @Inject constructor(
         )
     internal val uiStateEvents: AddAccountScreenUIStateEvents = AddAccountScreenUIStateEvents(
         clearMinimumAccountBalanceAmountValue = {
-            minimumAccountBalanceAmountValue =
-                minimumAccountBalanceAmountValue.copy(
-                    text = "",
-                )
+            minimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.copy(
+                text = "",
+            )
         },
         clearName = {
             name = name.copy(
@@ -101,9 +100,9 @@ public class AddAccountScreenViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            startLoading()
-            getAllAccounts()
-            completeLoading()
+            withLoadingSuspend {
+                getAllAccounts()
+            }
         }
     }
 

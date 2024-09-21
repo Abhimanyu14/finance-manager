@@ -37,6 +37,14 @@ internal interface EditTransactionScreenUIStateDelegate {
     fun startLoading()
 
     fun completeLoading()
+
+    fun <T> withLoading(
+        block: () -> T,
+    ): T
+
+    suspend fun <T> withLoadingSuspend(
+        block: suspend () -> T,
+    ): T
     // endregion
 
     // region state events

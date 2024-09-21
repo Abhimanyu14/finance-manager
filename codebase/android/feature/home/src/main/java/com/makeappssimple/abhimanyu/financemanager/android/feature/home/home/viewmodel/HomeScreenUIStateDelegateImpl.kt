@@ -61,6 +61,26 @@ internal class HomeScreenUIStateDelegateImpl(
             false
         }
     }
+
+    override fun <T> withLoading(
+        block: () -> T,
+    ): T {
+        startLoading()
+        val result = block()
+        completeLoading()
+        return result
+    }
+
+    override suspend fun <T> withLoadingSuspend(
+        block: suspend () -> T,
+    ): T {
+        startLoading()
+        try {
+            return block()
+        } finally {
+            completeLoading()
+        }
+    }
     // endregion
 
     // region state events
