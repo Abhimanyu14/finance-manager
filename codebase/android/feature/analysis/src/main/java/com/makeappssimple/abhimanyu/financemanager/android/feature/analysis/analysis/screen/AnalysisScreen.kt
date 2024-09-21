@@ -8,7 +8,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.event.AnalysisScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.viewmodel.AnalysisScreenViewModel
 
 @Composable
@@ -20,13 +21,14 @@ public fun AnalysisScreen(
         message = "Inside AnalysisScreen",
     )
 
-    val uiStateAndStateEvents: AnalysisScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
+    val uiState: AnalysisScreenUIState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateEvents: AnalysisScreenUIStateEvents = screenViewModel.uiStateEvents
 
     val screenUIEventHandler = remember(
-        key1 = uiStateAndStateEvents,
+        key1 = uiStateEvents,
     ) {
         AnalysisScreenUIEventHandler(
-            uiStateEvents = uiStateAndStateEvents.events,
+            uiStateEvents = uiStateEvents,
         )
     }
 
@@ -37,7 +39,7 @@ public fun AnalysisScreen(
     }
 
     AnalysisScreenUI(
-        uiState = uiStateAndStateEvents.state,
+        uiState = uiState,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

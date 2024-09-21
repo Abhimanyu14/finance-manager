@@ -16,7 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.snackbar.SettingsScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -53,10 +52,24 @@ public class SettingsScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<SettingsScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<SettingsScreenUIState> =
         MutableStateFlow(
-            value = SettingsScreenUIStateAndStateEvents(),
+            value = SettingsScreenUIState(),
         )
+    internal val uiStateEvents: SettingsScreenUIStateEvents = SettingsScreenUIStateEvents(
+        disableReminder = ::disableReminder,
+        enableReminder = ::enableReminder,
+        navigateToAccountsScreen = ::navigateToAccountsScreen,
+        navigateToCategoriesScreen = ::navigateToCategoriesScreen,
+        navigateToOpenSourceLicensesScreen = ::navigateToOpenSourceLicensesScreen,
+        navigateToTransactionForValuesScreen = ::navigateToTransactionForValuesScreen,
+        navigateUp = ::navigateUp,
+        recalculateTotal = ::recalculateTotal,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        resetScreenSnackbarType = ::resetScreenSnackbarType,
+        setScreenBottomSheetType = ::setScreenBottomSheetType,
+        setScreenSnackbarType = ::setScreenSnackbarType,
+    )
     // endregion
 
     // region initViewModel
@@ -136,30 +149,14 @@ public class SettingsScreenViewModel @Inject constructor(
                         isReminderEnabled,
                     ),
                 ->
-                uiStateAndStateEvents.update {
-                    SettingsScreenUIStateAndStateEvents(
-                        state = SettingsScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != SettingsScreenBottomSheetType.None,
-                            isLoading = isLoading,
-                            isReminderEnabled = isReminderEnabled,
-                            screenBottomSheetType = screenBottomSheetType,
-                            screenSnackbarType = screenSnackbarType,
-                            appVersion = appVersion,
-                        ),
-                        events = SettingsScreenUIStateEvents(
-                            disableReminder = ::disableReminder,
-                            enableReminder = ::enableReminder,
-                            navigateToAccountsScreen = ::navigateToAccountsScreen,
-                            navigateToCategoriesScreen = ::navigateToCategoriesScreen,
-                            navigateToOpenSourceLicensesScreen = ::navigateToOpenSourceLicensesScreen,
-                            navigateToTransactionForValuesScreen = ::navigateToTransactionForValuesScreen,
-                            navigateUp = ::navigateUp,
-                            recalculateTotal = ::recalculateTotal,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            resetScreenSnackbarType = ::resetScreenSnackbarType,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setScreenSnackbarType = ::setScreenSnackbarType,
-                        ),
+                uiState.update {
+                    SettingsScreenUIState(
+                        isBottomSheetVisible = screenBottomSheetType != SettingsScreenBottomSheetType.None,
+                        isLoading = isLoading,
+                        isReminderEnabled = isReminderEnabled,
+                        screenBottomSheetType = screenBottomSheetType,
+                        screenSnackbarType = screenSnackbarType,
+                        appVersion = appVersion,
                     )
                 }
             }

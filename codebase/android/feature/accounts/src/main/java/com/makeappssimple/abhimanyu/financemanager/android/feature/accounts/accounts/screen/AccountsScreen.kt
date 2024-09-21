@@ -8,7 +8,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.event.AccountsScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel.AccountsScreenViewModel
 
 @Composable
@@ -20,13 +21,14 @@ public fun AccountsScreen(
         message = "Inside AccountsScreen",
     )
 
-    val uiStateAndStateEvents: AccountsScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
+    val uiState: AccountsScreenUIState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateEvents: AccountsScreenUIStateEvents = screenViewModel.uiStateEvents
 
     val screenUIEventHandler = remember(
-        key1 = uiStateAndStateEvents,
+        key1 = uiStateEvents,
     ) {
         AccountsScreenUIEventHandler(
-            uiStateEvents = uiStateAndStateEvents.events,
+            uiStateEvents = uiStateEvents,
         )
     }
 
@@ -37,7 +39,7 @@ public fun AccountsScreen(
     }
 
     AccountsScreenUI(
-        uiState = uiStateAndStateEvents.state,
+        uiState = uiState,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

@@ -61,7 +61,18 @@ public class AddCategoryScreenViewModel @Inject constructor(
         MutableStateFlow(
             value = AddCategoryScreenUIState(),
         )
-    internal val uiStateEvents = getUpdatedUiStateEvents()
+    internal val uiStateEvents: AddCategoryScreenUIStateEvents = AddCategoryScreenUIStateEvents(
+        clearSearchText = ::clearSearchText,
+        clearTitle = ::clearTitle,
+        insertCategory = ::insertCategory,
+        navigateUp = ::navigateUp,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        setEmoji = ::updateEmoji,
+        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        setSearchText = ::updateSearchText,
+        setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
+        setTitle = ::updateTitle,
+    )
     // endregion
 
     // region initViewModel
@@ -148,21 +159,6 @@ public class AddCategoryScreenViewModel @Inject constructor(
                 title = title,
             )
         }
-    }
-
-    private fun getUpdatedUiStateEvents(): AddCategoryScreenUIStateEvents {
-        return AddCategoryScreenUIStateEvents(
-            clearSearchText = ::clearSearchText,
-            clearTitle = ::clearTitle,
-            insertCategory = ::insertCategory,
-            navigateUp = ::navigateUp,
-            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setEmoji = ::updateEmoji,
-            setScreenBottomSheetType = ::updateScreenBottomSheetType,
-            setSearchText = ::updateSearchText,
-            setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
-            setTitle = ::updateTitle,
-        )
     }
     // endregion
 }

@@ -18,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.ViewTransactionScreenArgs
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.bottomsheet.ViewTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.state.ViewTransactionScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.state.ViewTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.state.ViewTransactionScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -62,9 +61,22 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<ViewTransactionScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<ViewTransactionScreenUIState> =
         MutableStateFlow(
-            value = ViewTransactionScreenUIStateAndStateEvents(),
+            value = ViewTransactionScreenUIState(),
+        )
+    internal val uiStateEvents: ViewTransactionScreenUIStateEvents =
+        ViewTransactionScreenUIStateEvents(
+            deleteTransaction = ::deleteTransaction,
+            navigateUp = ::navigateUp,
+            navigateToEditTransactionScreen = ::navigateToEditTransactionScreen,
+            navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
+            onRefundButtonClick = ::onRefundButtonClick,
+            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+            setScreenBottomSheetType = ::setScreenBottomSheetType,
+            setTransactionIdToDelete = {
+                transactionIdToDelete = it
+            },
         )
     // endregion
 
@@ -163,28 +175,14 @@ public class ViewTransactionScreenViewModel @Inject constructor(
                     ),
                 ->
 
-                uiStateAndStateEvents.update {
-                    ViewTransactionScreenUIStateAndStateEvents(
-                        state = ViewTransactionScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
-                            isLoading = isLoading,
-                            refundTransactionsListItemData = refundTransactionsListItemData.orEmpty(),
-                            originalTransactionListItemData = originalTransactionListItemData,
-                            transactionListItemData = currentTransactionListItemData,
-                            screenBottomSheetType = screenBottomSheetType,
-                        ),
-                        events = ViewTransactionScreenUIStateEvents(
-                            deleteTransaction = ::deleteTransaction,
-                            navigateUp = ::navigateUp,
-                            navigateToEditTransactionScreen = ::navigateToEditTransactionScreen,
-                            navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
-                            onRefundButtonClick = ::onRefundButtonClick,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setTransactionIdToDelete = {
-                                transactionIdToDelete = it
-                            },
-                        ),
+                uiState.update {
+                    ViewTransactionScreenUIState(
+                        isBottomSheetVisible = screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
+                        isLoading = isLoading,
+                        refundTransactionsListItemData = refundTransactionsListItemData.orEmpty(),
+                        originalTransactionListItemData = originalTransactionListItemData,
+                        transactionListItemData = currentTransactionListItemData,
+                        screenBottomSheetType = screenBottomSheetType,
                     )
                 }
             }

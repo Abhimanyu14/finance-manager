@@ -13,7 +13,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.event.HomeScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.viewmodel.HomeScreenViewModel
 
 @Composable
@@ -37,13 +38,14 @@ public fun HomeScreen(
             onResult = onDocumentCreated,
         )
 
-    val uiStateAndStateEvents: HomeScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
+    val uiState: HomeScreenUIState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateEvents: HomeScreenUIStateEvents = screenViewModel.uiStateEvents
 
     val screenUIEventHandler = remember(
-        key1 = uiStateAndStateEvents,
+        key1 = uiStateEvents,
     ) {
         HomeScreenUIEventHandler(
-            uiStateEvents = uiStateAndStateEvents.events,
+            uiStateEvents = uiStateEvents,
             createDocument = { handler: (uri: Uri?) -> Unit ->
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },
@@ -57,7 +59,7 @@ public fun HomeScreen(
     }
 
     HomeScreenUI(
-        uiState = uiStateAndStateEvents.state,
+        uiState = uiState,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

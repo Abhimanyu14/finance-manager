@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.ana
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateEvents
 import org.junit.Before
 import org.junit.Test
@@ -11,17 +10,13 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 internal class AnalysisScreenUIEventHandlerTest {
-    private val events: AnalysisScreenUIStateEvents = mock()
-    private val uiStateAndStateEvents: AnalysisScreenUIStateAndStateEvents =
-        AnalysisScreenUIStateAndStateEvents(
-            events = events,
-        )
+    private val uiStateEvents: AnalysisScreenUIStateEvents = mock()
     private lateinit var analysisScreenUIEventHandler: AnalysisScreenUIEventHandler
 
     @Before
     fun setUp() {
         analysisScreenUIEventHandler = AnalysisScreenUIEventHandler(
-            uiStateEvents = uiStateAndStateEvents.events,
+            uiStateEvents = uiStateEvents,
         )
     }
 
@@ -29,7 +24,7 @@ internal class AnalysisScreenUIEventHandlerTest {
     fun `on filter action button click`() {
         val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit = mock()
         whenever(
-            methodCall = events.setScreenBottomSheetType,
+            methodCall = uiStateEvents.setScreenBottomSheetType,
         ).thenReturn(setScreenBottomSheetType)
 
         analysisScreenUIEventHandler.handleUIEvent(AnalysisScreenUIEvent.OnFilterActionButtonClick)
@@ -43,7 +38,7 @@ internal class AnalysisScreenUIEventHandlerTest {
     fun `on navigation back button click`() {
         val resetScreenBottomSheetType: () -> Unit = mock()
         whenever(
-            methodCall = events.resetScreenBottomSheetType,
+            methodCall = uiStateEvents.resetScreenBottomSheetType,
         ).thenReturn(resetScreenBottomSheetType)
 
         analysisScreenUIEventHandler.handleUIEvent(AnalysisScreenUIEvent.OnNavigationBackButtonClick)
@@ -57,7 +52,7 @@ internal class AnalysisScreenUIEventHandlerTest {
     fun `on top app bar navigation button click`() {
         val navigateUp: () -> Unit = mock()
         whenever(
-            methodCall = events.navigateUp,
+            methodCall = uiStateEvents.navigateUp,
         ).thenReturn(navigateUp)
 
         analysisScreenUIEventHandler.handleUIEvent(AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick)
@@ -73,10 +68,10 @@ internal class AnalysisScreenUIEventHandlerTest {
         val resetScreenBottomSheetType: () -> Unit = mock()
         val setSelectedFilter: (Filter) -> Unit = mock()
         whenever(
-            methodCall = events.setSelectedFilter,
+            methodCall = uiStateEvents.setSelectedFilter,
         ).thenReturn(setSelectedFilter)
         whenever(
-            methodCall = events.resetScreenBottomSheetType,
+            methodCall = uiStateEvents.resetScreenBottomSheetType,
         ).thenReturn(resetScreenBottomSheetType)
 
         analysisScreenUIEventHandler.handleUIEvent(
@@ -98,7 +93,7 @@ internal class AnalysisScreenUIEventHandlerTest {
         val updatedSelectedTransactionTypeIndex = 1
         val setSelectedTransactionTypeIndex: (Int) -> Unit = mock()
         whenever(
-            methodCall = events.setSelectedTransactionTypeIndex,
+            methodCall = uiStateEvents.setSelectedTransactionTypeIndex,
         ).thenReturn(setSelectedTransactionTypeIndex)
 
         analysisScreenUIEventHandler.handleUIEvent(

@@ -8,7 +8,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.event.EditTransactionScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenViewModel
 
 @Composable
@@ -20,13 +21,14 @@ public fun EditTransactionScreen(
         message = "Inside EditTransactionScreen",
     )
 
-    val uiStateAndStateEvents: EditTransactionScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
+    val uiState: EditTransactionScreenUIState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateEvents: EditTransactionScreenUIStateEvents = screenViewModel.uiStateEvents
 
     val screenUIEventHandler = remember(
-        key1 = uiStateAndStateEvents,
+        key1 = uiStateEvents,
     ) {
         EditTransactionScreenUIEventHandler(
-            uiStateEvents = uiStateAndStateEvents.events,
+            uiStateEvents = uiStateEvents,
         )
     }
 
@@ -37,7 +39,7 @@ public fun EditTransactionScreen(
     }
 
     EditTransactionScreenUI(
-        uiState = uiStateAndStateEvents.state,
+        uiState = uiState,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

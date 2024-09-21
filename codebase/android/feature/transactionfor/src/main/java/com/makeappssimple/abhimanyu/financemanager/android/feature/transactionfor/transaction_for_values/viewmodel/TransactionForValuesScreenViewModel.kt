@@ -16,7 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.bottomsheet.TransactionForValuesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.state.TransactionForValuesScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.state.TransactionForValuesScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.state.TransactionForValuesScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -48,9 +47,19 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<TransactionForValuesScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<TransactionForValuesScreenUIState> =
         MutableStateFlow(
-            value = TransactionForValuesScreenUIStateAndStateEvents(),
+            value = TransactionForValuesScreenUIState(),
+        )
+    internal val uiStateEvents: TransactionForValuesScreenUIStateEvents =
+        TransactionForValuesScreenUIStateEvents(
+            deleteTransactionFor = ::deleteTransactionFor,
+            navigateToAddTransactionForScreen = ::navigateToAddTransactionForScreen,
+            navigateToEditTransactionForScreen = ::navigateToEditTransactionForScreen,
+            navigateUp = ::navigateUp,
+            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+            setScreenBottomSheetType = ::setScreenBottomSheetType,
+            setTransactionForIdToDelete = ::setTransactionForIdToDelete,
         )
     // endregion
 
@@ -82,24 +91,13 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
                         transactionForIdToDelete,
                     ),
                 ->
-                uiStateAndStateEvents.update {
-                    TransactionForValuesScreenUIStateAndStateEvents(
-                        state = TransactionForValuesScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
-                            isLoading = isLoading,
-                            transactionForIdToDelete = transactionForIdToDelete,
-                            transactionForListItemDataList = transactionForListItemDataList,
-                            screenBottomSheetType = screenBottomSheetType,
-                        ),
-                        events = TransactionForValuesScreenUIStateEvents(
-                            deleteTransactionFor = ::deleteTransactionFor,
-                            navigateToAddTransactionForScreen = ::navigateToAddTransactionForScreen,
-                            navigateToEditTransactionForScreen = ::navigateToEditTransactionForScreen,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setTransactionForIdToDelete = ::setTransactionForIdToDelete,
-                        ),
+                uiState.update {
+                    TransactionForValuesScreenUIState(
+                        isBottomSheetVisible = screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
+                        isLoading = isLoading,
+                        transactionForIdToDelete = transactionForIdToDelete,
+                        transactionForListItemDataList = transactionForListItemDataList,
+                        screenBottomSheetType = screenBottomSheetType,
                     )
                 }
             }

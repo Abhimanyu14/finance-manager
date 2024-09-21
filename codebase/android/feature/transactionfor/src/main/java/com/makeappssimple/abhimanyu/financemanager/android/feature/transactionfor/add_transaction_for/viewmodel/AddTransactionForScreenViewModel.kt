@@ -10,7 +10,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.bottomsheet.AddTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.usecase.AddTransactionForScreenDataValidationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,9 +40,21 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<AddTransactionForScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<AddTransactionForScreenUIState> =
         MutableStateFlow(
-            value = AddTransactionForScreenUIStateAndStateEvents(),
+            value = AddTransactionForScreenUIState(),
+        )
+    internal val uiStateEvents: AddTransactionForScreenUIStateEvents =
+        AddTransactionForScreenUIStateEvents(
+            clearTitle = ::clearTitle,
+            insertTransactionFor = {
+                insertTransactionFor(
+                    uiState = uiState.value,
+                )
+            },
+            navigateUp = ::navigateUp,
+            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+            setTitle = ::setTitle,
         )
     // endregion
 
@@ -90,27 +101,14 @@ public class AddTransactionForScreenViewModel @Inject constructor(
                     allTransactionForValues = allTransactionForValues,
                     enteredTitle = title.text,
                 )
-                uiStateAndStateEvents.update {
-                    AddTransactionForScreenUIStateAndStateEvents(
-                        state = AddTransactionForScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
-                            titleError = validationState.titleError,
-                            isBottomSheetVisible = screenBottomSheetType != AddTransactionForScreenBottomSheetType.None,
-                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
-                            isLoading = isLoading,
-                            title = title,
-                        ),
-                        events = AddTransactionForScreenUIStateEvents(
-                            clearTitle = ::clearTitle,
-                            insertTransactionFor = {
-                                insertTransactionFor(
-                                    uiState = uiStateAndStateEvents.value.state,
-                                )
-                            },
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setTitle = ::setTitle,
-                        ),
+                uiState.update {
+                    AddTransactionForScreenUIState(
+                        screenBottomSheetType = screenBottomSheetType,
+                        titleError = validationState.titleError,
+                        isBottomSheetVisible = screenBottomSheetType != AddTransactionForScreenBottomSheetType.None,
+                        isCtaButtonEnabled = validationState.isCtaButtonEnabled,
+                        isLoading = isLoading,
+                        title = title,
                     )
                 }
             }

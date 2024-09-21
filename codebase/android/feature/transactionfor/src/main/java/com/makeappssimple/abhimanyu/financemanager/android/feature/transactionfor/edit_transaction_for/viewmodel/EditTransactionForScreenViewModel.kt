@@ -14,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.usecase.EditTransactionForScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.EditTransactionForScreenArgs
@@ -56,9 +55,22 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<EditTransactionForScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<EditTransactionForScreenUIState> =
         MutableStateFlow(
-            value = EditTransactionForScreenUIStateAndStateEvents(),
+            value = EditTransactionForScreenUIState(),
+        )
+    internal val uiStateEvents: EditTransactionForScreenUIStateEvents =
+        EditTransactionForScreenUIStateEvents(
+            clearTitle = ::clearTitle,
+            navigateUp = ::navigateUp,
+            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+            setScreenBottomSheetType = ::setScreenBottomSheetType,
+            setTitle = ::setTitle,
+            updateTransactionFor = {
+                updateTransactionFor(
+                    uiState = uiState.value
+                )
+            },
         )
     // endregion
 
@@ -132,28 +144,14 @@ public class EditTransactionForScreenViewModel @Inject constructor(
                     currentTransactionFor = currentTransactionFor,
                     enteredTitle = title.text,
                 )
-                uiStateAndStateEvents.update {
-                    EditTransactionForScreenUIStateAndStateEvents(
-                        state = EditTransactionForScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
-                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
-                            isLoading = isLoading,
-                            screenBottomSheetType = screenBottomSheetType,
-                            titleError = validationState.titleError,
-                            title = title,
-                        ),
-                        events = EditTransactionForScreenUIStateEvents(
-                            clearTitle = ::clearTitle,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setTitle = ::setTitle,
-                            updateTransactionFor = {
-                                updateTransactionFor(
-                                    uiState = uiStateAndStateEvents.value.state
-                                )
-                            },
-                        ),
+                uiState.update {
+                    EditTransactionForScreenUIState(
+                        isBottomSheetVisible = screenBottomSheetType != EditTransactionForScreenBottomSheetType.None,
+                        isCtaButtonEnabled = validationState.isCtaButtonEnabled,
+                        isLoading = isLoading,
+                        screenBottomSheetType = screenBottomSheetType,
+                        titleError = validationState.titleError,
+                        title = title,
                     )
                 }
             }

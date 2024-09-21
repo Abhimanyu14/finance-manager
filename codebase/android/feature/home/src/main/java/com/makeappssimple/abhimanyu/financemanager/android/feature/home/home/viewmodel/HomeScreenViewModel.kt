@@ -30,7 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.bottomsheet.HomeScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -71,10 +70,23 @@ public class HomeScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<HomeScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<HomeScreenUIState> =
         MutableStateFlow(
-            value = HomeScreenUIStateAndStateEvents(),
+            value = HomeScreenUIState(),
         )
+    internal val uiStateEvents: HomeScreenUIStateEvents = HomeScreenUIStateEvents(
+        handleOverviewCardAction = ::handleOverviewCardAction,
+        navigateToAccountsScreen = ::navigateToAccountsScreen,
+        navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
+        navigateToAnalysisScreen = ::navigateToAnalysisScreen,
+        navigateToSettingsScreen = ::navigateToSettingsScreen,
+        navigateToTransactionsScreen = ::navigateToTransactionsScreen,
+        navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        setBalanceVisible = ::setBalanceVisible,
+        setOverviewTabSelectionIndex = ::setOverviewTabSelectionIndex,
+        setScreenBottomSheetType = ::setScreenBottomSheetType,
+    )
     // endregion
 
     // region initViewModel
@@ -141,48 +153,33 @@ public class HomeScreenViewModel @Inject constructor(
                     value = overviewCardData?.expense?.toLong().orZero(),
                 )
 
-                uiStateAndStateEvents.update {
-                    HomeScreenUIStateAndStateEvents(
-                        state = HomeScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != HomeScreenBottomSheetType.None,
-                            isBackupCardVisible = isBackupCardVisible,
-                            isBalanceVisible = isBalanceVisible,
-                            isLoading = isLoading,
-                            isRecentTransactionsTrailingTextVisible = homeListItemViewData
-                                .isNotEmpty(),
-                            screenBottomSheetType = screenBottomSheetType,
-                            overviewTabSelectionIndex = overviewTabSelectionIndex.orZero(),
-                            transactionListItemDataList = homeListItemViewData,
-                            accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
-                            accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
-                            overviewCardData = overviewCardData.orDefault(),
-                            pieChartData = PieChartData(
-                                items = persistentListOf(
-                                    PieChartItemData(
-                                        value = overviewCardData?.income.orZero(),
-                                        text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources
-                                        color = MyColor.TERTIARY,
-                                    ),
-                                    PieChartItemData(
-                                        value = overviewCardData?.expense.orZero(),
-                                        text = "Expense : ${totalExpenseAmount.toNonSignedString()}", // TODO(Abhi): Move to string resources
-                                        color = MyColor.ERROR,
-                                    ),
+                uiState.update {
+                    HomeScreenUIState(
+                        isBottomSheetVisible = screenBottomSheetType != HomeScreenBottomSheetType.None,
+                        isBackupCardVisible = isBackupCardVisible,
+                        isBalanceVisible = isBalanceVisible,
+                        isLoading = isLoading,
+                        isRecentTransactionsTrailingTextVisible = homeListItemViewData
+                            .isNotEmpty(),
+                        screenBottomSheetType = screenBottomSheetType,
+                        overviewTabSelectionIndex = overviewTabSelectionIndex.orZero(),
+                        transactionListItemDataList = homeListItemViewData,
+                        accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
+                        accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
+                        overviewCardData = overviewCardData.orDefault(),
+                        pieChartData = PieChartData(
+                            items = persistentListOf(
+                                PieChartItemData(
+                                    value = overviewCardData?.income.orZero(),
+                                    text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources
+                                    color = MyColor.TERTIARY,
+                                ),
+                                PieChartItemData(
+                                    value = overviewCardData?.expense.orZero(),
+                                    text = "Expense : ${totalExpenseAmount.toNonSignedString()}", // TODO(Abhi): Move to string resources
+                                    color = MyColor.ERROR,
                                 ),
                             ),
-                        ),
-                        events = HomeScreenUIStateEvents(
-                            handleOverviewCardAction = ::handleOverviewCardAction,
-                            navigateToAccountsScreen = ::navigateToAccountsScreen,
-                            navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
-                            navigateToAnalysisScreen = ::navigateToAnalysisScreen,
-                            navigateToSettingsScreen = ::navigateToSettingsScreen,
-                            navigateToTransactionsScreen = ::navigateToTransactionsScreen,
-                            navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setBalanceVisible = ::setBalanceVisible,
-                            setOverviewTabSelectionIndex = ::setOverviewTabSelectionIndex,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
                         ),
                     )
                 }

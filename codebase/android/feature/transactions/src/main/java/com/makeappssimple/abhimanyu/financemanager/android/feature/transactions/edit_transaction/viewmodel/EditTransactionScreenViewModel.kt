@@ -41,7 +41,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.AccountFromText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.AccountToText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.usecase.EditTransactionScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.EditTransactionScreenArgs
@@ -114,9 +113,34 @@ public class EditTransactionScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<EditTransactionScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<EditTransactionScreenUIState> =
         MutableStateFlow(
-            value = EditTransactionScreenUIStateAndStateEvents(),
+            value = EditTransactionScreenUIState(),
+        )
+    internal val uiStateEvents: EditTransactionScreenUIStateEvents =
+        EditTransactionScreenUIStateEvents(
+            clearAmount = ::clearAmount,
+            clearTitle = ::clearTitle,
+            navigateUp = ::navigateUp,
+            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+            resetScreenSnackbarType = ::resetScreenSnackbarType,
+            setAccountFrom = ::setAccountFrom,
+            setAccountTo = ::setAccountTo,
+            setAmount = ::setAmount,
+            setCategory = ::setCategory,
+            setIsTransactionDatePickerDialogVisible = ::setIsTransactionDatePickerDialogVisible,
+            setIsTransactionTimePickerDialogVisible = ::setIsTransactionTimePickerDialogVisible,
+            setScreenBottomSheetType = ::setScreenBottomSheetType,
+            setSelectedTransactionForIndex = ::setSelectedTransactionForIndex,
+            setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
+            setTitle = ::setTitle,
+            setTransactionDate = ::setTransactionDate,
+            setTransactionTime = ::setTransactionTime,
+            updateTransaction = {
+                updateTransaction(
+                    uiState = uiState.value,
+                )
+            },
         )
     // endregion
 
@@ -367,84 +391,58 @@ public class EditTransactionScreenViewModel @Inject constructor(
                     title = title.text,
                     selectedTransactionType = selectedTransactionType,
                 )
-                uiStateAndStateEvents.update {
-                    EditTransactionScreenUIStateAndStateEvents(
-                        state = EditTransactionScreenUIState(
-                            accountFrom = accountFrom,
-                            accountFromText = if (selectedTransactionType == TransactionType.TRANSFER) {
-                                AccountFromText.AccountFrom
-                            } else {
-                                AccountFromText.Account
-                            },
-                            accountTo = accountTo,
-                            accountToText = if (selectedTransactionType == TransactionType.TRANSFER) {
-                                AccountToText.AccountTo
-                            } else {
-                                AccountToText.Account
-                            },
-                            screenBottomSheetType = screenBottomSheetType,
-                            screenSnackbarType = screenSnackbarType,
-                            uiVisibilityState = uiVisibilityState,
-                            isBottomSheetVisible = screenBottomSheetType != EditTransactionScreenBottomSheetType.None,
-                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
-                            isLoading = isLoading,
-                            isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
-                            isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
-                            category = category,
-                            selectedTransactionForIndex = selectedTransactionForIndex,
-                            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                            accounts = accounts.orEmpty(),
-                            filteredCategories = filteredCategories,
-                            titleSuggestionsChipUIData = titleSuggestions
-                                .map { title ->
-                                    ChipUIData(
-                                        text = title,
-                                    )
-                                },
-                            transactionForValuesChipUIData = transactionForValues
-                                .map { transactionFor ->
-                                    ChipUIData(
-                                        text = transactionFor.titleToDisplay,
-                                    )
-                                },
-                            transactionTypesForNewTransactionChipUIData = validTransactionTypesForNewTransaction
-                                .map { transactionType ->
-                                    ChipUIData(
-                                        text = transactionType.title,
-                                    )
-                                },
-                            titleSuggestions = titleSuggestions,
-                            currentLocalDate = dateTimeUtil.getCurrentLocalDate().orMin(),
-                            transactionDate = transactionDate,
-                            transactionTime = transactionTime,
-                            amountErrorText = validationState.amountErrorText,
-                            amount = amount,
-                            title = title,
-                        ),
-                        events = EditTransactionScreenUIStateEvents(
-                            clearAmount = ::clearAmount,
-                            clearTitle = ::clearTitle,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            resetScreenSnackbarType = ::resetScreenSnackbarType,
-                            setAccountFrom = ::setAccountFrom,
-                            setAccountTo = ::setAccountTo,
-                            setAmount = ::setAmount,
-                            setCategory = ::setCategory,
-                            setIsTransactionDatePickerDialogVisible = ::setIsTransactionDatePickerDialogVisible,
-                            setIsTransactionTimePickerDialogVisible = ::setIsTransactionTimePickerDialogVisible,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setSelectedTransactionForIndex = ::setSelectedTransactionForIndex,
-                            setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
-                            setTitle = ::setTitle,
-                            setTransactionDate = ::setTransactionDate,
-                            setTransactionTime = ::setTransactionTime,
-                            updateTransaction = {
-                                updateTransaction(
-                                    uiState = uiStateAndStateEvents.value.state,
+                uiState.update {
+                    EditTransactionScreenUIState(
+                        accountFrom = accountFrom,
+                        accountFromText = if (selectedTransactionType == TransactionType.TRANSFER) {
+                            AccountFromText.AccountFrom
+                        } else {
+                            AccountFromText.Account
+                        },
+                        accountTo = accountTo,
+                        accountToText = if (selectedTransactionType == TransactionType.TRANSFER) {
+                            AccountToText.AccountTo
+                        } else {
+                            AccountToText.Account
+                        },
+                        screenBottomSheetType = screenBottomSheetType,
+                        screenSnackbarType = screenSnackbarType,
+                        uiVisibilityState = uiVisibilityState,
+                        isBottomSheetVisible = screenBottomSheetType != EditTransactionScreenBottomSheetType.None,
+                        isCtaButtonEnabled = validationState.isCtaButtonEnabled,
+                        isLoading = isLoading,
+                        isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
+                        isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
+                        category = category,
+                        selectedTransactionForIndex = selectedTransactionForIndex,
+                        selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                        accounts = accounts.orEmpty(),
+                        filteredCategories = filteredCategories,
+                        titleSuggestionsChipUIData = titleSuggestions
+                            .map { title ->
+                                ChipUIData(
+                                    text = title,
                                 )
                             },
-                        ),
+                        transactionForValuesChipUIData = transactionForValues
+                            .map { transactionFor ->
+                                ChipUIData(
+                                    text = transactionFor.titleToDisplay,
+                                )
+                            },
+                        transactionTypesForNewTransactionChipUIData = validTransactionTypesForNewTransaction
+                            .map { transactionType ->
+                                ChipUIData(
+                                    text = transactionType.title,
+                                )
+                            },
+                        titleSuggestions = titleSuggestions,
+                        currentLocalDate = dateTimeUtil.getCurrentLocalDate().orMin(),
+                        transactionDate = transactionDate,
+                        transactionTime = transactionTime,
+                        amountErrorText = validationState.amountErrorText,
+                        amount = amount,
+                        title = title,
                     )
                 }
             }

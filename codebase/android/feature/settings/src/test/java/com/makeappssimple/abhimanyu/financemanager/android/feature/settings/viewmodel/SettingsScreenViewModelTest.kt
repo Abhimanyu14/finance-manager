@@ -82,7 +82,7 @@ internal class SettingsScreenViewModelTest {
     fun initViewModel_navigateToAccountsScreen() = testScope.runTest {
         settingsScreenViewModel.initViewModel()
 
-        val uiStateAndStateEvents = settingsScreenViewModel.uiStateAndStateEvents.first()
+        val uiStateAndStateEvents = settingsScreenViewModel.uiState.first()
 
         uiStateAndStateEvents.events.navigateToAccountsScreen()
         verify(
@@ -94,7 +94,7 @@ internal class SettingsScreenViewModelTest {
     fun initViewModel_navigateToCategoriesScreen() = testScope.runTest {
         settingsScreenViewModel.initViewModel()
 
-        val uiStateAndStateEvents = settingsScreenViewModel.uiStateAndStateEvents.first()
+        val uiStateAndStateEvents = settingsScreenViewModel.uiState.first()
 
         uiStateAndStateEvents.events.navigateToCategoriesScreen()
         verify(
@@ -106,7 +106,7 @@ internal class SettingsScreenViewModelTest {
     fun initViewModel_navigateToOpenSourceLicensesScreen() = testScope.runTest {
         settingsScreenViewModel.initViewModel()
 
-        val uiStateAndStateEvents = settingsScreenViewModel.uiStateAndStateEvents.first()
+        val uiStateAndStateEvents = settingsScreenViewModel.uiState.first()
 
         uiStateAndStateEvents.events.navigateToOpenSourceLicensesScreen()
         verify(
@@ -118,7 +118,7 @@ internal class SettingsScreenViewModelTest {
     fun initViewModel_navigateToTransactionForValuesScreen() = testScope.runTest {
         settingsScreenViewModel.initViewModel()
 
-        val uiStateAndStateEvents = settingsScreenViewModel.uiStateAndStateEvents.first()
+        val uiStateAndStateEvents = settingsScreenViewModel.uiState.first()
 
         uiStateAndStateEvents.events.navigateToTransactionForValuesScreen()
         verify(
@@ -130,7 +130,7 @@ internal class SettingsScreenViewModelTest {
     fun initViewModel_navigateUp() = testScope.runTest {
         settingsScreenViewModel.initViewModel()
 
-        val uiStateAndStateEvents = settingsScreenViewModel.uiStateAndStateEvents.first()
+        val uiStateAndStateEvents = settingsScreenViewModel.uiState.first()
 
         uiStateAndStateEvents.events.navigateUp()
         verify(
@@ -142,7 +142,7 @@ internal class SettingsScreenViewModelTest {
     fun initViewModel_appVersion() = testScope.runTest {
         settingsScreenViewModel.initViewModel()
 
-        val uiStateAndStateEvents = settingsScreenViewModel.uiStateAndStateEvents.first()
+        val uiStateAndStateEvents = settingsScreenViewModel.uiState.first()
 
         Assert.assertEquals(
             TEST_APP_VERSION_NAME,
@@ -162,7 +162,7 @@ internal class SettingsScreenViewModelTest {
         ).thenReturn(true)
 
         settingsScreenViewModel.initViewModel()
-        val uiStateAndStateEvents = settingsScreenViewModel.uiStateAndStateEvents
+        val uiStateAndStateEvents = settingsScreenViewModel.uiState
 //        uiStateAndStateEvents.test {
 //            val state1 = awaitItem()
 //            Assert.assertEquals(

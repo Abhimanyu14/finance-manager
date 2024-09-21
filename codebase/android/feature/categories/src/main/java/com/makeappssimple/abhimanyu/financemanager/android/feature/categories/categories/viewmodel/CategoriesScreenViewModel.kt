@@ -23,7 +23,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state.CategoriesScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -63,10 +62,23 @@ public class CategoriesScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<CategoriesScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<CategoriesScreenUIState> =
         MutableStateFlow(
-            value = CategoriesScreenUIStateAndStateEvents(),
+            value = CategoriesScreenUIState(),
         )
+    internal val uiStateEvents: CategoriesScreenUIStateEvents = CategoriesScreenUIStateEvents(
+        deleteCategory = ::deleteCategory,
+        navigateToAddCategoryScreen = ::navigateToAddCategoryScreen,
+        navigateToEditCategoryScreen = ::navigateToEditCategoryScreen,
+        navigateUp = ::navigateUp,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        resetScreenSnackbarType = ::resetScreenSnackbarType,
+        setCategoryIdToDelete = ::updateCategoryIdToDelete,
+        setClickedItemId = ::updateClickedItemId,
+        setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
+        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        setScreenSnackbarType = ::updateScreenSnackbarType,
+    )
     // endregion
 
     // region initViewModel
@@ -263,32 +275,17 @@ public class CategoriesScreenViewModel @Inject constructor(
             )
         }
 
-        uiStateAndStateEvents.update {
-            CategoriesScreenUIStateAndStateEvents(
-                state = CategoriesScreenUIState(
-                    isBottomSheetVisible = screenBottomSheetType != CategoriesScreenBottomSheetType.None,
-                    screenBottomSheetType = screenBottomSheetType,
-                    screenSnackbarType = screenSnackbarType,
-                    isLoading = isLoading,
-                    categoryIdToDelete = categoryIdToDelete,
-                    clickedItemId = clickedItemId,
-                    tabData = tabData,
-                    validTransactionTypes = validTransactionTypes,
-                    categoriesGridItemDataMap = categoriesGridItemDataMap,
-                ),
-                events = CategoriesScreenUIStateEvents(
-                    deleteCategory = ::deleteCategory,
-                    navigateToAddCategoryScreen = ::navigateToAddCategoryScreen,
-                    navigateToEditCategoryScreen = ::navigateToEditCategoryScreen,
-                    navigateUp = ::navigateUp,
-                    resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                    resetScreenSnackbarType = ::resetScreenSnackbarType,
-                    setCategoryIdToDelete = ::updateCategoryIdToDelete,
-                    setClickedItemId = ::updateClickedItemId,
-                    setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
-                    setScreenBottomSheetType = ::updateScreenBottomSheetType,
-                    setScreenSnackbarType = ::updateScreenSnackbarType,
-                ),
+        uiState.update {
+            CategoriesScreenUIState(
+                isBottomSheetVisible = screenBottomSheetType != CategoriesScreenBottomSheetType.None,
+                screenBottomSheetType = screenBottomSheetType,
+                screenSnackbarType = screenSnackbarType,
+                isLoading = isLoading,
+                categoryIdToDelete = categoryIdToDelete,
+                clickedItemId = clickedItemId,
+                tabData = tabData,
+                validTransactionTypes = validTransactionTypes,
+                categoriesGridItemDataMap = categoriesGridItemDataMap,
             )
         }
     }

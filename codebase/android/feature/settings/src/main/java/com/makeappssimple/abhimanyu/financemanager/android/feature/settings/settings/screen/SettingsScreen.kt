@@ -19,7 +19,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event.SettingsScreenUIEventHandler
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateAndStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 
 @Composable
@@ -33,7 +34,8 @@ public fun SettingsScreen(
 
     val context = LocalContext.current
 
-    val uiStateAndStateEvents: SettingsScreenUIStateAndStateEvents by screenViewModel.uiStateAndStateEvents.collectAsStateWithLifecycle()
+    val uiState: SettingsScreenUIState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateEvents: SettingsScreenUIStateEvents = screenViewModel.uiStateEvents
 
     val onDocumentCreated: (Uri?) -> Unit = { uri: Uri? ->
         uri?.let {
@@ -62,7 +64,7 @@ public fun SettingsScreen(
         }
     val onNotificationPermissionRequestResult = { isPermissionGranted: Boolean ->
         if (isPermissionGranted) {
-            uiStateAndStateEvents.events.enableReminder()
+            uiStateEvents.enableReminder()
         }
     }
     val notificationsPermissionLauncher: ManagedActivityResultLauncher<String, Boolean> =
@@ -82,11 +84,11 @@ public fun SettingsScreen(
     }
 
     val screenUIEventHandler = remember(
-        key1 = uiStateAndStateEvents,
+        key1 = uiStateEvents,
     ) {
         SettingsScreenUIEventHandler(
             hasNotificationPermission = hasNotificationPermission,
-            uiStateEvents = uiStateAndStateEvents.events,
+            uiStateEvents = uiStateEvents,
             createDocument = { handler: (uri: Uri?) -> Unit ->
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },
@@ -108,7 +110,7 @@ public fun SettingsScreen(
     }
 
     SettingsScreenUI(
-        uiState = uiStateAndStateEvents.state,
+        uiState = uiState,
         handleUIEvent = screenUIEventHandler::handleUIEvent,
     )
 }

@@ -32,7 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -81,10 +80,26 @@ public class TransactionsScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<TransactionsScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<TransactionsScreenUIState> =
         MutableStateFlow(
-            value = TransactionsScreenUIStateAndStateEvents(),
+            value = TransactionsScreenUIState(),
         )
+    internal val uiStateEvents: TransactionsScreenUIStateEvents = TransactionsScreenUIStateEvents(
+        addToSelectedTransactions = ::addToSelectedTransactions,
+        clearSelectedTransactions = ::clearSelectedTransactions,
+        navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
+        navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
+        navigateUp = ::navigateUp,
+        removeFromSelectedTransactions = ::removeFromSelectedTransactions,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        selectAllTransactions = ::selectAllTransactions,
+        setIsInSelectionMode = ::setIsInSelectionMode,
+        setScreenBottomSheetType = ::setScreenBottomSheetType,
+        setSearchText = ::setSearchText,
+        setSelectedFilter = ::setSelectedFilter,
+        setSelectedSortOption = ::setSelectedSortOption,
+        updateTransactionForValuesInTransactions = ::updateTransactionForValuesInTransactions,
+    )
     // endregion
 
     // region initViewModel
@@ -136,56 +151,38 @@ public class TransactionsScreenViewModel @Inject constructor(
                     isInitialDataFetchCompleted = true
                 }
 
-                uiStateAndStateEvents.update {
-                    TransactionsScreenUIStateAndStateEvents(
-                        state = TransactionsScreenUIState(
-                            isBackHandlerEnabled = searchText.isNotEmpty() ||
-                                    selectedFilter.orEmpty().areFiltersSelected() ||
-                                    isInSelectionMode,
-                            isBottomSheetVisible = screenBottomSheetType != TransactionsScreenBottomSheetType.None,
-                            isInSelectionMode = isInSelectionMode,
-                            isLoading = isLoading,
-                            isSearchSortAndFilterVisible = isInSelectionMode.not() && (
-                                    transactionDetailsListItemViewData.isNotEmpty() ||
-                                            searchText.isNotEmpty() ||
-                                            selectedFilter.orEmpty().areFiltersSelected() ||
-                                            isLoading
-                                    ),
-                            selectedFilter = selectedFilter.orEmpty(),
-                            selectedTransactions = selectedTransactionIndices.toImmutableList(),
-                            sortOptions = sortOptions.orEmpty(),
-                            transactionForValues = allTransactionForValues.orEmpty(),
-                            accounts = accounts.toImmutableList(),
-                            expenseCategories = categoriesMap[TransactionType.EXPENSE].orEmpty()
-                                .toImmutableList(),
-                            incomeCategories = categoriesMap[TransactionType.INCOME].orEmpty()
-                                .toImmutableList(),
-                            investmentCategories = categoriesMap[TransactionType.INVESTMENT].orEmpty()
-                                .toImmutableList(),
-                            transactionTypes = transactionTypes.orEmpty(),
-                            currentLocalDate = currentLocalDate.orMin(),
-                            oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
-                            transactionDetailsListItemViewData = transactionDetailsListItemViewData,
-                            selectedSortOption = selectedSortOption.orDefault(),
-                            searchText = searchText,
-                            screenBottomSheetType = screenBottomSheetType,
-                        ),
-                        events = TransactionsScreenUIStateEvents(
-                            addToSelectedTransactions = ::addToSelectedTransactions,
-                            clearSelectedTransactions = ::clearSelectedTransactions,
-                            navigateToAddTransactionScreen = ::navigateToAddTransactionScreen,
-                            navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
-                            navigateUp = ::navigateUp,
-                            removeFromSelectedTransactions = ::removeFromSelectedTransactions,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            selectAllTransactions = ::selectAllTransactions,
-                            setIsInSelectionMode = ::setIsInSelectionMode,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setSearchText = ::setSearchText,
-                            setSelectedFilter = ::setSelectedFilter,
-                            setSelectedSortOption = ::setSelectedSortOption,
-                            updateTransactionForValuesInTransactions = ::updateTransactionForValuesInTransactions,
-                        ),
+                uiState.update {
+                    TransactionsScreenUIState(
+                        isBackHandlerEnabled = searchText.isNotEmpty() ||
+                                selectedFilter.orEmpty().areFiltersSelected() ||
+                                isInSelectionMode,
+                        isBottomSheetVisible = screenBottomSheetType != TransactionsScreenBottomSheetType.None,
+                        isInSelectionMode = isInSelectionMode,
+                        isLoading = isLoading,
+                        isSearchSortAndFilterVisible = isInSelectionMode.not() && (
+                                transactionDetailsListItemViewData.isNotEmpty() ||
+                                        searchText.isNotEmpty() ||
+                                        selectedFilter.orEmpty().areFiltersSelected() ||
+                                        isLoading
+                                ),
+                        selectedFilter = selectedFilter.orEmpty(),
+                        selectedTransactions = selectedTransactionIndices.toImmutableList(),
+                        sortOptions = sortOptions.orEmpty(),
+                        transactionForValues = allTransactionForValues.orEmpty(),
+                        accounts = accounts.toImmutableList(),
+                        expenseCategories = categoriesMap[TransactionType.EXPENSE].orEmpty()
+                            .toImmutableList(),
+                        incomeCategories = categoriesMap[TransactionType.INCOME].orEmpty()
+                            .toImmutableList(),
+                        investmentCategories = categoriesMap[TransactionType.INVESTMENT].orEmpty()
+                            .toImmutableList(),
+                        transactionTypes = transactionTypes.orEmpty(),
+                        currentLocalDate = currentLocalDate.orMin(),
+                        oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
+                        transactionDetailsListItemViewData = transactionDetailsListItemViewData,
+                        selectedSortOption = selectedSortOption.orDefault(),
+                        searchText = searchText,
+                        screenBottomSheetType = screenBottomSheetType,
                     )
                 }
             }

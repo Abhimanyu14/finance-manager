@@ -7,7 +7,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.bottomsheet.OpenSourceLicensesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -27,9 +26,15 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
     navigator = navigator,
 ) {
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<OpenSourceLicensesScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<OpenSourceLicensesScreenUIState> =
         MutableStateFlow(
-            value = OpenSourceLicensesScreenUIStateAndStateEvents(),
+            value = OpenSourceLicensesScreenUIState(),
+        )
+    internal val uiStateEvents: OpenSourceLicensesScreenUIStateEvents =
+        OpenSourceLicensesScreenUIStateEvents(
+            navigateUp = ::navigateUp,
+            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+            setScreenBottomSheetType = ::setScreenBottomSheetType,
         )
     // endregion
 
@@ -58,18 +63,11 @@ public class OpenSourceLicensesScreenViewModel @Inject constructor(
                         screenBottomSheetType,
                     ),
                 ->
-                uiStateAndStateEvents.update {
-                    OpenSourceLicensesScreenUIStateAndStateEvents(
-                        state = OpenSourceLicensesScreenUIState(
-                            isBottomSheetVisible = screenBottomSheetType != OpenSourceLicensesScreenBottomSheetType.None,
-                            isLoading = isLoading,
-                            screenBottomSheetType = screenBottomSheetType,
-                        ),
-                        events = OpenSourceLicensesScreenUIStateEvents(
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                        ),
+                uiState.update {
+                    OpenSourceLicensesScreenUIState(
+                        isBottomSheetVisible = screenBottomSheetType != OpenSourceLicensesScreenBottomSheetType.None,
+                        isLoading = isLoading,
+                        screenBottomSheetType = screenBottomSheetType,
                     )
                 }
             }

@@ -23,7 +23,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.bottomsheet.EditCategoryScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.usecase.EditCategoryScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.EditCategoryScreenArgs
@@ -68,10 +67,21 @@ public class EditCategoryScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<EditCategoryScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<EditCategoryScreenUIState> =
         MutableStateFlow(
-            value = EditCategoryScreenUIStateAndStateEvents(),
+            value = EditCategoryScreenUIState(),
         )
+    internal val uiStateEvents: EditCategoryScreenUIStateEvents = EditCategoryScreenUIStateEvents(
+        clearTitle = ::clearTitle,
+        navigateUp = ::navigateUp,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        setEmoji = ::setEmoji,
+        setTitle = ::setTitle,
+        setScreenBottomSheetType = ::setScreenBottomSheetType,
+        setSearchText = ::setSearchText,
+        setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
+        updateCategory = ::updateCategory,
+    )
     // endregion
 
     // region initViewModel
@@ -192,36 +202,23 @@ public class EditCategoryScreenViewModel @Inject constructor(
                     true
                 }
 
-                uiStateAndStateEvents.update {
-                    EditCategoryScreenUIStateAndStateEvents(
-                        state = EditCategoryScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
-                            isBottomSheetVisible = screenBottomSheetType != EditCategoryScreenBottomSheetType.None,
-                            isCtaButtonEnabled = isCtaButtonEnabled,
-                            isLoading = isLoading,
-                            isSupportingTextVisible = titleError != EditCategoryScreenTitleError.None,
-                            titleError = titleError,
-                            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                            transactionTypesChipUIData = validTransactionTypes.map { transactionType ->
-                                ChipUIData(
-                                    text = transactionType.title,
-                                )
-                            },
-                            emoji = emoji,
-                            emojiSearchText = searchText,
-                            title = title,
-                        ),
-                        events = EditCategoryScreenUIStateEvents(
-                            clearTitle = ::clearTitle,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setEmoji = ::setEmoji,
-                            setTitle = ::setTitle,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setSearchText = ::setSearchText,
-                            setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
-                            updateCategory = ::updateCategory,
-                        ),
+                uiState.update {
+                    EditCategoryScreenUIState(
+                        screenBottomSheetType = screenBottomSheetType,
+                        isBottomSheetVisible = screenBottomSheetType != EditCategoryScreenBottomSheetType.None,
+                        isCtaButtonEnabled = isCtaButtonEnabled,
+                        isLoading = isLoading,
+                        isSupportingTextVisible = titleError != EditCategoryScreenTitleError.None,
+                        titleError = titleError,
+                        selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                        transactionTypesChipUIData = validTransactionTypes.map { transactionType ->
+                            ChipUIData(
+                                text = transactionType.title,
+                            )
+                        },
+                        emoji = emoji,
+                        emojiSearchText = searchText,
+                        title = title,
                     )
                 }
             }

@@ -24,7 +24,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.ic
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -70,10 +69,20 @@ public class AccountsScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<AccountsScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<AccountsScreenUIState> =
         MutableStateFlow(
-            value = AccountsScreenUIStateAndStateEvents(),
+            value = AccountsScreenUIState(),
         )
+    internal val uiStateEvents: AccountsScreenUIStateEvents = AccountsScreenUIStateEvents(
+        deleteAccount = ::deleteAccount,
+        navigateToAddAccountScreen = ::navigateToAddAccountScreen,
+        navigateToEditAccountScreen = ::navigateToEditAccountScreen,
+        navigateUp = ::navigateUp,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        setClickedItemId = ::setClickedItemId,
+        setDefaultAccountIdInDataStore = ::setDefaultAccountIdInDataStore,
+        setScreenBottomSheetType = ::setScreenBottomSheetType,
+    )
     // endregion
 
     // region initViewModel
@@ -112,27 +121,15 @@ public class AccountsScreenViewModel @Inject constructor(
                         accountsListItemDataList,
                     ),
                 ->
-                uiStateAndStateEvents.update {
-                    AccountsScreenUIStateAndStateEvents(
-                        state = AccountsScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
-                            isBottomSheetVisible = screenBottomSheetType != AccountsScreenBottomSheetType.None,
-                            clickedItemId = clickedItemId,
-                            isLoading = isLoading,
-                            accountsListItemDataList = accountsListItemDataList.toImmutableList(),
-                            accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
-                            accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
-                        ),
-                        events = AccountsScreenUIStateEvents(
-                            deleteAccount = ::deleteAccount,
-                            navigateToAddAccountScreen = ::navigateToAddAccountScreen,
-                            navigateToEditAccountScreen = ::navigateToEditAccountScreen,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setClickedItemId = ::setClickedItemId,
-                            setDefaultAccountIdInDataStore = ::setDefaultAccountIdInDataStore,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                        ),
+                uiState.update {
+                    AccountsScreenUIState(
+                        screenBottomSheetType = screenBottomSheetType,
+                        isBottomSheetVisible = screenBottomSheetType != AccountsScreenBottomSheetType.None,
+                        clickedItemId = clickedItemId,
+                        isLoading = isLoading,
+                        accountsListItemDataList = accountsListItemDataList.toImmutableList(),
+                        accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue.orZero(),
+                        accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue.orZero(),
                     )
                 }
             }

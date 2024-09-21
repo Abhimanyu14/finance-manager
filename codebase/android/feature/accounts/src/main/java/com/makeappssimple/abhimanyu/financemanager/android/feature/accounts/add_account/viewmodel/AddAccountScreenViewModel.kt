@@ -15,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIVisibilityData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.usecase.AddAccountScreenDataValidationUseCase
@@ -48,10 +47,50 @@ public class AddAccountScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<AddAccountScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<AddAccountScreenUIState> =
         MutableStateFlow(
-            value = AddAccountScreenUIStateAndStateEvents(),
+            value = AddAccountScreenUIState(),
         )
+    internal val uiStateEvents: AddAccountScreenUIStateEvents = AddAccountScreenUIStateEvents(
+        clearMinimumAccountBalanceAmountValue = {
+            minimumAccountBalanceAmountValue =
+                minimumAccountBalanceAmountValue.copy(
+                    text = "",
+                )
+        },
+        clearName = {
+            name = name.copy(
+                text = "",
+            )
+        },
+        insertAccount = {
+            insertAccount(
+                uiState = uiState.value,
+            )
+        },
+        navigateUp = ::navigateUp,
+        resetScreenBottomSheetType = {
+            screenBottomSheetType = AddAccountScreenBottomSheetType.None
+        },
+        resetScreenSnackbarType = {
+            screenSnackbarType = AddAccountScreenSnackbarType.None
+        },
+        setMinimumAccountBalanceAmountValue = {
+            minimumAccountBalanceAmountValue = it
+        },
+        setName = {
+            name = it
+        },
+        setScreenBottomSheetType = {
+            screenBottomSheetType = it
+        },
+        setScreenSnackbarType = {
+            screenSnackbarType = it
+        },
+        setSelectedAccountTypeIndex = {
+            selectedAccountTypeIndex = it
+        },
+    )
     // endregion
 
     // region initViewModel
@@ -91,70 +130,28 @@ public class AddAccountScreenViewModel @Inject constructor(
                     index = selectedAccountTypeIndex,
                 )
 
-                uiStateAndStateEvents.update {
-                    AddAccountScreenUIStateAndStateEvents(
-                        state = AddAccountScreenUIState(
-                            selectedAccountType = selectedAccountType,
-                            screenBottomSheetType = screenBottomSheetType,
-                            nameError = validationState.nameError,
-                            screenSnackbarType = screenSnackbarType,
-                            visibilityData = AddAccountScreenUIVisibilityData(
-                                minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
-                                nameTextFieldErrorText = validationState.nameError != AddAccountScreenNameError.None,
-                            ),
-                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
-                            isLoading = isLoading,
-                            selectedAccountTypeIndex = selectedAccountTypeIndex,
-                            accountTypesChipUIDataList = validAccountTypesForNewAccount
-                                .map { accountType ->
-                                    ChipUIData(
-                                        text = accountType.title,
-                                        icon = accountType.icon,
-                                    )
-                                },
-                            minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
-                            nameTextFieldValue = name,
+                uiState.update {
+                    AddAccountScreenUIState(
+                        selectedAccountType = selectedAccountType,
+                        screenBottomSheetType = screenBottomSheetType,
+                        nameError = validationState.nameError,
+                        screenSnackbarType = screenSnackbarType,
+                        visibilityData = AddAccountScreenUIVisibilityData(
+                            minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
+                            nameTextFieldErrorText = validationState.nameError != AddAccountScreenNameError.None,
                         ),
-                        events = AddAccountScreenUIStateEvents(
-                            clearMinimumAccountBalanceAmountValue = {
-                                minimumAccountBalanceAmountValue =
-                                    minimumAccountBalanceAmountValue.copy(
-                                        text = "",
-                                    )
-                            },
-                            clearName = {
-                                name = name.copy(
-                                    text = "",
+                        isCtaButtonEnabled = validationState.isCtaButtonEnabled,
+                        isLoading = isLoading,
+                        selectedAccountTypeIndex = selectedAccountTypeIndex,
+                        accountTypesChipUIDataList = validAccountTypesForNewAccount
+                            .map { accountType ->
+                                ChipUIData(
+                                    text = accountType.title,
+                                    icon = accountType.icon,
                                 )
                             },
-                            insertAccount = {
-                                insertAccount(
-                                    uiState = uiStateAndStateEvents.value.state,
-                                )
-                            },
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = {
-                                screenBottomSheetType = AddAccountScreenBottomSheetType.None
-                            },
-                            resetScreenSnackbarType = {
-                                screenSnackbarType = AddAccountScreenSnackbarType.None
-                            },
-                            setMinimumAccountBalanceAmountValue = {
-                                minimumAccountBalanceAmountValue = it
-                            },
-                            setName = {
-                                name = it
-                            },
-                            setScreenBottomSheetType = {
-                                screenBottomSheetType = it
-                            },
-                            setScreenSnackbarType = {
-                                screenSnackbarType = it
-                            },
-                            setSelectedAccountTypeIndex = {
-                                selectedAccountTypeIndex = it
-                            },
-                        ),
+                        minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
+                        nameTextFieldValue = name,
                     )
                 }
             }

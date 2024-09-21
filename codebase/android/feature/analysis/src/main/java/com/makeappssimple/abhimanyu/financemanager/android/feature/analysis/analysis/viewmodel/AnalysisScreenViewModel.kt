@@ -23,7 +23,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -72,10 +71,17 @@ public class AnalysisScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<AnalysisScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<AnalysisScreenUIState> =
         MutableStateFlow(
-            value = AnalysisScreenUIStateAndStateEvents(),
+            value = AnalysisScreenUIState(),
         )
+    internal val uiStateEvents: AnalysisScreenUIStateEvents = AnalysisScreenUIStateEvents(
+        navigateUp = ::navigateUp,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        setScreenBottomSheetType = ::setScreenBottomSheetType,
+        setSelectedFilter = ::setSelectedFilter,
+        setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
+    )
     // endregion
 
     // region initViewModel
@@ -127,28 +133,19 @@ public class AnalysisScreenViewModel @Inject constructor(
                         analysisListItemData,
                     ),
                 ->
-                uiStateAndStateEvents.update {
-                    AnalysisScreenUIStateAndStateEvents(
-                        state = AnalysisScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
-                            isBottomSheetVisible = screenBottomSheetType != AnalysisScreenBottomSheetType.None,
-                            isLoading = isLoading,
-                            selectedFilter = selectedFilter.orEmpty(),
-                            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                            analysisListItemData = analysisListItemData,
-                            transactionTypesChipUIData = validTransactionTypesChipUIData,
-                            defaultStartLocalDate = oldestTransactionLocalDate.orMin(),
-                            defaultEndLocalDate = dateTimeUtil.getCurrentLocalDate(),
-                            startOfCurrentMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
-                            startOfCurrentYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
-                        ),
-                        events = AnalysisScreenUIStateEvents(
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setSelectedFilter = ::setSelectedFilter,
-                            setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
-                        ),
+                uiState.update {
+                    AnalysisScreenUIState(
+                        screenBottomSheetType = screenBottomSheetType,
+                        isBottomSheetVisible = screenBottomSheetType != AnalysisScreenBottomSheetType.None,
+                        isLoading = isLoading,
+                        selectedFilter = selectedFilter.orEmpty(),
+                        selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                        analysisListItemData = analysisListItemData,
+                        transactionTypesChipUIData = validTransactionTypesChipUIData,
+                        defaultStartLocalDate = oldestTransactionLocalDate.orMin(),
+                        defaultEndLocalDate = dateTimeUtil.getCurrentLocalDate(),
+                        startOfCurrentMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
+                        startOfCurrentYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
                     )
                 }
             }

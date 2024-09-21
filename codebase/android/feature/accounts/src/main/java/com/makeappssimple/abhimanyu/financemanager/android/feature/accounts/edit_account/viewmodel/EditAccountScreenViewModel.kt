@@ -22,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.ic
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateAndStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.usecase.EditAccountScreenDataValidationUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.EditAccountScreenArgs
@@ -66,10 +65,24 @@ public class EditAccountScreenViewModel @Inject constructor(
     // endregion
 
     // region uiStateAndStateEvents
-    internal val uiStateAndStateEvents: MutableStateFlow<EditAccountScreenUIStateAndStateEvents> =
+    internal val uiState: MutableStateFlow<EditAccountScreenUIState> =
         MutableStateFlow(
-            value = EditAccountScreenUIStateAndStateEvents(),
+            value = EditAccountScreenUIState(),
         )
+    internal val uiStateEvents: EditAccountScreenUIStateEvents = EditAccountScreenUIStateEvents(
+        clearBalanceAmountValue = ::clearBalanceAmountValue,
+        clearMinimumAccountBalanceAmountValue = ::clearMinimumAccountBalanceAmountValue,
+        clearName = ::clearName,
+        navigateUp = ::navigateUp,
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        setMinimumAccountBalanceAmountValue = ::setMinimumAccountBalanceAmountValue,
+        setName = ::setName,
+        setBalanceAmountValue = ::setBalanceAmountValue,
+        setScreenBottomSheetType = ::setScreenBottomSheetType,
+        setScreenSnackbarType = ::setScreenSnackbarType,
+        setSelectedAccountTypeIndex = ::setSelectedAccountTypeIndex,
+        updateAccount = ::updateAccount,
+    )
     // endregion
 
     // region initViewModel
@@ -167,45 +180,29 @@ public class EditAccountScreenViewModel @Inject constructor(
                     currentAccount = currentAccount,
                 )
 
-                uiStateAndStateEvents.update {
-                    EditAccountScreenUIStateAndStateEvents(
-                        state = EditAccountScreenUIState(
-                            screenBottomSheetType = screenBottomSheetType,
-                            isLoading = isLoading,
-                            isCtaButtonEnabled = validationState.isCtaButtonEnabled,
-                            nameError = validationState.nameError,
-                            selectedAccountTypeIndex = selectedAccountTypeIndex.orZero(),
-                            accountTypesChipUIDataList = validAccountTypesForNewAccount
-                                .map { accountType ->
-                                    ChipUIData(
-                                        text = accountType.title,
-                                        icon = accountType.icon,
-                                    )
-                                },
-                            balanceAmountValue = balanceAmountValue,
-                            minimumBalanceAmountValue = minimumAccountBalanceAmountValue,
-                            name = name,
-                            visibilityData = EditAccountScreenUIVisibilityData(
-                                balanceAmountTextField = true,
-                                minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
-                                nameTextField = validationState.isCashAccount.not(),
-                                nameTextFieldErrorText = validationState.nameError != EditAccountScreenNameError.None,
-                                accountTypesRadioGroup = validationState.isCashAccount.not(),
-                            ),
-                        ),
-                        events = EditAccountScreenUIStateEvents(
-                            clearBalanceAmountValue = ::clearBalanceAmountValue,
-                            clearMinimumAccountBalanceAmountValue = ::clearMinimumAccountBalanceAmountValue,
-                            clearName = ::clearName,
-                            navigateUp = ::navigateUp,
-                            resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-                            setMinimumAccountBalanceAmountValue = ::setMinimumAccountBalanceAmountValue,
-                            setName = ::setName,
-                            setBalanceAmountValue = ::setBalanceAmountValue,
-                            setScreenBottomSheetType = ::setScreenBottomSheetType,
-                            setScreenSnackbarType = ::setScreenSnackbarType,
-                            setSelectedAccountTypeIndex = ::setSelectedAccountTypeIndex,
-                            updateAccount = ::updateAccount,
+                uiState.update {
+                    EditAccountScreenUIState(
+                        screenBottomSheetType = screenBottomSheetType,
+                        isLoading = isLoading,
+                        isCtaButtonEnabled = validationState.isCtaButtonEnabled,
+                        nameError = validationState.nameError,
+                        selectedAccountTypeIndex = selectedAccountTypeIndex.orZero(),
+                        accountTypesChipUIDataList = validAccountTypesForNewAccount
+                            .map { accountType ->
+                                ChipUIData(
+                                    text = accountType.title,
+                                    icon = accountType.icon,
+                                )
+                            },
+                        balanceAmountValue = balanceAmountValue,
+                        minimumBalanceAmountValue = minimumAccountBalanceAmountValue,
+                        name = name,
+                        visibilityData = EditAccountScreenUIVisibilityData(
+                            balanceAmountTextField = true,
+                            minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
+                            nameTextField = validationState.isCashAccount.not(),
+                            nameTextFieldErrorText = validationState.nameError != EditAccountScreenNameError.None,
+                            accountTypesRadioGroup = validationState.isCashAccount.not(),
                         ),
                     )
                 }

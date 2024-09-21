@@ -192,7 +192,7 @@ internal fun TransactionsScreenUI(
             is TransactionsScreenBottomSheetType.None,
             is TransactionsScreenBottomSheetType.SelectTransactionFor,
             is TransactionsScreenBottomSheetType.Sort,
-                -> {
+            -> {
                 BottomSheetShape
             }
 
