@@ -5,8 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 internal class AccountsScreenUIStateDelegateImpl(
@@ -16,29 +15,41 @@ internal class AccountsScreenUIStateDelegateImpl(
     private val navigator: Navigator,
 ) : AccountsScreenUIStateDelegate {
     // region UI state
-    override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
+    override val refreshSignal: MutableSharedFlow<Unit> = MutableSharedFlow(
+        replay = 0,
+        extraBufferCapacity = 1,
     )
-    override val screenBottomSheetType: MutableStateFlow<AccountsScreenBottomSheetType> =
-        MutableStateFlow(
-            value = AccountsScreenBottomSheetType.None,
-        )
-    override val clickedItemId: MutableStateFlow<Int?> = MutableStateFlow(
-        value = null,
-    )
+    override var isLoading: Boolean = true
+        set(value) {
+            field = value
+            refresh()
+        }
+    override var screenBottomSheetType: AccountsScreenBottomSheetType =
+        AccountsScreenBottomSheetType.None
+        set(value) {
+            field = value
+            refresh()
+        }
+    override var clickedItemId: Int? = null
+        set(value) {
+            field = value
+            refresh()
+        }
+    // endregion
+
+    // region refresh
+    override fun refresh() {
+        refreshSignal.tryEmit(Unit)
+    }
     // endregion
 
     // region loading
     override fun startLoading() {
-        isLoading.update {
-            true
-        }
+        isLoading = true
     }
 
     override fun completeLoading() {
-        isLoading.update {
-            false
-        }
+        isLoading = false
     }
 
     override fun <T> withLoading(
@@ -65,7 +76,7 @@ internal class AccountsScreenUIStateDelegateImpl(
     // region state events
     override fun deleteAccount() {
         coroutineScope.launch {
-            clickedItemId.value?.let { id ->
+            clickedItemId?.let { id ->
                 deleteAccountUseCase(
                     id = id,
                 )
@@ -90,22 +101,20 @@ internal class AccountsScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedAccountsScreenBottomSheetType = AccountsScreenBottomSheetType.None,
         )
     }
 
-    override fun setClickedItemId(
+    override fun updateClickedItemId(
         updatedClickedItemId: Int?,
     ) {
-        clickedItemId.update {
-            updatedClickedItemId
-        }
+        clickedItemId = updatedClickedItemId
     }
 
     override fun setDefaultAccountIdInDataStore() {
         coroutineScope.launch {
-            clickedItemId.value?.let { accountId ->
+            clickedItemId?.let { accountId ->
                 val isDefaultAccountUpdated = myPreferencesRepository.setDefaultAccountId(
                     accountId = accountId,
                 )
@@ -116,12 +125,10 @@ internal class AccountsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedAccountsScreenBottomSheetType: AccountsScreenBottomSheetType,
     ) {
-        screenBottomSheetType.update {
-            updatedAccountsScreenBottomSheetType
-        }
+        screenBottomSheetType = updatedAccountsScreenBottomSheetType
     }
     // endregion
 }

@@ -1,13 +1,18 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 internal interface AccountsScreenUIStateDelegate {
     // region UI state
-    val isLoading: MutableStateFlow<Boolean>
-    val screenBottomSheetType: MutableStateFlow<AccountsScreenBottomSheetType>
-    val clickedItemId: MutableStateFlow<Int?>
+    val refreshSignal: MutableSharedFlow<Unit>
+    val isLoading: Boolean
+    val screenBottomSheetType: AccountsScreenBottomSheetType
+    val clickedItemId: Int?
+    // endregion
+
+    // region refresh
+    fun refresh()
     // endregion
 
     // region loading
@@ -37,13 +42,13 @@ internal interface AccountsScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setClickedItemId(
+    fun updateClickedItemId(
         updatedClickedItemId: Int?,
     )
 
     fun setDefaultAccountIdInDataStore()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedAccountsScreenBottomSheetType: AccountsScreenBottomSheetType,
     )
     // endregion
