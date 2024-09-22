@@ -229,20 +229,8 @@ public class CategoriesScreenViewModel @Inject constructor(
 
     // region observeForUiStateAndStateEvents
     private fun observeForUiStateAndStateEvents() {
-        observeForIsLoading()
         observeForRefreshSignal()
         observeForCategoriesGridItemDataMap()
-    }
-
-    private fun observeForIsLoading() {
-        viewModelScope.launch {
-            isLoading.collectLatest { isLoading ->
-                updateUiStateAndStateEvents(
-                    isLoading = isLoading,
-                    categoriesGridItemDataMap = categoriesGridItemDataMap.value,
-                )
-            }
-        }
     }
 
     private fun observeForRefreshSignal() {
@@ -266,7 +254,6 @@ public class CategoriesScreenViewModel @Inject constructor(
     }
 
     private fun updateUiStateAndStateEvents(
-        isLoading: Boolean = false,
         categoriesGridItemDataMap: ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>,
     ) {
         val tabData = validTransactionTypes.map {

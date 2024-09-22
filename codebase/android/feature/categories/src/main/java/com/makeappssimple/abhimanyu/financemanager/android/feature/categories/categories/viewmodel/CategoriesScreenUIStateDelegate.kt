@@ -5,7 +5,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 
 internal interface CategoriesScreenUIStateDelegate {
     // region initial data
@@ -14,7 +13,7 @@ internal interface CategoriesScreenUIStateDelegate {
 
     // region UI state
     val refreshSignal: MutableSharedFlow<Unit>
-    val isLoading: MutableStateFlow<Boolean>
+    val isLoading: Boolean
     val screenBottomSheetType: CategoriesScreenBottomSheetType
     val screenSnackbarType: CategoriesScreenSnackbarType
     val categoryIdToDelete: Int?

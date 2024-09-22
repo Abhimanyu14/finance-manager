@@ -10,8 +10,6 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class CategoriesScreenUIStateDelegateImpl(
@@ -33,9 +31,11 @@ internal class CategoriesScreenUIStateDelegateImpl(
         replay = 0,
         extraBufferCapacity = 1,
     )
-    override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
+    override var isLoading: Boolean = true
+        set(value) {
+            field = value
+            refresh()
+        }
     override var screenBottomSheetType: CategoriesScreenBottomSheetType =
         CategoriesScreenBottomSheetType.None
         set(value) {
@@ -68,15 +68,11 @@ internal class CategoriesScreenUIStateDelegateImpl(
 
     // region loading
     override fun startLoading() {
-        isLoading.update {
-            true
-        }
+        isLoading = true
     }
 
     override fun completeLoading() {
-        isLoading.update {
-            false
-        }
+        isLoading = false
     }
 
     override fun <T> withLoading(
