@@ -11,8 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 internal class AddAccountScreenUIStateDelegateImpl(
@@ -28,102 +27,153 @@ internal class AddAccountScreenUIStateDelegateImpl(
     // endregion
 
     // region UI state
-    override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
+    override val refreshSignal: MutableSharedFlow<Unit> = MutableSharedFlow(
+        replay = 0,
+        extraBufferCapacity = 1,
     )
+    override var isLoading: Boolean = true
     override var screenBottomSheetType: AddAccountScreenBottomSheetType =
         AddAccountScreenBottomSheetType.None
-        set(value) {
-            withLoading {
-                field = value
-            }
-        }
     override var screenSnackbarType: AddAccountScreenSnackbarType =
         AddAccountScreenSnackbarType.None
-        set(value) {
-            withLoading {
-                field = value
-            }
-        }
     override var selectedAccountTypeIndex = validAccountTypesForNewAccount
         .indexOf(
             element = AccountType.BANK,
         )
-        set(value) {
-            withLoading {
-                field = value
-            }
-        }
     override var name = TextFieldValue()
-        set(value) {
-            withLoading {
-                field = value
-            }
-        }
     override var minimumAccountBalanceAmountValue = TextFieldValue()
-        set(value) {
-            withLoading {
-                field = value
-            }
-        }
     // endregion
 
-    // region loading
-    override fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    override fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-
-    override fun <T> withLoading(
-        block: () -> T,
-    ): T {
-        startLoading()
-        val result = block()
-        completeLoading()
-        return result
-    }
-
-    override suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T {
-        startLoading()
-        try {
-            return block()
-        } finally {
-            completeLoading()
-        }
+    // region refresh
+    override fun refresh() {
+        refreshSignal.tryEmit(Unit)
     }
     // endregion
 
     // region state events
+    override fun clearMinimumAccountBalanceAmountValue(
+        refresh: Boolean,
+    ) {
+        minimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.copy(
+            text = "",
+        )
+        if (refresh) {
+            refresh()
+        }
+    }
+
+    override fun clearName(
+        refresh: Boolean,
+    ) {
+        name = name.copy(
+            text = "",
+        )
+        if (refresh) {
+            refresh()
+        }
+    }
+
+    override fun completeLoading(
+        refresh: Boolean,
+    ) {
+        isLoading = false
+        if (refresh) {
+            refresh()
+        }
+    }
+
     override fun insertAccount(
         uiState: AddAccountScreenUIState,
     ) {
-        withLoading {
-            coroutineScope.launch {
-                val isAccountInserted = insertAccountUseCase(
-                    accountType = uiState.selectedAccountType,
-                    minimumAccountBalanceAmountValue = uiState.minimumAccountBalanceTextFieldValue.text.toLongOrZero(),
-                    name = uiState.nameTextFieldValue.text,
-                )
-                if (isAccountInserted == -1L) {
-                    // TODO(Abhi): Show error
-                } else {
-                    navigateUp()
-                }
+        startLoading()
+        coroutineScope.launch {
+            val isAccountInserted = insertAccountUseCase(
+                accountType = uiState.selectedAccountType,
+                minimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.text.toLongOrZero(),
+                name = name.text,
+            )
+            if (isAccountInserted == -1L) {
+                // TODO(Abhi): Show error
+            } else {
+                navigateUp()
             }
         }
+        completeLoading()
     }
 
     override fun navigateUp() {
         navigator.navigateUp()
+    }
+
+    override fun resetScreenBottomSheetType() {
+        updateScreenBottomSheetType(
+            updatedAddAccountScreenBottomSheetType = AddAccountScreenBottomSheetType.None,
+        )
+    }
+
+    override fun resetScreenSnackbarType() {
+        updateScreenSnackbarType(
+            updatedAddAccountScreenSnackbarType = AddAccountScreenSnackbarType.None,
+        )
+    }
+
+    override fun startLoading(
+        refresh: Boolean,
+    ) {
+        isLoading = true
+        if (refresh) {
+            refresh()
+        }
+    }
+
+    override fun updateMinimumAccountBalanceAmountValue(
+        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
+        refresh: Boolean,
+    ) {
+        minimumAccountBalanceAmountValue = updatedMinimumAccountBalanceAmountValue
+        if (refresh) {
+            refresh()
+        }
+    }
+
+    override fun updateName(
+        updatedName: TextFieldValue,
+        refresh: Boolean,
+    ) {
+        name = updatedName
+        if (refresh) {
+            refresh()
+        }
+    }
+
+    override fun updateScreenBottomSheetType(
+        updatedAddAccountScreenBottomSheetType: AddAccountScreenBottomSheetType,
+        refresh: Boolean,
+    ) {
+        screenBottomSheetType = updatedAddAccountScreenBottomSheetType
+        if (refresh) {
+            refresh()
+        }
+    }
+
+    override fun updateScreenSnackbarType(
+        updatedAddAccountScreenSnackbarType: AddAccountScreenSnackbarType,
+        refresh: Boolean,
+    ) {
+        screenSnackbarType = updatedAddAccountScreenSnackbarType
+        if (refresh) {
+            refresh()
+        }
+    }
+
+    override fun updateSelectedAccountTypeIndex(
+        updatedSelectedAccountTypeIndex: Int,
+        refresh: Boolean,
+    ) {
+        selectedAccountTypeIndex = updatedSelectedAccountTypeIndex
+        if (refresh) {
+            refresh()
+        }
     }
     // endregion
 }

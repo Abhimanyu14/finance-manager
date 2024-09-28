@@ -20,21 +20,9 @@ internal class AccountsScreenUIStateDelegateImpl(
         extraBufferCapacity = 1,
     )
     override var isLoading: Boolean = true
-        set(value) {
-            field = value
-            refresh()
-        }
     override var screenBottomSheetType: AccountsScreenBottomSheetType =
         AccountsScreenBottomSheetType.None
-        set(value) {
-            field = value
-            refresh()
-        }
     override var clickedItemId: Int? = null
-        set(value) {
-            field = value
-            refresh()
-        }
     // endregion
 
     // region refresh
@@ -43,37 +31,16 @@ internal class AccountsScreenUIStateDelegateImpl(
     }
     // endregion
 
-    // region loading
-    override fun startLoading() {
-        isLoading = true
-    }
-
-    override fun completeLoading() {
+    // region state events
+    override fun completeLoading(
+        refresh: Boolean,
+    ) {
         isLoading = false
-    }
-
-    override fun <T> withLoading(
-        block: () -> T,
-    ): T {
-        startLoading()
-        val result = block()
-        completeLoading()
-        return result
-    }
-
-    override suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T {
-        startLoading()
-        try {
-            return block()
-        } finally {
-            completeLoading()
+        if (refresh) {
+            refresh()
         }
     }
-    // endregion
 
-    // region state events
     override fun deleteAccount() {
         coroutineScope.launch {
             clickedItemId?.let { id ->
@@ -106,10 +73,23 @@ internal class AccountsScreenUIStateDelegateImpl(
         )
     }
 
+    override fun startLoading(
+        refresh: Boolean,
+    ) {
+        isLoading = true
+        if (refresh) {
+            refresh()
+        }
+    }
+
     override fun updateClickedItemId(
         updatedClickedItemId: Int?,
+        refresh: Boolean,
     ) {
         clickedItemId = updatedClickedItemId
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun setDefaultAccountIdInDataStore() {
@@ -127,8 +107,12 @@ internal class AccountsScreenUIStateDelegateImpl(
 
     override fun updateScreenBottomSheetType(
         updatedAccountsScreenBottomSheetType: AccountsScreenBottomSheetType,
+        refresh: Boolean,
     ) {
         screenBottomSheetType = updatedAccountsScreenBottomSheetType
+        if (refresh) {
+            refresh()
+        }
     }
     // endregion
 }

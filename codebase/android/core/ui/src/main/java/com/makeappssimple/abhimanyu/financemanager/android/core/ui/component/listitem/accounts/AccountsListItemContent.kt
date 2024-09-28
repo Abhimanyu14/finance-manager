@@ -1,10 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -12,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -20,7 +23,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag.MyDefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumListItemHeight
+
+private object AccountsListItemContentConstants {
+    val loadingUIHeight = 40.dp
+    val loadingUIHorizontalPadding = 16.dp
+    val loadingUIVerticalPadding = 4.dp
+}
 
 @Immutable
 public data class AccountsListItemContentDataAndEventHandler(
@@ -34,6 +44,7 @@ public data class AccountsListItemContentData(
     val isDefault: Boolean = false,
     val isDeleteEnabled: Boolean = false,
     val isHeading: Boolean = false,
+    val isLoading: Boolean = false,
     val isLowBalance: Boolean = false,
     val isMoreOptionsIconButtonVisible: Boolean = false,
     val isSelected: Boolean = false,
@@ -53,6 +64,25 @@ public fun AccountsListItemContent(
     modifier: Modifier = Modifier,
     data: AccountsListItemContentData,
     handleEvent: (event: AccountsListItemContentEvent) -> Unit = {},
+) {
+    if (data.isLoading) {
+        AccountsListItemContentLoadingUI(
+            modifier = modifier,
+        )
+    } else {
+        AccountsListItemContentUI(
+            modifier = modifier,
+            data = data,
+            handleEvent = handleEvent,
+        )
+    }
+}
+
+@Composable
+private fun AccountsListItemContentUI(
+    modifier: Modifier = Modifier,
+    data: AccountsListItemContentData,
+    handleEvent: (event: AccountsListItemContentEvent) -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -137,4 +167,25 @@ public fun AccountsListItemContent(
             )
         }
     }
+}
+
+@Composable
+public fun AccountsListItemContentLoadingUI(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(
+                height = AccountsListItemContentConstants.loadingUIHeight,
+            )
+            .padding(
+                horizontal = AccountsListItemContentConstants.loadingUIHorizontalPadding,
+                vertical = AccountsListItemContentConstants.loadingUIVerticalPadding,
+            )
+            .clip(
+                shape = MaterialTheme.shapes.small,
+            )
+            .shimmer(),
+    )
 }

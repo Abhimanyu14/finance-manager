@@ -15,21 +15,11 @@ internal interface AccountsScreenUIStateDelegate {
     fun refresh()
     // endregion
 
-    // region loading
-    fun startLoading()
-
-    fun completeLoading()
-
-    fun <T> withLoading(
-        block: () -> T,
-    ): T
-
-    suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T
-    // endregion
-
     // region state events
+    fun completeLoading(
+        refresh: Boolean = true,
+    )
+
     fun deleteAccount()
 
     fun navigateToAddAccountScreen()
@@ -42,14 +32,20 @@ internal interface AccountsScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
+    fun startLoading(
+        refresh: Boolean = true,
+    )
+
     fun updateClickedItemId(
         updatedClickedItemId: Int?,
+        refresh: Boolean = true,
     )
 
     fun setDefaultAccountIdInDataStore()
 
     fun updateScreenBottomSheetType(
         updatedAccountsScreenBottomSheetType: AccountsScreenBottomSheetType,
+        refresh: Boolean = true,
     )
     // endregion
 }

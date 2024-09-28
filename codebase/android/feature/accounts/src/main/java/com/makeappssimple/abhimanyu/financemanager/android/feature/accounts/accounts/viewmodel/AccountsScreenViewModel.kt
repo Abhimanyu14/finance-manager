@@ -54,7 +54,7 @@ public class AccountsScreenViewModel @Inject constructor(
         persistentListOf()
     // endregion
 
-    // region uiStateAndStateEvents
+    // region uiState and uiStateEvents
     internal val uiState: MutableStateFlow<AccountsScreenUIState> =
         MutableStateFlow(
             value = AccountsScreenUIState(),
@@ -102,21 +102,29 @@ public class AccountsScreenViewModel @Inject constructor(
     private fun observeForAllAccounts() {
         viewModelScope.launch {
             getAllAccountsFlowUseCase().collectLatest { updatedAllAccounts ->
-                allAccounts = updatedAllAccounts
-                allAccountsTotalBalanceAmountValue = getAccountsTotalBalanceAmountValueUseCase(
-                    allAccounts = updatedAllAccounts
+                handleAllAccountsUpdate(
+                    updatedAllAccounts = updatedAllAccounts,
                 )
-                allAccountsTotalMinimumBalanceAmountValue =
-                    getAccountsTotalMinimumBalanceAmountValueUseCase(
-                        allAccounts = updatedAllAccounts
-                    )
-                allAccountsListItemDataList = getAllAccountsListItemDataListUseCase(
-                    allAccounts = allAccounts,
-                    defaultAccountId = defaultAccountId,
-                )
-                refresh()
             }
         }
+    }
+
+    private suspend fun handleAllAccountsUpdate(
+        updatedAllAccounts: ImmutableList<Account>,
+    ) {
+        allAccounts = updatedAllAccounts
+        allAccountsTotalBalanceAmountValue = getAccountsTotalBalanceAmountValueUseCase(
+            allAccounts = updatedAllAccounts
+        )
+        allAccountsTotalMinimumBalanceAmountValue =
+            getAccountsTotalMinimumBalanceAmountValueUseCase(
+                allAccounts = updatedAllAccounts
+            )
+        allAccountsListItemDataList = getAllAccountsListItemDataListUseCase(
+            allAccounts = allAccounts,
+            defaultAccountId = defaultAccountId,
+        )
+        refresh()
     }
     // endregion
 
@@ -124,14 +132,22 @@ public class AccountsScreenViewModel @Inject constructor(
     private fun observeForDefaultAccountId() {
         viewModelScope.launch {
             getDefaultAccountIdFlowUseCase().collectLatest { updatedDefaultAccountId ->
-                defaultAccountId = updatedDefaultAccountId
-                allAccountsListItemDataList = getAllAccountsListItemDataListUseCase(
-                    allAccounts = allAccounts,
-                    defaultAccountId = defaultAccountId,
+                handleDefaultAccountIdUpdate(
+                    updatedDefaultAccountId = updatedDefaultAccountId,
                 )
-                refresh()
             }
         }
+    }
+
+    private suspend fun AccountsScreenViewModel.handleDefaultAccountIdUpdate(
+        updatedDefaultAccountId: Int?,
+    ) {
+        defaultAccountId = updatedDefaultAccountId
+        allAccountsListItemDataList = getAllAccountsListItemDataListUseCase(
+            allAccounts = allAccounts,
+            defaultAccountId = defaultAccountId,
+        )
+        refresh()
     }
     // endregion
 

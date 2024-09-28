@@ -11,8 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
@@ -46,68 +44,56 @@ public class AddAccountScreenViewModel @Inject constructor(
     private var allAccounts: ImmutableList<Account> = persistentListOf()
     // endregion
 
-    // region uiStateAndStateEvents
+    // region uiState and uiStateEvents
     internal val uiState: MutableStateFlow<AddAccountScreenUIState> =
         MutableStateFlow(
             value = AddAccountScreenUIState(),
         )
     internal val uiStateEvents: AddAccountScreenUIStateEvents = AddAccountScreenUIStateEvents(
-        clearMinimumAccountBalanceAmountValue = {
-            minimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.copy(
-                text = "",
-            )
-        },
-        clearName = {
-            name = name.copy(
-                text = "",
-            )
-        },
+        clearMinimumAccountBalanceAmountValue = ::clearMinimumAccountBalanceAmountValue,
+        clearName = ::clearName,
         insertAccount = {
+            // TODO(Abhi): Change this to remove passing UI state from here
             insertAccount(
                 uiState = uiState.value,
             )
         },
         navigateUp = ::navigateUp,
-        resetScreenBottomSheetType = {
-            screenBottomSheetType = AddAccountScreenBottomSheetType.None
-        },
-        resetScreenSnackbarType = {
-            screenSnackbarType = AddAccountScreenSnackbarType.None
-        },
-        setMinimumAccountBalanceAmountValue = {
-            minimumAccountBalanceAmountValue = it
-        },
-        setName = {
-            name = it
-        },
-        setScreenBottomSheetType = {
-            screenBottomSheetType = it
-        },
-        setScreenSnackbarType = {
-            screenSnackbarType = it
-        },
-        setSelectedAccountTypeIndex = {
-            selectedAccountTypeIndex = it
-        },
+        resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        resetScreenSnackbarType = ::resetScreenSnackbarType,
+        setMinimumAccountBalanceAmountValue = ::updateMinimumAccountBalanceAmountValue,
+        setName = ::updateName,
+        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        setScreenSnackbarType = ::updateScreenSnackbarType,
+        setSelectedAccountTypeIndex = ::updateSelectedAccountTypeIndex,
     )
     // endregion
 
     // region initViewModel
     internal fun initViewModel() {
-        fetchData()
         observeData()
+        fetchData()
     }
 
     private fun fetchData() {
         viewModelScope.launch {
-            withLoadingSuspend {
-                getAllAccounts()
-            }
+            getAllAccounts()
+            completeLoading()
         }
     }
 
     private fun observeData() {
-        observeForUiStateAndStateEvents()
+        observeForRefreshSignal()
+    }
+    // endregion
+
+    // region observeForRefreshSignal
+    private fun observeForRefreshSignal() {
+        viewModelScope.launch {
+            refreshSignal.collectLatest {
+                updateUiStateAndStateEvents()
+            }
+        }
     }
     // endregion
 
@@ -117,43 +103,38 @@ public class AddAccountScreenViewModel @Inject constructor(
     }
     // endregion
 
-    // region observeForUiStateAndStateEvents
-    private fun observeForUiStateAndStateEvents() {
-        viewModelScope.launch {
-            isLoading.collectLatest { isLoading ->
-                val validationState = addAccountScreenDataValidationUseCase(
-                    allAccounts = allAccounts,
-                    enteredName = name.text.trim(),
-                )
-                val selectedAccountType = validAccountTypesForNewAccount.getOrNull(
-                    index = selectedAccountTypeIndex,
-                )
-
-                uiState.update {
-                    AddAccountScreenUIState(
-                        selectedAccountType = selectedAccountType,
-                        screenBottomSheetType = screenBottomSheetType,
-                        nameError = validationState.nameError,
-                        screenSnackbarType = screenSnackbarType,
-                        visibilityData = AddAccountScreenUIVisibilityData(
-                            minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
-                            nameTextFieldErrorText = validationState.nameError != AddAccountScreenNameError.None,
-                        ),
-                        isCtaButtonEnabled = validationState.isCtaButtonEnabled,
-                        isLoading = isLoading,
-                        selectedAccountTypeIndex = selectedAccountTypeIndex,
-                        accountTypesChipUIDataList = validAccountTypesForNewAccount
-                            .map { accountType ->
-                                ChipUIData(
-                                    text = accountType.title,
-                                    icon = accountType.icon,
-                                )
-                            },
-                        minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
-                        nameTextFieldValue = name,
-                    )
-                }
-            }
+    // region updateUiStateAndStateEvents
+    private fun updateUiStateAndStateEvents() {
+        val validationState = addAccountScreenDataValidationUseCase(
+            allAccounts = allAccounts,
+            enteredName = name.text.trim(),
+        )
+        val selectedAccountType = validAccountTypesForNewAccount.getOrNull(
+            index = selectedAccountTypeIndex,
+        )
+        uiState.update {
+            AddAccountScreenUIState(
+                selectedAccountType = selectedAccountType,
+                screenBottomSheetType = screenBottomSheetType,
+                nameError = validationState.nameError,
+                screenSnackbarType = screenSnackbarType,
+                visibilityData = AddAccountScreenUIVisibilityData(
+                    minimumBalanceAmountTextField = selectedAccountType == AccountType.BANK,
+                    nameTextFieldErrorText = validationState.nameError != AddAccountScreenNameError.None,
+                ),
+                isCtaButtonEnabled = validationState.isCtaButtonEnabled,
+                isLoading = isLoading,
+                selectedAccountTypeIndex = selectedAccountTypeIndex,
+                accountTypesChipUIDataList = validAccountTypesForNewAccount
+                    .map { accountType ->
+                        ChipUIData(
+                            text = accountType.title,
+                            icon = accountType.icon,
+                        )
+                    },
+                minimumAccountBalanceTextFieldValue = minimumAccountBalanceAmountValue,
+                nameTextFieldValue = name,
+            )
         }
     }
     // endregion

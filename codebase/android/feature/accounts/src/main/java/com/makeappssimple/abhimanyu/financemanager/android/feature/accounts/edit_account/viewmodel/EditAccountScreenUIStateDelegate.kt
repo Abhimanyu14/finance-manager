@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 internal interface EditAccountScreenUIStateDelegate {
     // region initial data
@@ -15,27 +15,18 @@ internal interface EditAccountScreenUIStateDelegate {
     // endregion
 
     // region UI state
-    val isLoading: MutableStateFlow<Boolean>
-    val balanceAmountValue: MutableStateFlow<TextFieldValue>
-    val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue>
-    val name: MutableStateFlow<TextFieldValue>
-    val screenBottomSheetType: MutableStateFlow<EditAccountScreenBottomSheetType>
-    val screenSnackbarType: MutableStateFlow<EditAccountScreenSnackbarType>
-    val selectedAccountTypeIndex: MutableStateFlow<Int>
+    val refreshSignal: MutableSharedFlow<Unit>
+    val isLoading: Boolean
+    val balanceAmountValue: TextFieldValue
+    val minimumAccountBalanceAmountValue: TextFieldValue
+    val name: TextFieldValue
+    val screenBottomSheetType: EditAccountScreenBottomSheetType
+    val screenSnackbarType: EditAccountScreenSnackbarType
+    val selectedAccountTypeIndex: Int
     // endregion
 
-    // region loading
-    fun startLoading()
-
-    fun completeLoading()
-
-    fun <T> withLoading(
-        block: () -> T,
-    ): T
-
-    suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T
+    // region refresh
+    fun refresh()
     // endregion
 
     // region state events
@@ -45,34 +36,48 @@ internal interface EditAccountScreenUIStateDelegate {
 
     fun clearName()
 
+    fun completeLoading(
+        refresh: Boolean = true,
+    )
+
     fun navigateUp()
 
     fun resetScreenBottomSheetType()
 
-    fun setMinimumAccountBalanceAmountValue(
-        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
-    )
-
-    fun setBalanceAmountValue(
-        updatedBalanceAmountValue: TextFieldValue,
-    )
-
-    fun setName(
-        updatedName: TextFieldValue,
-    )
-
-    fun setScreenBottomSheetType(
-        updatedEditAccountScreenBottomSheetType: EditAccountScreenBottomSheetType,
-    )
-
-    fun setScreenSnackbarType(
-        updatedEditAccountScreenSnackbarType: EditAccountScreenSnackbarType,
-    )
-
-    fun setSelectedAccountTypeIndex(
-        updatedSelectedAccountTypeIndex: Int,
+    fun startLoading(
+        refresh: Boolean = true,
     )
 
     fun updateAccount()
+
+    fun updateBalanceAmountValue(
+        updatedBalanceAmountValue: TextFieldValue,
+        refresh: Boolean = true,
+    )
+
+    fun updateMinimumAccountBalanceAmountValue(
+        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
+        refresh: Boolean = true,
+    )
+
+    fun updateName(
+        updatedName: TextFieldValue,
+        refresh: Boolean = true,
+    )
+
+    fun updateScreenBottomSheetType(
+        updatedEditAccountScreenBottomSheetType: EditAccountScreenBottomSheetType,
+        refresh: Boolean = true,
+    )
+
+    fun updateScreenSnackbarType(
+        updatedEditAccountScreenSnackbarType: EditAccountScreenSnackbarType,
+        refresh: Boolean = true,
+    )
+
+    fun updateSelectedAccountTypeIndex(
+        updatedSelectedAccountTypeIndex: Int,
+        refresh: Boolean = true,
+    )
     // endregion
 }

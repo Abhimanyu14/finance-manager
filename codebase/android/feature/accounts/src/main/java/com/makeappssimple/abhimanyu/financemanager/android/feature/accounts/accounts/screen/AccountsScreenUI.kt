@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,8 +29,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentLoadingUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeader
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderLoadingUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
@@ -180,42 +183,84 @@ internal fun AccountsScreenUI(
                     ),
                 )
             }
-            itemsIndexed(
-                items = uiState.accountsListItemDataList,
-                key = { _, listItem ->
-                    listItem.hashCode()
-                },
-            ) { _, listItem ->
-                when (listItem) {
-                    is AccountsListItemContentData -> {
-                        AccountsListItemContent(
-                            data = listItem,
-                            handleEvent = { event ->
-                                when (event) {
-                                    is AccountsListItemContentEvent.OnClick -> {
-                                        handleUIEvent(
-                                            AccountsScreenUIEvent.OnAccountsListItemContent.Click(
-                                                isDeleteEnabled = listItem.isDeleteEnabled,
-                                                isDefault = listItem.isDefault,
-                                                accountId = listItem.accountId,
-                                            )
-                                        )
-                                    }
-                                }
-                            },
-                        )
-                    }
-
-                    is AccountsListItemHeaderData -> {
-                        AccountsListItemHeader(
-                            data = listItem,
-                        )
-                    }
-                }
-            }
+            accountsList(
+                uiState = uiState,
+                handleUIEvent = handleUIEvent,
+            )
             item {
                 NavigationBarsAndImeSpacer()
             }
+        }
+    }
+}
+
+private fun LazyListScope.accountsList(
+    uiState: AccountsScreenUIState,
+    handleUIEvent: (uiEvent: AccountsScreenUIEvent) -> Unit,
+) {
+    if (uiState.isLoading) {
+        accountsListLoadingUI()
+    } else {
+        accountsListUI(
+            uiState = uiState,
+            handleUIEvent = handleUIEvent,
+        )
+    }
+}
+
+private fun LazyListScope.accountsListUI(
+    uiState: AccountsScreenUIState,
+    handleUIEvent: (uiEvent: AccountsScreenUIEvent) -> Unit,
+) {
+    itemsIndexed(
+        items = uiState.accountsListItemDataList,
+        key = { _, listItem ->
+            listItem.hashCode()
+        },
+    ) { _, listItem ->
+        when (listItem) {
+            is AccountsListItemContentData -> {
+                AccountsListItemContent(
+                    data = listItem,
+                    handleEvent = { event ->
+                        when (event) {
+                            is AccountsListItemContentEvent.OnClick -> {
+                                handleUIEvent(
+                                    AccountsScreenUIEvent.OnAccountsListItemContent.Click(
+                                        isDeleteEnabled = listItem.isDeleteEnabled,
+                                        isDefault = listItem.isDefault,
+                                        accountId = listItem.accountId,
+                                    )
+                                )
+                            }
+                        }
+                    },
+                )
+            }
+
+            is AccountsListItemHeaderData -> {
+                AccountsListItemHeader(
+                    data = listItem,
+                )
+            }
+        }
+    }
+}
+
+private fun LazyListScope.accountsListLoadingUI() {
+    repeat(3) {
+        item {
+            AccountsListItemHeaderLoadingUI()
+        }
+        repeat(5) {
+            item {
+                AccountsListItemContentLoadingUI()
+            }
+        }
+        item {
+            VerticalSpacer(
+                height = 16.dp,
+            )
         }
     }
 }
