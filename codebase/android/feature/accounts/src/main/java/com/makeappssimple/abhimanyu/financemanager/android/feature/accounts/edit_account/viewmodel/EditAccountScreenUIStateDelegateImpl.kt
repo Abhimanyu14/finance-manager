@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
@@ -29,7 +30,7 @@ internal class EditAccountScreenUIStateDelegateImpl(
     // region UI state
     override val refreshSignal: MutableSharedFlow<Unit> = MutableSharedFlow(
         replay = 0,
-        extraBufferCapacity = 2,
+        extraBufferCapacity = 1,
     )
     override var isLoading: Boolean = true
     override var minimumAccountBalanceAmountValue: TextFieldValue = TextFieldValue()
@@ -110,6 +111,8 @@ internal class EditAccountScreenUIStateDelegateImpl(
     override fun updateAccount() {
         coroutineScope.launch {
             startLoading()
+            // TODO(Abhi): Added delay for testing, Reference - https://stackoverflow.com/q/79034315/9636037
+            delay(100)
             val isAccountUpdated = updateAccountUseCase(
                 currentAccount = currentAccount,
                 validAccountTypesForNewAccount = validAccountTypesForNewAccount,

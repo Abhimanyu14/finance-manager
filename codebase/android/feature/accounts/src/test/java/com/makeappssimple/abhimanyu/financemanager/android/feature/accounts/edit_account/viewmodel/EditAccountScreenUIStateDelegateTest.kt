@@ -10,21 +10,22 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-internal class EditAccountScreenUIStateDelegateImplTest {
+internal class EditAccountScreenUIStateDelegateTest {
     // region testing
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
@@ -39,6 +40,7 @@ internal class EditAccountScreenUIStateDelegateImplTest {
     private lateinit var editAccountScreenUIStateDelegate: EditAccountScreenUIStateDelegate
     // endregion
 
+    // region test setup
     @Before
     fun setUp() {
         editAccountScreenUIStateDelegate = EditAccountScreenUIStateDelegateImpl(
@@ -51,6 +53,7 @@ internal class EditAccountScreenUIStateDelegateImplTest {
     @After
     fun tearDown() {
     }
+    // endregion
 
     // region initial state
     @Test
@@ -296,16 +299,17 @@ internal class EditAccountScreenUIStateDelegateImplTest {
                 true,
                 editAccountScreenUIStateDelegate.isLoading,
             )
+
+            advanceUntilIdle()
+
+            verify(
+                mock = navigator,
+            ).navigateUp()
             expectNoEvents()
         }
-
-        verify(
-            mock = navigator,
-        ).navigateUp()
     }
 
     @Test
-    @Ignore("Fix this")
     fun `updateAccount when updateAccountUseCase returns false`() = testScope.runTest {
         whenever(
             methodCall = updateAccountUseCase(
@@ -318,13 +322,20 @@ internal class EditAccountScreenUIStateDelegateImplTest {
             ),
         ).thenReturn(false)
 
-        editAccountScreenUIStateDelegate.updateAccount()
-
         editAccountScreenUIStateDelegate.refreshSignal.test {
+            editAccountScreenUIStateDelegate.updateAccount()
+
+            assertEquals(
+                Unit,
+                awaitItem(),
+            )
             assertEquals(
                 true,
                 editAccountScreenUIStateDelegate.isLoading,
             )
+
+            advanceUntilIdle()
+
             assertEquals(
                 Unit,
                 awaitItem(),
@@ -333,12 +344,81 @@ internal class EditAccountScreenUIStateDelegateImplTest {
                 false,
                 editAccountScreenUIStateDelegate.isLoading,
             )
+
+            verify(
+                mock = navigator,
+                mode = never(),
+            ).navigateUp()
+            expectNoEvents()
+        }
+
+//        turbineScope {
+//
+//            val turbine = editAccountScreenUIStateDelegate.refreshSignal.testIn(this)
+//
+//            editAccountScreenUIStateDelegate.updateAccount()
+//
+//            // advanceUntilIdle()
+//
+//            println("Asserting")
+//            assertEquals(
+//                Unit,
+//                turbine.awaitItem(),
+//            )
+//            assertEquals(
+//                true,
+//                editAccountScreenUIStateDelegate.isLoading,
+//            )
+//
+//            advanceUntilIdle()
+//
+//            println("Next assertion")
+//            assertEquals(
+//                Unit,
+//                turbine.awaitItem(),
+//            )
+//            assertEquals(
+//                false,
+//                editAccountScreenUIStateDelegate.isLoading,
+//            )
+//
+//            verify(
+//                mock = navigator,
+//                mode = never(),
+//            ).navigateUp()
+//
+//            turbine.cancel()
+//
+//        }
+
+        /*
+        editAccountScreenUIStateDelegate.refreshSignal.test {
+            editAccountScreenUIStateDelegate.updateAccount()
+
             assertEquals(
                 Unit,
                 awaitItem(),
             )
+            assertEquals(
+                true,
+                editAccountScreenUIStateDelegate.isLoading,
+            )
+            advanceUntilIdle()
+            assertEquals(
+                Unit,
+                awaitItem(),
+            )
+            assertEquals(
+                false,
+                editAccountScreenUIStateDelegate.isLoading,
+            )
+            verify(
+                mock = navigator,
+                mode = never(),
+            ).navigateUp()
             expectNoEvents()
         }
+        */
     }
 
     @Test
