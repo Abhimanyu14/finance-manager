@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
@@ -20,6 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -37,6 +39,7 @@ public class AccountsScreenViewModel @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val getDefaultAccountIdFlowUseCase: GetDefaultAccountIdFlowUseCase,
     private val navigator: Navigator,
+    private val screenUICommonState: ScreenUICommonState,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AccountsScreenUIStateDelegate by AccountsScreenUIStateDelegateImpl(
@@ -44,6 +47,7 @@ public class AccountsScreenViewModel @Inject constructor(
     deleteAccountUseCase = deleteAccountUseCase,
     myPreferencesRepository = myPreferencesRepository,
     navigator = navigator,
+    screenUICommonState = screenUICommonState,
 ) {
     // region initial data
     private var allAccounts: ImmutableList<Account> = persistentListOf()
@@ -73,16 +77,22 @@ public class AccountsScreenViewModel @Inject constructor(
 
     // region initViewModel
     internal fun initViewModel() {
-        fetchData()
+        observeForRefreshSignal()
+        fetchData().invokeOnCompletion {
+            viewModelScope.launch {
+                completeLoading()
+            }
+        }
         observeData()
     }
 
-    private fun fetchData() {
-        completeLoading()
+    private fun fetchData(): Job {
+        return Job().apply {
+            complete()
+        }
     }
 
     private fun observeData() {
-        observeForRefreshSignal()
         observeForAllAccounts()
         observeForDefaultAccountId()
     }
@@ -139,7 +149,7 @@ public class AccountsScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun AccountsScreenViewModel.handleDefaultAccountIdUpdate(
+    private suspend fun handleDefaultAccountIdUpdate(
         updatedDefaultAccountId: Int?,
     ) {
         defaultAccountId = updatedDefaultAccountId

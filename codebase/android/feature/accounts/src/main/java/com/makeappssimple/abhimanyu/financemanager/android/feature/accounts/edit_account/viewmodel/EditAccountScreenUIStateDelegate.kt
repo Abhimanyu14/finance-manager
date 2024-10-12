@@ -1,22 +1,21 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.Job
 
-internal interface EditAccountScreenUIStateDelegate {
+internal interface EditAccountScreenUIStateDelegate : ScreenUICommonState {
     // region initial data
     var currentAccount: Account?
     val validAccountTypesForNewAccount: ImmutableList<AccountType>
     // endregion
 
     // region UI state
-    val refreshSignal: MutableSharedFlow<Unit>
-    val isLoading: Boolean
     val balanceAmountValue: TextFieldValue
     val minimumAccountBalanceAmountValue: TextFieldValue
     val name: TextFieldValue
@@ -25,59 +24,47 @@ internal interface EditAccountScreenUIStateDelegate {
     val selectedAccountTypeIndex: Int
     // endregion
 
-    // region refresh
-    fun refresh()
-    // endregion
-
     // region state events
-    fun clearBalanceAmountValue()
+    fun clearBalanceAmountValue(): Job?
 
-    fun clearMinimumAccountBalanceAmountValue()
+    fun clearMinimumAccountBalanceAmountValue(): Job?
 
-    fun clearName()
+    fun clearName(): Job?
 
-    fun completeLoading(
-        refresh: Boolean = true,
-    )
+    fun navigateUp(): Job
 
-    fun navigateUp()
+    fun resetScreenBottomSheetType(): Job?
 
-    fun resetScreenBottomSheetType()
-
-    fun startLoading(
-        refresh: Boolean = true,
-    )
-
-    fun updateAccount()
+    fun updateAccount(): Job
 
     fun updateBalanceAmountValue(
         updatedBalanceAmountValue: TextFieldValue,
-        refresh: Boolean = true,
-    )
+        shouldRefresh: Boolean = true,
+    ): Job?
 
     fun updateMinimumAccountBalanceAmountValue(
         updatedMinimumAccountBalanceAmountValue: TextFieldValue,
-        refresh: Boolean = true,
-    )
+        shouldRefresh: Boolean = true,
+    ): Job?
 
     fun updateName(
         updatedName: TextFieldValue,
-        refresh: Boolean = true,
-    )
+        shouldRefresh: Boolean = true,
+    ): Job?
 
     fun updateScreenBottomSheetType(
         updatedEditAccountScreenBottomSheetType: EditAccountScreenBottomSheetType,
-        refresh: Boolean = true,
-    )
+        shouldRefresh: Boolean = true,
+    ): Job?
 
     fun updateScreenSnackbarType(
         updatedEditAccountScreenSnackbarType: EditAccountScreenSnackbarType,
-        refresh: Boolean = true,
-    )
+        shouldRefresh: Boolean = true,
+    ): Job?
 
     fun updateSelectedAccountTypeIndex(
         updatedSelectedAccountTypeIndex: Int,
-        refresh: Boolean = true,
-    )
+        shouldRefresh: Boolean = true,
+    ): Job?
     // endregion
 }

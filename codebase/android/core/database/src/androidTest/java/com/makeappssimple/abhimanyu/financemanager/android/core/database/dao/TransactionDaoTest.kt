@@ -63,7 +63,6 @@ internal class TransactionDaoTest {
         val transactionTimes = fetchedTransactions.map {
             getReadableDateAndTime(it.transactionTimestamp)
         }
-        println(transactionTimes)
         Assert.assertArrayEquals(
             transactions,
             fetchedTransactions,
@@ -88,7 +87,6 @@ internal class TransactionDaoTest {
         val transactionTimes = fetchedTransactions.map {
             getReadableDateAndTime(it.transactionTimestamp)
         }
-        println(transactionTimes)
         Assert.assertEquals(
             24,
             fetchedTransactions.size,

@@ -584,10 +584,9 @@ internal class ComposeNavigationTest {
     private fun runTestWithTimeout(
         block: suspend TestScope.() -> Unit,
     ) = testScope.runTest(
-        timeout = 10.seconds,
-    ) {
-        block()
-    }
+        timeout = 3.seconds,
+        testBody = block,
+    )
 
     private fun NavController.assertCurrentRouteName(
         expectedRouteName: String,
@@ -598,7 +597,6 @@ internal class ComposeNavigationTest {
         } else {
             currentRoute
         }
-        println("Abhi - expectedRouteName: $expectedRouteName routeToMatch: $routeToMatch")
         waitForRoute(
             expectedRouteName = expectedRouteName,
             routeToMatch = routeToMatch,

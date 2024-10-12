@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edi
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
@@ -10,15 +11,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 internal class EditAccountScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val navigator: Navigator,
+    private val screenUICommonState: ScreenUICommonState,
     private val updateAccountUseCase: UpdateAccountUseCase,
-) : EditAccountScreenUIStateDelegate {
+) : EditAccountScreenUIStateDelegate, ScreenUICommonState by screenUICommonState {
     // region initial data
     override var currentAccount: Account? = null
     override val validAccountTypesForNewAccount: ImmutableList<AccountType> =
@@ -28,11 +29,7 @@ internal class EditAccountScreenUIStateDelegateImpl(
     // endregion
 
     // region UI state
-    override val refreshSignal: MutableSharedFlow<Unit> = MutableSharedFlow(
-        replay = 0,
-        extraBufferCapacity = 1,
-    )
-    override var isLoading: Boolean = true
+    // override var isLoading: Boolean = true
     override var minimumAccountBalanceAmountValue: TextFieldValue = TextFieldValue()
     override var name = TextFieldValue()
     override var balanceAmountValue = TextFieldValue()
@@ -46,15 +43,9 @@ internal class EditAccountScreenUIStateDelegateImpl(
         )
     // endregion
 
-    // region refresh
-    override fun refresh() {
-        refreshSignal.tryEmit(Unit)
-    }
-    // endregion
-
     // region state events
-    override fun clearBalanceAmountValue() {
-        updateBalanceAmountValue(
+    override fun clearBalanceAmountValue(): Job? {
+        return updateBalanceAmountValue(
             updatedBalanceAmountValue = balanceAmountValue
                 .copy(
                     text = "",
@@ -62,8 +53,8 @@ internal class EditAccountScreenUIStateDelegateImpl(
         )
     }
 
-    override fun clearMinimumAccountBalanceAmountValue() {
-        updateMinimumAccountBalanceAmountValue(
+    override fun clearMinimumAccountBalanceAmountValue(): Job? {
+        return updateMinimumAccountBalanceAmountValue(
             updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue
                 .copy(
                     text = "",
@@ -71,8 +62,8 @@ internal class EditAccountScreenUIStateDelegateImpl(
         )
     }
 
-    override fun clearName() {
-        updateName(
+    override fun clearName(): Job? {
+        return updateName(
             updatedName = name
                 .copy(
                     text = "",
@@ -80,39 +71,20 @@ internal class EditAccountScreenUIStateDelegateImpl(
         )
     }
 
-    override fun completeLoading(
-        refresh: Boolean,
-    ) {
-        isLoading = false
-        if (refresh) {
-            refresh()
-        }
+    override fun navigateUp(): Job {
+        return navigator.navigateUp()
     }
 
-    override fun navigateUp() {
-        navigator.navigateUp()
-    }
-
-    override fun resetScreenBottomSheetType() {
-        updateScreenBottomSheetType(
+    override fun resetScreenBottomSheetType(): Job? {
+        return updateScreenBottomSheetType(
             updatedEditAccountScreenBottomSheetType = EditAccountScreenBottomSheetType.None,
         )
     }
 
-    override fun startLoading(
-        refresh: Boolean,
-    ) {
-        isLoading = true
-        if (refresh) {
-            refresh()
-        }
-    }
-
-    override fun updateAccount() {
-        coroutineScope.launch {
+    override fun updateAccount(): Job {
+        return coroutineScope.launch {
             startLoading()
-            // TODO(Abhi): Added delay for testing, Reference - https://stackoverflow.com/q/79034315/9636037
-            delay(100)
+
             val isAccountUpdated = updateAccountUseCase(
                 currentAccount = currentAccount,
                 validAccountTypesForNewAccount = validAccountTypesForNewAccount,
@@ -132,62 +104,68 @@ internal class EditAccountScreenUIStateDelegateImpl(
 
     override fun updateBalanceAmountValue(
         updatedBalanceAmountValue: TextFieldValue,
-        refresh: Boolean,
-    ) {
+        shouldRefresh: Boolean,
+    ): Job? {
         balanceAmountValue = updatedBalanceAmountValue
-        if (refresh) {
-            refresh()
+        if (shouldRefresh) {
+            return refresh()
         }
+        return null
     }
 
     override fun updateMinimumAccountBalanceAmountValue(
         updatedMinimumAccountBalanceAmountValue: TextFieldValue,
-        refresh: Boolean,
-    ) {
+        shouldRefresh: Boolean,
+    ): Job? {
         minimumAccountBalanceAmountValue = updatedMinimumAccountBalanceAmountValue
-        if (refresh) {
-            refresh()
+        if (shouldRefresh) {
+            return refresh()
         }
+        return null
     }
 
     override fun updateName(
         updatedName: TextFieldValue,
-        refresh: Boolean,
-    ) {
+        shouldRefresh: Boolean,
+    ): Job? {
         name = updatedName
-        if (refresh) {
-            refresh()
+        if (shouldRefresh) {
+            return refresh()
         }
+        return null
     }
 
     override fun updateScreenBottomSheetType(
         updatedEditAccountScreenBottomSheetType: EditAccountScreenBottomSheetType,
-        refresh: Boolean,
-    ) {
+        shouldRefresh: Boolean,
+    ): Job? {
         screenBottomSheetType = updatedEditAccountScreenBottomSheetType
-        if (refresh) {
-            refresh()
+        if (shouldRefresh) {
+            return refresh()
         }
+        return null
     }
 
     override fun updateScreenSnackbarType(
         updatedEditAccountScreenSnackbarType: EditAccountScreenSnackbarType,
-        refresh: Boolean,
-    ) {
+        shouldRefresh: Boolean,
+    ): Job? {
         screenSnackbarType = updatedEditAccountScreenSnackbarType
-        if (refresh) {
-            refresh()
+        if (shouldRefresh) {
+            return refresh()
         }
+        return null
     }
 
     override fun updateSelectedAccountTypeIndex(
         updatedSelectedAccountTypeIndex: Int,
-        refresh: Boolean,
-    ) {
+        shouldRefresh: Boolean,
+    ): Job? {
         selectedAccountTypeIndex = updatedSelectedAccountTypeIndex
-        if (refresh) {
-            refresh()
+        if (shouldRefresh) {
+            return refresh()
         }
+        return null
     }
     // endregion
 }

@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -141,16 +142,16 @@ public class NavigatorImpl(
         )
     }
 
-    override fun navigateUp() {
-        navigate(
+    override fun navigateUp(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 
     private fun navigate(
         navigationCommand: NavigationCommand,
-    ) {
-        coroutineScope.launch {
+    ): Job {
+        return coroutineScope.launch {
             _command.emit(
                 value = navigationCommand,
             )

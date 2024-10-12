@@ -5,14 +5,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
@@ -29,6 +27,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -39,19 +38,18 @@ import javax.inject.Inject
 public class EditAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
-    private val dateTimeUtil: DateTimeUtil,
     private val editAccountScreenDataValidationUseCase: EditAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,
-    private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val navigator: Navigator,
-    private val updateAccountsUseCase: UpdateAccountsUseCase,
+    private val screenUICommonState: ScreenUICommonState,
     private val updateAccountUseCase: UpdateAccountUseCase,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditAccountScreenUIStateDelegate by EditAccountScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
     navigator = navigator,
+    screenUICommonState = screenUICommonState,
     updateAccountUseCase = updateAccountUseCase,
 ) {
     // region screen args
@@ -88,15 +86,18 @@ public class EditAccountScreenViewModel @Inject constructor(
     // region initViewModel
     internal fun initViewModel() {
         observeForRefreshSignal()
-        fetchData()
+        fetchData().invokeOnCompletion {
+            viewModelScope.launch {
+                completeLoading()
+            }
+        }
         observeData()
     }
 
-    private fun fetchData() {
-        viewModelScope.launch {
+    private fun fetchData(): Job {
+        return viewModelScope.launch {
             getAllAccounts()
             getCurrentAccount()
-            completeLoading()
         }
     }
 
@@ -111,40 +112,50 @@ public class EditAccountScreenViewModel @Inject constructor(
 
     // region getCurrentAccount
     private suspend fun getCurrentAccount() {
-        val currentAccountId = screenArgs.accountId ?: return // TODO(Abhi): Throw exception here
-        currentAccount = getAccountUseCase(
+        val currentAccountId = getAccountId()
+        if (currentAccountId == null) {
+            // TODO(Abhi): Throw exception here
+            navigator.navigateUp()
+            return
+        }
+
+        val currentAccountValue = getAccountUseCase(
             id = currentAccountId,
         )
+        if (currentAccountValue == null) {
+            // TODO(Abhi): Throw exception here
+            navigator.navigateUp()
+            return
+        }
+        currentAccount = currentAccountValue
 
-        currentAccount?.let { currentAccount ->
-            updateSelectedAccountTypeIndex(
-                updatedSelectedAccountTypeIndex = validAccountTypesForNewAccount.indexOf(
-                    element = currentAccount.type,
+        updateSelectedAccountTypeIndex(
+            updatedSelectedAccountTypeIndex = validAccountTypesForNewAccount.indexOf(
+                element = currentAccountValue.type,
+            ),
+            shouldRefresh = false,
+        )
+        updateName(
+            updatedName = name.copy(
+                text = currentAccountValue.name,
+            ),
+            shouldRefresh = false,
+        )
+        updateBalanceAmountValue(
+            updatedBalanceAmountValue = TextFieldValue(
+                text = currentAccountValue.balanceAmount.value.toString(),
+                selection = TextRange(currentAccountValue.balanceAmount.value.toString().length),
+            ),
+            shouldRefresh = false,
+        )
+        currentAccountValue.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
+            updateMinimumAccountBalanceAmountValue(
+                updatedMinimumAccountBalanceAmountValue = TextFieldValue(
+                    text = minimumAccountBalanceAmount.value.toString(),
+                    selection = TextRange(minimumAccountBalanceAmount.value.toString().length),
                 ),
-                refresh = false,
+                shouldRefresh = false,
             )
-            updateName(
-                updatedName = name.copy(
-                    text = currentAccount.name,
-                ),
-                refresh = false,
-            )
-            updateBalanceAmountValue(
-                updatedBalanceAmountValue = TextFieldValue(
-                    text = currentAccount.balanceAmount.value.toString(),
-                    selection = TextRange(currentAccount.balanceAmount.value.toString().length),
-                ),
-                refresh = false,
-            )
-            currentAccount.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
-                updateMinimumAccountBalanceAmountValue(
-                    updatedMinimumAccountBalanceAmountValue = TextFieldValue(
-                        text = minimumAccountBalanceAmount.value.toString(),
-                        selection = TextRange(minimumAccountBalanceAmount.value.toString().length),
-                    ),
-                    refresh = false,
-                )
-            }
         }
     }
     // endregion
@@ -198,4 +209,8 @@ public class EditAccountScreenViewModel @Inject constructor(
         }
     }
     // endregion
+
+    private fun getAccountId(): Int? {
+        return screenArgs.accountId
+    }
 }

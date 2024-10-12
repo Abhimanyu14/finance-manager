@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharedFlow
 
 public interface Navigator {
@@ -53,5 +54,5 @@ public interface Navigator {
         transactionId: Int,
     )
 
-    public fun navigateUp()
+    public fun navigateUp(): Job
 }

@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationCommand
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -64,5 +65,7 @@ public class FakeNavigatorImpl : Navigator {
     ) {
     }
 
-    override fun navigateUp() {}
+    override fun navigateUp(): Job {
+        return Job()
+    }
 }

@@ -23,7 +23,9 @@ import org.junit.runner.RunWith
 @SmallTest
 internal class AccountDaoTest {
     private val testDispatcher = UnconfinedTestDispatcher()
-    private val testScope = TestScope(testDispatcher)
+    private val testScope = TestScope(
+        context = testDispatcher,
+    )
 
     private lateinit var myRoomDatabase: MyRoomDatabase
     private lateinit var accountDao: AccountDao
