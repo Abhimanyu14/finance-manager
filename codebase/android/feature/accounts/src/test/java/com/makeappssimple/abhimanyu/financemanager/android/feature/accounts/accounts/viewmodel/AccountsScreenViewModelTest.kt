@@ -21,7 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acco
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.usecase.GetDefaultAccountIdFlowUseCase
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -84,7 +83,7 @@ internal class AccountsScreenViewModelTest {
 
     @Test
     fun `initial state`() = runTestWithTimeout {
-        initViewModel(
+        setupViewModel(
             coroutineScope = testScope,
         )
 
@@ -103,8 +102,8 @@ internal class AccountsScreenViewModelTest {
     }
 
     @Test
-    fun `when viewmodel is initialized, then isLoading is false`() = runTestWithTimeout {
-        initViewModel(
+    fun `when initViewModel is completed, then isLoading is false`() = runTestWithTimeout {
+        setupViewModel(
             coroutineScope = testScope,
         )
 
@@ -146,7 +145,7 @@ internal class AccountsScreenViewModelTest {
                     defaultAccountId = null,
                 ),
             ).thenReturn(testAllAccountsListItemData)
-            initViewModel(
+            setupViewModel(
                 coroutineScope = testScope,
             )
 
@@ -173,19 +172,20 @@ internal class AccountsScreenViewModelTest {
             val testDefaultAccountIdFlow = MutableSharedFlow<Int?>()
             whenever(
                 methodCall = getDefaultAccountIdFlowUseCase(),
-            ).thenReturn(testDefaultAccountIdFlow)
+            ).thenReturn(flowOf(TEST_DEFAULT_ACCOUNT_ID))
             whenever(
                 methodCall = getAllAccountsListItemDataListUseCase(
                     allAccounts = persistentListOf(),
                     defaultAccountId = TEST_DEFAULT_ACCOUNT_ID,
                 ),
             ).thenReturn(testAllAccountsListItemData)
-            initViewModel(
+            setupViewModel(
                 coroutineScope = testScope,
             )
 
             accountsScreenViewModel.initViewModel()
             testDefaultAccountIdFlow.emit(TEST_DEFAULT_ACCOUNT_ID)
+            advanceUntilIdle()
 
             assertEquals(
                 testAllAccountsListItemData,
@@ -193,7 +193,7 @@ internal class AccountsScreenViewModelTest {
             )
         }
 
-    private fun initViewModel(
+    private fun setupViewModel(
         coroutineScope: CoroutineScope,
     ) {
         val screenUIStateRefresh = ScreenUIStateRefreshImpl(
@@ -232,9 +232,6 @@ internal class AccountsScreenViewModelTest {
             ) {
                 block()
             }
-            testScope.async {
-
-            }.await()
             tearDown()
         },
     )

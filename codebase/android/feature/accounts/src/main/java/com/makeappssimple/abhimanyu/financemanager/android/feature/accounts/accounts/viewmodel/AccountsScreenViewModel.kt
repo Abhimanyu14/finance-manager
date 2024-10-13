@@ -111,7 +111,9 @@ public class AccountsScreenViewModel @Inject constructor(
     // region observeForAllAccounts
     private fun observeForAllAccounts() {
         viewModelScope.launch {
+            println("getAllAccountsFlowUseCase launch")
             getAllAccountsFlowUseCase().collectLatest { updatedAllAccounts ->
+                println("getAllAccountsFlowUseCase().collectLatest")
                 handleAllAccountsUpdate(
                     updatedAllAccounts = updatedAllAccounts,
                 )
