@@ -5,11 +5,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
 internal class EditAccountScreenArgs(
-    val accountId: Int?,
+    val currentAccountId: Int?,
 ) : ScreenArgs {
     constructor(
         savedStateHandle: SavedStateHandle,
     ) : this(
-        accountId = savedStateHandle.get<Int>(NavArgs.ACCOUNT_ID),
+        currentAccountId = savedStateHandle.get<Int>(NavArgs.ACCOUNT_ID),
     )
 }

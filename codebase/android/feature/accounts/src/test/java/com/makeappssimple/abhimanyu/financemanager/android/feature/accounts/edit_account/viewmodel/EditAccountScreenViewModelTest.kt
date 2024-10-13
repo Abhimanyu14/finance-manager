@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edi
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import app.cash.turbine.turbineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonStateImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.loading.ScreenUIStateLoadingImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.refresh.ScreenUIStateRefreshImpl
@@ -19,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.usecase.EditAccountScreenDataValidationUseCase
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -28,6 +28,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
@@ -60,7 +61,7 @@ internal class EditAccountScreenViewModelTest {
 
     @Test
     fun `initial state`() = runTestWithTimeout {
-        initViewModel(
+        setupViewModel(
             coroutineScope = testScope,
         )
 
@@ -108,140 +109,85 @@ internal class EditAccountScreenViewModelTest {
 
     @Test
     fun `when initViewModel is completed, then isLoading is false`() = runTestWithTimeout {
-        whenever(
-            methodCall = getAllAccountsUseCase(),
-        ).thenReturn(persistentListOf())
-        whenever(
-            methodCall = editAccountScreenDataValidationUseCase(
-                allAccounts = any(),
-                enteredName = any(),
-                currentAccount = anyOrNull(),
-            ),
-        ).thenReturn(EditAccountScreenDataValidationState())
-        savedStateHandle[NavArgs.ACCOUNT_ID] = null
-        initViewModel(
+        setupViewModel(
             coroutineScope = testScope,
         )
 
-        editAccountScreenViewModel.initViewModel()
-        advanceUntilIdle()
+        editAccountScreenViewModel.refreshSignal.test {
+            editAccountScreenViewModel.initViewModel()
+            advanceUntilIdle()
 
-        assertEquals(
-            false,
-            editAccountScreenViewModel.uiState.value.isLoading,
-        )
+            assertEquals(
+                false,
+                editAccountScreenViewModel.uiState.value.isLoading,
+            )
+            assertEquals(
+                Unit,
+                awaitItem(),
+            )
+            expectNoEvents()
+        }
     }
 
     @Test
     fun `when initViewModel is called, then getAllAccountsUseCase is called`() =
         runTestWithTimeout {
-            whenever(
-                methodCall = getAllAccountsUseCase(),
-            ).thenReturn(persistentListOf())
-            whenever(
-                methodCall = editAccountScreenDataValidationUseCase(
-                    allAccounts = any(),
-                    enteredName = any(),
-                    currentAccount = anyOrNull(),
-                ),
-            ).thenReturn(EditAccountScreenDataValidationState())
-            savedStateHandle[NavArgs.ACCOUNT_ID] = null
-            initViewModel(
+            setupViewModel(
                 coroutineScope = testScope,
             )
 
-            editAccountScreenViewModel.initViewModel()
-            advanceUntilIdle()
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
 
-            verify(
-                mock = getAllAccountsUseCase,
-            ).invoke()
-            assertEquals(
-                false,
-                editAccountScreenViewModel.uiState.value.isLoading,
-            )
+                verify(
+                    mock = getAllAccountsUseCase,
+                ).invoke()
+                assertEquals(
+                    false,
+                    editAccountScreenViewModel.uiState.value.isLoading,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
         }
 
     @Test
-    fun `when initViewModel is called and currentAccountId is null, then navigateUp is called`() =
+    fun `when initViewModel is called and currentAccountId is null, then IllegalStateException is thrown`() =
         runTestWithTimeout {
-            whenever(
-                methodCall = getAllAccountsUseCase(),
-            ).thenReturn(persistentListOf())
-            whenever(
-                methodCall = editAccountScreenDataValidationUseCase(
-                    allAccounts = any(),
-                    enteredName = any(),
-                    currentAccount = anyOrNull(),
-                ),
-            ).thenReturn(EditAccountScreenDataValidationState())
-            savedStateHandle[NavArgs.ACCOUNT_ID] = null
-            initViewModel(
+            setupViewModel(
                 coroutineScope = testScope,
+                currentAccountId = null,
             )
 
-            editAccountScreenViewModel.initViewModel()
-            advanceUntilIdle()
-
-            verify(
-                mock = navigator,
-            ).navigateUp()
+            assertThrows(IllegalStateException::class.java) {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+            }
         }
 
     @Test
-    fun `when initViewModel is called and currentAccount is null, then navigateUp is called`() =
+    fun `when initViewModel is called and currentAccount is null, then IllegalStateException is thrown`() =
         runTestWithTimeout {
-            whenever(
-                methodCall = getAllAccountsUseCase(),
-            ).thenReturn(persistentListOf())
-            whenever(
-                methodCall = editAccountScreenDataValidationUseCase(
-                    allAccounts = any(),
-                    enteredName = any(),
-                    currentAccount = anyOrNull(),
-                ),
-            ).thenReturn(EditAccountScreenDataValidationState())
-            whenever(
-                methodCall = getAccountUseCase(
-                    id = TEST_CURRENT_ACCOUNT_ID,
-                ),
-            ).thenReturn(null)
-            savedStateHandle[NavArgs.ACCOUNT_ID] = TEST_CURRENT_ACCOUNT_ID
-            initViewModel(
+            setupViewModel(
                 coroutineScope = testScope,
+                currentAccount = null,
             )
 
-            editAccountScreenViewModel.initViewModel()
-            advanceUntilIdle()
-
-            verify(
-                mock = getAllAccountsUseCase,
-            ).invoke()
-            verify(
-                mock = navigator,
-            ).navigateUp()
+            assertThrows(IllegalStateException::class.java) {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+            }
         }
 
     @Test
-    fun `when initViewModel is called and currentAccount is not null, then ui state is updated`() =
+    fun `when initViewModel is called and currentAccount is NOT null, then UI state is updated`() =
         runTestWithTimeout {
-            whenever(
-                methodCall = getAllAccountsUseCase(),
-            ).thenReturn(persistentListOf())
-            whenever(
-                methodCall = editAccountScreenDataValidationUseCase(
-                    allAccounts = any(),
-                    enteredName = any(),
-                    currentAccount = anyOrNull(),
-                ),
-            ).thenReturn(EditAccountScreenDataValidationState())
-            whenever(
-                methodCall = getAccountUseCase(
-                    id = TEST_CURRENT_ACCOUNT_ID,
-                ),
-            ).thenReturn(testCurrentAccount)
-            savedStateHandle[NavArgs.ACCOUNT_ID] = TEST_CURRENT_ACCOUNT_ID
-            initViewModel(
+            setupViewModel(
+                currentAccount = testCurrentAccount,
                 coroutineScope = testScope,
             )
 
@@ -280,207 +226,173 @@ internal class EditAccountScreenViewModelTest {
     @Test
     fun `when clearBalanceAmountValue is called, balanceAmountValue is reset`() =
         runTestWithTimeout {
-            whenever(
-                methodCall = getAllAccountsUseCase(),
-            ).thenReturn(persistentListOf())
-            whenever(
-                methodCall = editAccountScreenDataValidationUseCase(
-                    allAccounts = any(),
-                    enteredName = any(),
-                    currentAccount = anyOrNull(),
-                ),
-            ).thenReturn(EditAccountScreenDataValidationState())
-            whenever(
-                methodCall = getAccountUseCase(
-                    id = TEST_CURRENT_ACCOUNT_ID,
-                ),
-            ).thenReturn(testCurrentAccount)
-            savedStateHandle[NavArgs.ACCOUNT_ID] = TEST_CURRENT_ACCOUNT_ID
-            initViewModel(
+            setupViewModel(
+                currentAccount = testCurrentAccount,
                 coroutineScope = testScope,
             )
 
-            turbineScope {
-                val refreshSignalTurbine = editAccountScreenViewModel.refreshSignal.testIn(
-                    scope = this,
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
                 )
                 editAccountScreenViewModel.updateBalanceAmountValue(
                     updatedBalanceAmountValue = editAccountScreenViewModel.balanceAmountValue.copy(
                         text = TEST_BALANCE_AMOUNT_VALUE,
                     ),
-                    shouldRefresh = false,
                 )
+                advanceUntilIdle()
                 assertEquals(
                     TEST_BALANCE_AMOUNT_VALUE,
                     editAccountScreenViewModel.uiState.value.balanceAmountValue.text,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
                 )
 
                 editAccountScreenViewModel.clearBalanceAmountValue()
                 advanceUntilIdle()
 
                 assertEquals(
-                    Unit,
-                    refreshSignalTurbine.awaitItem(),
-                )
-                assertEquals(
                     EMPTY_STRING,
                     editAccountScreenViewModel.uiState.value.balanceAmountValue.text,
                 )
-                refreshSignalTurbine.awaitComplete()
-                refreshSignalTurbine.expectNoEvents()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
             }
         }
 
     @Test
     fun `when clearMinimumAccountBalanceAmountValue is called, minimumAccountBalanceAmountValue is reset`() =
         runTestWithTimeout {
-            initViewModel(
+            setupViewModel(
                 coroutineScope = testScope,
             )
 
-            turbineScope {
-                val refreshSignalTurbine = editAccountScreenViewModel.refreshSignal.testIn(
-                    scope = this,
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
                 )
                 editAccountScreenViewModel.updateMinimumAccountBalanceAmountValue(
                     updatedMinimumAccountBalanceAmountValue = editAccountScreenViewModel.minimumAccountBalanceAmountValue.copy(
                         text = TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
                     ),
-                    shouldRefresh = false,
                 )
+                advanceUntilIdle()
                 assertEquals(
                     TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
                     editAccountScreenViewModel.uiState.value.minimumBalanceAmountValue.text,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
                 )
 
                 editAccountScreenViewModel.clearMinimumAccountBalanceAmountValue()
                 advanceUntilIdle()
 
                 assertEquals(
-                    Unit,
-                    refreshSignalTurbine.awaitItem(),
-                )
-                assertEquals(
                     EMPTY_STRING,
                     editAccountScreenViewModel.uiState.value.minimumBalanceAmountValue.text,
                 )
-                refreshSignalTurbine.awaitComplete()
-                refreshSignalTurbine.expectNoEvents()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
             }
         }
 
     @Test
     fun `when clearName is called, name is reset`() = runTestWithTimeout {
-        whenever(
-            methodCall = getAllAccountsUseCase(),
-        ).thenReturn(persistentListOf())
-        whenever(
-            methodCall = editAccountScreenDataValidationUseCase(
-                allAccounts = any(),
-                enteredName = any(),
-                currentAccount = anyOrNull(),
-            ),
-        ).thenReturn(EditAccountScreenDataValidationState())
-        savedStateHandle[NavArgs.ACCOUNT_ID] = null
-        initViewModel(
+        setupViewModel(
             coroutineScope = testScope,
         )
 
-        turbineScope {
+        editAccountScreenViewModel.refreshSignal.test {
             editAccountScreenViewModel.initViewModel()
-            val refreshSignalTurbine = editAccountScreenViewModel.refreshSignal.testIn(
-                scope = this,
-            )
+            advanceUntilIdle()
             assertEquals(
                 Unit,
-                refreshSignalTurbine.awaitItem(),
+                awaitItem(),
             )
             editAccountScreenViewModel.updateName(
                 updatedName = editAccountScreenViewModel.name.copy(
                     text = TEST_NAME,
                 ),
             )
-            assertEquals(
-                Unit,
-                refreshSignalTurbine.awaitItem(),
-            )
+            advanceUntilIdle()
             assertEquals(
                 TEST_NAME,
                 editAccountScreenViewModel.uiState.value.name.text,
+            )
+            assertEquals(
+                Unit,
+                awaitItem(),
             )
 
             editAccountScreenViewModel.clearName()
             advanceUntilIdle()
 
             assertEquals(
-                Unit,
-                refreshSignalTurbine.awaitItem(),
-            )
-            assertEquals(
                 EMPTY_STRING,
                 editAccountScreenViewModel.uiState.value.name.text,
             )
-            refreshSignalTurbine.awaitComplete()
-            refreshSignalTurbine.expectNoEvents()
-        }
-    }
-
-    @Test
-    fun `completeLoading with refresh = true`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.startLoading(
-                shouldRefresh = false,
-            )
-
-            editAccountScreenViewModel.completeLoading(
-                shouldRefresh = true,
-            )
-            advanceUntilIdle()
-
             assertEquals(
                 Unit,
                 awaitItem(),
             )
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `when completeLoading is called, then isLoading is false`() = runTestWithTimeout {
+        setupViewModel(
+            coroutineScope = testScope,
+        )
+
+        editAccountScreenViewModel.refreshSignal.test {
+            editAccountScreenViewModel.initViewModel()
+            advanceUntilIdle()
+            assertEquals(
+                Unit,
+                awaitItem(),
+            )
+            editAccountScreenViewModel.startLoading()
+            advanceUntilIdle()
+            assertEquals(
+                Unit,
+                awaitItem(),
+            )
+
+            editAccountScreenViewModel.completeLoading()
+            advanceUntilIdle()
+
             assertEquals(
                 false,
                 editAccountScreenViewModel.isLoading,
             )
-            awaitComplete()
-            expectNoEvents()
-        }
-    }
-
-    @Test
-    fun `completeLoading with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.startLoading(
-            shouldRefresh = false,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.completeLoading(
-                shouldRefresh = false,
+            assertEquals(
+                Unit,
+                awaitItem(),
             )
-
             expectNoEvents()
         }
-
-        assertEquals(
-            false,
-            editAccountScreenViewModel.isLoading,
-        )
     }
 
     @Test
-    fun navigateUp() = runTestWithTimeout {
-        initViewModel(
+    fun `when navigateUp is called, then navigator navigateUp is called`() = runTestWithTimeout {
+        setupViewModel(
             coroutineScope = testScope,
         )
 
@@ -492,87 +404,55 @@ internal class EditAccountScreenViewModelTest {
     }
 
     @Test
-    fun resetScreenBottomSheetType() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.resetScreenBottomSheetType()
-
-            assertEquals(
-                Unit,
-                awaitItem(),
+    fun `when resetScreenBottomSheetType is called, then screenBottomSheetType is reset`() =
+        runTestWithTimeout {
+            setupViewModel(
+                coroutineScope = testScope,
             )
+
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                editAccountScreenViewModel.updateScreenBottomSheetType(
+                    updatedEditAccountScreenBottomSheetType = testScreenBottomSheetType,
+                )
+                advanceUntilIdle()
+                assertEquals(
+                    testScreenBottomSheetType,
+                    editAccountScreenViewModel.screenBottomSheetType,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+
+                editAccountScreenViewModel.resetScreenBottomSheetType()
+                advanceUntilIdle()
+
+                assertEquals(
+                    EditAccountScreenBottomSheetType.None,
+                    editAccountScreenViewModel.screenBottomSheetType,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
         }
 
-        assertEquals(
-            EditAccountScreenBottomSheetType.None,
-            editAccountScreenViewModel.screenBottomSheetType,
-        )
-    }
-
     @Test
-    fun `startLoading with refresh = true`() = runTestWithTimeout {
-        initViewModel(
+    fun `when startLoading is called, then isLoading is true`() = runTestWithTimeout {
+        setupViewModel(
             coroutineScope = testScope,
         )
 
         editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.startLoading(
-                shouldRefresh = true,
-            )
-
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-        }
-
-        assertEquals(
-            true,
-            editAccountScreenViewModel.isLoading,
-        )
-    }
-
-    @Test
-    fun `startLoading with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.startLoading(
-                shouldRefresh = false,
-            )
-
-            expectNoEvents()
-        }
-
-        assertEquals(
-            true,
-            editAccountScreenViewModel.isLoading,
-        )
-    }
-
-    @Test
-    fun `updateAccount when updateAccountUseCase returns true`() = runTestWithTimeout {
-        whenever(
-            methodCall = updateAccountUseCase(
-                currentAccount = anyOrNull(),
-                validAccountTypesForNewAccount = any(),
-                selectedAccountTypeIndex = any(),
-                balanceAmountValue = any(),
-                minimumAccountBalanceAmountValue = any(),
-                name = any(),
-            ),
-        ).thenReturn(true)
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateAccount()
+            editAccountScreenViewModel.startLoading()
 
             assertEquals(
                 Unit,
@@ -582,347 +462,396 @@ internal class EditAccountScreenViewModelTest {
                 true,
                 editAccountScreenViewModel.isLoading,
             )
+        }
+    }
 
+    @Test
+    fun `when updateAccount is called and updateAccountUseCase returns true, then navigator navigateUp is called`() =
+        runTestWithTimeout {
+            whenever(
+                methodCall = updateAccountUseCase(
+                    currentAccount = anyOrNull(),
+                    validAccountTypesForNewAccount = any(),
+                    selectedAccountTypeIndex = any(),
+                    balanceAmountValue = any(),
+                    minimumAccountBalanceAmountValue = any(),
+                    name = any(),
+                ),
+            ).thenReturn(true)
+            setupViewModel(
+                coroutineScope = testScope,
+            )
+
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+
+                editAccountScreenViewModel.updateAccount()
+                advanceUntilIdle()
+
+                verify(
+                    mock = navigator,
+                ).navigateUp()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when updateAccount is called and updateAccountUseCase returns false, then isLoading is false`() =
+        runTestWithTimeout {
+            whenever(
+                methodCall = updateAccountUseCase(
+                    currentAccount = anyOrNull(),
+                    validAccountTypesForNewAccount = any(),
+                    selectedAccountTypeIndex = any(),
+                    balanceAmountValue = any(),
+                    minimumAccountBalanceAmountValue = any(),
+                    name = any(),
+                ),
+            ).thenReturn(false)
+            setupViewModel(
+                coroutineScope = testScope,
+            )
+
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+
+                editAccountScreenViewModel.updateAccount()
+                advanceUntilIdle()
+
+                verify(
+                    mock = navigator,
+                    mode = never(),
+                ).navigateUp()
+                assertEquals(
+                    false,
+                    editAccountScreenViewModel.isLoading,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when updateBalanceAmountValue is called, then balanceAmountValue is updated`() =
+        runTestWithTimeout {
+            setupViewModel(
+                coroutineScope = testScope,
+            )
+
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                editAccountScreenViewModel.updateBalanceAmountValue(
+                    updatedBalanceAmountValue = editAccountScreenViewModel.balanceAmountValue.copy(
+                        text = EMPTY_STRING,
+                    ),
+                )
+                advanceUntilIdle()
+                assertEquals(
+                    EMPTY_STRING,
+                    editAccountScreenViewModel.balanceAmountValue.text,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+
+                editAccountScreenViewModel.updateBalanceAmountValue(
+                    updatedBalanceAmountValue = editAccountScreenViewModel.balanceAmountValue.copy(
+                        text = TEST_BALANCE_AMOUNT_VALUE,
+                    ),
+                )
+                advanceUntilIdle()
+
+                assertEquals(
+                    TEST_BALANCE_AMOUNT_VALUE,
+                    editAccountScreenViewModel.balanceAmountValue.text,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when updateMinimumAccountBalanceAmountValue is called, then minimumAccountBalanceAmountValue is updated`() =
+        runTestWithTimeout {
+            setupViewModel(
+                coroutineScope = testScope,
+            )
+
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                editAccountScreenViewModel.updateMinimumAccountBalanceAmountValue(
+                    updatedMinimumAccountBalanceAmountValue = editAccountScreenViewModel.minimumAccountBalanceAmountValue.copy(
+                        text = EMPTY_STRING,
+                    ),
+                )
+                advanceUntilIdle()
+                assertEquals(
+                    EMPTY_STRING,
+                    editAccountScreenViewModel.minimumAccountBalanceAmountValue.text,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+
+                editAccountScreenViewModel.updateMinimumAccountBalanceAmountValue(
+                    updatedMinimumAccountBalanceAmountValue = editAccountScreenViewModel.minimumAccountBalanceAmountValue.copy(
+                        text = TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
+                    ),
+                )
+                advanceUntilIdle()
+
+                assertEquals(
+                    TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
+                    editAccountScreenViewModel.minimumAccountBalanceAmountValue.text,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when updateName is called, then name is updated`() = runTestWithTimeout {
+        setupViewModel(
+            coroutineScope = testScope,
+        )
+
+        editAccountScreenViewModel.refreshSignal.test {
+            editAccountScreenViewModel.initViewModel()
+            advanceUntilIdle()
+            assertEquals(
+                Unit,
+                awaitItem(),
+            )
+            editAccountScreenViewModel.updateName(
+                updatedName = editAccountScreenViewModel.name.copy(
+                    text = EMPTY_STRING,
+                ),
+            )
+            advanceUntilIdle()
+            assertEquals(
+                EMPTY_STRING,
+                editAccountScreenViewModel.name.text,
+            )
+            assertEquals(
+                Unit,
+                awaitItem(),
+            )
+
+            editAccountScreenViewModel.updateName(
+                updatedName = editAccountScreenViewModel.name.copy(
+                    text = TEST_NAME,
+                ),
+            )
             advanceUntilIdle()
 
-            verify(
-                mock = navigator,
-            ).navigateUp()
-            expectNoEvents()
-        }
-    }
-
-    @Test
-    fun `updateAccount when updateAccountUseCase returns false`() = runTestWithTimeout {
-        whenever(
-            methodCall = updateAccountUseCase(
-                currentAccount = anyOrNull(),
-                validAccountTypesForNewAccount = any(),
-                selectedAccountTypeIndex = any(),
-                balanceAmountValue = any(),
-                minimumAccountBalanceAmountValue = any(),
-                name = any(),
-            ),
-        ).thenReturn(false)
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateAccount()
-
             assertEquals(
-                Unit,
-                awaitItem(),
+                TEST_NAME,
+                editAccountScreenViewModel.name.text,
             )
-            // TODO(Abhi): The isLoading should be true here, but it is reset before we assert that.
-            assertEquals(
-                false,
-                editAccountScreenViewModel.isLoading,
-            )
-
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-            assertEquals(
-                false,
-                editAccountScreenViewModel.isLoading,
-            )
-
-            verify(
-                mock = navigator,
-                mode = never(),
-            ).navigateUp()
-            expectNoEvents()
-        }
-    }
-
-    @Test
-    fun `updateBalanceAmountValue with refresh = true`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateBalanceAmountValue(
-                updatedBalanceAmountValue = editAccountScreenViewModel.balanceAmountValue.copy(
-                    text = TEST_BALANCE_AMOUNT_VALUE,
-                ),
-            )
-
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-        }
-
-        assertEquals(
-            TEST_BALANCE_AMOUNT_VALUE,
-            editAccountScreenViewModel.balanceAmountValue.text,
-        )
-    }
-
-    @Test
-    fun `updateBalanceAmountValue with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateBalanceAmountValue(
-                updatedBalanceAmountValue = editAccountScreenViewModel.balanceAmountValue.copy(
-                    text = TEST_BALANCE_AMOUNT_VALUE,
-                ),
-                shouldRefresh = false,
-            )
-
-            expectNoEvents()
-        }
-
-        assertEquals(
-            TEST_BALANCE_AMOUNT_VALUE,
-            editAccountScreenViewModel.balanceAmountValue.text,
-        )
-    }
-
-    @Test
-    fun `updateMinimumAccountBalanceAmountValue with refresh = true`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateMinimumAccountBalanceAmountValue(
-                updatedMinimumAccountBalanceAmountValue = editAccountScreenViewModel.minimumAccountBalanceAmountValue.copy(
-                    text = TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
-                ),
-                shouldRefresh = true,
-            )
-
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-        }
-
-        assertEquals(
-            TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
-            editAccountScreenViewModel.minimumAccountBalanceAmountValue.text,
-        )
-    }
-
-    @Test
-    fun `updateMinimumAccountBalanceAmountValue with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateMinimumAccountBalanceAmountValue(
-                updatedMinimumAccountBalanceAmountValue = editAccountScreenViewModel.minimumAccountBalanceAmountValue.copy(
-                    text = TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
-                ),
-                shouldRefresh = false,
-            )
-
-            expectNoEvents()
-        }
-
-        assertEquals(
-            TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
-            editAccountScreenViewModel.minimumAccountBalanceAmountValue.text,
-        )
-    }
-
-    @Test
-    fun `updateName with refresh = true`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateName(
-                updatedName = editAccountScreenViewModel.name.copy(
-                    text = TEST_NAME,
-                ),
-                shouldRefresh = true,
-            )
-
             assertEquals(
                 Unit,
                 awaitItem(),
             )
             expectNoEvents()
         }
-
-        assertEquals(
-            TEST_NAME,
-            editAccountScreenViewModel.name.text,
-        )
     }
 
     @Test
-    fun `updateName with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateName(
-                updatedName = editAccountScreenViewModel.name.copy(
-                    text = TEST_NAME,
-                ),
-                shouldRefresh = false,
+    fun `when updateScreenBottomSheetType is called, then screenBottomSheetType is updated`() =
+        runTestWithTimeout {
+            setupViewModel(
+                coroutineScope = testScope,
             )
 
-            expectNoEvents()
-        }
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                editAccountScreenViewModel.updateScreenBottomSheetType(
+                    updatedEditAccountScreenBottomSheetType = EditAccountScreenBottomSheetType.None,
+                )
+                advanceUntilIdle()
+                assertEquals(
+                    EditAccountScreenBottomSheetType.None,
+                    editAccountScreenViewModel.screenBottomSheetType,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
 
-        assertEquals(
-            TEST_NAME,
-            editAccountScreenViewModel.name.text,
-        )
-    }
+                editAccountScreenViewModel.updateScreenBottomSheetType(
+                    updatedEditAccountScreenBottomSheetType = testScreenBottomSheetType,
+                )
+                advanceUntilIdle()
+
+                assertEquals(
+                    testScreenBottomSheetType,
+                    editAccountScreenViewModel.screenBottomSheetType,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
+        }
 
     @Test
-    fun `updateScreenBottomSheetType with refresh = true`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateScreenBottomSheetType(
-                updatedEditAccountScreenBottomSheetType = testScreenBottomSheetType,
-                shouldRefresh = true,
+    fun `when updateScreenSnackbarType is called, then screenSnackbarType is updated`() =
+        runTestWithTimeout {
+            setupViewModel(
+                coroutineScope = testScope,
             )
 
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                editAccountScreenViewModel.updateScreenSnackbarType(
+                    updatedEditAccountScreenSnackbarType = EditAccountScreenSnackbarType.None,
+                )
+                advanceUntilIdle()
+                assertEquals(
+                    EditAccountScreenSnackbarType.None,
+                    editAccountScreenViewModel.screenSnackbarType,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+
+                editAccountScreenViewModel.updateScreenSnackbarType(
+                    updatedEditAccountScreenSnackbarType = testScreenSnackbarType,
+                )
+                advanceUntilIdle()
+
+                assertEquals(
+                    testScreenSnackbarType,
+                    editAccountScreenViewModel.screenSnackbarType,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
         }
-
-        assertEquals(
-            testScreenBottomSheetType,
-            editAccountScreenViewModel.screenBottomSheetType,
-        )
-    }
 
     @Test
-    fun `updateScreenBottomSheetType with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateScreenBottomSheetType(
-                updatedEditAccountScreenBottomSheetType = testScreenBottomSheetType,
-                shouldRefresh = false,
+    fun `when updateSelectedAccountTypeIndex is called, then selectedAccountTypeIndex is updated`() =
+        runTestWithTimeout {
+            setupViewModel(
+                coroutineScope = testScope,
             )
 
-            expectNoEvents()
+            editAccountScreenViewModel.refreshSignal.test {
+                editAccountScreenViewModel.initViewModel()
+                advanceUntilIdle()
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                editAccountScreenViewModel.updateSelectedAccountTypeIndex(
+                    updatedSelectedAccountTypeIndex = 0,
+                )
+                advanceUntilIdle()
+                assertEquals(
+                    0,
+                    editAccountScreenViewModel.selectedAccountTypeIndex,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+
+                editAccountScreenViewModel.updateSelectedAccountTypeIndex(
+                    updatedSelectedAccountTypeIndex = TEST_ACCOUNT_TYPE_INDEX,
+                )
+                advanceUntilIdle()
+
+                assertEquals(
+                    TEST_ACCOUNT_TYPE_INDEX,
+                    editAccountScreenViewModel.selectedAccountTypeIndex,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
         }
 
-        assertEquals(
-            testScreenBottomSheetType,
-            editAccountScreenViewModel.screenBottomSheetType,
-        )
-    }
-
-    @Test
-    fun `updateScreenSnackbarType with refresh = true`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateScreenSnackbarType(
-                updatedEditAccountScreenSnackbarType = testScreenSnackbarType,
-                shouldRefresh = true,
-            )
-
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-        }
-
-        assertEquals(
-            testScreenSnackbarType,
-            editAccountScreenViewModel.screenSnackbarType,
-        )
-    }
-
-    @Test
-    fun `updateScreenSnackbarType with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateScreenSnackbarType(
-                updatedEditAccountScreenSnackbarType = testScreenSnackbarType,
-                shouldRefresh = false,
-            )
-
-            expectNoEvents()
-        }
-
-        assertEquals(
-            testScreenSnackbarType,
-            editAccountScreenViewModel.screenSnackbarType,
-        )
-    }
-
-    @Test
-    fun `updateSelectedAccountTypeIndex with refresh = true`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateSelectedAccountTypeIndex(
-                updatedSelectedAccountTypeIndex = TEST_ACCOUNT_TYPE_INDEX,
-                shouldRefresh = true,
-            )
-
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-        }
-
-        assertEquals(
-            TEST_ACCOUNT_TYPE_INDEX,
-            editAccountScreenViewModel.selectedAccountTypeIndex,
-        )
-    }
-
-    @Test
-    fun `updateSelectedAccountTypeIndex with refresh = false`() = runTestWithTimeout {
-        initViewModel(
-            coroutineScope = testScope,
-        )
-
-        editAccountScreenViewModel.refreshSignal.test {
-            editAccountScreenViewModel.updateSelectedAccountTypeIndex(
-                updatedSelectedAccountTypeIndex = TEST_ACCOUNT_TYPE_INDEX,
-                shouldRefresh = false,
-            )
-
-            expectNoEvents()
-        }
-
-        assertEquals(
-            TEST_ACCOUNT_TYPE_INDEX,
-            editAccountScreenViewModel.selectedAccountTypeIndex,
-        )
-    }
-
-    private fun initViewModel(
+    private suspend fun setupViewModel(
+        currentAccount: Account? = testCurrentAccount,
         coroutineScope: CoroutineScope,
+        allAccounts: ImmutableList<Account> = persistentListOf(),
+        currentAccountId: Int? = TEST_CURRENT_ACCOUNT_ID,
     ) {
+        whenever(
+            methodCall = getAllAccountsUseCase(),
+        ).thenReturn(allAccounts)
+        whenever(
+            methodCall = editAccountScreenDataValidationUseCase(
+                allAccounts = any(),
+                enteredName = any(),
+                currentAccount = anyOrNull(),
+            ),
+        ).thenReturn(EditAccountScreenDataValidationState())
+        currentAccountId?.let {
+            whenever(
+                methodCall = getAccountUseCase(
+                    id = currentAccountId,
+                ),
+            ).thenReturn(currentAccount)
+        }
+        savedStateHandle[NavArgs.ACCOUNT_ID] = currentAccountId
+
         val screenUIStateRefresh = ScreenUIStateRefreshImpl(
             coroutineScope = coroutineScope,
         )
@@ -982,7 +911,7 @@ internal class EditAccountScreenViewModelTest {
         const val TEST_BALANCE_AMOUNT_VALUE = "10000"
         const val TEST_CURRENT_ACCOUNT_ID = 123
         const val TEST_MINIMUM_BALANCE_AMOUNT_VALUE = "1000"
-        const val TEST_NAME = "ABCBC"
+        const val TEST_NAME = "test_name"
 
         val testCurrentAccount = Account(
             type = AccountType.BANK,

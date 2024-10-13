@@ -112,21 +112,12 @@ public class EditAccountScreenViewModel @Inject constructor(
 
     // region getCurrentAccount
     private suspend fun getCurrentAccount() {
-        val currentAccountId = getAccountId()
-        if (currentAccountId == null) {
-            // TODO(Abhi): Throw exception here
-            navigator.navigateUp()
-            return
-        }
+        val currentAccountId = getCurrentAccountId()
+            ?: throw IllegalStateException("Current account id is null")
 
         val currentAccountValue = getAccountUseCase(
             id = currentAccountId,
-        )
-        if (currentAccountValue == null) {
-            // TODO(Abhi): Throw exception here
-            navigator.navigateUp()
-            return
-        }
+        ) ?: throw IllegalStateException("Current account not found")
         currentAccount = currentAccountValue
 
         updateSelectedAccountTypeIndex(
@@ -210,7 +201,7 @@ public class EditAccountScreenViewModel @Inject constructor(
     }
     // endregion
 
-    private fun getAccountId(): Int? {
-        return screenArgs.accountId
+    private fun getCurrentAccountId(): Int? {
+        return screenArgs.currentAccountId
     }
 }
