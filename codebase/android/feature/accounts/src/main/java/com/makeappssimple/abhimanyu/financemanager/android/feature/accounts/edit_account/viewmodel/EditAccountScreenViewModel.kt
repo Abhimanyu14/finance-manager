@@ -73,9 +73,9 @@ public class EditAccountScreenViewModel @Inject constructor(
         clearName = ::clearName,
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
+        setBalanceAmountValue = ::updateBalanceAmountValue,
         setMinimumAccountBalanceAmountValue = ::updateMinimumAccountBalanceAmountValue,
         setName = ::updateName,
-        setBalanceAmountValue = ::updateBalanceAmountValue,
         setScreenBottomSheetType = ::updateScreenBottomSheetType,
         setScreenSnackbarType = ::updateScreenSnackbarType,
         setSelectedAccountTypeIndex = ::updateSelectedAccountTypeIndex,
@@ -113,7 +113,9 @@ public class EditAccountScreenViewModel @Inject constructor(
     // region getCurrentAccount
     private suspend fun getCurrentAccount() {
         val currentAccountId = getCurrentAccountId()
-            ?: throw IllegalStateException("Current account id is null")
+        if (currentAccountId == null) {
+            throw IllegalStateException("Current account id is null")
+        }
 
         val currentAccountValue = getAccountUseCase(
             id = currentAccountId,

@@ -1,19 +1,20 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.state.refresh
 
 import app.cash.turbine.test
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import kotlin.time.Duration.Companion.seconds
 
 internal class ScreenUIStateRefreshTest {
     // region testing
-    private lateinit var testDispatcher: TestDispatcher
+    private lateinit var standardTestDispatcher: TestDispatcher
+    private lateinit var unconfinedTestDispatcher: TestDispatcher
     private lateinit var testScope: TestScope
     // endregion
 
@@ -21,28 +22,12 @@ internal class ScreenUIStateRefreshTest {
     private lateinit var screenUIStateRefresh: ScreenUIStateRefresh
     // endregion
 
-    // region test setup
-    @Before
-    fun setUp() = runTest {
-        testDispatcher = UnconfinedTestDispatcher(
-            scheduler = testScheduler,
-        )
-        testScope = TestScope(
-            context = testDispatcher,
-        )
-
-        screenUIStateRefresh = ScreenUIStateRefreshImpl(
+    @Test
+    fun `when refresh is called, then expect refresh signal event`() = runTestWithTimeout {
+        setupSUT(
             coroutineScope = testScope,
         )
-    }
 
-    @After
-    fun tearDown() = runTest {
-    }
-    // endregion
-
-    @Test
-    fun refresh() = runTestWithTimeout {
         screenUIStateRefresh.refreshSignal.test {
             screenUIStateRefresh.refresh()
 
@@ -54,10 +39,43 @@ internal class ScreenUIStateRefreshTest {
         }
     }
 
+    private suspend fun setupSUT(
+        coroutineScope: CoroutineScope,
+    ) {
+        screenUIStateRefresh = ScreenUIStateRefreshImpl(
+            coroutineScope = coroutineScope,
+        )
+    }
+
+    // region test setup
     private fun runTestWithTimeout(
         block: suspend TestScope.() -> Unit,
     ) = runTest(
         timeout = 3.seconds,
-        testBody = block,
+        testBody = {
+            setUp()
+            with(
+                receiver = testScope,
+            ) {
+                block()
+            }
+            tearDown()
+        },
     )
+
+    private suspend fun TestScope.setUp() {
+        standardTestDispatcher = StandardTestDispatcher(
+            scheduler = testScheduler,
+        )
+        unconfinedTestDispatcher = UnconfinedTestDispatcher(
+            scheduler = testScheduler,
+        )
+        testScope = TestScope(
+            context = standardTestDispatcher,
+        )
+    }
+
+    private suspend fun TestScope.tearDown() {
+    }
+    // endregion
 }

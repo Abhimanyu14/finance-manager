@@ -7,12 +7,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 internal data class EditAccountScreenUIState(
     val screenBottomSheetType: EditAccountScreenBottomSheetType = EditAccountScreenBottomSheetType.None,
+    val screenSnackbarType: EditAccountScreenSnackbarType = EditAccountScreenSnackbarType.None,
     val visibilityData: EditAccountScreenUIVisibilityData = EditAccountScreenUIVisibilityData(),
     val isCtaButtonEnabled: Boolean = false,
     val isLoading: Boolean = true,

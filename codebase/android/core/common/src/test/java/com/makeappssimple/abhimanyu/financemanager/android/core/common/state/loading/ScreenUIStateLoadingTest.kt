@@ -2,19 +2,20 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.state.lo
 
 import app.cash.turbine.test
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.refresh.ScreenUIStateRefreshImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import kotlin.time.Duration.Companion.seconds
 
 internal class ScreenUIStateLoadingTest {
     // region testing
-    private lateinit var testDispatcher: TestDispatcher
+    private lateinit var standardTestDispatcher: TestDispatcher
+    private lateinit var unconfinedTestDispatcher: TestDispatcher
     private lateinit var testScope: TestScope
     // endregion
 
@@ -22,108 +23,142 @@ internal class ScreenUIStateLoadingTest {
     private lateinit var screenUIStateLoading: ScreenUIStateLoading
     // endregion
 
-    // region test setup
-    @Before
-    fun setUp() = runTest {
-        testDispatcher = UnconfinedTestDispatcher(
-            scheduler = testScheduler,
-        )
-        testScope = TestScope(
-            context = testDispatcher,
-        )
-
-        screenUIStateLoading = ScreenUIStateLoadingImpl(
-            screenUIStateRefresh = ScreenUIStateRefreshImpl(
+    @Test
+    fun `when completeLoading is called and shouldRefresh = true, then expect refresh signal event`() =
+        runTestWithTimeout {
+            setupSUT(
                 coroutineScope = testScope,
-            ),
+            )
+
+            screenUIStateLoading.refreshSignal.test {
+                screenUIStateLoading.completeLoading(
+                    shouldRefresh = true,
+                )
+
+                assertEquals(
+                    false,
+                    screenUIStateLoading.isLoading,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when completeLoading is called and shouldRefresh = false, then expect no refresh signal event`() =
+        runTestWithTimeout {
+            setupSUT(
+                coroutineScope = testScope,
+            )
+
+            screenUIStateLoading.refreshSignal.test {
+                screenUIStateLoading.completeLoading(
+                    shouldRefresh = false,
+                )
+
+                assertEquals(
+                    false,
+                    screenUIStateLoading.isLoading,
+                )
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when startLoading is called and shouldRefresh = true, then expect refresh signal event`() =
+        runTestWithTimeout {
+            setupSUT(
+                coroutineScope = testScope,
+            )
+
+            screenUIStateLoading.refreshSignal.test {
+                screenUIStateLoading.completeLoading(
+                    shouldRefresh = false,
+                )
+
+                screenUIStateLoading.startLoading(
+                    shouldRefresh = true,
+                )
+
+                assertEquals(
+                    true,
+                    screenUIStateLoading.isLoading,
+                )
+                assertEquals(
+                    Unit,
+                    awaitItem(),
+                )
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when startLoading is called and shouldRefresh = false, then expect no refresh signal event`() =
+        runTestWithTimeout {
+            setupSUT(
+                coroutineScope = testScope,
+            )
+
+            screenUIStateLoading.refreshSignal.test {
+                screenUIStateLoading.completeLoading(
+                    shouldRefresh = false,
+                )
+
+                screenUIStateLoading.startLoading(
+                    shouldRefresh = false,
+                )
+
+                assertEquals(
+                    true,
+                    screenUIStateLoading.isLoading,
+                )
+                expectNoEvents()
+            }
+        }
+
+    private suspend fun setupSUT(
+        coroutineScope: CoroutineScope,
+    ) {
+        val screenUIStateRefresh = ScreenUIStateRefreshImpl(
+            coroutineScope = coroutineScope,
+        )
+        screenUIStateLoading = ScreenUIStateLoadingImpl(
+            screenUIStateRefresh = screenUIStateRefresh,
         )
     }
 
-    @After
-    fun tearDown() = runTest {
-    }
-    // endregion
-
-    @Test
-    fun `completeLoading shouldRefresh = true`() = runTestWithTimeout {
-        screenUIStateLoading.refreshSignal.test {
-            screenUIStateLoading.completeLoading(
-                shouldRefresh = true,
-            )
-
-            assertEquals(
-                false,
-                screenUIStateLoading.isLoading,
-            )
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-            expectNoEvents()
-        }
-    }
-
-    @Test
-    fun `completeLoading shouldRefresh = false`() = runTestWithTimeout {
-        screenUIStateLoading.refreshSignal.test {
-            screenUIStateLoading.completeLoading(
-                shouldRefresh = false,
-            )
-
-            assertEquals(
-                false,
-                screenUIStateLoading.isLoading,
-            )
-            expectNoEvents()
-        }
-    }
-
-    @Test
-    fun `startLoading shouldRefresh = true`() = runTestWithTimeout {
-        screenUIStateLoading.refreshSignal.test {
-            screenUIStateLoading.completeLoading(
-                shouldRefresh = false,
-            )
-
-            screenUIStateLoading.startLoading(
-                shouldRefresh = true,
-            )
-
-            assertEquals(
-                true,
-                screenUIStateLoading.isLoading,
-            )
-            assertEquals(
-                Unit,
-                awaitItem(),
-            )
-            expectNoEvents()
-        }
-    }
-
-    @Test
-    fun `startLoading shouldRefresh = false`() = runTestWithTimeout {
-        screenUIStateLoading.refreshSignal.test {
-            screenUIStateLoading.completeLoading(
-                shouldRefresh = false,
-            )
-
-            screenUIStateLoading.startLoading(
-                shouldRefresh = false,
-            )
-
-            assertEquals(
-                true,
-                screenUIStateLoading.isLoading,
-            )
-            expectNoEvents()
-        }
-    }
-
+    // region test setup
     private fun runTestWithTimeout(
         block: suspend TestScope.() -> Unit,
     ) = runTest(
         timeout = 3.seconds,
-        testBody = block,
+        testBody = {
+            setUp()
+            with(
+                receiver = testScope,
+            ) {
+                block()
+            }
+            tearDown()
+        },
     )
+
+    private suspend fun TestScope.setUp() {
+        standardTestDispatcher = StandardTestDispatcher(
+            scheduler = testScheduler,
+        )
+        unconfinedTestDispatcher = UnconfinedTestDispatcher(
+            scheduler = testScheduler,
+        )
+        testScope = TestScope(
+            context = standardTestDispatcher,
+        )
+    }
+
+    private suspend fun TestScope.tearDown() {
+    }
+    // endregion
 }
