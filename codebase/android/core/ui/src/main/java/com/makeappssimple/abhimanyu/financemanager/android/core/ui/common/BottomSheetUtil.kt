@@ -57,7 +57,7 @@ internal fun BottomSheetBackHandler(
     isEnabled: Boolean,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: SheetState,
-    onNavigationBackButtonClick: () -> Unit,
+    onBottomSheetDismiss: () -> Unit,
 ) {
     BackHandler(
         enabled = isEnabled,
@@ -65,7 +65,7 @@ internal fun BottomSheetBackHandler(
         coroutineScope.launch {
             hideModalBottomSheet(
                 modalBottomSheetState = modalBottomSheetState,
-                onNavigationBackButtonClick = onNavigationBackButtonClick,
+                onBottomSheetDismiss = onBottomSheetDismiss,
             )
         }
     }
@@ -73,20 +73,18 @@ internal fun BottomSheetBackHandler(
 
 private suspend fun showModalBottomSheet(
     modalBottomSheetState: SheetState,
-    onNavigationBackButtonClick: () -> Unit = {},
 ) {
     if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
         modalBottomSheetState.show()
-        onNavigationBackButtonClick()
     }
 }
 
 private suspend fun hideModalBottomSheet(
     modalBottomSheetState: SheetState,
-    onNavigationBackButtonClick: () -> Unit = {},
+    onBottomSheetDismiss: () -> Unit = {},
 ) {
     if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
         modalBottomSheetState.hide()
-        onNavigationBackButtonClick()
+        onBottomSheetDismiss()
     }
 }

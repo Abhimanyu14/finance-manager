@@ -192,7 +192,7 @@ internal fun TransactionsScreenUI(
             is TransactionsScreenBottomSheetType.None,
             is TransactionsScreenBottomSheetType.SelectTransactionFor,
             is TransactionsScreenBottomSheetType.Sort,
-            -> {
+                -> {
                 BottomSheetShape
             }
 
@@ -261,7 +261,7 @@ internal fun TransactionsScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

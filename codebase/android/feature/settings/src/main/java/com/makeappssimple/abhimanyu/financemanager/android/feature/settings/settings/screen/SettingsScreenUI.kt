@@ -146,7 +146,7 @@ internal fun SettingsScreenUI(
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(SettingsScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

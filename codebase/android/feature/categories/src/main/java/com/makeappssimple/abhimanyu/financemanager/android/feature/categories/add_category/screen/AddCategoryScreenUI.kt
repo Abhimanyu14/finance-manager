@@ -138,7 +138,7 @@ internal fun AddCategoryScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != AddCategoryScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(AddCategoryScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

@@ -101,7 +101,7 @@ internal fun AddAccountScreenUI(
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(AddAccountScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

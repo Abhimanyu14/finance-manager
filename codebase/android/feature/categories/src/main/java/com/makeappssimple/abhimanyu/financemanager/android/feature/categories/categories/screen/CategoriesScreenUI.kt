@@ -240,7 +240,7 @@ internal fun CategoriesScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(CategoriesScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

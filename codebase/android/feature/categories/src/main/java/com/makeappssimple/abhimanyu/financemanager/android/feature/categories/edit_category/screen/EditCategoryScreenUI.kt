@@ -138,7 +138,7 @@ internal fun EditCategoryScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != EditCategoryScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(EditCategoryScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

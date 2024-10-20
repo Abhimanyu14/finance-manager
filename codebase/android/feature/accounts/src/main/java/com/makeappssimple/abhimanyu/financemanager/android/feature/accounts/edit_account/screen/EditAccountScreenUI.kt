@@ -109,7 +109,7 @@ internal fun EditAccountScreenUI(
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(EditAccountScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

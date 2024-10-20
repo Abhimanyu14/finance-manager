@@ -79,7 +79,7 @@ public fun MyScaffold(
     isModalBottomSheetVisible: Boolean = false,
     isBackHandlerEnabled: Boolean = false,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onNavigationBackButtonClick: () -> Unit = {},
+    onBottomSheetDismiss: () -> Unit = {},
 
     content: ColumnScopedComposableContent,
 ) {
@@ -87,7 +87,7 @@ public fun MyScaffold(
         isEnabled = isBackHandlerEnabled,
         coroutineScope = coroutineScope,
         modalBottomSheetState = sheetState,
-        onNavigationBackButtonClick = onNavigationBackButtonClick,
+        onBottomSheetDismiss = onBottomSheetDismiss,
     )
 
     Scaffold(
@@ -125,7 +125,7 @@ public fun MyScaffold(
             tonalElevation = 0.dp,
             dragHandle = {},
             scrimColor = scrimColor,
-            onDismissRequest = onNavigationBackButtonClick,
+            onDismissRequest = onBottomSheetDismiss,
             contentWindowInsets = {
                 WindowInsets.systemBars.only(WindowInsetsSides.Bottom)
             },

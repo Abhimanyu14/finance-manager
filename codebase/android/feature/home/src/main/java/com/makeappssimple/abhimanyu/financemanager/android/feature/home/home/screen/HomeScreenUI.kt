@@ -97,7 +97,7 @@ internal fun HomeScreenUI(
         onClick = state.focusManager::clearFocus,
         contentTestTag = SCREEN_CONTENT_HOME,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(HomeScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

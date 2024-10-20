@@ -103,7 +103,7 @@ internal fun AddTransactionForScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != AddTransactionForScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(AddTransactionForScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

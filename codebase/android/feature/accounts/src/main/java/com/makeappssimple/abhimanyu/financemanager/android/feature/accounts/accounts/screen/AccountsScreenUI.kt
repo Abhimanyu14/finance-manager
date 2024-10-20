@@ -159,7 +159,7 @@ internal fun AccountsScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(AccountsScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

@@ -196,7 +196,7 @@ internal fun EditTransactionScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != EditTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(EditTransactionScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

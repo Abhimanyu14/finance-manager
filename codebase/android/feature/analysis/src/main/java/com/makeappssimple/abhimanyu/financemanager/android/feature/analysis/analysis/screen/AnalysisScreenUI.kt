@@ -90,7 +90,7 @@ internal fun AnalysisScreenUI(
         isModalBottomSheetVisible = uiState.isBottomSheetVisible,
         isBackHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
+        onBottomSheetDismiss = {
             handleUIEvent(AnalysisScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
