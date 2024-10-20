@@ -40,8 +40,6 @@ import kotlin.time.Duration.Companion.seconds
 internal class AccountsScreenViewModelTest {
     // region testing
     private lateinit var standardTestDispatcher: TestDispatcher
-
-    // private lateinit var unconfinedTestDispatcher: TestDispatcher
     private lateinit var testScope: TestScope
     // endregion
 
@@ -328,11 +326,6 @@ internal class AccountsScreenViewModelTest {
         standardTestDispatcher = StandardTestDispatcher(
             scheduler = testScheduler,
         )
-        /*
-        unconfinedTestDispatcher = UnconfinedTestDispatcher(
-            scheduler = testScheduler,
-        )
-        */
         testScope = TestScope(
             context = standardTestDispatcher,
         )

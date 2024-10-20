@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.testing
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.withContext
 
 public class TestDispatcherProviderImpl(
     testDispatcher: CoroutineDispatcher,
@@ -16,6 +17,9 @@ public class TestDispatcherProviderImpl(
     override suspend fun <T> executeOnIoDispatcher(
         block: suspend CoroutineScope.() -> T,
     ): T {
-        TODO("Not yet implemented")
+        return withContext(
+            context = io,
+            block = block,
+        )
     }
 }

@@ -41,7 +41,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typ
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import kotlinx.coroutines.CoroutineScope
 
-private val topAppBarHeight = 64.dp
+private object MyScaffoldConstants {
+    val topAppBarHeight = 64.dp
+}
 
 @Composable
 public fun MyScaffold(
@@ -85,7 +87,7 @@ public fun MyScaffold(
         isEnabled = isBackHandlerEnabled,
         coroutineScope = coroutineScope,
         modalBottomSheetState = sheetState,
-        onBackPressed = onNavigationBackButtonClick,
+        onNavigationBackButtonClick = onNavigationBackButtonClick,
     )
 
     Scaffold(
@@ -124,7 +126,9 @@ public fun MyScaffold(
             dragHandle = {},
             scrimColor = scrimColor,
             onDismissRequest = onNavigationBackButtonClick,
-            contentWindowInsets = { WindowInsets.systemBars.only(WindowInsetsSides.Bottom) },
+            contentWindowInsets = {
+                WindowInsets.systemBars.only(WindowInsetsSides.Bottom)
+            },
         ) {
             val screenHeight = LocalConfiguration.current.screenHeightDp.dp
             val navigationBarsHeight =
@@ -136,7 +140,7 @@ public fun MyScaffold(
             } else {
                 Modifier
                     .heightIn(
-                        max = screenHeight + navigationBarsHeight - topAppBarHeight,
+                        max = screenHeight + navigationBarsHeight - MyScaffoldConstants.topAppBarHeight,
                     )
             }
 

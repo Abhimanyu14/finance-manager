@@ -10,59 +10,86 @@ public class FakeNavigatorImpl : Navigator {
     private val _command: MutableSharedFlow<NavigationCommand> = MutableSharedFlow()
     override val command: SharedFlow<NavigationCommand> = _command
 
-    override fun navigateToAccountsScreen() {}
+    override fun navigateToAccountsScreen(): Job {
+        return Job()
+    }
 
-    override fun navigateToAddAccountScreen() {}
+    override fun navigateToAddAccountScreen(): Job {
+        return Job()
+    }
 
     override fun navigateToAddCategoryScreen(
         transactionType: String,
-    ) {
+    ): Job {
+        return Job()
     }
 
     override fun navigateToAddTransactionScreen(
         transactionId: Int?,
-    ) {
+    ): Job {
+        return Job()
     }
 
-    override fun navigateToAddTransactionForScreen() {}
+    override fun navigateToAddTransactionForScreen(): Job {
+        return Job()
+    }
 
-    override fun navigateToAnalysisScreen() {}
+    override fun navigateToAnalysisScreen(): Job {
+        return Job()
+    }
 
-    override fun navigateToCategoriesScreen() {}
+    override fun navigateToCategoriesScreen(): Job {
+        return Job()
+    }
 
     override fun navigateToEditAccountScreen(
         accountId: Int,
-    ) {
+    ): Job {
+        return Job()
     }
 
     override fun navigateToEditCategoryScreen(
         categoryId: Int,
-    ) {
+    ): Job {
+        return Job()
     }
 
     override fun navigateToEditTransactionScreen(
         transactionId: Int,
-    ) {
+    ): Job {
+        return Job()
     }
 
     override fun navigateToEditTransactionForScreen(
         transactionForId: Int,
-    ) {
+    ): Job {
+        return Job()
     }
 
-    override fun navigateToHomeScreen() {}
+    override fun navigateToHomeScreen(): Job {
+        return Job()
+    }
 
-    override fun navigateToOpenSourceLicensesScreen() {}
+    override fun navigateToOpenSourceLicensesScreen(): Job {
+        return Job()
+    }
 
-    override fun navigateToSettingsScreen() {}
+    override fun navigateToSettingsScreen(): Job {
+        return Job()
+    }
 
-    override fun navigateToTransactionForValuesScreen() {}
+    override fun navigateToTransactionForValuesScreen(): Job {
+        return Job()
+    }
 
-    override fun navigateToTransactionsScreen() {}
+    override fun navigateToTransactionsScreen(): Job {
+        return Job()
+    }
 
     override fun navigateToViewTransactionScreen(
         transactionId: Int,
-    ) {
+    ): Job {
+        return Job()
     }
 
     override fun navigateUp(): Job {

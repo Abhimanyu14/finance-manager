@@ -12,22 +12,22 @@ public class NavigatorImpl(
     private val _command: MutableSharedFlow<NavigationCommand> = MutableSharedFlow()
     override val command: SharedFlow<NavigationCommand> = _command
 
-    override fun navigateToAccountsScreen() {
-        navigate(
+    override fun navigateToAccountsScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.Accounts,
         )
     }
 
-    override fun navigateToAddAccountScreen() {
-        navigate(
+    override fun navigateToAddAccountScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.AddAccount,
         )
     }
 
     override fun navigateToAddCategoryScreen(
         transactionType: String,
-    ) {
-        navigate(
+    ): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.AddCategory(
                 transactionType = transactionType,
             ),
@@ -36,36 +36,36 @@ public class NavigatorImpl(
 
     override fun navigateToAddTransactionScreen(
         transactionId: Int?,
-    ) {
-        navigate(
+    ): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.AddTransaction(
                 transactionId = transactionId,
             ),
         )
     }
 
-    override fun navigateToAddTransactionForScreen() {
-        navigate(
+    override fun navigateToAddTransactionForScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.AddTransactionFor,
         )
     }
 
-    override fun navigateToAnalysisScreen() {
-        navigate(
+    override fun navigateToAnalysisScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.Analysis,
         )
     }
 
-    override fun navigateToCategoriesScreen() {
-        navigate(
+    override fun navigateToCategoriesScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.Categories,
         )
     }
 
     override fun navigateToEditAccountScreen(
         accountId: Int,
-    ) {
-        navigate(
+    ): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.EditAccount(
                 accountId = accountId,
             ),
@@ -74,8 +74,8 @@ public class NavigatorImpl(
 
     override fun navigateToEditCategoryScreen(
         categoryId: Int,
-    ) {
-        navigate(
+    ): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.EditCategory(
                 categoryId = categoryId,
             ),
@@ -84,8 +84,8 @@ public class NavigatorImpl(
 
     override fun navigateToEditTransactionScreen(
         transactionId: Int,
-    ) {
-        navigate(
+    ): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.EditTransaction(
                 transactionId = transactionId,
             ),
@@ -94,48 +94,48 @@ public class NavigatorImpl(
 
     override fun navigateToEditTransactionForScreen(
         transactionForId: Int,
-    ) {
-        navigate(
+    ): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.EditTransactionFor(
                 transactionForId = transactionForId,
             ),
         )
     }
 
-    override fun navigateToHomeScreen() {
-        navigate(
+    override fun navigateToHomeScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.Home,
         )
     }
 
-    override fun navigateToOpenSourceLicensesScreen() {
-        navigate(
+    override fun navigateToOpenSourceLicensesScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.OpenSourceLicenses,
         )
     }
 
-    override fun navigateToSettingsScreen() {
-        navigate(
+    override fun navigateToSettingsScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.Settings,
         )
     }
 
-    override fun navigateToTransactionForValuesScreen() {
-        navigate(
+    override fun navigateToTransactionForValuesScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.TransactionForValues,
         )
     }
 
-    override fun navigateToTransactionsScreen() {
-        navigate(
+    override fun navigateToTransactionsScreen(): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.Transactions,
         )
     }
 
     override fun navigateToViewTransactionScreen(
         transactionId: Int,
-    ) {
-        navigate(
+    ): Job {
+        return navigate(
             navigationCommand = MyNavigationDirections.ViewTransaction(
                 transactionId = transactionId,
             ),
