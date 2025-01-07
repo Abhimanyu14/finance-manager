@@ -5,9 +5,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.DeeplinkUrl
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.NavArgs
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen.AddTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen.EditTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreen

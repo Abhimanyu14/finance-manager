@@ -2,16 +2,16 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.InsertCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.coroutines.di.ApplicationScope
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.map
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.stringdecoder.StringDecoder
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.category.GetAllCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.category.InsertCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIState

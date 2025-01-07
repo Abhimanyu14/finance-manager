@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.accountsNavGraph
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.navigation.analysisNavGraph
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.categoriesNavGraph

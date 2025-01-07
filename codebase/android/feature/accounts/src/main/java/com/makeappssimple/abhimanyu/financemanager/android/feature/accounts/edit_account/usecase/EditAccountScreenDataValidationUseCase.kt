@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.viewmodel.EditAccountScreenDataValidationState
 import kotlinx.collections.immutable.ImmutableList

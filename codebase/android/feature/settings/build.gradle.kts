@@ -16,7 +16,7 @@ android {
         minSdk = libs.versions.min.sdk.get().toInt()
 
         testInstrumentationRunner =
-            "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
+            "com.makeappssimple.abhimanyu.financemanager.android.cre.testing.MyTestRunner"
     }
 
     buildTypes {
@@ -64,7 +64,7 @@ android {
             "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            "-opt-in=androidx.compose.animation.core.InternalAnimationApi",
+            "-opt-in=androidx.compose.animation.cre.InternalAnimationApi",
         )
     }
 
@@ -74,17 +74,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:alarmkit"))
-    implementation(project(":core:alarmkitimpl"))
-    implementation(project(":core:common"))
-    implementation(project(":core:data"))
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:logger"))
-    implementation(project(":core:navigation"))
-    implementation(project(":core:notificationkit"))
-    implementation(project(":core:notificationkitimpl"))
-    implementation(project(":core:model"))
-    implementation(project(":core:ui"))
+    implementation(project(":cre"))
 
     testImplementation(project(":core:testing"))
 

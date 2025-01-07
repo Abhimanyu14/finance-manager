@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.nav
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.DeeplinkUrl
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.screen.AnalysisScreen
 
 public fun NavGraphBuilder.analysisNavGraph() {

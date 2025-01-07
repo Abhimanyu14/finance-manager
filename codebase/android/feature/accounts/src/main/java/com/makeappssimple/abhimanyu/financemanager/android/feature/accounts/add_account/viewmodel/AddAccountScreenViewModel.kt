@@ -1,16 +1,16 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.coroutines.di.ApplicationScope
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.map
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.account.GetAllAccountsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.account.InsertAccountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenNameError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents

@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.bottomsheet.EditCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow

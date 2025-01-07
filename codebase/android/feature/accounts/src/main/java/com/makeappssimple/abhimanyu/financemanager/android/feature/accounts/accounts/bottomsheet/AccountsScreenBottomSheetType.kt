@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenBottomSheetType
 
 internal sealed class AccountsScreenBottomSheetType : ScreenBottomSheetType {
     data object DeleteConfirmation : AccountsScreenBottomSheetType()

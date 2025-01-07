@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.event
 
 import androidx.compose.runtime.Immutable
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.component.overview_card.OverviewCardAction
 
 @Immutable
 internal sealed class HomeScreenUIEvent : ScreenUIEvent {

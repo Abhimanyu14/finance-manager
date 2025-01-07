@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.appkit
 import android.content.Context
 import android.content.Intent
 import com.makeappssimple.abhimanyu.financemanager.android.MainActivity
-import com.makeappssimple.abhimanyu.financemanager.android.core.appkit.AppKit
+import com.makeappssimple.abhimanyu.financemanager.android.cre.app.AppKit
 
 public class AppKitImpl(
     private val context: Context,

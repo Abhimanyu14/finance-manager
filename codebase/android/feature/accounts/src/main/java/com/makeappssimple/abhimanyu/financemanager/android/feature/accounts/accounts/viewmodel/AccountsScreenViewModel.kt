@@ -1,15 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.coroutines.di.ApplicationScope
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.state.common.ScreenUICommonState
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.repository.preferences.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.account.DeleteAccountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.account.GetAllAccountsFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.component.listitem.accounts.AccountsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIStateEvents

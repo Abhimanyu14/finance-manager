@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.cre.alarm.AlarmKit
+import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.common.RecalculateTotalUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.snackbar.SettingsScreenSnackbarType
 import kotlinx.coroutines.CoroutineScope

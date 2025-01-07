@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.util.isDefaultExpenseCategory
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.util.isDefaultIncomeCategory
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenDataValidationState
 import kotlinx.collections.immutable.ImmutableList

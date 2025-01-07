@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation
 
 import androidx.lifecycle.SavedStateHandle
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
+import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.NavArgs
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenArgs
 
 internal class EditAccountScreenArgs(
     val currentAccountId: Int?,

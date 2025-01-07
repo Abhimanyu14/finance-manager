@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenTitleError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.viewmodel.AddTransactionForScreenDataValidationState
 import kotlinx.collections.immutable.ImmutableList

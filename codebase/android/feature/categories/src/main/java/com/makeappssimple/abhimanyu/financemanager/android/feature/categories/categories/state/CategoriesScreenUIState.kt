@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.state
 
 import androidx.compose.runtime.Stable
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow.MyTabData
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.cre.designsystem.component.tabrow.MyTabData
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList

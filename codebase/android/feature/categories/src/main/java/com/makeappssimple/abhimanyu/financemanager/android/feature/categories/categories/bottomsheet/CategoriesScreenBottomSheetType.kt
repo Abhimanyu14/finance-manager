@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet
 
 import androidx.compose.runtime.Immutable
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenBottomSheetType
 
 @Immutable
 internal sealed class CategoriesScreenBottomSheetType : ScreenBottomSheetType {

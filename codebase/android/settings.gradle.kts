@@ -28,6 +28,7 @@ rootProject.name = "Finance Manager"
 include(":app")
 include(":app-ui-catalog")
 include(":chart")
+include(":cre")
 include(":core:alarmkit")
 include(":core:alarmkitimpl")
 include(":core:appkit")

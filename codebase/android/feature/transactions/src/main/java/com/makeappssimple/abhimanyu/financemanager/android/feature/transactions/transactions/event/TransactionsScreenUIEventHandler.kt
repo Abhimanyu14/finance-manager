@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.event
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.feature.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.state.TransactionsScreenUIStateEvents
 

@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.event
 
 import androidx.compose.runtime.Immutable
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.feature.Filter
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.feature.SortOption
+import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIEvent
 
 @Immutable
 internal sealed class TransactionsScreenUIEvent : ScreenUIEvent {

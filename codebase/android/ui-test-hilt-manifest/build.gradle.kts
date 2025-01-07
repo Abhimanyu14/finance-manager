@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
+    implementation(project(":cre"))
 
     // Coroutines
     implementation(libs.coroutines.android)

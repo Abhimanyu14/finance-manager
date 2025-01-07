@@ -214,21 +214,7 @@ ksp {
 }
 
 dependencies {
-    implementation(project(":core:alarmkit"))
-    implementation(project(":core:alarmkitimpl"))
-    implementation(project(":core:appkit"))
-    implementation(project(":core:boot"))
-    implementation(project(":core:common"))
-    implementation(project(":core:data"))
-    implementation(project(":core:database"))
-    implementation(project(":core:datastore"))
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:logger"))
-    implementation(project(":core:navigation"))
-    implementation(project(":core:notificationkit"))
-    implementation(project(":core:notificationkitimpl"))
-    implementation(project(":core:time"))
-    implementation(project(":core:ui"))
+    implementation(project(":cre"))
     implementation(project(":feature:accounts"))
     implementation(project(":feature:analysis"))
     implementation(project(":feature:categories"))

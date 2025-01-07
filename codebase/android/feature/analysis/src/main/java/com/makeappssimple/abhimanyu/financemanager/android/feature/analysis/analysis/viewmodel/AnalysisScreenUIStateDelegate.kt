@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
+import com.makeappssimple.abhimanyu.financemanager.android.cre.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
 import kotlinx.coroutines.flow.MutableStateFlow
 

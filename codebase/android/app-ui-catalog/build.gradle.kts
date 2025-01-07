@@ -94,10 +94,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":chart"))
-    implementation(project(":core:common"))
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:ui"))
+    implementation(project(":cre"))
 
     testImplementation(project(":core:testing"))
 

@@ -15,9 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.constants.MimeTypeConstants
+import com.makeappssimple.abhimanyu.financemanager.android.cre.common.util.document.CreateJsonDocument
+import com.makeappssimple.abhimanyu.financemanager.android.cre.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event.SettingsScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
