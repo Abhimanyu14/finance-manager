@@ -1,17 +1,17 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinx.kover)
 }
 
 android {
-    namespace = "com.makeappssimple.abhimanyu.financemanager.android.chart"
+    namespace = "com.makeappssimple.abhimanyu.financemanager.android.core.model"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.get().toInt()
-        targetSdk = libs.versions.target.sdk.get().toInt()
 
         testInstrumentationRunner =
             "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
@@ -43,37 +43,25 @@ android {
         freeCompilerArgs += listOf(
             // Explicit API mode
             "-Xexplicit-api=strict",
-        )
-    }
 
-    buildFeatures {
-        compose = true
+            // Kotlin
+            "-opt-in=kotlin.RequiresOptIn",
+
+            // Kotlinx
+            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+        )
     }
 }
 
 dependencies {
-    implementation(project(":legacycore:designsystem"))
+    implementation(project(":legacycore:common"))
 
-    lintChecks(project(":lint"))
+    // KotlinX serialization
+    implementation(libs.serialization)
 
-    // Androidx core
-    implementation(libs.androidx.core)
+    // KotlinX collections immutable
+    implementation(libs.collections.immutable)
 
-    // Jetpack compose
-    implementation(libs.bundles.compose)
-
-    // Testing
-
-    // JUnit
-    testImplementation(libs.junit)
-
-    // Android X test
-    androidTestImplementation(libs.bundles.test)
-
-    // Mockito kotlin
-    testImplementation(libs.mockito.kotlin)
-
-    // Coroutines test
-    testImplementation(libs.coroutines.test)
-    androidTestImplementation(libs.coroutines.test)
+    // Detekt
+    detektPlugins(libs.bundles.detekt)
 }

@@ -225,13 +225,13 @@ dependencies {
 
     debugImplementation(project(":ui-test-hilt-manifest"))
 
-    testImplementation(project(":core:data-test"))
-    testImplementation(project(":core:database-test"))
-    testImplementation(project(":core:testing"))
+    testImplementation(project(":legacycore:data-test"))
+    testImplementation(project(":legacycore:database-test"))
+    testImplementation(project(":legacycore:testing"))
 
-    androidTestImplementation(project(":core:data-test"))
-    androidTestImplementation(project(":core:database-test"))
-    androidTestImplementation(project(":core:testing"))
+    androidTestImplementation(project(":legacycore:data-test"))
+    androidTestImplementation(project(":legacycore:database-test"))
+    androidTestImplementation(project(":legacycore:testing"))
     androidTestImplementation(project(":ui-test-hilt-manifest"))
 
     lintChecks(project(":lint"))

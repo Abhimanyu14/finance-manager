@@ -8,14 +8,14 @@ plugins {
 }
 
 android {
-    namespace = "com.makeappssimple.abhimanyu.financemanager.android.feature.home"
+    namespace = "com.makeappssimple.abhimanyu.financemanager.android.core.ui"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.get().toInt()
 
         testInstrumentationRunner =
-            "com.makeappssimple.abhimanyu.financemanager.android.cre.testing.MyTestRunner"
+            "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
     }
 
     buildTypes {
@@ -60,10 +60,11 @@ android {
             // Compose
             "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
             "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
             "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            "-opt-in=androidx.compose.animation.cre.InternalAnimationApi",
+            "-opt-in=androidx.compose.animation.core.InternalAnimationApi",
         )
     }
 
@@ -73,26 +74,25 @@ android {
 }
 
 dependencies {
-    implementation(project(":cre"))
+    implementation(project(":chart"))
+    implementation(project(":legacycore:common"))
+    implementation(project(":legacycore:navigation"))
+    implementation(project(":legacycore:model"))
+    implementation(project(":legacycore:data"))
+    implementation(project(":legacycore:designsystem"))
 
     testImplementation(project(":legacycore:testing"))
 
     androidTestImplementation(project(":legacycore:testing"))
 
-    lintChecks(project(":lint"))
-
     implementation(libs.androidx.core)
     implementation(libs.lifecycle.runtime.core)
 
-    // Coroutines
-    implementation(libs.coroutines.android)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
     // Jetpack compose
     implementation(libs.bundles.compose)
+
+    // Jetpack compose integration with activities
+    implementation(libs.activity.compose)
 
     // Jetpack compose integration with view models
     implementation(libs.lifecycle.viewmodel.compose)
@@ -106,14 +106,15 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation(libs.hilt.navigation.compose)
 
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    // Compose emoji picker
+    implementation(libs.compose.emoji.picker)
+
     // KotlinX collections immutable
     implementation(libs.collections.immutable)
-
-    // Firebase BoM
-    implementation(platform(libs.firebase))
-
-    // Firebase perf
-    implementation(libs.firebase.perf)
 
     // Detekt
     detektPlugins(libs.bundles.detekt)
@@ -152,6 +153,9 @@ dependencies {
 
     // Jetpack compose UI tests
     androidTestImplementation(libs.compose.ui.test.junit4)
+
+    // KakaoCup Compose
+    androidTestImplementation(libs.kakaocup.compose)
 
     // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
     debugImplementation(libs.compose.ui.test.manifest)

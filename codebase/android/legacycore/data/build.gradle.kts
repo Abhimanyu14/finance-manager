@@ -1,21 +1,22 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinx.kover)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
-    namespace = "com.makeappssimple.abhimanyu.financemanager.android.feature.home"
+    namespace = "com.makeappssimple.abhimanyu.financemanager.android.core.data"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.get().toInt()
 
         testInstrumentationRunner =
-            "com.makeappssimple.abhimanyu.financemanager.android.cre.testing.MyTestRunner"
+            "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
     }
 
     buildTypes {
@@ -56,64 +57,52 @@ android {
             "-opt-in=kotlinx.coroutines.FlowPreview",
             "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
             "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
-
-            // Compose
-            "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
-            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            "-opt-in=androidx.compose.animation.cre.InternalAnimationApi",
+            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
         )
-    }
-
-    buildFeatures {
-        compose = true
     }
 }
 
 dependencies {
-    implementation(project(":cre"))
+    implementation(project(":legacycore:common"))
+    implementation(project(":legacycore:database"))
+    implementation(project(":legacycore:datastore"))
+    implementation(project(":legacycore:logger"))
+    implementation(project(":legacycore:model"))
+    implementation(project(":legacycore:network"))
 
     testImplementation(project(":legacycore:testing"))
 
     androidTestImplementation(project(":legacycore:testing"))
 
-    lintChecks(project(":lint"))
-
+    // Androidx core
     implementation(libs.androidx.core)
-    implementation(libs.lifecycle.runtime.core)
 
     // Coroutines
     implementation(libs.coroutines.android)
+
+    // Emoji2
+    implementation(libs.emoji2)
 
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    // Jetpack compose
-    implementation(libs.bundles.compose)
+    // KSP
+    implementation(libs.ksp)
 
-    // Jetpack compose integration with view models
-    implementation(libs.lifecycle.viewmodel.compose)
-
-    // Jetpack compose lifecycle runtime
-    implementation(libs.lifecycle.runtime.compose)
-
-    // Jetpack compose navigation
-    implementation(libs.navigation.compose)
-
-    // Jetpack compose navigation with hilt
-    implementation(libs.hilt.navigation.compose)
+    // KotlinX serialization
+    implementation(libs.serialization)
 
     // KotlinX collections immutable
     implementation(libs.collections.immutable)
 
-    // Firebase BoM
-    implementation(platform(libs.firebase))
+    // Data store
+    implementation(libs.datastore)
 
-    // Firebase perf
-    implementation(libs.firebase.perf)
+    // Room
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
+    androidTestImplementation(libs.room.testing)
 
     // Detekt
     detektPlugins(libs.bundles.detekt)
@@ -125,7 +114,6 @@ dependencies {
     androidTestImplementation(libs.junit)
 
     // Android X test
-    testImplementation(libs.bundles.test)
     androidTestImplementation(libs.bundles.test)
 
     // Mockito kotlin
@@ -136,10 +124,6 @@ dependencies {
     testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.coroutines.test)
 
-    // AndroidX core test
-    testImplementation(libs.core.testing)
-    androidTestImplementation(libs.core.testing)
-
     // Turbine
     testImplementation(libs.turbine)
     androidTestImplementation(libs.turbine)
@@ -149,10 +133,4 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
     kspTest(libs.hilt.compiler)
     kspAndroidTest(libs.hilt.compiler)
-
-    // Jetpack compose UI tests
-    androidTestImplementation(libs.compose.ui.test.junit4)
-
-    // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
-    debugImplementation(libs.compose.ui.test.manifest)
 }

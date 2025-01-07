@@ -1,17 +1,18 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinx.kover)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
-    namespace = "com.makeappssimple.abhimanyu.financemanager.android.chart"
+    namespace = "com.makeappssimple.abhimanyu.financemanager.android.core.logger"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.get().toInt()
-        targetSdk = libs.versions.target.sdk.get().toInt()
 
         testInstrumentationRunner =
             "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
@@ -45,22 +46,23 @@ android {
             "-Xexplicit-api=strict",
         )
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    implementation(project(":legacycore:designsystem"))
-
-    lintChecks(project(":lint"))
+    implementation(project(":legacycore:common"))
 
     // Androidx core
     implementation(libs.androidx.core)
 
-    // Jetpack compose
-    implementation(libs.bundles.compose)
+    // Jetpack compose lifecycle runtime
+    implementation(libs.lifecycle.runtime.compose)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    // Detekt
+    detektPlugins(libs.bundles.detekt)
 
     // Testing
 
