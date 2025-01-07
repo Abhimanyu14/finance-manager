@@ -27,8 +27,8 @@ dependencyResolutionManagement {
 rootProject.name = "Finance Manager"
 include(":app")
 include(":app-ui-catalog")
+include(":core")
 include(":chart")
-include(":cre")
 include(":legacycore:alarmkit")
 include(":legacycore:alarmkitimpl")
 include(":legacycore:appkit")

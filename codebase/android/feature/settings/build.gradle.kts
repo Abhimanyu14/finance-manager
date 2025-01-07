@@ -74,8 +74,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":cre"))
 
+    implementation(project(":core"))
     testImplementation(project(":legacycore:testing"))
 
     androidTestImplementation(project(":legacycore:testing"))

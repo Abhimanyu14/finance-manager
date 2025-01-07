@@ -214,7 +214,7 @@ ksp {
 }
 
 dependencies {
-    implementation(project(":cre"))
+    implementation(project(":core"))
     implementation(project(":feature:accounts"))
     implementation(project(":feature:analysis"))
     implementation(project(":feature:categories"))
