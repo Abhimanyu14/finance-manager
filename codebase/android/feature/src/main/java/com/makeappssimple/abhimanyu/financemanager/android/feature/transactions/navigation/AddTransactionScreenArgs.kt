@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.lifecycle.SavedStateHandle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationArguments
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.constants.NavigationArguments
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
 internal class AddTransactionScreenArgs(

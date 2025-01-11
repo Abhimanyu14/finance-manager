@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.constants
 
 public object DeeplinkUrl {
     public const val BASE_URL: String = "makeappssimple://financemanager"

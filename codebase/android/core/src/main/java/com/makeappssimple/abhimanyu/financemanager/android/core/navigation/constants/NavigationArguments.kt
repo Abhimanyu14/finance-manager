@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.constants
 
 public object NavigationArguments {
     public const val ACCOUNT_ID: String = "accountId"
