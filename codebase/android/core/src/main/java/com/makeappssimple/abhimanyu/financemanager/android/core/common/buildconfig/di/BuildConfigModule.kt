@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-public interface BuildConfigUtilModule {
+public interface BuildConfigModule {
     @Binds
     public fun bindBuildConfigUtil(
         buildConfigUtilImpl: BuildConfigKitImpl,

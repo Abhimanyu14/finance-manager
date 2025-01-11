@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.notification.NotificationKit
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -13,8 +12,8 @@ public class AlarmReceiver : BroadcastReceiver() {
     @Inject
     public lateinit var logKit: LogKit
 
-    @Inject
-    public lateinit var notificationKit: NotificationKit
+//    @Inject
+//    public lateinit var notificationKit: NotificationKit
 
     override fun onReceive(
         context: Context,
@@ -23,6 +22,6 @@ public class AlarmReceiver : BroadcastReceiver() {
         logKit.logInfo(
             message = "Alarm received : ${System.currentTimeMillis()}",
         )
-        notificationKit.scheduleNotification()
+//        notificationKit.scheduleNotification()
     }
 }

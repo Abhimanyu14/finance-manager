@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-public class AppVersionUtilModule {
+public class AppVersionKitModule {
     @Provides
     public fun providesAppVersionUtil(
         @ApplicationContext context: Context,

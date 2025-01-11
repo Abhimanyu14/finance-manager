@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android
+package com.makeappssimple.abhimanyu.financemanager.android.application
 
 import android.app.Application
 import android.app.NotificationChannel
@@ -34,7 +34,7 @@ public class MyApplication : Application(), Configuration.Provider {
             NotificationManager.IMPORTANCE_HIGH,
         )
         val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            (getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager) ?: return
         notificationManager.createNotificationChannel(channel)
     }
 }

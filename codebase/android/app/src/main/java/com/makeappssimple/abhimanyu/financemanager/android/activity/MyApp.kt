@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android
+package com.makeappssimple.abhimanyu.financemanager.android.activity
 
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.runtime.Composable

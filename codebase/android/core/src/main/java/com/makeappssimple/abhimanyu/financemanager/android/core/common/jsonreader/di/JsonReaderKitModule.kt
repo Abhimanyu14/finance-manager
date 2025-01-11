@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-public class JsonReaderModule {
+public class JsonReaderKitModule {
     @Provides
     public fun providesJsonReader(
         @ApplicationContext context: Context,

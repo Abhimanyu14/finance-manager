@@ -23,6 +23,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.makeappssimple.abhimanyu.financemanager.android.activity.MainActivity
+import com.makeappssimple.abhimanyu.financemanager.android.activity.MyApp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_OVERVIEW_CARD
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_TOTAL_BALANCE_CARD

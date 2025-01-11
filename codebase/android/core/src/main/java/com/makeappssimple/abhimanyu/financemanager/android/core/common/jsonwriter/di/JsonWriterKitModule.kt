@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-public class JsonWriterModule {
+public class JsonWriterKitModule {
     @Provides
     public fun providesJsonWriter(
         @ApplicationContext context: Context,
