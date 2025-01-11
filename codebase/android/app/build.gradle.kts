@@ -215,13 +215,7 @@ ksp {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":feature:accounts"))
-    implementation(project(":feature:analysis"))
-    implementation(project(":feature:categories"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:settings"))
-    implementation(project(":feature:transactionfor"))
-    implementation(project(":feature:transactions"))
+    implementation(project(":feature"))
 
     debugImplementation(project(":ui-test-hilt-manifest"))
 
