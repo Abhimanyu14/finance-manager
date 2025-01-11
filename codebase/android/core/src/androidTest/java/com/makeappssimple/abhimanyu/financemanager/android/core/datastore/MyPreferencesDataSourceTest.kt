@@ -12,7 +12,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.ReminderConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Job
@@ -34,9 +33,6 @@ import kotlin.time.Duration.Companion.seconds
 internal class MyPreferencesDataSourceTest {
     @get:Rule(order = 0)
     var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
-    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private val testContext: Context = ApplicationProvider.getApplicationContext()
     private val testDispatcher = StandardTestDispatcher()

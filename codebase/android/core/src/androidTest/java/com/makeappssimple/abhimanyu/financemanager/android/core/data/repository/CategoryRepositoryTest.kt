@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.getTestCategories
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestCategories
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import dagger.hilt.android.testing.HiltAndroidRule

@@ -12,13 +12,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.TH
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.timeInMillis_01_JUN_2022
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -27,9 +25,6 @@ import org.junit.runner.RunWith
 internal class TransactionDaoTest {
     private lateinit var database: MyRoomDatabase
     private lateinit var dao: TransactionDao
-
-    @get:Rule
-    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Before
     fun setUp() {

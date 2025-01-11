@@ -7,13 +7,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -22,9 +20,6 @@ import org.junit.runner.RunWith
 internal class TransactionForDaoTest {
     private lateinit var myRoomDatabase: MyRoomDatabase
     private lateinit var transactionForDao: TransactionForDao
-
-    @get:Rule
-    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Before
     fun setUp() {
