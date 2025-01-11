@@ -13,47 +13,41 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.ge
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.timeInMillis_01_JUN_2022
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 internal class TransactionDaoTest {
-    private lateinit var database: MyRoomDatabase
-    private lateinit var dao: TransactionDao
+    // region testing
+    private lateinit var standardTestDispatcher: TestDispatcher
+    private lateinit var testScope: TestScope
+    // endregion
 
-    @Before
-    fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room
-            .inMemoryDatabaseBuilder(
-                context = context,
-                klass = MyRoomDatabase::class.java,
-            )
-            .allowMainThreadQueries()
-            .build()
-        dao = database.transactionDao()
-    }
+    // region dependencies
+    private lateinit var myRoomDatabase: MyRoomDatabase
+    // endregion
 
-    @After
-    fun tearDown() {
-        database.close()
-    }
+    // region SUT
+    private lateinit var transactionDao: TransactionDao
+    // endregion
 
     @Test
-    fun insertTransactions() = runTest {
+    fun insertTransactions() = runTestWithTimeout {
         val transactions = getTestTransactions(
             size = 10,
             frequency = THIRTY_DAYS,
         )
-        dao.insertTransactions(
+        transactionDao.insertTransactions(
             transactions = transactions,
         )
-        val fetchedTransactions = dao.getAllTransactionsFlow().first().toTypedArray()
+        val fetchedTransactions = transactionDao.getAllTransactionsFlow().first().toTypedArray()
 
         val transactionTimes = fetchedTransactions.map {
             getReadableDateAndTime(it.transactionTimestamp)
@@ -65,16 +59,16 @@ internal class TransactionDaoTest {
     }
 
     @Test
-    fun getTransactionsBetweenTimestampsFlow() = runTest {
+    fun getTransactionsBetweenTimestampsFlow() = runTestWithTimeout {
         val transactions = getTestTransactions(
             size = 100,
             frequency = ONE_HOUR,
         )
-        dao.insertTransactions(
+        transactionDao.insertTransactions(
             transactions = transactions,
         )
 
-        val fetchedTransactions = dao.getTransactionsBetweenTimestampsFlow(
+        val fetchedTransactions = transactionDao.getTransactionsBetweenTimestampsFlow(
             startingTimestamp = timeInMillis_01_JUN_2022 - ONE_DAY,
             endingTimestamp = timeInMillis_01_JUN_2022 - 1,
         ).first().toTypedArray()
@@ -94,4 +88,47 @@ internal class TransactionDaoTest {
             fetchedTransactions,
         )
     }
+
+    // region test setup
+    private fun runTestWithTimeout(
+        block: suspend TestScope.() -> Unit,
+    ) = runTest(
+        timeout = 3.seconds,
+        testBody = {
+            setUp()
+            with(
+                receiver = testScope,
+            ) {
+                block()
+            }
+            tearDown()
+        },
+    )
+
+    private fun TestScope.setUp() {
+        standardTestDispatcher = StandardTestDispatcher(
+            scheduler = testScheduler,
+        )
+        testScope = TestScope(
+            context = standardTestDispatcher,
+        )
+        setupSUT()
+    }
+
+    private fun setupSUT() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        myRoomDatabase = Room
+            .inMemoryDatabaseBuilder(
+                context = context,
+                klass = MyRoomDatabase::class.java,
+            )
+            .allowMainThreadQueries()
+            .build()
+        transactionDao = myRoomDatabase.transactionDao()
+    }
+
+    private fun tearDown() {
+        myRoomDatabase.close()
+    }
+    // endregion
 }

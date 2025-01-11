@@ -9,53 +9,33 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.d
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 internal class CategoryDaoTest {
+    // region testing
+    private lateinit var standardTestDispatcher: TestDispatcher
+    private lateinit var testScope: TestScope
+    // endregion
+
+    // region dependencies
     private lateinit var myRoomDatabase: MyRoomDatabase
+    // endregion
+
+    // region SUT
     private lateinit var categoryDao: CategoryDao
-
-    @Before
-    fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        myRoomDatabase = Room
-            .inMemoryDatabaseBuilder(
-                context = context,
-                klass = MyRoomDatabase::class.java,
-            )
-            .allowMainThreadQueries()
-            .build()
-        categoryDao = myRoomDatabase.categoryDao()
-    }
-
-    @After
-    fun tearDown() {
-        myRoomDatabase.close()
-    }
+    // endregion
 
     @Test
-    fun getAllCategories() = runTest {
-        categoryDao.insertCategories(
-            categories = testCategories.toTypedArray(),
-        )
-
-        val result = categoryDao.getAllCategories()
-
-        Assert.assertEquals(
-            testCategories.toSet(),
-            result.toSet(),
-        )
-    }
-
-    @Test
-    fun getAllCategoriesFlow() = runTest {
+    fun getAllCategoriesFlow() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -69,7 +49,21 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getAllCategoriesCount() = runTest {
+    fun getAllCategories() = runTestWithTimeout {
+        categoryDao.insertCategories(
+            categories = testCategories.toTypedArray(),
+        )
+
+        val result = categoryDao.getAllCategories()
+
+        Assert.assertEquals(
+            testCategories.toSet(),
+            result.toSet(),
+        )
+    }
+
+    @Test
+    fun getAllCategoriesCount() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -83,13 +77,13 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getCategory_returnsDataForValidId() = runTest {
+    fun getCategory_returnsDataForValidId() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
 
         val result = categoryDao.getCategory(
-            id = testId2,
+            id = TEST_ID_2,
         )
 
         Assert.assertEquals(
@@ -99,26 +93,26 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun getCategory_returnsNullForInvalidId() = runTest {
+    fun getCategory_returnsNullForInvalidId() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
 
         val result = categoryDao.getCategory(
-            id = invalidId,
+            id = INVALID_ID,
         )
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun deleteCategory_deleteDataOfGivenId() = runTest {
+    fun deleteCategory_deleteDataOfGivenId() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
 
         categoryDao.deleteCategory(
-            id = testId1,
+            id = TEST_ID_1,
         )
         val result = categoryDao.getAllCategories()
 
@@ -133,7 +127,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategory_noDeletionForInvalidId() = runTest {
+    fun deleteCategory_noDeletionForInvalidId() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -154,7 +148,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun updateCategories() = runTest {
+    fun updateCategories() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -167,7 +161,7 @@ internal class CategoryDaoTest {
                 title = testCategoryTitle1,
             ),
             testCategories[1].copy(
-                id = invalidId,
+                id = INVALID_ID,
             ),
         )
         val result = categoryDao.getAllCategories()
@@ -191,7 +185,7 @@ internal class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategories() = runTest {
+    fun deleteCategories() = runTestWithTimeout {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -202,7 +196,7 @@ internal class CategoryDaoTest {
                 title = "Test",
             ),
             testCategories[1].copy(
-                id = invalidId,
+                id = INVALID_ID,
             ),
         )
         val result = categoryDao.getAllCategories()
@@ -217,19 +211,62 @@ internal class CategoryDaoTest {
         )
     }
 
+    // region test setup
+    private fun runTestWithTimeout(
+        block: suspend TestScope.() -> Unit,
+    ) = runTest(
+        timeout = 3.seconds,
+        testBody = {
+            setUp()
+            with(
+                receiver = testScope,
+            ) {
+                block()
+            }
+            tearDown()
+        },
+    )
+
+    private fun TestScope.setUp() {
+        standardTestDispatcher = StandardTestDispatcher(
+            scheduler = testScheduler,
+        )
+        testScope = TestScope(
+            context = standardTestDispatcher,
+        )
+        setupSUT()
+    }
+
+    private fun setupSUT() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        myRoomDatabase = Room
+            .inMemoryDatabaseBuilder(
+                context = context,
+                klass = MyRoomDatabase::class.java,
+            )
+            .allowMainThreadQueries()
+            .build()
+        categoryDao = myRoomDatabase.categoryDao()
+    }
+
+    private fun tearDown() {
+        myRoomDatabase.close()
+    }
+    // endregion
+
     companion object {
-        private const val testId1 = 123
-        private const val testId2 = 234
-        private const val invalidId = 987
+        private const val TEST_ID_1 = 123
+        private const val TEST_ID_2 = 234
+        private const val INVALID_ID = 987
         private val testCategories = listOf(
             CategoryEntity(
-                id = testId1,
+                id = TEST_ID_1,
                 emoji = "emoji 1", // Not using emoji characters as test logs are not able to print it
                 title = "Default",
                 transactionType = TransactionType.EXPENSE,
             ),
             CategoryEntity(
-                id = testId2,
+                id = TEST_ID_2,
                 emoji = "emoji 2",
                 title = "Salary",
                 transactionType = TransactionType.INCOME,

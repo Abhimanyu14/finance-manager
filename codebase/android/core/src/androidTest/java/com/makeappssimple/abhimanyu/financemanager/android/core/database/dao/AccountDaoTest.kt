@@ -10,46 +10,33 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.A
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 internal class AccountDaoTest {
-    private val testDispatcher = UnconfinedTestDispatcher()
-    private val testScope = TestScope(
-        context = testDispatcher,
-    )
+    // region testing
+    private lateinit var standardTestDispatcher: TestDispatcher
+    private lateinit var testScope: TestScope
+    // endregion
 
+    // region dependencies
     private lateinit var myRoomDatabase: MyRoomDatabase
+    // endregion
+
+    // region SUT
     private lateinit var accountDao: AccountDao
-
-    @Before
-    fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        myRoomDatabase = Room
-            .inMemoryDatabaseBuilder(
-                context = context,
-                klass = MyRoomDatabase::class.java,
-            )
-            .allowMainThreadQueries()
-            .build()
-        accountDao = myRoomDatabase.accountDao()
-    }
-
-    @After
-    fun tearDown() {
-        myRoomDatabase.close()
-    }
+    // endregion
 
     @Test
-    fun getAllAccounts() = testScope.runTest {
+    fun getAllAccounts() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -64,7 +51,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAllAccountsFlow() = testScope.runTest {
+    fun getAllAccountsFlow() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -78,7 +65,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAllAccountsCount() = testScope.runTest {
+    fun getAllAccountsCount() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -92,13 +79,13 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAccount_returnsDataForValidId() = testScope.runTest {
+    fun getAccount_returnsDataForValidId() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAccount(
-            id = testId2,
+            id = TEST_ID_2,
         )
 
         Assert.assertEquals(
@@ -108,26 +95,26 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun getAccount_returnsNullForInvalidId() = testScope.runTest {
+    fun getAccount_returnsNullForInvalidId() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAccount(
-            id = invalidId,
+            id = INVALID_ID,
         )
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun deleteAccount_deleteDataOfGivenId() = testScope.runTest {
+    fun deleteAccount_deleteDataOfGivenId() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccount(
-            id = testId1,
+            id = TEST_ID_1,
         )
         val result = accountDao.getAllAccounts()
 
@@ -142,13 +129,13 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccount_noDeletionForInvalidId() = testScope.runTest {
+    fun deleteAccount_noDeletionForInvalidId() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccount(
-            id = invalidId,
+            id = INVALID_ID,
         )
         val result = accountDao.getAllAccounts()
 
@@ -163,7 +150,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun updateAccounts() = testScope.runTest {
+    fun updateAccounts() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -200,7 +187,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccounts() = testScope.runTest {
+    fun deleteAccounts() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -211,7 +198,7 @@ internal class AccountDaoTest {
                     name = "Random", // Data mismatch
                 ),
             testAccounts[1].copy(
-                id = invalidId,
+                id = INVALID_ID,
             ),
         )
         val result = accountDao.getAllAccounts()
@@ -227,7 +214,7 @@ internal class AccountDaoTest {
     }
 
     @Test
-    fun deleteAllAccounts() = testScope.runTest {
+    fun deleteAllAccounts() = runTestWithTimeout {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -241,32 +228,75 @@ internal class AccountDaoTest {
         )
     }
 
+    // region test setup
+    private fun runTestWithTimeout(
+        block: suspend TestScope.() -> Unit,
+    ) = runTest(
+        timeout = 3.seconds,
+        testBody = {
+            setUp()
+            with(
+                receiver = testScope,
+            ) {
+                block()
+            }
+            tearDown()
+        },
+    )
+
+    private fun TestScope.setUp() {
+        standardTestDispatcher = StandardTestDispatcher(
+            scheduler = testScheduler,
+        )
+        testScope = TestScope(
+            context = standardTestDispatcher,
+        )
+        setupSUT()
+    }
+
+    private fun setupSUT() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        myRoomDatabase = Room
+            .inMemoryDatabaseBuilder(
+                context = context,
+                klass = MyRoomDatabase::class.java,
+            )
+            .allowMainThreadQueries()
+            .build()
+        accountDao = myRoomDatabase.accountDao()
+    }
+
+    private fun tearDown() {
+        myRoomDatabase.close()
+    }
+    // endregion
+
     companion object {
-        private const val testId1 = 123
-        private const val testId2 = 234
-        private const val testId3 = 345
-        private const val invalidId = 987
+        private const val TEST_ID_1 = 123
+        private const val TEST_ID_2 = 234
+        private const val TEST_ID_3 = 345
+        private const val INVALID_ID = 987
         private val testAccounts = listOf(
             AccountEntity(
-                id = testId1,
+                id = TEST_ID_1,
                 balanceAmount = AmountEntity(
-                    value = testId1.toLong(),
+                    value = TEST_ID_1.toLong(),
                 ),
                 name = "Cash",
                 type = AccountType.CASH,
             ),
             AccountEntity(
-                id = testId2,
+                id = TEST_ID_2,
                 balanceAmount = AmountEntity(
-                    value = testId2.toLong(),
+                    value = TEST_ID_2.toLong(),
                 ),
                 name = "Axis",
                 type = AccountType.BANK,
             ),
             AccountEntity(
-                id = testId3,
+                id = TEST_ID_3,
                 balanceAmount = AmountEntity(
-                    value = testId3.toLong(),
+                    value = TEST_ID_3.toLong(),
                 ),
                 name = "Paytm",
                 type = AccountType.E_WALLET,

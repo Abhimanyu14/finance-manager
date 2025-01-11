@@ -8,39 +8,33 @@ import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 internal class TransactionForDaoTest {
+    // region testing
+    private lateinit var standardTestDispatcher: TestDispatcher
+    private lateinit var testScope: TestScope
+    // endregion
+
+    // region dependencies
     private lateinit var myRoomDatabase: MyRoomDatabase
+    // endregion
+
+    // region SUT
     private lateinit var transactionForDao: TransactionForDao
-
-    @Before
-    fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        myRoomDatabase = Room
-            .inMemoryDatabaseBuilder(
-                context = context,
-                klass = MyRoomDatabase::class.java,
-            )
-            .allowMainThreadQueries()
-            .build()
-        transactionForDao = myRoomDatabase.transactionForDao()
-    }
-
-    @After
-    fun tearDown() {
-        myRoomDatabase.close()
-    }
+    // endregion
 
     @Test
-    fun getAllTransactionForValues() = runTest {
+    fun getAllTransactionForValues() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -58,7 +52,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getAllTransactionForValuesFlow() = runTest {
+    fun getAllTransactionForValuesFlow() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -80,7 +74,7 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionForValuesCount() = runTest {
+    fun getTransactionForValuesCount() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -94,13 +88,13 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionFor_returnsDataForValidId() = runTest {
+    fun getTransactionFor_returnsDataForValidId() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val result = transactionForDao.getTransactionFor(
-            id = testId1,
+            id = TEST_ID_1,
         )
 
         Assert.assertEquals(
@@ -110,20 +104,20 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionFor_returnsNullForInvalidId() = runTest {
+    fun getTransactionFor_returnsNullForInvalidId() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val result = transactionForDao.getTransactionFor(
-            id = invalidId,
+            id = INVALID_ID,
         )
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun updateTransactionForValues() = runTest {
+    fun updateTransactionForValues() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -132,11 +126,11 @@ internal class TransactionForDaoTest {
         val testTitle2 = "Rock"
         transactionForDao.updateTransactionForValues(
             testTransactionForValues[0].copy(
-                id = testId1,
+                id = TEST_ID_1,
                 title = testTitle1,
             ),
             testTransactionForValues[1].copy(
-                id = testId2,
+                id = TEST_ID_2,
                 title = testTitle2,
             ),
         )
@@ -153,13 +147,13 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun deleteTransactionFor_deleteDataOfGivenId() = runTest {
+    fun deleteTransactionFor_deleteDataOfGivenId() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         transactionForDao.deleteTransactionFor(
-            id = testId1,
+            id = TEST_ID_1,
         )
         val result = transactionForDao.getAllTransactionForValues()
 
@@ -174,13 +168,13 @@ internal class TransactionForDaoTest {
     }
 
     @Test
-    fun deleteTransactionFor_noDeletionForInvalidId() = runTest {
+    fun deleteTransactionFor_noDeletionForInvalidId() = runTestWithTimeout {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         transactionForDao.deleteTransactionFor(
-            id = invalidId,
+            id = INVALID_ID,
         )
         val result = transactionForDao.getAllTransactionForValues()
 
@@ -194,18 +188,63 @@ internal class TransactionForDaoTest {
         )
     }
 
+    // region test setup
+    private fun runTestWithTimeout(
+        block: suspend TestScope.() -> Unit,
+    ) = runTest(
+        timeout = 3.seconds,
+        testBody = {
+            setUp()
+            with(
+                receiver = testScope,
+            ) {
+                block()
+            }
+            tearDown()
+        },
+    )
+
+    private fun TestScope.setUp() {
+        standardTestDispatcher = StandardTestDispatcher(
+            scheduler = testScheduler,
+        )
+        testScope = TestScope(
+            context = standardTestDispatcher,
+        )
+        setupSUT()
+    }
+
+    private fun setupSUT() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        myRoomDatabase = Room
+            .inMemoryDatabaseBuilder(
+                context = context,
+                klass = MyRoomDatabase::class.java,
+            )
+            .allowMainThreadQueries()
+            .build()
+        transactionForDao = myRoomDatabase.transactionForDao()
+    }
+
+    private fun tearDown() {
+        myRoomDatabase.close()
+    }
+    // endregion
+
     companion object {
-        private const val testId1 = 123
-        private const val testId2 = 234
-        private const val invalidId = 987
+        private const val TEST_ID_1 = 123
+        private const val TEST_ID_2 = 234
+        private const val TEST_TITLE_1 = "Sam"
+        private const val TEST_TITLE_2 = "Jim"
+        private const val INVALID_ID = 987
         private val testTransactionForValues = listOf(
             TransactionForEntity(
-                id = testId1,
-                title = "Sam",
+                id = TEST_ID_1,
+                title = TEST_TITLE_1,
             ),
             TransactionForEntity(
-                id = testId2,
-                title = "Jim",
+                id = TEST_ID_2,
+                title = TEST_TITLE_2,
             ),
         )
     }
