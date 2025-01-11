@@ -24,6 +24,7 @@ public interface TransactionForDao {
         id: Int,
     ): TransactionForEntity?
 
+    // TODO(Abhi): Handle conflicts with error handling properly
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionForEntity,

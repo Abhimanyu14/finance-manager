@@ -25,6 +25,7 @@ public interface CategoryDao {
         id: Int,
     ): CategoryEntity?
 
+    // TODO(Abhi): Handle conflicts with error handling properly
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public suspend fun insertCategories(
         vararg categories: CategoryEntity,

@@ -141,6 +141,7 @@ public interface TransactionDao {
         id: Int,
     ): TransactionDataEntity?
 
+    // TODO(Abhi): Handle conflicts with error handling properly
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public suspend fun insertTransactions(
         vararg transactions: TransactionEntity,
@@ -149,6 +150,7 @@ public interface TransactionDao {
     @Query(value = "DELETE FROM transaction_table")
     public suspend fun deleteAllTransactions(): Int
 
+    // TODO(Abhi): Handle conflicts with error handling properly
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public suspend fun insertTransaction(
         transaction: TransactionEntity,
