@@ -99,10 +99,10 @@ public class FakeTransactionRepositoryImpl : TransactionRepository {
     }
 
     override suspend fun insertTransaction(
-        amountValue: Long,
         accountFrom: Account?,
         accountTo: Account?,
         transaction: Transaction,
+        originalTransaction: Transaction?,
     ): Long {
         return 0L
     }
