@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionUseCase
@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.bottomsheet.AddTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.snackbar.AddTransactionScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
@@ -23,10 +23,10 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 internal class AddTransactionScreenUIStateDelegateImpl(
-    dateTimeUtil: DateTimeUtil,
+    dateTimeKit: DateTimeKit,
     private val coroutineScope: CoroutineScope,
     private val insertTransactionUseCase: InsertTransactionUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : AddTransactionScreenUIStateDelegate {
     // region initial data
     override var originalTransactionData: TransactionData? = null
@@ -76,11 +76,11 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         )
     override val transactionDate: MutableStateFlow<LocalDate> =
         MutableStateFlow(
-            value = dateTimeUtil.getCurrentLocalDate(),
+            value = dateTimeKit.getCurrentLocalDate(),
         )
     override val transactionTime: MutableStateFlow<LocalTime> =
         MutableStateFlow(
-            value = dateTimeUtil.getCurrentLocalTime(),
+            value = dateTimeKit.getCurrentLocalTime(),
         )
     override val isTransactionDatePickerDialogVisible: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
@@ -172,7 +172,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
             )
             if (isTransactionInsertedSuccessfully) {
                 setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
-                navigator.navigateUp()
+                navigationKit.navigateUp()
             } else {
                 setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionFailed)
             }
@@ -180,7 +180,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

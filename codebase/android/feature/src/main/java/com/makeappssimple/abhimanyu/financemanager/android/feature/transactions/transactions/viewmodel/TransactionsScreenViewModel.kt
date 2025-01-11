@@ -6,7 +6,7 @@ import com.google.firebase.perf.metrics.Trace
 import com.google.firebase.perf.performance
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.So
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.areFiltersSelected
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
@@ -52,16 +52,16 @@ import javax.inject.Inject
 public class TransactionsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     private val dispatcherProvider: DispatcherProvider,
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), TransactionsScreenUIStateDelegate by TransactionsScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
-    navigator = navigator,
+    navigationKit = navigationKit,
     updateTransactionsUseCase = updateTransactionsUseCase,
 ) {
     // region initial data
@@ -76,7 +76,7 @@ public class TransactionsScreenViewModel @Inject constructor(
     private val transactionTypes: ImmutableList<TransactionType> =
         TransactionType.entries.toImmutableList()
     private val sortOptions: ImmutableList<SortOption> = SortOption.entries.toImmutableList()
-    private val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
+    private val currentLocalDate: LocalDate = dateTimeKit.getCurrentLocalDate()
     // endregion
 
     // region uiStateAndStateEvents
@@ -270,13 +270,13 @@ public class TransactionsScreenViewModel @Inject constructor(
                             ) {
                                 val dateTextBuilder = StringBuilder()
                                 dateTextBuilder.append(
-                                    dateTimeUtil.getFormattedDate(
+                                    dateTimeKit.getFormattedDate(
                                         timestamp = it.transaction.transactionTimestamp,
                                     )
                                 )
                                 dateTextBuilder.append(" (")
                                 dateTextBuilder.append(
-                                    dateTimeUtil.getFormattedDayOfWeek(
+                                    dateTimeKit.getFormattedDayOfWeek(
                                         timestamp = it.transaction.transactionTimestamp,
                                     )
                                 )
@@ -289,7 +289,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                         .mapValues {
                             it.value.map { listItem ->
                                 listItem.toTransactionListItemData(
-                                    dateTimeUtil = dateTimeUtil,
+                                    dateTimeKit = dateTimeKit,
                                 )
                                     .copy(
                                         isDeleteButtonEnabled = false,
@@ -454,7 +454,7 @@ public class TransactionsScreenViewModel @Inject constructor(
                     }
 
                     accounts = accountsInTransactions
-                    oldestTransactionLocalDate = dateTimeUtil.getLocalDate(
+                    oldestTransactionLocalDate = dateTimeKit.getLocalDate(
                         timestamp = oldestTransactionLocalDateValue.orZero(),
                     )
                     categoriesMap = categoriesInTransactionsMap.toMap()

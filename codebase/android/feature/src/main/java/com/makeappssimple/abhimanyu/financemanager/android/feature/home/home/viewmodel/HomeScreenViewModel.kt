@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.core.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
@@ -22,7 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.toNonSignedString
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
@@ -50,16 +50,16 @@ public class HomeScreenViewModel @Inject constructor(
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     shouldShowBackupCardUseCase: ShouldShowBackupCardUseCase,
     private val backupDataUseCase: BackupDataUseCase,
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
     private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), HomeScreenUIStateDelegate by HomeScreenUIStateDelegateImpl(
-    dateTimeUtil = dateTimeUtil,
-    navigator = navigator,
+    dateTimeKit = dateTimeKit,
+    navigationKit = navigationKit,
 ) {
     // region initial data
     private val isBackupCardVisible: Flow<Boolean> = shouldShowBackupCardUseCase()
@@ -115,7 +115,7 @@ public class HomeScreenViewModel @Inject constructor(
                     uri = uri,
                 )
             }
-            navigator.navigateUp()
+            navigationKit.navigateUp()
         }
     }
     // endregion
@@ -196,7 +196,7 @@ public class HomeScreenViewModel @Inject constructor(
                 homeListItemViewData.update {
                     transactionDataList.map { transactionData: TransactionData ->
                         transactionData.toTransactionListItemData(
-                            dateTimeUtil = dateTimeUtil,
+                            dateTimeKit = dateTimeKit,
                         )
                     }
                 }
@@ -244,38 +244,38 @@ public class HomeScreenViewModel @Inject constructor(
         return getTransactionsBetweenTimestampsUseCase(
             startingTimestamp = when (overviewTabOption) {
                 OverviewTabOption.DAY -> {
-                    dateTimeUtil.getStartOfDayTimestamp(
+                    dateTimeKit.getStartOfDayTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.MONTH -> {
-                    dateTimeUtil.getStartOfMonthTimestamp(
+                    dateTimeKit.getStartOfMonthTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.YEAR -> {
-                    dateTimeUtil.getStartOfYearTimestamp(
+                    dateTimeKit.getStartOfYearTimestamp(
                         timestamp = timestamp,
                     )
                 }
             },
             endingTimestamp = when (overviewTabOption) {
                 OverviewTabOption.DAY -> {
-                    dateTimeUtil.getEndOfDayTimestamp(
+                    dateTimeKit.getEndOfDayTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.MONTH -> {
-                    dateTimeUtil.getEndOfMonthTimestamp(
+                    dateTimeKit.getEndOfMonthTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.YEAR -> {
-                    dateTimeUtil.getEndOfYearTimestamp(
+                    dateTimeKit.getEndOfYearTimestamp(
                         timestamp = timestamp,
                     )
                 }
@@ -326,15 +326,15 @@ public class HomeScreenViewModel @Inject constructor(
     ): String {
         return when (overviewTabOption) {
             OverviewTabOption.DAY -> {
-                dateTimeUtil.getFormattedDate(timestamp).uppercase()
+                dateTimeKit.getFormattedDate(timestamp).uppercase()
             }
 
             OverviewTabOption.MONTH -> {
-                dateTimeUtil.getFormattedMonth(timestamp).uppercase()
+                dateTimeKit.getFormattedMonth(timestamp).uppercase()
             }
 
             OverviewTabOption.YEAR -> {
-                dateTimeUtil.getFormattedYear(timestamp).uppercase()
+                dateTimeKit.getFormattedYear(timestamp).uppercase()
             }
         }
     }

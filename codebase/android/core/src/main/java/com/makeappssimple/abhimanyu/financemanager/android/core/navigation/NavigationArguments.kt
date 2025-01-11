@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
-public object NavArgs {
+public object NavigationArguments {
     public const val ACCOUNT_ID: String = "accountId"
     public const val CATEGORY_ID: String = "categoryId"
     public const val TRANSACTION_FOR_ID: String = "transactionForId"

@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
@@ -32,13 +32,13 @@ public class AddAccountScreenViewModel @Inject constructor(
     private val addAccountScreenDataValidationUseCase: AddAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val insertAccountUseCase: InsertAccountUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddAccountScreenUIStateDelegate by AddAccountScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
     insertAccountUseCase = insertAccountUseCase,
-    navigator = navigator,
+    navigationKit = navigationKit,
 ) {
     // region initial data
     private var allAccounts: ImmutableList<Account> = persistentListOf()

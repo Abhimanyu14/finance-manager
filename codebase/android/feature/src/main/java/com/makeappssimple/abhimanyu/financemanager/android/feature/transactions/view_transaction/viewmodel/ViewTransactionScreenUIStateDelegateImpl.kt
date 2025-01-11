@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.bottomsheet.ViewTransactionScreenBottomSheetType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 internal class ViewTransactionScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : ViewTransactionScreenUIStateDelegate {
     // region initial data
     override var transactionIdToDelete: Int? = null
@@ -86,7 +86,7 @@ internal class ViewTransactionScreenUIStateDelegateImpl(
     override fun onRefundButtonClick(
         transactionId: Int,
     ) {
-        navigator.navigateToAddTransactionScreen(
+        navigationKit.navigateToAddTransactionScreen(
             transactionId = transactionId,
         )
     }
@@ -94,7 +94,7 @@ internal class ViewTransactionScreenUIStateDelegateImpl(
     override fun navigateToEditTransactionScreen(
         transactionId: Int,
     ) {
-        navigator.navigateToEditTransactionScreen(
+        navigationKit.navigateToEditTransactionScreen(
             transactionId = transactionId,
         )
     }
@@ -102,13 +102,13 @@ internal class ViewTransactionScreenUIStateDelegateImpl(
     override fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigator.navigateToViewTransactionScreen(
+        navigationKit.navigateToViewTransactionScreen(
             transactionId = transactionId,
         )
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

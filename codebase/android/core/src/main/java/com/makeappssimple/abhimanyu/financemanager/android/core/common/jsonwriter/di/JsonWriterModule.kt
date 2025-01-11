@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriter
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriterImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriterKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriterKitImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +15,8 @@ public class JsonWriterModule {
     @Provides
     public fun providesJsonWriter(
         @ApplicationContext context: Context,
-    ): MyJsonWriter {
-        return MyJsonWriterImpl(
+    ): JsonWriterKit {
+        return JsonWriterKitImpl(
             context = context,
         )
     }

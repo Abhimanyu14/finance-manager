@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.lifecycle.SavedStateHandle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationArguments
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
 internal class EditTransactionForScreenArgs(
@@ -12,6 +12,6 @@ internal class EditTransactionForScreenArgs(
         savedStateHandle: SavedStateHandle,
         @Suppress("UNUSED_PARAMETER") stringDecoder: StringDecoder,
     ) : this(
-        transactionForId = savedStateHandle.get<Int>(NavArgs.TRANSACTION_FOR_ID),
+        transactionForId = savedStateHandle.get<Int>(NavigationArguments.TRANSACTION_FOR_ID),
     )
 }

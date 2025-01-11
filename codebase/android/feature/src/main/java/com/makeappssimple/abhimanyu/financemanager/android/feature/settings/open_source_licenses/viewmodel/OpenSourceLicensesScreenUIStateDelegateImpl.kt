@@ -1,12 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.bottomsheet.OpenSourceLicensesScreenBottomSheetType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 internal class OpenSourceLicensesScreenUIStateDelegateImpl(
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : OpenSourceLicensesScreenUIStateDelegate {
     // region UI state
     override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -54,7 +54,7 @@ internal class OpenSourceLicensesScreenUIStateDelegateImpl(
 
     // region state events
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

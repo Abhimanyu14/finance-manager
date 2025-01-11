@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.bottomsheet.EditCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 internal class EditCategoryScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : EditCategoryScreenUIStateDelegate {
     // region initial data
@@ -98,7 +98,7 @@ internal class EditCategoryScreenUIStateDelegateImpl(
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {
@@ -155,7 +155,7 @@ internal class EditCategoryScreenUIStateDelegateImpl(
         )?.let { category ->
             coroutineScope.launch {
                 updateCategoriesUseCase(category)
-                navigator.navigateUp()
+                navigationKit.navigateUp()
             }
         }
     }

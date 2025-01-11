@@ -10,9 +10,9 @@ private object MyJsonWriterImplConstants {
     const val WRITE_MODE = "w"
 }
 
-public class MyJsonWriterImpl(
+public class JsonWriterKitImpl(
     private val context: Context,
-) : MyJsonWriter {
+) : JsonWriterKit {
     override fun writeJsonToFile(
         jsonString: String,
         uri: Uri,

@@ -17,7 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalLogKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.event.SettingsScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 public fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel(),
 ) {
-    val myLogger = LocalMyLogger.current
+    val myLogger = LocalLogKit.current
     myLogger.logInfo(
         message = "Inside SettingsScreen",
     )

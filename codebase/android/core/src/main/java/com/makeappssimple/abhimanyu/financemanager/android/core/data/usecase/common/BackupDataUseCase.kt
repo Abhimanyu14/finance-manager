@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common
 
 import android.net.Uri
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriter
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriterKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatastoreData
@@ -22,20 +22,20 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 public class BackupDataUseCase @Inject constructor(
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getAllTransactionsUseCase: GetAllTransactionsUseCase,
-    private val myJsonWriter: MyJsonWriter,
+    private val jsonWriterKit: JsonWriterKit,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) {
     public suspend operator fun invoke(
         uri: Uri,
     ): Boolean {
         val backupData = BackupData(
-            lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
-            lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
+            lastBackupTime = dateTimeKit.getReadableDateAndTime(),
+            lastBackupTimestamp = dateTimeKit.getCurrentTimeMillis().toString(),
             databaseData = getDatabaseData(),
             datastoreData = getDatastoreData(),
         )
@@ -43,7 +43,7 @@ public class BackupDataUseCase @Inject constructor(
             value = backupData,
         )
         myPreferencesRepository.setLastDataBackupTimestamp()
-        return myJsonWriter.writeJsonToFile(
+        return jsonWriterKit.writeJsonToFile(
             uri = uri,
             jsonString = jsonString,
         )

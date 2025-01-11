@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIState
@@ -54,7 +54,7 @@ internal class AccountsScreenViewModelTest {
         mock()
     private val myPreferencesRepository: MyPreferencesRepository = mock()
     private val getDefaultAccountIdFlowUseCase: GetDefaultAccountIdFlowUseCase = mock()
-    private val navigator: Navigator = mock()
+    private val navigationKit: NavigationKit = mock()
     // endregion
 
     // region SUT
@@ -228,7 +228,7 @@ internal class AccountsScreenViewModelTest {
             uiStateEvents().navigateToAddAccountScreen()
 
             verify(
-                mock = navigator,
+                mock = navigationKit,
             ).navigateToAddAccountScreen()
         }
 
@@ -242,7 +242,7 @@ internal class AccountsScreenViewModelTest {
             uiStateEvents().navigateToEditAccountScreen(any())
 
             verify(
-                mock = navigator,
+                mock = navigationKit,
             ).navigateToEditAccountScreen(any())
         }
 
@@ -256,7 +256,7 @@ internal class AccountsScreenViewModelTest {
             uiStateEvents().navigateUp()
 
             verify(
-                mock = navigator,
+                mock = navigationKit,
             ).navigateUp()
         }
     // endregion
@@ -284,7 +284,7 @@ internal class AccountsScreenViewModelTest {
             getAllAccountsListItemDataListUseCase = getAllAccountsListItemDataListUseCase,
             myPreferencesRepository = myPreferencesRepository,
             getDefaultAccountIdFlowUseCase = getDefaultAccountIdFlowUseCase,
-            navigator = navigator,
+            navigationKit = navigationKit,
             screenUICommonState = screenUICommonState,
         )
     }

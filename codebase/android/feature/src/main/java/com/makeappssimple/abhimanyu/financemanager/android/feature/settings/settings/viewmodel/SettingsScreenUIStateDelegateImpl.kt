@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarm.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.snackbar.SettingsScreenSnackbarType
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 internal class SettingsScreenUIStateDelegateImpl(
     private val alarmKit: AlarmKit,
     private val coroutineScope: CoroutineScope,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
 ) : SettingsScreenUIStateDelegate {
     // region UI state
@@ -86,30 +86,30 @@ internal class SettingsScreenUIStateDelegateImpl(
     }
 
     override fun navigateToAccountsScreen() {
-        navigator.navigateToAccountsScreen()
+        navigationKit.navigateToAccountsScreen()
     }
 
     override fun navigateToCategoriesScreen() {
-        navigator.navigateToCategoriesScreen()
+        navigationKit.navigateToCategoriesScreen()
     }
 
     override fun navigateToOpenSourceLicensesScreen() {
-        navigator.navigateToOpenSourceLicensesScreen()
+        navigationKit.navigateToOpenSourceLicensesScreen()
     }
 
     override fun navigateToTransactionForValuesScreen() {
-        navigator.navigateToTransactionForValuesScreen()
+        navigationKit.navigateToTransactionForValuesScreen()
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun recalculateTotal() {
         coroutineScope.launch {
             startLoading()
             recalculateTotalUseCase()
-            navigator.navigateUp()
+            navigationKit.navigateUp()
         }
     }
 

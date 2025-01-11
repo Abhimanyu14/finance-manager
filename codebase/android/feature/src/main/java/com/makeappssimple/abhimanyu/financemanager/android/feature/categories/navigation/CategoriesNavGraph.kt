@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationArguments
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.screen.AddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreen
@@ -14,20 +14,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ed
 
 public fun NavGraphBuilder.categoriesNavGraph() {
     composable(
-        route = "${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}",
+        route = "${Screen.AddCategory.route}/{${NavigationArguments.TRANSACTION_TYPE}}",
         arguments = listOf(
-            navArgument(NavArgs.TRANSACTION_TYPE) {
+            navArgument(NavigationArguments.TRANSACTION_TYPE) {
                 type = NavType.StringType
             },
         ),
         deepLinks = listOf(
             navDeepLink {
                 uriPattern =
-                    "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}"
+                    "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.AddCategory.route}/{${NavigationArguments.TRANSACTION_TYPE}}"
             },
             navDeepLink {
                 uriPattern =
-                    "${DeeplinkUrl.BASE_URL}/${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}"
+                    "${DeeplinkUrl.BASE_URL}/${Screen.AddCategory.route}/{${NavigationArguments.TRANSACTION_TYPE}}"
             },
         ),
     ) {
@@ -49,9 +49,9 @@ public fun NavGraphBuilder.categoriesNavGraph() {
     }
 
     composable(
-        route = "${Screen.EditCategory.route}/{${NavArgs.CATEGORY_ID}}",
+        route = "${Screen.EditCategory.route}/{${NavigationArguments.CATEGORY_ID}}",
         arguments = listOf(
-            navArgument(NavArgs.CATEGORY_ID) {
+            navArgument(NavigationArguments.CATEGORY_ID) {
                 type = NavType.IntType
             },
         ),

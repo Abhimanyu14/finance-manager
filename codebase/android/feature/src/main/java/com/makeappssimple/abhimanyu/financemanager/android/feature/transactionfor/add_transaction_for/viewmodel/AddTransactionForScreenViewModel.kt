@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.bottomsheet.AddTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIState
@@ -27,13 +27,13 @@ public class AddTransactionForScreenViewModel @Inject constructor(
     private val addTransactionForScreenDataValidationUseCase: AddTransactionForScreenDataValidationUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val insertTransactionForUseCase: InsertTransactionForUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddTransactionForScreenUIStateDelegate by AddTransactionForScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
     insertTransactionForUseCase = insertTransactionForUseCase,
-    navigator = navigator,
+    navigationKit = navigationKit,
 ) {
     // region initial data
     private var allTransactionForValues: ImmutableList<TransactionFor> = persistentListOf()

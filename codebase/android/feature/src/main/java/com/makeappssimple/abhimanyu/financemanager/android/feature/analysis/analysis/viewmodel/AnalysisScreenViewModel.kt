@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.ana
 
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
@@ -41,13 +41,13 @@ private object AnalysisScreenViewModelConstants {
 @HiltViewModel
 public class AnalysisScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AnalysisScreenUIStateDelegate by AnalysisScreenUIStateDelegateImpl(
-    navigator = navigator,
+    navigationKit = navigationKit,
 ) {
     // region initial data
     private val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
@@ -107,7 +107,7 @@ public class AnalysisScreenViewModel @Inject constructor(
 
     // region getOldestTransactionLocalDate
     private fun getOldestTransactionLocalDate(): LocalDate {
-        return dateTimeUtil.getLocalDate(
+        return dateTimeKit.getLocalDate(
             timestamp = allTransactionData.minOfOrNull { transactionData ->
                 transactionData.transaction.transactionTimestamp
             }.orZero(),
@@ -143,9 +143,9 @@ public class AnalysisScreenViewModel @Inject constructor(
                         analysisListItemData = analysisListItemData,
                         transactionTypesChipUIData = validTransactionTypesChipUIData,
                         defaultStartLocalDate = oldestTransactionLocalDate.orMin(),
-                        defaultEndLocalDate = dateTimeUtil.getCurrentLocalDate(),
-                        startOfCurrentMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
-                        startOfCurrentYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
+                        defaultEndLocalDate = dateTimeKit.getCurrentLocalDate(),
+                        startOfCurrentMonthLocalDate = dateTimeKit.getStartOfMonthLocalDate(),
+                        startOfCurrentYearLocalDate = dateTimeKit.getStartOfYearLocalDate(),
                     )
                 }
             }

@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
-public interface DateTimeUtil : DateUtil, TimeUtil {
+public interface DateTimeKit : DateKit, TimeKit {
     public fun getCurrentLocalDateTime(): LocalDateTime
 
     public fun getCurrentInstant(): Instant

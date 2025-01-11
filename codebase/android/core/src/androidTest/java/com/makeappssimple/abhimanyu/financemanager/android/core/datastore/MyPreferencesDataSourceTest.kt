@@ -10,7 +10,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeLogKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.ReminderConstants
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -57,7 +57,7 @@ internal class MyPreferencesDataSourceTest {
         )
         myPreferencesDataSource = MyPreferencesDataSource(
             dataStore = testDataStore,
-            myLogger = FakeMyLoggerImpl(),
+            logKit = FakeLogKitImpl(),
         )
     }
 

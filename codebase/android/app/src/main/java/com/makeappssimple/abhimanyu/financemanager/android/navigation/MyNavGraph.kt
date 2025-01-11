@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalLogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Command
 import com.makeappssimple.abhimanyu.financemanager.android.viewmodel.MainActivityViewModel
 
@@ -18,7 +18,7 @@ internal fun MyNavGraph(
     activityViewModel: MainActivityViewModel = hiltViewModel(),
     navHostController: NavHostController,
 ) {
-    val myLogger = LocalMyLogger.current
+    val myLogger = LocalLogKit.current
     myLogger.logInfo(
         message = "Inside MyNavGraph",
     )
@@ -31,7 +31,7 @@ internal fun MyNavGraph(
         lifecycle.repeatOnLifecycle(
             state = Lifecycle.State.STARTED,
         ) {
-            activityViewModel.navigator.command.collect { command ->
+            activityViewModel.navigationKit.command.collect { command ->
                 keyboardController?.hide()
                 when (command.command) {
                     Command.NAVIGATE -> {

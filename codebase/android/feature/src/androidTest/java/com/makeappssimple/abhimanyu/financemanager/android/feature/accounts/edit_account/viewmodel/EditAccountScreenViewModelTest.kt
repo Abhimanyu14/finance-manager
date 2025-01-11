@@ -11,8 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationArguments
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
@@ -53,7 +53,7 @@ internal class EditAccountScreenViewModelTest {
         mock()
     private val getAllAccountsUseCase: GetAllAccountsUseCase = mock()
     private val getAccountUseCase: GetAccountUseCase = mock()
-    private val navigator: Navigator = mock()
+    private val navigationKit: NavigationKit = mock()
     private val updateAccountUseCase: UpdateAccountUseCase = mock()
     // endregion
 
@@ -178,7 +178,7 @@ internal class EditAccountScreenViewModelTest {
                 advanceUntilIdle()
 
                 verify(
-                    mock = navigator,
+                    mock = navigationKit,
                     mode = never(),
                 ).navigateUp()
                 assertEquals(
@@ -348,7 +348,7 @@ internal class EditAccountScreenViewModelTest {
         uiStateEvents().navigateUp()
 
         verify(
-            mock = navigator,
+            mock = navigationKit,
         ).navigateUp()
     }
 
@@ -684,7 +684,7 @@ internal class EditAccountScreenViewModelTest {
                 advanceUntilIdle()
 
                 verify(
-                    mock = navigator,
+                    mock = navigationKit,
                 ).navigateUp()
                 assertEquals(
                     Unit,
@@ -723,7 +723,7 @@ internal class EditAccountScreenViewModelTest {
                 advanceUntilIdle()
 
                 verify(
-                    mock = navigator,
+                    mock = navigationKit,
                     mode = never(),
                 ).navigateUp()
                 assertEquals(
@@ -767,7 +767,7 @@ internal class EditAccountScreenViewModelTest {
                 ),
             ).thenReturn(currentAccount)
         }
-        savedStateHandle[NavArgs.ACCOUNT_ID] = currentAccountId
+        savedStateHandle[NavigationArguments.ACCOUNT_ID] = currentAccountId
 
         val screenUIStateRefresh = ScreenUIStateRefreshImpl(
             coroutineScope = coroutineScope,
@@ -784,7 +784,7 @@ internal class EditAccountScreenViewModelTest {
             editAccountScreenDataValidationUseCase = editAccountScreenDataValidationUseCase,
             getAllAccountsUseCase = getAllAccountsUseCase,
             getAccountUseCase = getAccountUseCase,
-            navigator = navigator,
+            navigationKit = navigationKit,
             screenUICommonState = screenUICommonState,
             updateAccountUseCase = updateAccountUseCase,
         )

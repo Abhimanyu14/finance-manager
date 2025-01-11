@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.di
 
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReaderKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.InitialDatabasePopulator
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.InitialDatabasePopulatorImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
@@ -21,12 +21,12 @@ public class RoomModule {
     @Provides
     public fun providesInitialDatabasePopulator(
         dispatcherProvider: DispatcherProvider,
-        myJsonReader: MyJsonReader,
+        jsonReaderKit: JsonReaderKit,
         myPreferencesDataSource: MyPreferencesDataSource,
     ): InitialDatabasePopulator {
         return InitialDatabasePopulatorImpl(
             dispatcherProvider = dispatcherProvider,
-            myJsonReader = myJsonReader,
+            jsonReaderKit = jsonReaderKit,
             myPreferencesDataSource = myPreferencesDataSource,
         )
     }

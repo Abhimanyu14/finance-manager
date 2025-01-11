@@ -3,12 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.vie
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarm.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersion
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
@@ -34,10 +34,10 @@ internal class SettingsScreenViewModelTest {
     )
 
     private lateinit var alarmKit: AlarmKit
-    private lateinit var appVersionUtil: AppVersionUtil
+    private lateinit var appVersionKit: AppVersionKit
     private lateinit var backupDataUseCase: BackupDataUseCase
     private lateinit var myPreferencesRepository: MyPreferencesRepository
-    private lateinit var navigator: Navigator
+    private lateinit var navigationKit: NavigationKit
     private lateinit var recalculateTotalUseCase: RecalculateTotalUseCase
     private lateinit var restoreDataUseCase: RestoreDataUseCase
 
@@ -46,10 +46,10 @@ internal class SettingsScreenViewModelTest {
     @Before
     fun setUp() {
         alarmKit = mock()
-        appVersionUtil = mock()
+        appVersionKit = mock()
         backupDataUseCase = mock()
         myPreferencesRepository = mock()
-        navigator = mock()
+        navigationKit = mock()
         recalculateTotalUseCase = mock()
         restoreDataUseCase = mock()
 
@@ -57,16 +57,16 @@ internal class SettingsScreenViewModelTest {
             methodCall = myPreferencesRepository.getReminderFlow(),
         ).thenReturn(flow { })
         whenever(
-            methodCall = appVersionUtil.getAppVersion(),
+            methodCall = appVersionKit.getAppVersion(),
         ).thenReturn(TEST_APP_VERSION)
 
         settingsScreenViewModel = SettingsScreenViewModel(
             coroutineScope = testScope,
             alarmKit = alarmKit,
-            appVersionUtil = appVersionUtil,
+            appVersionKit = appVersionKit,
             backupDataUseCase = backupDataUseCase,
             myPreferencesRepository = myPreferencesRepository,
-            navigator = navigator,
+            navigationKit = navigationKit,
             recalculateTotalUseCase = recalculateTotalUseCase,
             restoreDataUseCase = restoreDataUseCase,
         )
@@ -84,7 +84,7 @@ internal class SettingsScreenViewModelTest {
 
         uiStateEvents.navigateToAccountsScreen()
         verify(
-            mock = navigator,
+            mock = navigationKit,
         ).navigateToAccountsScreen()
     }
 
@@ -96,7 +96,7 @@ internal class SettingsScreenViewModelTest {
 
         uiStateEvents.navigateToCategoriesScreen()
         verify(
-            mock = navigator,
+            mock = navigationKit,
         ).navigateToCategoriesScreen()
     }
 
@@ -108,7 +108,7 @@ internal class SettingsScreenViewModelTest {
 
         uiStateEvents.navigateToOpenSourceLicensesScreen()
         verify(
-            mock = navigator,
+            mock = navigationKit,
         ).navigateToOpenSourceLicensesScreen()
     }
 
@@ -120,7 +120,7 @@ internal class SettingsScreenViewModelTest {
 
         uiStateEvents.navigateToTransactionForValuesScreen()
         verify(
-            mock = navigator,
+            mock = navigationKit,
         ).navigateToTransactionForValuesScreen()
     }
 
@@ -132,7 +132,7 @@ internal class SettingsScreenViewModelTest {
 
         uiStateEvents.navigateUp()
         verify(
-            mock = navigator,
+            mock = navigationKit,
         ).navigateUp()
     }
 

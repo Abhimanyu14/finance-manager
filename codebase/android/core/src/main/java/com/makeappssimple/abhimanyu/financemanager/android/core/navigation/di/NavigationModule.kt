@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigatorImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKitImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,13 +12,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public class NavigatorModule {
+public class NavigationModule {
     @Singleton
     @Provides
     public fun providesNavigator(
         @ApplicationScope coroutineScope: CoroutineScope,
-    ): Navigator {
-        return NavigatorImpl(
+    ): NavigationKit {
+        return NavigationKitImpl(
             coroutineScope = coroutineScope,
         )
     }

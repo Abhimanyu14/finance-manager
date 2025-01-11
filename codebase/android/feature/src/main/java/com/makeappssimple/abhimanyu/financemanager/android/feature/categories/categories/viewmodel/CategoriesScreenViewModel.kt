@@ -15,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
@@ -45,14 +45,14 @@ public class CategoriesScreenViewModel @Inject constructor(
     private val getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), CategoriesScreenUIStateDelegate by CategoriesScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
     deleteCategoryUseCase = deleteCategoryUseCase,
     setDefaultCategoryUseCase = setDefaultCategoryUseCase,
-    navigator = navigator,
+    navigationKit = navigationKit,
 ) {
     // region initial data
     private val categoriesGridItemDataMap: MutableStateFlow<ImmutableMap<TransactionType, ImmutableList<CategoriesGridItemData>>> =

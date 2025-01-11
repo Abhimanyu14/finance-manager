@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.snackbar.EditAccountScreenSnackbarType
 import kotlinx.collections.immutable.ImmutableList
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 internal class EditAccountScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val screenUICommonState: ScreenUICommonState,
     private val updateAccountUseCase: UpdateAccountUseCase,
 ) : EditAccountScreenUIStateDelegate, ScreenUICommonState by screenUICommonState {
@@ -72,7 +72,7 @@ internal class EditAccountScreenUIStateDelegateImpl(
     }
 
     override fun navigateUp(): Job {
-        return navigator.navigateUp()
+        return navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType(): Job? {
@@ -94,7 +94,7 @@ internal class EditAccountScreenUIStateDelegateImpl(
                 name = name.text,
             )
             if (isAccountUpdated) {
-                navigator.navigateUp()
+                navigationKit.navigateUp()
             } else {
                 completeLoading()
                 // TODO: Show Error

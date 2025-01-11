@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
@@ -36,13 +36,13 @@ public class AddCategoryScreenViewModel @Inject constructor(
     private val addCategoryScreenDataValidationUseCase: AddCategoryScreenDataValidationUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddCategoryScreenUIStateDelegate by AddCategoryScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
     insertCategoriesUseCase = insertCategoriesUseCase,
-    navigator = navigator,
+    navigationKit = navigationKit,
 ) {
     // region screen args
     private val screenArgs = AddCategoryScreenArgs(

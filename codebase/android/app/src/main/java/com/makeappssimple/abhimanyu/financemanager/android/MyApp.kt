@@ -6,18 +6,18 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalLogKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavGraph
 
 @Composable
 internal fun MyApp(
-    myLogger: MyLogger,
+    logKit: LogKit,
     navHostController: NavHostController = rememberNavController(),
 ) {
     MyAppTheme {
         CompositionLocalProvider(
-            LocalMyLogger provides myLogger,
+            LocalLogKit provides logKit,
 
             // To remove overscroll effect globally
             LocalOverscrollConfiguration provides null,

@@ -2,10 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.buildcon
 
 import android.os.Build
 import com.makeappssimple.abhimanyu.financemanager.android.core.BuildConfig
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigKit
 import javax.inject.Inject
 
-public class FakeBuildConfigUtilImpl @Inject constructor() : BuildConfigUtil {
+public class FakeBuildConfigKitImpl @Inject constructor() : BuildConfigKit {
     override fun isDebugBuild(): Boolean {
         return BuildConfig.DEBUG
     }

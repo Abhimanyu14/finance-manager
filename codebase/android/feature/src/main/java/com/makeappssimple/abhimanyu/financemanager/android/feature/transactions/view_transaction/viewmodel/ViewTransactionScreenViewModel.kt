@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.toTransactionListItemData
@@ -35,16 +35,16 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
-    @VisibleForTesting internal val navigator: Navigator,
+    @VisibleForTesting internal val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), ViewTransactionScreenUIStateDelegate by ViewTransactionScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
     deleteTransactionUseCase = deleteTransactionUseCase,
-    navigator = navigator,
+    navigationKit = navigationKit,
 ) {
     // region screen args
     private val screenArgs = ViewTransactionScreenArgs(
@@ -150,7 +150,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
     ): TransactionListItemData {
         val transaction = transactionData.transaction
         return transactionData.toTransactionListItemData(
-            dateTimeUtil = dateTimeUtil,
+            dateTimeKit = dateTimeKit,
         )
             .copy(
                 isDeleteButtonEnabled = transaction.refundTransactionIds.isNullOrEmpty(),

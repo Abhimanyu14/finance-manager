@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.DeleteTransactionForUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.bottomsheet.TransactionForValuesScreenBottomSheetType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 internal class TransactionForValuesScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : TransactionForValuesScreenUIStateDelegate {
     // region UI state
     override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -76,19 +76,19 @@ internal class TransactionForValuesScreenUIStateDelegateImpl(
     }
 
     override fun navigateToAddTransactionForScreen() {
-        navigator.navigateToAddTransactionForScreen()
+        navigationKit.navigateToAddTransactionForScreen()
     }
 
     override fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     ) {
-        navigator.navigateToEditTransactionForScreen(
+        navigationKit.navigateToEditTransactionForScreen(
             transactionForId = transactionForId,
         )
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

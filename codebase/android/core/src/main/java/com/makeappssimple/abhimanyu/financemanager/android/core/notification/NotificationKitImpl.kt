@@ -8,12 +8,12 @@ import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import com.makeappssimple.abhimanyu.financemanager.android.core.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.app.AppKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 
 public class NotificationKitImpl(
     private val appKit: AppKit,
     private val context: Context,
-    private val myLogger: MyLogger,
+    private val logKit: LogKit,
 ) : NotificationKit {
     override fun scheduleNotification() {
         val notificationManager =
@@ -25,7 +25,7 @@ public class NotificationKitImpl(
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        myLogger.logInfo(
+        logKit.logInfo(
             message = "Sending Notification : ${System.currentTimeMillis()}",
         )
         val notification =
@@ -41,7 +41,7 @@ public class NotificationKitImpl(
                 .setAutoCancel(true)
                 .build()
         notificationManager.notify(1, notification)
-        myLogger.logInfo(
+        logKit.logInfo(
             message = "Notification : ${System.currentTimeMillis()}",
         )
     }

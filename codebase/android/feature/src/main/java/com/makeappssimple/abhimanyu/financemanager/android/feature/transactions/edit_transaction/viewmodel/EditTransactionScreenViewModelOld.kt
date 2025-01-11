@@ -5,7 +5,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
@@ -42,7 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.minus
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.plus
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
@@ -72,14 +72,14 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateAccountBalanceAmountUseCase: UpdateAccountBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : ScreenViewModel(
@@ -133,7 +133,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     )
     // endregion
 
-    internal val currentLocalDate: LocalDate = dateTimeUtil.getCurrentLocalDate()
+    internal val currentLocalDate: LocalDate = dateTimeKit.getCurrentLocalDate()
 
     internal val uiState: MutableStateFlow<EditTransactionScreenUiStateData> = MutableStateFlow(
         value = EditTransactionScreenUiStateData(
@@ -145,8 +145,8 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
             selectedTransactionForIndex = 0,
             accountFrom = null,
             accountTo = null,
-            transactionDate = dateTimeUtil.getCurrentLocalDate(),
-            transactionTime = dateTimeUtil.getCurrentLocalTime(),
+            transactionDate = dateTimeKit.getCurrentLocalDate(),
+            transactionTime = dateTimeKit.getCurrentLocalTime(),
         ),
     )
     private val uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
@@ -441,7 +441,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                                 accountToId = accountToId,
                                 description = uiStateValue.description.text,
                                 title = title,
-                                creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
+                                creationTimestamp = dateTimeKit.getCurrentTimeMillis(),
                                 transactionTimestamp = transactionTimestamp,
                                 transactionForId = transactionForId,
                                 transactionType = selectedTransactionTypeValue,
@@ -472,7 +472,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                     // endregion
                 }
             }
-            navigator.navigateUp()
+            navigationKit.navigateUp()
         }
     }
 
@@ -515,7 +515,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
     }
 
     internal fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     private fun updateTitle(
@@ -887,10 +887,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
             ),
             accountFrom = editingTransactionData?.accountFrom,
             accountTo = editingTransactionData?.accountTo,
-            transactionDate = dateTimeUtil.getLocalDate(
+            transactionDate = dateTimeKit.getLocalDate(
                 timestamp = originalTransaction.transactionTimestamp,
             ),
-            transactionTime = dateTimeUtil.getLocalTime(
+            transactionTime = dateTimeKit.getLocalTime(
                 timestamp = originalTransaction.transactionTimestamp,
             ),
         )

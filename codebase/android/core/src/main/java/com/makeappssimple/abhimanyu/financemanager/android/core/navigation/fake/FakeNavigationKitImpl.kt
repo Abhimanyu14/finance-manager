@@ -1,12 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationCommand
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-public class FakeNavigatorImpl : Navigator {
+public class FakeNavigationKitImpl : NavigationKit {
     private val _command: MutableSharedFlow<NavigationCommand> = MutableSharedFlow()
     override val command: SharedFlow<NavigationCommand> = _command
 

@@ -3,19 +3,19 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.turbineScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.fake.FakeMyPreferencesRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.fake.FakeTransactionRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeLogKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigatorImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigationKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -41,9 +41,9 @@ internal class ViewTransactionScreenViewModelTest {
 
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var stringDecoder: StringDecoder
-    private lateinit var myLogger: MyLogger
-    private lateinit var navigator: Navigator
-    private lateinit var dateTimeUtil: DateTimeUtil
+    private lateinit var logKit: LogKit
+    private lateinit var navigationKit: NavigationKit
+    private lateinit var dateTimeKit: DateTimeKit
     private lateinit var deleteTransactionUseCase: DeleteTransactionUseCase
     private lateinit var getTransactionDataUseCase: GetTransactionDataUseCase
 
@@ -57,8 +57,8 @@ internal class ViewTransactionScreenViewModelTest {
     fun setUp() {
         savedStateHandle = SavedStateHandle()
         stringDecoder = StringDecoderImpl()
-        myLogger = FakeMyLoggerImpl()
-        dateTimeUtil = DateTimeUtilImpl()
+        logKit = FakeLogKitImpl()
+        dateTimeKit = DateTimeKitImpl()
         deleteTransactionUseCase = DeleteTransactionUseCase(
             myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
             transactionRepository = FakeTransactionRepositoryImpl(),
@@ -83,7 +83,7 @@ internal class ViewTransactionScreenViewModelTest {
     @Test
     @Ignore("Fix later")
     internal fun navigateUpTest() = runTest {
-        navigator = FakeNavigatorImpl()
+        navigationKit = FakeNavigationKitImpl()
         initViewModel()
 
         turbineScope {
@@ -105,10 +105,10 @@ internal class ViewTransactionScreenViewModelTest {
         viewTransactionScreenViewModel = ViewTransactionScreenViewModel(
             savedStateHandle = savedStateHandle,
             stringDecoder = stringDecoder,
-            dateTimeUtil = dateTimeUtil,
+            dateTimeUtil = dateTimeKit,
             deleteTransactionUseCase = deleteTransactionUseCase,
             getTransactionDataUseCase = getTransactionDataUseCase,
-            navigator = navigator,
+            navigator = navigationKit,
         )
     }
 }

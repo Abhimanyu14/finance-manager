@@ -6,18 +6,18 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.boot.BootCompleteReceiver
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.boot.BootCompletedReceiver
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.time.TimeChangedReceiver
 import java.time.LocalTime
 
 public class AlarmKitImpl(
     private val context: Context,
-    private val dateTimeUtil: DateTimeUtil,
-    private val myLogger: MyLogger,
+    private val dateTimeKit: DateTimeKit,
+    private val logKit: LogKit,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : AlarmKit {
     override suspend fun cancelReminderAlarm(): Boolean {
@@ -33,7 +33,7 @@ public class AlarmKitImpl(
         )
 
         if (isAlarmCancelled) {
-            myLogger.logInfo(
+            logKit.logInfo(
                 message = "Alarm cancelled",
             )
         }
@@ -59,7 +59,7 @@ public class AlarmKitImpl(
         )
 
         if (isAlarmSet) {
-            myLogger.logInfo(
+            logKit.logInfo(
                 message = "Alarm set for : ${reminder.hour}:${reminder.min}",
             )
         }
@@ -120,7 +120,7 @@ public class AlarmKitImpl(
 
     private fun enableBootCompleteReceiver() {
         context.packageManager.setComponentEnabledSetting(
-            ComponentName(context, BootCompleteReceiver::class.java),
+            ComponentName(context, BootCompletedReceiver::class.java),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
             PackageManager.DONT_KILL_APP
         )
@@ -128,7 +128,7 @@ public class AlarmKitImpl(
 
     private fun disableBootCompleteReceiver() {
         context.packageManager.setComponentEnabledSetting(
-            ComponentName(context, BootCompleteReceiver::class.java),
+            ComponentName(context, BootCompletedReceiver::class.java),
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP
         )
@@ -165,7 +165,7 @@ public class AlarmKitImpl(
     private fun getInitialAlarmTimestamp(
         reminder: Reminder,
     ): Long {
-        return dateTimeUtil.getTimestamp(
+        return dateTimeKit.getTimestamp(
             time = LocalTime.of(reminder.hour, reminder.min),
         )
     }

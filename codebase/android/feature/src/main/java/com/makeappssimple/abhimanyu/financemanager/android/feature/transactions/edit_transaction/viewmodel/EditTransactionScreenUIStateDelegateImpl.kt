@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.bottomsheet.EditTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.snackbar.EditTransactionScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIState
@@ -22,8 +22,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 internal class EditTransactionScreenUIStateDelegateImpl(
-    dateTimeUtil: DateTimeUtil,
-    private val navigator: Navigator,
+    dateTimeKit: DateTimeKit,
+    private val navigationKit: NavigationKit,
 ) : EditTransactionScreenUIStateDelegate {
     // region initial data
     override var selectedTransactionType: TransactionType? = null
@@ -71,11 +71,11 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         )
     override val transactionDate: MutableStateFlow<LocalDate> =
         MutableStateFlow(
-            value = dateTimeUtil.getCurrentLocalDate(),
+            value = dateTimeKit.getCurrentLocalDate(),
         )
     override val transactionTime: MutableStateFlow<LocalTime> =
         MutableStateFlow(
-            value = dateTimeUtil.getCurrentLocalTime(),
+            value = dateTimeKit.getCurrentLocalTime(),
         )
     override val isTransactionDatePickerDialogVisible: MutableStateFlow<Boolean> = MutableStateFlow(
         value = false,
@@ -137,7 +137,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

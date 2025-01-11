@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ internal class AccountsScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val screenUICommonState: ScreenUICommonState,
 ) : AccountsScreenUIStateDelegate, ScreenUICommonState by screenUICommonState {
     // region UI state
@@ -33,19 +33,19 @@ internal class AccountsScreenUIStateDelegateImpl(
     }
 
     override fun navigateToAddAccountScreen() {
-        navigator.navigateToAddAccountScreen()
+        navigationKit.navigateToAddAccountScreen()
     }
 
     override fun navigateToEditAccountScreen(
         accountId: Int,
     ) {
-        navigator.navigateToEditAccountScreen(
+        navigationKit.navigateToEditAccountScreen(
             accountId = accountId,
         )
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationArguments
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen.AddTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen.EditTransactionForScreen
@@ -28,9 +28,9 @@ public fun NavGraphBuilder.transactionForNavGraph() {
     }
 
     composable(
-        route = "${Screen.EditTransactionFor.route}/{${NavArgs.TRANSACTION_FOR_ID}}",
+        route = "${Screen.EditTransactionFor.route}/{${NavigationArguments.TRANSACTION_FOR_ID}}",
         arguments = listOf(
-            navArgument(NavArgs.TRANSACTION_FOR_ID) {
+            navArgument(NavigationArguments.TRANSACTION_FOR_ID) {
                 type = NavType.IntType
             },
         ),

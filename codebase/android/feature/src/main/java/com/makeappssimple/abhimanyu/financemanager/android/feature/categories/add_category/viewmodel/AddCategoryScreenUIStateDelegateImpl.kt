@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 internal class AddCategoryScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : AddCategoryScreenUIStateDelegate {
     // region initial data
     override val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
@@ -126,12 +126,12 @@ internal class AddCategoryScreenUIStateDelegateImpl(
         )
         coroutineScope.launch {
             insertCategoriesUseCase(category)
-            navigator.navigateUp()
+            navigationKit.navigateUp()
         }
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

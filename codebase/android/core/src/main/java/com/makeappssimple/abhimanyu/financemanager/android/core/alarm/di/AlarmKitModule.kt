@@ -3,9 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.alarm.di
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarm.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarm.AlarmKitImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +18,14 @@ public class AlarmKitModule {
     @Provides
     public fun providesAlarmKit(
         @ApplicationContext context: Context,
-        dateTimeUtil: DateTimeUtil,
-        myLogger: MyLogger,
+        dateTimeKit: DateTimeKit,
+        logKit: LogKit,
         myPreferencesRepository: MyPreferencesRepository,
     ): AlarmKit {
         return AlarmKitImpl(
             context = context,
-            dateTimeUtil = dateTimeUtil,
-            myLogger = myLogger,
+            dateTimeKit = dateTimeKit,
+            logKit = logKit,
             myPreferencesRepository = myPreferencesRepository,
         )
     }

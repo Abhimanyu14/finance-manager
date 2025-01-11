@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig
 
-public interface BuildConfigUtil {
+public interface BuildConfigKit {
     public fun isDebugBuild(): Boolean
 
     public fun getBuildVersion(): Int

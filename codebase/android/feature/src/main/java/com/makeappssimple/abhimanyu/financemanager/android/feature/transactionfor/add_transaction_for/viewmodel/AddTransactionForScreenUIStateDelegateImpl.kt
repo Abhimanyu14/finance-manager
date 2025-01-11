@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.bottomsheet.AddTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.state.AddTransactionForScreenUIState
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 internal class AddTransactionForScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val insertTransactionForUseCase: InsertTransactionForUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : AddTransactionForScreenUIStateDelegate {
     // region UI state
     override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -81,13 +81,13 @@ internal class AddTransactionForScreenUIStateDelegateImpl(
             if (isTransactionForInserted == -1L) {
                 // TODO(Abhi): Show error
             } else {
-                navigator.navigateUp()
+                navigationKit.navigateUp()
             }
         }
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
-public class BootCompleteReceiver : BroadcastReceiver() {
+public class BootCompletedReceiver : BroadcastReceiver() {
     @Inject
     public lateinit var alarmKit: AlarmKit
 

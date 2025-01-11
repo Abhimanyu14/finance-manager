@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.bottomsheet.AnalysisScreenBottomSheetType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 internal class AnalysisScreenUIStateDelegateImpl(
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : AnalysisScreenUIStateDelegate {
     // region UI state
     override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -61,7 +61,7 @@ internal class AnalysisScreenUIStateDelegateImpl(
 
     // region state events
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

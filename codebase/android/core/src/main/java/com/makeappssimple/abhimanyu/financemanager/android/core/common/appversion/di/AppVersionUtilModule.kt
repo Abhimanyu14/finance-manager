@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionKitImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +15,8 @@ public class AppVersionUtilModule {
     @Provides
     public fun providesAppVersionUtil(
         @ApplicationContext context: Context,
-    ): AppVersionUtil {
-        return AppVersionUtilImpl(
+    ): AppVersionKit {
+        return AppVersionKitImpl(
             context = context,
         )
     }

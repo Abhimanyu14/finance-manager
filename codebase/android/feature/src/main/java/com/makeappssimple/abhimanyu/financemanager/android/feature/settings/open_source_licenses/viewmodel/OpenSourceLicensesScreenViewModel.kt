@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.bottomsheet.OpenSourceLicensesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIState
@@ -19,11 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 public class OpenSourceLicensesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    @VisibleForTesting internal val navigator: Navigator,
+    @VisibleForTesting internal val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), OpenSourceLicensesScreenUIStateDelegate by OpenSourceLicensesScreenUIStateDelegateImpl(
-    navigator = navigator,
+    navigationKit = navigationKit,
 ) {
     // region uiStateAndStateEvents
     internal val uiState: MutableStateFlow<OpenSourceLicensesScreenUIState> =

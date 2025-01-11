@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
@@ -38,7 +38,7 @@ public class AccountsScreenViewModel @Inject constructor(
     private val getAllAccountsListItemDataListUseCase: GetAllAccountsListItemDataListUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val getDefaultAccountIdFlowUseCase: GetDefaultAccountIdFlowUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val screenUICommonState: ScreenUICommonState,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
@@ -46,7 +46,7 @@ public class AccountsScreenViewModel @Inject constructor(
     coroutineScope = coroutineScope,
     deleteAccountUseCase = deleteAccountUseCase,
     myPreferencesRepository = myPreferencesRepository,
-    navigator = navigator,
+    navigationKit = navigationKit,
     screenUICommonState = screenUICommonState,
 ) {
     // region initial data

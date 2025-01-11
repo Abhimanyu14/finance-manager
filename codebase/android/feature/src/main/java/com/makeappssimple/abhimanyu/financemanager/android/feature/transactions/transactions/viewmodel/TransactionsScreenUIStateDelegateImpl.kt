@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.bottomsheet.TransactionsScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 internal class TransactionsScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : TransactionsScreenUIStateDelegate {
     // region initial data
@@ -110,7 +110,7 @@ internal class TransactionsScreenUIStateDelegateImpl(
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun removeFromSelectedTransactions(
@@ -124,13 +124,13 @@ internal class TransactionsScreenUIStateDelegateImpl(
     }
 
     override fun navigateToAddTransactionScreen() {
-        navigator.navigateToAddTransactionScreen()
+        navigationKit.navigateToAddTransactionScreen()
     }
 
     override fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigator.navigateToViewTransactionScreen(
+        navigationKit.navigateToViewTransactionScreen(
             transactionId = transactionId,
         )
     }

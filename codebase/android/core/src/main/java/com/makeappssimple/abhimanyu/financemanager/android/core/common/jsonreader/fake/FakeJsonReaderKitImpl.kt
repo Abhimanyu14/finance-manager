@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.fake
 
 import android.net.Uri
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReaderKit
 
-public class FakeMyJsonReaderImpl : MyJsonReader {
+public class FakeJsonReaderKitImpl : JsonReaderKit {
     private val assetsJson = """
         {
           "account": "assets"

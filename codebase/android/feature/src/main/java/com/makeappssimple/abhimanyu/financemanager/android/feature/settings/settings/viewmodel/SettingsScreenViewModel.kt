@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarm.AlarmKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.snackbar.SettingsScreenSnackbarType
@@ -30,10 +30,10 @@ import javax.inject.Inject
 public class SettingsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     private val alarmKit: AlarmKit,
-    private val appVersionUtil: AppVersionUtil,
+    private val appVersionKit: AppVersionKit,
     private val backupDataUseCase: BackupDataUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    @VisibleForTesting internal val navigator: Navigator,
+    @VisibleForTesting internal val navigationKit: NavigationKit,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : ScreenViewModel(
@@ -41,7 +41,7 @@ public class SettingsScreenViewModel @Inject constructor(
 ), SettingsScreenUIStateDelegate by SettingsScreenUIStateDelegateImpl(
     alarmKit = alarmKit,
     coroutineScope = coroutineScope,
-    navigator = navigator,
+    navigationKit = navigationKit,
     recalculateTotalUseCase = recalculateTotalUseCase,
 ) {
     // region initial data
@@ -98,7 +98,7 @@ public class SettingsScreenViewModel @Inject constructor(
                 uri = uri,
             )
             if (isBackupSuccessful) {
-                navigator.navigateUp()
+                navigationKit.navigateUp()
             } else {
                 // TODO(Abhi): use the result to show snackbar to the user
             }
@@ -116,7 +116,7 @@ public class SettingsScreenViewModel @Inject constructor(
                     uri = uri,
                 )
             ) {
-                navigator.navigateUp()
+                navigationKit.navigateUp()
             } else {
                 completeLoading()
                 setScreenSnackbarType(
@@ -129,7 +129,7 @@ public class SettingsScreenViewModel @Inject constructor(
 
     // region getAppVersion
     private fun getAppVersion() {
-        appVersion = appVersionUtil.getAppVersion()?.versionName.orEmpty()
+        appVersion = appVersionKit.getAppVersion()?.versionName.orEmpty()
     }
     // endregion
 

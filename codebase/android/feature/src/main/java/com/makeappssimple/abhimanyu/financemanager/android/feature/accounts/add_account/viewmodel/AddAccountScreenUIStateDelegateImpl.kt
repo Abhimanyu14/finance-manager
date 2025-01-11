@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 internal class AddAccountScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val insertAccountUseCase: InsertAccountUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : AddAccountScreenUIStateDelegate {
     // region initial data
     override val validAccountTypesForNewAccount: ImmutableList<AccountType> =
@@ -102,7 +102,7 @@ internal class AddAccountScreenUIStateDelegateImpl(
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

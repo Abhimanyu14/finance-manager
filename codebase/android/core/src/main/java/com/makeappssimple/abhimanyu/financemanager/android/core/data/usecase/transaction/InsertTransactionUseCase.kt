@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
@@ -15,7 +15,7 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 public class InsertTransactionUseCase @Inject constructor(
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
@@ -51,7 +51,7 @@ public class InsertTransactionUseCase @Inject constructor(
             selectedTransactionType = selectedTransactionType,
             enteredTitle = enteredTitle,
         )
-        val transactionTimestamp = dateTimeUtil.getTimestamp(
+        val transactionTimestamp = dateTimeKit.getTimestamp(
             date = selectedTransactionDate,
             time = selectedTransactionTime,
         )
@@ -74,7 +74,7 @@ public class InsertTransactionUseCase @Inject constructor(
             accountFromId = accountFromId,
             accountToId = accountToId,
             title = title,
-            creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
+            creationTimestamp = dateTimeKit.getCurrentTimeMillis(),
             transactionTimestamp = transactionTimestamp,
             transactionForId = transactionForId,
             transactionType = selectedTransactionType,

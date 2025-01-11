@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPreferencesDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.preferencesDataMigrations
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,11 +52,11 @@ public class PreferencesModule {
     @Provides
     public fun providesMyPreferencesDataSource(
         dataStore: DataStore<Preferences>,
-        myLogger: MyLogger,
+        logKit: LogKit,
     ): MyPreferencesDataSource {
         return MyPreferencesDataSource(
             dataStore = dataStore,
-            myLogger = myLogger,
+            logKit = logKit,
         )
     }
 }

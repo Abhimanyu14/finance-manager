@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
@@ -20,8 +20,8 @@ private object HomeScreenUIStateDelegateImplConstants {
 }
 
 internal class HomeScreenUIStateDelegateImpl(
-    private val dateTimeUtil: DateTimeUtil,
-    private val navigator: Navigator,
+    private val dateTimeKit: DateTimeKit,
+    private val navigationKit: NavigationKit,
 ) : HomeScreenUIStateDelegate {
     // region UI state
     override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
@@ -42,7 +42,7 @@ internal class HomeScreenUIStateDelegateImpl(
         value = HomeScreenUIStateDelegateImplConstants.DEFAULT_OVERVIEW_TAB_SELECTION,
     )
     override val selectedTimestamp: MutableStateFlow<Long> = MutableStateFlow(
-        value = dateTimeUtil.getCurrentTimeMillis(),
+        value = dateTimeKit.getCurrentTimeMillis(),
     )
     override val overviewCardData: MutableStateFlow<OverviewCardViewModelData?> = MutableStateFlow(
         value = null,
@@ -142,29 +142,29 @@ internal class HomeScreenUIStateDelegateImpl(
     }
 
     override fun navigateToAccountsScreen() {
-        navigator.navigateToAccountsScreen()
+        navigationKit.navigateToAccountsScreen()
     }
 
     override fun navigateToAddTransactionScreen() {
-        navigator.navigateToAddTransactionScreen()
+        navigationKit.navigateToAddTransactionScreen()
     }
 
     override fun navigateToAnalysisScreen() {
-        navigator.navigateToAnalysisScreen()
+        navigationKit.navigateToAnalysisScreen()
     }
 
     override fun navigateToSettingsScreen() {
-        navigator.navigateToSettingsScreen()
+        navigationKit.navigateToSettingsScreen()
     }
 
     override fun navigateToTransactionsScreen() {
-        navigator.navigateToTransactionsScreen()
+        navigationKit.navigateToTransactionsScreen()
     }
 
     override fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigator.navigateToViewTransactionScreen(
+        navigationKit.navigateToViewTransactionScreen(
             transactionId = transactionId,
         )
     }

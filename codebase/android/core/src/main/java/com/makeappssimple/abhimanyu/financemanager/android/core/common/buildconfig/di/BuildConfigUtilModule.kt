@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigKitImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 public interface BuildConfigUtilModule {
     @Binds
     public fun bindBuildConfigUtil(
-        buildConfigUtilImpl: BuildConfigUtilImpl,
-    ): BuildConfigUtil
+        buildConfigUtilImpl: BuildConfigKitImpl,
+    ): BuildConfigKit
 }

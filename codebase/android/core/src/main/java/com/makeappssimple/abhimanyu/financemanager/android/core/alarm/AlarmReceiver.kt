@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.notification.NotificationKit
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 public class AlarmReceiver : BroadcastReceiver() {
     @Inject
-    public lateinit var myLogger: MyLogger
+    public lateinit var logKit: LogKit
 
     @Inject
     public lateinit var notificationKit: NotificationKit
@@ -20,7 +20,7 @@ public class AlarmReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent?,
     ) {
-        myLogger.logInfo(
+        logKit.logInfo(
             message = "Alarm received : ${System.currentTimeMillis()}",
         )
         notificationKit.scheduleNotification()

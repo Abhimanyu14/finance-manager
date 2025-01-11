@@ -4,7 +4,7 @@ import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneId
 
-public interface TimeUtil {
+public interface TimeKit {
     public fun getCurrentLocalTime(): LocalTime
 
     public fun getLocalTime(

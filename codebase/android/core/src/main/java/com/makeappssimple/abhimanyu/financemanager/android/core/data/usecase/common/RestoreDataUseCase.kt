@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.co
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReaderKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatastoreData
@@ -15,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeAccounts
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeTransactions
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import kotlinx.collections.immutable.toImmutableList
@@ -26,19 +26,19 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 public class RestoreDataUseCase @Inject constructor(
-    private val myJsonReader: MyJsonReader,
-    private val myLogger: MyLogger,
+    private val jsonReaderKit: JsonReaderKit,
+    private val logKit: LogKit,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
 ) {
     public suspend operator fun invoke(
         uri: Uri,
     ): Boolean {
-        val jsonString = myJsonReader.readJsonFromFile(
+        val jsonString = jsonReaderKit.readJsonFromFile(
             uri = uri,
         )
         if (jsonString.isNull()) {
-            myLogger.logInfo(
+            logKit.logInfo(
                 message = "Restore Data: Error reading file",
             )
             return false
@@ -48,13 +48,13 @@ public class RestoreDataUseCase @Inject constructor(
             string = jsonString,
         )
         if (backupData.databaseData.isNull()) {
-            myLogger.logInfo(
+            logKit.logInfo(
                 message = "Restore Data: Error in file database data",
             )
             return false
         }
         if (backupData.datastoreData.isNull()) {
-            myLogger.logInfo(
+            logKit.logInfo(
                 message = "Restore Data: Error in file datastore data",
             )
             return false

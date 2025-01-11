@@ -5,7 +5,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
@@ -61,7 +61,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val editTransactionScreenDataValidationUseCase: EditTransactionScreenDataValidationUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
@@ -70,14 +70,14 @@ public class EditTransactionScreenViewModel @Inject constructor(
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     private val getMaxRefundAmountUseCase: GetMaxRefundAmountUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateAccountBalanceAmountUseCase: UpdateAccountBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditTransactionScreenUIStateDelegate by EditTransactionScreenUIStateDelegateImpl(
-    dateTimeUtil = dateTimeUtil,
-    navigator = navigator,
+    dateTimeKit = dateTimeKit,
+    navigationKit = navigationKit,
 ) {
     // region screen args
     private val screenArgs = EditTransactionScreenArgs(
@@ -437,7 +437,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
                                 )
                             },
                         titleSuggestions = titleSuggestions,
-                        currentLocalDate = dateTimeUtil.getCurrentLocalDate().orMin(),
+                        currentLocalDate = dateTimeKit.getCurrentLocalDate().orMin(),
                         transactionDate = transactionDate,
                         transactionTime = transactionTime,
                         amountErrorText = validationState.amountErrorText,
@@ -571,12 +571,12 @@ public class EditTransactionScreenViewModel @Inject constructor(
         setAmount(maxRefundAmount.orEmpty().value.toString())
         setAccountTo(originalTransactionData?.accountFrom)
         setTransactionDate(
-            updatedTransactionDate = dateTimeUtil.getLocalDate(
+            updatedTransactionDate = dateTimeKit.getLocalDate(
                 timestamp = originalTransactionData?.transaction?.transactionTimestamp.orZero(),
             ),
         )
         setTransactionTime(
-            updatedTransactionTime = dateTimeUtil.getLocalTime(
+            updatedTransactionTime = dateTimeKit.getLocalTime(
                 timestamp = originalTransactionData?.transaction?.transactionTimestamp.orZero(),
             ),
         )

@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.SetDefaultCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import kotlinx.collections.immutable.PersistentList
@@ -16,7 +16,7 @@ internal class CategoriesScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
 ) : CategoriesScreenUIStateDelegate {
     // region initial data
     override val validTransactionTypes: PersistentList<TransactionType> = persistentListOf(
@@ -110,7 +110,7 @@ internal class CategoriesScreenUIStateDelegateImpl(
     override fun navigateToAddCategoryScreen(
         transactionType: String,
     ) {
-        navigator.navigateToAddCategoryScreen(
+        navigationKit.navigateToAddCategoryScreen(
             transactionType = transactionType,
         )
     }
@@ -118,13 +118,13 @@ internal class CategoriesScreenUIStateDelegateImpl(
     override fun navigateToEditCategoryScreen(
         categoryId: Int,
     ) {
-        navigator.navigateToEditCategoryScreen(
+        navigationKit.navigateToEditCategoryScreen(
             categoryId = categoryId,
         )
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {

@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.UpdateTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
@@ -34,13 +34,13 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     private val editTransactionForScreenDataValidationUseCase: EditTransactionForScreenDataValidationUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateTransactionForUseCase: UpdateTransactionForUseCase,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditTransactionForScreenUIStateDelegate by EditTransactionForScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
-    navigator = navigator,
+    navigationKit = navigationKit,
     updateTransactionForUseCase = updateTransactionForUseCase,
 ) {
     // region screen args

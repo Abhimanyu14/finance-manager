@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionsUseCase
@@ -14,7 +14,7 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 public class UpdateAccountUseCase @Inject constructor(
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeKit: DateTimeKit,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
 ) {
@@ -78,8 +78,8 @@ public class UpdateAccountUseCase @Inject constructor(
                     accountToId = accountToId,
                     description = "",
                     title = TransactionType.ADJUSTMENT.title,
-                    creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
-                    transactionTimestamp = dateTimeUtil.getCurrentTimeMillis(),
+                    creationTimestamp = dateTimeKit.getCurrentTimeMillis(),
+                    transactionTimestamp = dateTimeKit.getCurrentTimeMillis(),
                     transactionType = TransactionType.ADJUSTMENT,
                 ),
             )

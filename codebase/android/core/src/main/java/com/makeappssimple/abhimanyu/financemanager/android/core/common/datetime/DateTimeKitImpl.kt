@@ -22,7 +22,7 @@ private object DateTimeUtilImplConstants {
     const val LAST_MONTH_OF_YEAR = 12
 }
 
-public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
+public class DateTimeKitImpl @Inject constructor() : DateTimeKit {
     override fun getCurrentLocalDate(): LocalDate {
         return LocalDate.now()
     }

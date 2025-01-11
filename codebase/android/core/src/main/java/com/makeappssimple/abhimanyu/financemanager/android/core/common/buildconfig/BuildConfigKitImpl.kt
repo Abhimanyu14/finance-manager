@@ -4,7 +4,7 @@ import android.os.Build
 import com.makeappssimple.abhimanyu.financemanager.android.core.BuildConfig
 import javax.inject.Inject
 
-public class BuildConfigUtilImpl @Inject constructor() : BuildConfigUtil {
+public class BuildConfigKitImpl @Inject constructor() : BuildConfigKit {
     override fun isDebugBuild(): Boolean {
         return BuildConfig.DEBUG
     }

@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.notification.di
 
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.app.AppKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.notification.NotificationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.notification.NotificationKitImpl
 import dagger.Module
@@ -18,12 +18,12 @@ public class NotificationKitModule {
     public fun providesNotificationKit(
         appKit: AppKit,
         @ApplicationContext context: Context,
-        myLogger: MyLogger,
+        logKit: LogKit,
     ): NotificationKit {
         return NotificationKitImpl(
             appKit = appKit,
             context = context,
-            myLogger = myLogger,
+            logKit = logKit,
         )
     }
 }

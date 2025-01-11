@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.UpdateTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 internal class EditTransactionForScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateTransactionForUseCase: UpdateTransactionForUseCase,
 ) : EditTransactionForScreenUIStateDelegate {
     // region initial data
@@ -77,7 +77,7 @@ internal class EditTransactionForScreenUIStateDelegateImpl(
     }
 
     override fun navigateUp() {
-        navigator.navigateUp()
+        navigationKit.navigateUp()
     }
 
     override fun resetScreenBottomSheetType() {
@@ -112,7 +112,7 @@ internal class EditTransactionForScreenUIStateDelegateImpl(
                 title = uiState.title.text,
             )
             if (isTransactionForUpdated) {
-                navigator.navigateUp()
+                navigationKit.navigateUp()
             } else {
                 // TODO(Abhi): Show error
             }

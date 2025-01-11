@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
@@ -19,11 +19,11 @@ import java.io.IOException
 
 public class MyPreferencesDataSource(
     private val dataStore: DataStore<Preferences>,
-    private val myLogger: MyLogger,
+    private val logKit: LogKit,
 ) {
     private val preferences: Flow<Preferences> = dataStore.data
         .catch { exception ->
-            myLogger.logInfo(
+            logKit.logInfo(
                 message = "Error reading preferences. ${exception.localizedMessage}",
             )
             emit(

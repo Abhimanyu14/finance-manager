@@ -4,7 +4,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 
-public interface DateUtil {
+public interface DateKit {
     public fun getCurrentLocalDate(): LocalDate
 
     public fun getLocalDate(

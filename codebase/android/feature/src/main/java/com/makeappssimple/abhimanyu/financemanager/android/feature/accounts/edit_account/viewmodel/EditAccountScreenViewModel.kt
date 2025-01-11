@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
@@ -41,14 +41,14 @@ public class EditAccountScreenViewModel @Inject constructor(
     private val editAccountScreenDataValidationUseCase: EditAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val screenUICommonState: ScreenUICommonState,
     private val updateAccountUseCase: UpdateAccountUseCase,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditAccountScreenUIStateDelegate by EditAccountScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
-    navigator = navigator,
+    navigationKit = navigationKit,
     screenUICommonState = screenUICommonState,
     updateAccountUseCase = updateAccountUseCase,
 ) {

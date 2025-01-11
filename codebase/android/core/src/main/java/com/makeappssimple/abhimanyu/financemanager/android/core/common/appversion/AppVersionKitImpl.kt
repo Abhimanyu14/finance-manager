@@ -6,9 +6,9 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import androidx.core.content.pm.PackageInfoCompat
 
-public class AppVersionUtilImpl(
+public class AppVersionKitImpl(
     private val context: Context,
-) : AppVersionUtil {
+) : AppVersionKit {
     override fun getAppVersion(): AppVersion? {
         return try {
             val packageManager = context.packageManager

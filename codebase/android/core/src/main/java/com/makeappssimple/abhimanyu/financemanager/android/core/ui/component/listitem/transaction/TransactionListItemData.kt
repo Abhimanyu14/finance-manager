@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.li
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -32,7 +32,7 @@ public data class TransactionListItemData(
 )
 
 public fun TransactionData.toTransactionListItemData(
-    dateTimeUtil: DateTimeUtil,
+    dateTimeKit: DateTimeKit,
 ): TransactionListItemData {
     val amountText: String = when (transaction.transactionType) {
         TransactionType.INCOME,
@@ -50,7 +50,7 @@ public fun TransactionData.toTransactionListItemData(
             transaction.amount.toString()
         }
     }
-    val dateAndTimeText: String = dateTimeUtil.getReadableDateAndTime(
+    val dateAndTimeText: String = dateTimeKit.getReadableDateAndTime(
         timestamp = transaction.transactionTimestamp,
     )
     val emoji: String = when (transaction.transactionType) {

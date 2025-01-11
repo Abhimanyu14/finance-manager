@@ -59,7 +59,7 @@
         </activity>
 
         <receiver
-            android:name=".core.boot.BootCompleteReceiver"
+            android:name=".core.boot.BootCompletedReceiver"
             android:enabled="false"
             android:exported="false">
             <intent-filter>

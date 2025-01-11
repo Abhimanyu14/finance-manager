@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
@@ -43,13 +43,13 @@ public class EditCategoryScreenViewModel @Inject constructor(
     private val editCategoryScreenDataValidationUseCase: EditCategoryScreenDataValidationUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
-    private val navigator: Navigator,
+    private val navigationKit: NavigationKit,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditCategoryScreenUIStateDelegate by EditCategoryScreenUIStateDelegateImpl(
     coroutineScope = coroutineScope,
-    navigator = navigator,
+    navigationKit = navigationKit,
     updateCategoriesUseCase = updateCategoriesUseCase,
 ) {
     // region screen args
