@@ -81,7 +81,6 @@ public class InsertTransactionUseCase @Inject constructor(
         )
         myPreferencesRepository.setLastDataChangeTimestamp()
         val id = transactionRepository.insertTransaction(
-            amountValue = enteredAmountValue,
             accountFrom = accountFrom,
             accountTo = accountTo,
             transaction = transaction,

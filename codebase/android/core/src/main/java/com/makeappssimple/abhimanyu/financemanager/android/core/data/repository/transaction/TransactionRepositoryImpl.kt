@@ -170,14 +170,12 @@ public class TransactionRepositoryImpl(
     }
 
     override suspend fun insertTransaction(
-        amountValue: Long,
         accountFrom: Account?,
         accountTo: Account?,
         transaction: Transaction,
     ): Long {
         return dispatcherProvider.executeOnIoDispatcher {
             commonDataSource.insertTransaction(
-                amountValue = amountValue,
                 accountFrom = accountFrom?.asEntity(),
                 accountTo = accountTo?.asEntity(),
                 transaction = transaction.asEntity(),

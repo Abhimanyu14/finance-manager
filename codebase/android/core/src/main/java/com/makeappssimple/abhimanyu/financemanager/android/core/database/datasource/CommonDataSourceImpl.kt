@@ -77,7 +77,6 @@ public class CommonDataSourceImpl(
     }
 
     override suspend fun insertTransaction(
-        amountValue: Long,
         accountFrom: AccountEntity?,
         accountTo: AccountEntity?,
         transaction: TransactionEntity,
@@ -92,14 +91,14 @@ public class CommonDataSourceImpl(
                 accountFrom?.let { accountFromValue ->
                     accountDao().updateAccounts(
                         accountFromValue.updateBalanceAmount(
-                            updatedBalanceAmount = accountFromValue.balanceAmount.value - amountValue,
+                            updatedBalanceAmount = accountFromValue.balanceAmount.value - transaction.amount.value,
                         ),
                     )
                 }
                 accountTo?.let { accountToValue ->
                     accountDao().updateAccounts(
                         accountToValue.updateBalanceAmount(
-                            updatedBalanceAmount = accountToValue.balanceAmount.value + amountValue,
+                            updatedBalanceAmount = accountToValue.balanceAmount.value + transaction.amount.value,
                         )
                     )
                 }

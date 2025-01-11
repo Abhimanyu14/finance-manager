@@ -34,3 +34,30 @@
 ### In Edit Account Screen
 
 - The account being edited
+
+# Responsibilities
+
+## DAO
+
+- Handles data from and to database.
+- All atomic operations should be done at this layer.
+
+## Repository
+
+- Handles mapping data entities to domain layer model classes.
+- Handles dispatcher switching to make all operations in lower above layers thread safe.
+
+## Use-Cases
+- 
+
+## ViewModel
+- 
+
+## Screen Composable
+- 
+
+## Screen UI Composable
+- 
+
+## Component Composable
+- 

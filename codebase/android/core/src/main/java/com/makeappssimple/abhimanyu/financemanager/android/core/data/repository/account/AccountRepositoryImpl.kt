@@ -73,7 +73,6 @@ public class AccountRepositoryImpl(
         }
     }
 
-    @androidx.room.Transaction
     override suspend fun updateAccountBalanceAmount(
         accountsBalanceAmountChange: ImmutableList<Pair<Int, Long>>,
     ): Boolean {

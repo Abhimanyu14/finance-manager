@@ -23,14 +23,12 @@ public interface TransactionDao {
     )
     public suspend fun getAllTransactions(): List<TransactionEntity>
 
-    @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
     public fun getAllTransactionDataFlow(): Flow<List<TransactionDataEntity>>
 
-    @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
@@ -43,7 +41,6 @@ public interface TransactionDao {
      *
      * The current code is a hacky solution, which does a simple text search of the JSON string.
      */
-    @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "WHERE instr(lower(title), lower(:searchText)) > 0 OR instr(lower(amount), lower(:searchText)) > 0 " +
@@ -73,7 +70,6 @@ public interface TransactionDao {
         endingTimestamp: Long,
     ): List<TransactionEntity>
 
-    @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC " +
@@ -132,7 +128,6 @@ public interface TransactionDao {
         id: Int,
     ): TransactionEntity?
 
-    @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "WHERE id = :id"

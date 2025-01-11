@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.data.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository

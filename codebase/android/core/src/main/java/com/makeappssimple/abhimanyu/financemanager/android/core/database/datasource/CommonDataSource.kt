@@ -11,7 +11,6 @@ public interface CommonDataSource {
     ): Boolean
 
     public suspend fun insertTransaction(
-        amountValue: Long,
         accountFrom: AccountEntity?,
         accountTo: AccountEntity?,
         transaction: TransactionEntity,
