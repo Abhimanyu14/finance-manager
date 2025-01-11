@@ -76,9 +76,6 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    testImplementation(project(":legacycore:testing"))
-
-    androidTestImplementation(project(":legacycore:testing"))
 
     lintChecks(project(":lint"))
 
