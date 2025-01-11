@@ -65,6 +65,7 @@ public interface TransactionRepository {
         accountFrom: Account?,
         accountTo: Account?,
         transaction: Transaction,
+        originalTransaction: Transaction?,
     ): Long
 
     public suspend fun insertTransactions(

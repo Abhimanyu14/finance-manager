@@ -14,6 +14,7 @@ public interface CommonDataSource {
         accountFrom: AccountEntity?,
         accountTo: AccountEntity?,
         transaction: TransactionEntity,
+        originalTransaction: TransactionEntity?,
     ): Long
 
     public suspend fun restoreData(

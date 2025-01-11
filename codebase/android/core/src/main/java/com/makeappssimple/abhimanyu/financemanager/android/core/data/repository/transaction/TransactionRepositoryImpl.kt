@@ -173,12 +173,14 @@ public class TransactionRepositoryImpl(
         accountFrom: Account?,
         accountTo: Account?,
         transaction: Transaction,
+        originalTransaction: Transaction?,
     ): Long {
         return dispatcherProvider.executeOnIoDispatcher {
             commonDataSource.insertTransaction(
                 accountFrom = accountFrom?.asEntity(),
                 accountTo = accountTo?.asEntity(),
                 transaction = transaction.asEntity(),
+                originalTransaction = originalTransaction?.asEntity(),
             )
         }
     }

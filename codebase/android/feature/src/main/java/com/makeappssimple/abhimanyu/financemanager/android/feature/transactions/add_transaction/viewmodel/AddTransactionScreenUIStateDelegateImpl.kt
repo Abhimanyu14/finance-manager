@@ -158,7 +158,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         val originalTransaction = originalTransactionData?.transaction
 
         coroutineScope.launch {
-            val isTransactionInsertedSuccessfully = insertTransactionUseCase(
+            val isTransactionInserted = insertTransactionUseCase(
                 selectedAccountFrom = selectedAccountFrom,
                 selectedAccountTo = selectedAccountTo,
                 selectedCategoryId = selectedCategoryId,
@@ -170,7 +170,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
                 selectedTransactionType = selectedTransactionType,
                 originalTransaction = originalTransaction,
             )
-            if (isTransactionInsertedSuccessfully) {
+            if (isTransactionInserted) {
                 setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
                 navigationKit.navigateUp()
             } else {

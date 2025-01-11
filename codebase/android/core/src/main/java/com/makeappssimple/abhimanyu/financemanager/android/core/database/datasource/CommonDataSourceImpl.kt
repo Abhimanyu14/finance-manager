@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource
 
 import androidx.room.withTransaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
@@ -80,6 +81,7 @@ public class CommonDataSourceImpl(
         accountFrom: AccountEntity?,
         accountTo: AccountEntity?,
         transaction: TransactionEntity,
+        originalTransaction: TransactionEntity?,
     ): Long {
         return with(
             receiver = myRoomDatabase,
@@ -88,18 +90,32 @@ public class CommonDataSourceImpl(
                 val id = transactionDao().insertTransaction(
                     transaction = transaction,
                 )
-                accountFrom?.let { accountFromValue ->
-                    accountDao().updateAccounts(
-                        accountFromValue.updateBalanceAmount(
-                            updatedBalanceAmount = accountFromValue.balanceAmount.value - transaction.amount.value,
-                        ),
-                    )
-                }
-                accountTo?.let { accountToValue ->
-                    accountDao().updateAccounts(
-                        accountToValue.updateBalanceAmount(
-                            updatedBalanceAmount = accountToValue.balanceAmount.value + transaction.amount.value,
+                val isTransactionInserted = id != -1L
+                if (isTransactionInserted) {
+                    accountFrom?.let { accountFromValue ->
+                        accountDao().updateAccounts(
+                            accountFromValue.updateBalanceAmount(
+                                updatedBalanceAmount = accountFromValue.balanceAmount.value - transaction.amount.value,
+                            ),
                         )
+                    }
+                    accountTo?.let { accountToValue ->
+                        accountDao().updateAccounts(
+                            accountToValue.updateBalanceAmount(
+                                updatedBalanceAmount = accountToValue.balanceAmount.value + transaction.amount.value,
+                            )
+                        )
+                    }
+                }
+                if (originalTransaction != null) {
+                    val refundTransactionIds = originalTransaction.refundTransactionIds.orEmpty()
+                        .toMutableList()
+                    refundTransactionIds.add(id.toInt())
+                    transactionDao().updateTransaction(
+                        transaction = originalTransaction
+                            .copy(
+                                refundTransactionIds = refundTransactionIds,
+                            ),
                     )
                 }
                 id

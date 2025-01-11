@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -18,7 +17,6 @@ public class InsertTransactionUseCase @Inject constructor(
     private val dateTimeKit: DateTimeKit,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
-    private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) {
     public suspend operator fun invoke(
         selectedAccountFrom: Account?,
@@ -79,17 +77,17 @@ public class InsertTransactionUseCase @Inject constructor(
             transactionForId = transactionForId,
             transactionType = selectedTransactionType,
         )
-        myPreferencesRepository.setLastDataChangeTimestamp()
         val id = transactionRepository.insertTransaction(
             accountFrom = accountFrom,
             accountTo = accountTo,
             transaction = transaction,
-        )
-        updateTransactionForRefundTransaction(
-            id = id,
             originalTransaction = originalTransaction,
         )
-        return id != -1L
+        val isTransactionInserted = id != -1L
+        if (isTransactionInserted) {
+            myPreferencesRepository.setLastDataChangeTimestamp()
+        }
+        return isTransactionInserted
     }
 
     private fun getCategoryId(
@@ -243,24 +241,6 @@ public class InsertTransactionUseCase @Inject constructor(
             selectedAccount
         } else {
             null
-        }
-    }
-
-    private suspend fun updateTransactionForRefundTransaction(
-        id: Long,
-        originalTransaction: Transaction?,
-    ) {
-        originalTransaction?.let {
-            val refundTransactionIds = originalTransaction.refundTransactionIds.orEmpty()
-                .toMutableList()
-            refundTransactionIds.add(id.toInt())
-            updateTransactionUseCase(
-                originalTransaction = originalTransaction,
-                updatedTransaction = originalTransaction
-                    .copy(
-                        refundTransactionIds = refundTransactionIds,
-                    ),
-            )
         }
     }
 }
