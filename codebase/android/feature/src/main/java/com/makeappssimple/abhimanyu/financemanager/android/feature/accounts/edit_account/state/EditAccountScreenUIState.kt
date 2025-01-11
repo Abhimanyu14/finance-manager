@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edi
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.bottomsheet.EditAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreenUIVisibilityData

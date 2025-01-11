@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.event
 
 import androidx.compose.runtime.Immutable
-import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
 internal sealed class CategoriesScreenUIEvent : ScreenUIEvent {

@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.appkit.di
 
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.appkit.AppKitImpl
-import com.makeappssimple.abhimanyu.financemanager.android.cre.app.AppKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.app.AppKit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

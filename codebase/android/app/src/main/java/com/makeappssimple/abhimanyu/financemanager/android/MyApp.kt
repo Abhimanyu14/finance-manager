@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.makeappssimple.abhimanyu.financemanager.android.cre.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.cre.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.cre.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavGraph
 
 @Composable

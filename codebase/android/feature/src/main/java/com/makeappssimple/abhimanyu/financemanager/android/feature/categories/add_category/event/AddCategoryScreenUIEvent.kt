@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIEvent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
 internal sealed class AddCategoryScreenUIEvent : ScreenUIEvent {

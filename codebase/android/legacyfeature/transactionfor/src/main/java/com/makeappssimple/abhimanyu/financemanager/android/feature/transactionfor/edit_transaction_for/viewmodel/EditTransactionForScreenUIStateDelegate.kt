@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.cre.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.bottomsheet.EditTransactionForScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.state.EditTransactionForScreenUIState
 import kotlinx.coroutines.flow.MutableStateFlow

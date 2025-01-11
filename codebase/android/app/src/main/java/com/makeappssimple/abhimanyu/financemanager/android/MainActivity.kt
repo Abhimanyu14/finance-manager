@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.makeappssimple.abhimanyu.financemanager.android.cre.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

@@ -6,7 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.makeappssimple.abhimanyu.financemanager.android.cre.notification.NotificationConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.notification.NotificationConstants
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

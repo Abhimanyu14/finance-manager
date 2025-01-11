@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel
 
 import androidx.compose.runtime.Immutable
-import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 
 @Immutable
 internal sealed class EditTransactionScreenUiVisibilityState(

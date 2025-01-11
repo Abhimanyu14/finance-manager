@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.cre.common.state.common.ScreenUICommonState
-import com.makeappssimple.abhimanyu.financemanager.android.cre.data.repository.preferences.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.account.DeleteAccountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

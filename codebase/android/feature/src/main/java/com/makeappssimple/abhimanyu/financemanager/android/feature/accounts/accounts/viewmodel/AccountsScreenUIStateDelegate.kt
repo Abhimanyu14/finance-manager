@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.cre.common.state.common.ScreenUICommonState
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.common.ScreenUICommonState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 
 internal interface AccountsScreenUIStateDelegate : ScreenUICommonState {

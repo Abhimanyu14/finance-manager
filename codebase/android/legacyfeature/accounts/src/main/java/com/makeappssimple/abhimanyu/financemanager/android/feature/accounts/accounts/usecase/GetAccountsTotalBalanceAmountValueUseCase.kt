@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.cre.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import kotlinx.collections.immutable.ImmutableList
 import javax.inject.Inject
 

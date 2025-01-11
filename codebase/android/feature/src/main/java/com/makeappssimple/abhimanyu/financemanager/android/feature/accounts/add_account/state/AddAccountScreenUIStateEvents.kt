@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 

@@ -1,15 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.alarm.AlarmKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersion
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
-import com.makeappssimple.abhimanyu.financemanager.android.cre.alarm.AlarmKit
-import com.makeappssimple.abhimanyu.financemanager.android.cre.common.appversion.AppVersion
-import com.makeappssimple.abhimanyu.financemanager.android.cre.common.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.cre.data.repository.preferences.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.common.BackupDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.common.RecalculateTotalUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.cre.data.usecase.common.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first

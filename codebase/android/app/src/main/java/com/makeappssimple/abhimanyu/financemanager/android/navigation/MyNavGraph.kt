@@ -9,8 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.makeappssimple.abhimanyu.financemanager.android.cre.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Command
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Command
 import com.makeappssimple.abhimanyu.financemanager.android.viewmodel.MainActivityViewModel
 
 @Composable

@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.makeappssimple.abhimanyu.financemanager.android.cre"
+    namespace = "com.makeappssimple.abhimanyu.financemanager.android.core"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

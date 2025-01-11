@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenUIStateEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
 @Stable
 internal class AddTransactionForScreenUIStateEvents(

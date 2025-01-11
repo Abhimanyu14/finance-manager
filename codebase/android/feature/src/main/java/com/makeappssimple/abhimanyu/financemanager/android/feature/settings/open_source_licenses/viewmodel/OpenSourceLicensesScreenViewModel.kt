@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.cre.common.coroutines.di.ApplicationScope
-import com.makeappssimple.abhimanyu.financemanager.android.cre.common.extensions.combineAndCollectLatest
-import com.makeappssimple.abhimanyu.financemanager.android.cre.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.cre.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.bottomsheet.OpenSourceLicensesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.state.OpenSourceLicensesScreenUIStateEvents
