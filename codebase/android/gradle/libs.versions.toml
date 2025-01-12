@@ -38,9 +38,11 @@ lint = "31.5.0"
 
 # Testing
 junit = "4.13.2"
-test-core = "1.6.0"
+test-core = "1.6.1"
+test-rules = "1.6.1"
+test-truth = "1.6.0"
 test-junit = "1.2.1"
-test-runner = "1.6.1"
+test-runner = "1.6.2"
 mockito-kotlin = "5.3.1"
 core-testing = "2.2.0"
 turbine = "1.1.0"
@@ -62,9 +64,6 @@ plugin-firebase-crashlytics = "3.0.2"
 plugin-firebase-perf = "1.4.2"
 plugin-detekt = "1.23.6"
 plugin-about-libraries = "11.1.3"
-espresso-core = "3.6.1"
-appcompat = "1.7.0"
-material = "1.12.0"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
@@ -138,8 +137,8 @@ detekt-rules = { group = "com.github.Abhimanyu14", name = "detekt-rules", versio
 # Tesing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 test-core = { group = "androidx.test", name = "core-ktx", version.ref = "test-core" }
-test-rules = { group = "androidx.test", name = "rules", version.ref = "test-core" }
-test-truth = { group = "androidx.test.ext", name = "truth", version.ref = "test-core" }
+test-rules = { group = "androidx.test", name = "rules", version.ref = "test-rules" }
+test-truth = { group = "androidx.test.ext", name = "truth", version.ref = "test-truth" }
 test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "test-junit" }
 test-runner = { group = "androidx.test", name = "runner", version.ref = "test-runner" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
@@ -149,9 +148,6 @@ compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose-version" }
 kakaocup-compose = { group = "io.github.kakaocup", name = "compose", version.ref = "kakaocup-compose" }
 konsist = { group = "com.lemonappdev", name = "konsist", version.ref = "konsist" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

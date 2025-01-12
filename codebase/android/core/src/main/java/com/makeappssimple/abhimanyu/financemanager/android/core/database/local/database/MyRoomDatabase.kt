@@ -7,8 +7,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.constants.DatabaseConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import java.util.concurrent.Executors
 
 @Database(
-    version = AppConstants.DATABASE_CURRENT_VERSION_NUMBER,
+    version = DatabaseConstants.DATABASE_CURRENT_VERSION_NUMBER,
     entities = [
         AccountEntity::class,
         CategoryEntity::class,
@@ -143,7 +143,7 @@ public abstract class MyRoomDatabase : RoomDatabase() {
                 .databaseBuilder(
                     context = context.applicationContext,
                     klass = MyRoomDatabase::class.java,
-                    name = AppConstants.DATABASE_NAME,
+                    name = DatabaseConstants.DATABASE_NAME,
                 )
                 .addMigrations(
                     migrations = manualDatabaseMigrations,

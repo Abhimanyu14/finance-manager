@@ -7,9 +7,9 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPreferencesDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.constants.DatastoreConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.preferencesDataMigrations
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import dagger.Module
@@ -42,7 +42,7 @@ public class PreferencesModule {
             ),
             produceFile = {
                 appContext.preferencesDataStoreFile(
-                    name = AppConstants.DATASTORE_FILE_NAME,
+                    name = DatastoreConstants.DATASTORE_FILE_NAME,
                 )
             },
         )

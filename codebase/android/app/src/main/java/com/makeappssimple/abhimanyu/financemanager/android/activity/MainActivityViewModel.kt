@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.activity
 
 import androidx.lifecycle.ViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit

@@ -8,8 +8,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.constants.DatastoreConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeLogKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.ReminderConstants
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -51,7 +51,7 @@ internal class MyPreferencesDataSourceTest {
             scope = testScope.backgroundScope,
             produceFile = {
                 testContext.preferencesDataStoreFile(
-                    name = AppConstants.DATASTORE_FILE_NAME,
+                    name = DatastoreConstants.DATASTORE_FILE_NAME,
                 )
             },
         )

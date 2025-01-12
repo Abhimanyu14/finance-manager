@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 import androidx.datastore.core.DataMigration
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.constants.DatastoreConstants
 
 public val preferencesDataMigrations: List<DataMigration<Preferences>> = listOf(
     PreferencesDataMigration.MIGRATION_3_TO_4,
@@ -17,7 +17,7 @@ private object PreferencesDataMigration {
         override suspend fun shouldMigrate(
             currentData: Preferences,
         ): Boolean {
-            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
+            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < DatastoreConstants.DATASTORE_CURRENT_VERSION_NUMBER
         }
 
         override suspend fun migrate(
@@ -43,7 +43,7 @@ private object PreferencesDataMigration {
         override suspend fun shouldMigrate(
             currentData: Preferences,
         ): Boolean {
-            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
+            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < DatastoreConstants.DATASTORE_CURRENT_VERSION_NUMBER
         }
 
         override suspend fun migrate(
@@ -79,7 +79,7 @@ private object PreferencesDataMigration {
         override suspend fun shouldMigrate(
             currentData: Preferences,
         ): Boolean {
-            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
+            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < DatastoreConstants.DATASTORE_CURRENT_VERSION_NUMBER
         }
 
         override suspend fun migrate(
@@ -103,7 +103,7 @@ private object PreferencesDataMigration {
 
             // Update data store version number
             currentMutablePrefs[DataStoreConstants.CURRENT_VERSION_NUMBER] =
-                AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
+                DatastoreConstants.DATASTORE_CURRENT_VERSION_NUMBER
 
             return currentMutablePrefs.toPreferences()
         }

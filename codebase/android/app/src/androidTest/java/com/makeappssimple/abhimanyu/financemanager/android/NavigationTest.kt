@@ -56,7 +56,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_VIEW_TRANSACTION
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKitImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
+import com.makeappssimple.abhimanyu.financemanager.android.feature.R
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -65,13 +65,7 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R as CoreUiR
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R as AccountsR
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R as CategoriesR
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R as HomeR
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R as SettingsR
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R as TransactionForR
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R as TransactionsR
+import com.makeappssimple.abhimanyu.financemanager.android.core.R as CoreR
 
 private object NavigationTestConstants {
     const val TIMEOUT = 5_000L
@@ -89,8 +83,8 @@ internal class NavigationTest {
     val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity> =
         createAndroidComposeRule<MainActivity>()
 
-    @get:Rule(order = 2)
-    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
+//    @get:Rule(order = 2)
+//    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var context: Context
 
@@ -166,37 +160,37 @@ internal class NavigationTest {
         accountsScreen = composeTestRule.onNodeWithTag(SCREEN_ACCOUNTS)
         accountsScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_ACCOUNTS)
         accountsFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(AccountsR.string.screen_accounts_floating_action_button_content_description)
+            context.getString(R.string.screen_accounts_floating_action_button_content_description)
         )
 
         addOrEditAccountScreen = composeTestRule.onNodeWithTag(SCREEN_ADD_OR_EDIT_ACCOUNT)
         addOrEditAccountScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_ACCOUNT)
         addAccountAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(AccountsR.string.screen_add_account_appbar_title)
+            context.getString(R.string.screen_add_account_appbar_title)
         )
         editAccountAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(AccountsR.string.screen_edit_account_appbar_title)
+            context.getString(R.string.screen_edit_account_appbar_title)
         )
 
         addOrEditCategoryScreen = composeTestRule.onNodeWithTag(SCREEN_ADD_OR_EDIT_CATEGORY)
         addOrEditCategoryScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY)
         addCategoryAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(CategoriesR.string.screen_add_category_appbar_title)
+            context.getString(R.string.screen_add_category_appbar_title)
         )
         editCategoryAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(CategoriesR.string.screen_edit_category_appbar_title)
+            context.getString(R.string.screen_edit_category_appbar_title)
         )
 
         addOrEditTransactionScreen = composeTestRule.onNodeWithTag(SCREEN_ADD_OR_EDIT_TRANSACTION)
         addOrEditTransactionScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION)
         addTransactionAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionsR.string.screen_add_transaction_appbar_title)
+            context.getString(R.string.screen_add_transaction_appbar_title)
         )
         editTransactionAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionsR.string.screen_edit_transaction_appbar_title)
+            context.getString(R.string.screen_edit_transaction_appbar_title)
         )
 
         addOrEditTransactionForScreen =
@@ -204,10 +198,10 @@ internal class NavigationTest {
         addOrEditTransactionForScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR)
         addTransactionForAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionForR.string.screen_add_transaction_for_appbar_title)
+            context.getString(R.string.screen_add_transaction_for_appbar_title)
         )
         editTransactionForAppbarTitle = composeTestRule.onNodeWithText(
-            context.getString(TransactionForR.string.screen_edit_transaction_for_appbar_title)
+            context.getString(R.string.screen_edit_transaction_for_appbar_title)
         )
 
         analysisScreen = composeTestRule.onNodeWithTag(SCREEN_ANALYSIS)
@@ -216,7 +210,7 @@ internal class NavigationTest {
         categoriesScreen = composeTestRule.onNodeWithTag(SCREEN_CATEGORIES)
         categoriesScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_CATEGORIES)
         categoriesFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(CategoriesR.string.screen_categories_floating_action_button_content_description)
+            context.getString(R.string.screen_categories_floating_action_button_content_description)
         )
 
         homeScreen = composeTestRule.onNodeWithTag(SCREEN_HOME)
@@ -224,13 +218,13 @@ internal class NavigationTest {
         homeTotalBalanceCard = composeTestRule.onNodeWithTag(COMPONENT_TOTAL_BALANCE_CARD)
         homeOverviewCard = composeTestRule.onNodeWithTag(COMPONENT_OVERVIEW_CARD)
         homeRecentTransactions = composeTestRule.onNodeWithText(
-            context.getString(CoreUiR.string.screen_home_recent_transactions)
+            context.getString(CoreR.string.screen_home_recent_transactions)
         )
         homeFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(HomeR.string.screen_home_floating_action_button_content_description)
+            context.getString(R.string.screen_home_floating_action_button_content_description)
         )
         homeAppbarSettings = composeTestRule.onNodeWithContentDescription(
-            context.getString(HomeR.string.screen_home_appbar_settings)
+            context.getString(R.string.screen_home_appbar_settings)
         )
 
         openSourceLicensesScreen = composeTestRule.onNodeWithTag(SCREEN_OPEN_SOURCE_LICENSES)
@@ -240,32 +234,32 @@ internal class NavigationTest {
         settingsScreen = composeTestRule.onNodeWithTag(SCREEN_SETTINGS)
         settingsScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_SETTINGS)
         settingsLinearProgressIndicator = composeTestRule.onNodeWithTag(
-            context.getString(SettingsR.string.screen_settings_linear_progress_indicator_test_tag)
+            context.getString(R.string.screen_settings_linear_progress_indicator_test_tag)
         )
         settingsCategoriesListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_categories)
+            context.getString(R.string.screen_settings_categories)
         )
         settingsAccountsListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_accounts)
+            context.getString(R.string.screen_settings_accounts)
         )
         settingsTransactionForListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_transaction_for)
+            context.getString(R.string.screen_settings_transaction_for)
         )
         settingsOpenSourceLicensesListItem = composeTestRule.onAllNodesWithText(
-            context.getString(SettingsR.string.screen_settings_open_source_licenses)
+            context.getString(R.string.screen_settings_open_source_licenses)
         )
 
         transactionForValuesScreen = composeTestRule.onNodeWithTag(SCREEN_TRANSACTION_FOR_VALUES)
         transactionForValuesScreenContent =
             composeTestRule.onNodeWithTag(SCREEN_CONTENT_TRANSACTION_FOR_VALUES)
         transactionForValuesFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(TransactionForR.string.screen_transaction_for_values_floating_action_button_content_description)
+            context.getString(R.string.screen_transaction_for_values_floating_action_button_content_description)
         )
 
         transactionsScreen = composeTestRule.onNodeWithTag(SCREEN_TRANSACTIONS)
         transactionsScreenContent = composeTestRule.onNodeWithTag(SCREEN_CONTENT_TRANSACTIONS)
         transactionsFloatingActionButton = composeTestRule.onNodeWithContentDescription(
-            context.getString(TransactionsR.string.screen_transactions_floating_action_button_content_description)
+            context.getString(R.string.screen_transactions_floating_action_button_content_description)
         )
 
         viewTransactionScreen = composeTestRule.onNodeWithTag(SCREEN_VIEW_TRANSACTION)
@@ -439,7 +433,7 @@ internal class NavigationTest {
         homeAppbarSettings.performClick()
         settingsScreenContent.performScrollToNode(
             matcher = hasText(
-                text = context.getString(SettingsR.string.screen_settings_open_source_licenses),
+                text = context.getString(R.string.screen_settings_open_source_licenses),
             ),
         )
         settingsOpenSourceLicensesListItem.onFirst().performClick()
@@ -465,7 +459,7 @@ internal class NavigationTest {
 
         settingsScreenContent.performScrollToNode(
             matcher = hasText(
-                text = context.getString(SettingsR.string.screen_settings_open_source_licenses),
+                text = context.getString(R.string.screen_settings_open_source_licenses),
             ),
         )
         settingsOpenSourceLicensesListItem.onFirst().assertIsDisplayed()
