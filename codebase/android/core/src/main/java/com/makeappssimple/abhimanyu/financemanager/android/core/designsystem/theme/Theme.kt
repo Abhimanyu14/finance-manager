@@ -73,21 +73,6 @@ public fun MyAppTheme(
     lightColorScheme: ColorScheme = myLightColorScheme,
     content: ComposableContent,
 ) {
-    Material3AppTheme(
-        darkTheme = darkTheme,
-        darkColorScheme = darkColorScheme,
-        lightColorScheme = lightColorScheme,
-        content = content,
-    )
-}
-
-@Composable
-internal fun Material3AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    darkColorScheme: ColorScheme,
-    lightColorScheme: ColorScheme,
-    content: ComposableContent,
-) {
     val colors = if (darkTheme) {
         darkColorScheme
     } else {
