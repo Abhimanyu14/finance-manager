@@ -141,18 +141,18 @@ internal class EditTransactionScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedEditTransactionScreenBottomSheetType = EditTransactionScreenBottomSheetType.None,
         )
     }
 
     override fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
+        updateScreenSnackbarType(
             updatedEditTransactionScreenSnackbarType = EditTransactionScreenSnackbarType.None,
         )
     }
 
-    override fun setAccountFrom(
+    override fun updateAccountFrom(
         updatedAccountFrom: Account?,
     ) {
         accountFrom.update {
@@ -160,7 +160,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setAccountTo(
+    override fun updateAccountTo(
         updatedAccountTo: Account?,
     ) {
         accountTo.update {
@@ -168,7 +168,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setAmount(
+    override fun updateAmount(
         updatedAmount: TextFieldValue,
     ) {
         amount.update {
@@ -178,7 +178,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setAmount(
+    override fun updateAmount(
         updatedAmount: String,
     ) {
         amount.update {
@@ -188,7 +188,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setCategory(
+    override fun updateCategory(
         updatedCategory: Category?,
     ) {
         category.update {
@@ -196,7 +196,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setIsTransactionDatePickerDialogVisible(
+    override fun updateIsTransactionDatePickerDialogVisible(
         updatedIsTransactionDatePickerDialogVisible: Boolean,
     ) {
         isTransactionDatePickerDialogVisible.update {
@@ -204,7 +204,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setIsTransactionTimePickerDialogVisible(
+    override fun updateIsTransactionTimePickerDialogVisible(
         updatedIsTransactionTimePickerDialogVisible: Boolean,
     ) {
         isTransactionTimePickerDialogVisible.update {
@@ -212,7 +212,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedEditTransactionScreenBottomSheetType: EditTransactionScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -220,7 +220,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setScreenSnackbarType(
+    override fun updateScreenSnackbarType(
         updatedEditTransactionScreenSnackbarType: EditTransactionScreenSnackbarType,
     ) {
         screenSnackbarType.update {
@@ -228,7 +228,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedTransactionForIndex(
+    override fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
         selectedTransactionForIndex.update {
@@ -236,7 +236,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedTransactionTypeIndex(
+    override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         selectedTransactionTypeIndex.update {
@@ -244,7 +244,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTitle(
+    override fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         title.update {
@@ -252,7 +252,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTransactionDate(
+    override fun updateTransactionDate(
         updatedTransactionDate: LocalDate,
     ) {
         transactionDate.update {
@@ -260,7 +260,7 @@ internal class EditTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTransactionTime(
+    override fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
     ) {
         transactionTime.update {

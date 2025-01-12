@@ -68,11 +68,11 @@ internal class SettingsScreenUIStateDelegateImpl(
     override fun disableReminder() {
         coroutineScope.launch {
             if (alarmKit.cancelReminderAlarm()) {
-                setScreenSnackbarType(
+                updateScreenSnackbarType(
                     updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.CancelReminderSuccessful,
                 )
             } else {
-                setScreenSnackbarType(
+                updateScreenSnackbarType(
                     updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.CancelReminderFailed,
                 )
             }
@@ -114,18 +114,18 @@ internal class SettingsScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedSettingsScreenBottomSheetType = SettingsScreenBottomSheetType.None,
         )
     }
 
     override fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
+        updateScreenSnackbarType(
             updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.None,
         )
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedSettingsScreenBottomSheetType: SettingsScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -133,7 +133,7 @@ internal class SettingsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setScreenSnackbarType(
+    override fun updateScreenSnackbarType(
         updatedSettingsScreenSnackbarType: SettingsScreenSnackbarType,
     ) {
         screenSnackbarType.update {

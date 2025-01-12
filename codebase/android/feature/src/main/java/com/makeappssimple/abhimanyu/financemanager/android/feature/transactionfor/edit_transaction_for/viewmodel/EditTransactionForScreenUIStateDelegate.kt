@@ -38,11 +38,11 @@ internal interface EditTransactionForScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedEditTransactionForScreenBottomSheetType: EditTransactionForScreenBottomSheetType,
     )
 
-    fun setTitle(
+    fun updateTitle(
         updatedTitle: TextFieldValue,
     )
 

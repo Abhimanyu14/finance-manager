@@ -28,7 +28,7 @@ internal interface OpenSourceLicensesScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedOpenSourceLicensesScreenBottomSheetType: OpenSourceLicensesScreenBottomSheetType,
     )
     // endregion

@@ -171,10 +171,10 @@ internal class AddTransactionScreenUIStateDelegateImpl(
                 originalTransaction = originalTransaction,
             )
             if (isTransactionInserted) {
-                setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
+                updateScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionSuccessful)
                 navigationKit.navigateUp()
             } else {
-                setScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionFailed)
+                updateScreenSnackbarType(AddTransactionScreenSnackbarType.AddTransactionFailed)
             }
         }
     }
@@ -184,18 +184,18 @@ internal class AddTransactionScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedAddTransactionScreenBottomSheetType = AddTransactionScreenBottomSheetType.None,
         )
     }
 
     override fun resetScreenSnackbarType() {
-        setScreenSnackbarType(
+        updateScreenSnackbarType(
             updatedAddTransactionScreenSnackbarType = AddTransactionScreenSnackbarType.None,
         )
     }
 
-    override fun setAccountFrom(
+    override fun updateAccountFrom(
         updatedAccountFrom: Account?,
     ) {
         accountFrom.update {
@@ -203,7 +203,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setAccountTo(
+    override fun updateAccountTo(
         updatedAccountTo: Account?,
     ) {
         accountTo.update {
@@ -211,7 +211,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setAmount(
+    override fun updateAmount(
         updatedAmount: TextFieldValue,
     ) {
         amount.update {
@@ -221,7 +221,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setAmount(
+    override fun updateAmount(
         updatedAmount: String,
     ) {
         amount.update {
@@ -231,7 +231,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setCategory(
+    override fun updateCategory(
         updatedCategory: Category?,
     ) {
         category.update {
@@ -239,7 +239,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setIsTransactionDatePickerDialogVisible(
+    override fun updateIsTransactionDatePickerDialogVisible(
         updatedIsTransactionDatePickerDialogVisible: Boolean,
     ) {
         isTransactionDatePickerDialogVisible.update {
@@ -247,7 +247,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setIsTransactionTimePickerDialogVisible(
+    override fun updateIsTransactionTimePickerDialogVisible(
         updatedIsTransactionTimePickerDialogVisible: Boolean,
     ) {
         isTransactionTimePickerDialogVisible.update {
@@ -255,7 +255,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedAddTransactionScreenBottomSheetType: AddTransactionScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -263,7 +263,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setScreenSnackbarType(
+    override fun updateScreenSnackbarType(
         updatedAddTransactionScreenSnackbarType: AddTransactionScreenSnackbarType,
     ) {
         screenSnackbarType.update {
@@ -271,7 +271,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedTransactionForIndex(
+    override fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
         selectedTransactionForIndex.update {
@@ -279,7 +279,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedTransactionTypeIndex(
+    override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         selectedTransactionTypeIndex.update {
@@ -287,7 +287,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTitle(
+    override fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         title.update {
@@ -295,7 +295,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTransactionDate(
+    override fun updateTransactionDate(
         updatedTransactionDate: LocalDate,
     ) {
         transactionDate.update {
@@ -303,7 +303,7 @@ internal class AddTransactionScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTransactionTime(
+    override fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
     ) {
         transactionTime.update {

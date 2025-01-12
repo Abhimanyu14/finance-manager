@@ -53,15 +53,15 @@ internal interface HomeScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setBalanceVisible(
+    fun updateIsBalanceVisible(
         updatedIsBalanceVisible: Boolean,
     )
 
-    fun setOverviewTabSelectionIndex(
+    fun updateOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
     )
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedHomeScreenBottomSheetType: HomeScreenBottomSheetType,
     )
     // endregion

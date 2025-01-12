@@ -65,12 +65,12 @@ internal class AnalysisScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedAnalysisScreenBottomSheetType = AnalysisScreenBottomSheetType.None,
         )
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedAnalysisScreenBottomSheetType: AnalysisScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -78,7 +78,7 @@ internal class AnalysisScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedFilter(
+    override fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     ) {
         selectedFilter.update {
@@ -86,7 +86,7 @@ internal class AnalysisScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedTransactionTypeIndex(
+    override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         selectedTransactionTypeIndex.update {

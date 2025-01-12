@@ -70,7 +70,7 @@ public class AccountsScreenViewModel @Inject constructor(
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
         setClickedItemId = ::updateClickedItemId,
-        setDefaultAccountIdInDataStore = ::setDefaultAccountIdInDataStore,
+        setDefaultAccountIdInDataStore = ::updateDefaultAccountIdInDataStore,
         setScreenBottomSheetType = ::updateScreenBottomSheetType,
     )
     // endregion

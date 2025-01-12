@@ -73,7 +73,7 @@ public class ViewTransactionScreenViewModel @Inject constructor(
             navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
             onRefundButtonClick = ::onRefundButtonClick,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setScreenBottomSheetType = ::setScreenBottomSheetType,
+            setScreenBottomSheetType = ::updateScreenBottomSheetType,
             setTransactionIdToDelete = {
                 transactionIdToDelete = it
             },

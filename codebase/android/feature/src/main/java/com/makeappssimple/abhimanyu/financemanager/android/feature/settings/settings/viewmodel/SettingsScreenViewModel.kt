@@ -67,8 +67,8 @@ public class SettingsScreenViewModel @Inject constructor(
         recalculateTotal = ::recalculateTotal,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
         resetScreenSnackbarType = ::resetScreenSnackbarType,
-        setScreenBottomSheetType = ::setScreenBottomSheetType,
-        setScreenSnackbarType = ::setScreenSnackbarType,
+        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        setScreenSnackbarType = ::updateScreenSnackbarType,
     )
     // endregion
 
@@ -119,7 +119,7 @@ public class SettingsScreenViewModel @Inject constructor(
                 navigationKit.navigateUp()
             } else {
                 completeLoading()
-                setScreenSnackbarType(
+                updateScreenSnackbarType(
                     updatedSettingsScreenSnackbarType = SettingsScreenSnackbarType.RestoreDataFailed,
                 )
             }

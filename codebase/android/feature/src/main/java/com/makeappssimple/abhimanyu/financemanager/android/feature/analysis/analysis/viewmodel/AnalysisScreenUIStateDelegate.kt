@@ -31,15 +31,15 @@ internal interface AnalysisScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedAnalysisScreenBottomSheetType: AnalysisScreenBottomSheetType,
     )
 
-    fun setSelectedFilter(
+    fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     )
 
-    fun setSelectedTransactionTypeIndex(
+    fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     )
     // endregion

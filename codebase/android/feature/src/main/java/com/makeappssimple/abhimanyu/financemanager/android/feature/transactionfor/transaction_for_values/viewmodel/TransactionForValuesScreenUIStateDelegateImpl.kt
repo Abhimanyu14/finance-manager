@@ -92,12 +92,12 @@ internal class TransactionForValuesScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedTransactionForValuesScreenBottomSheetType = TransactionForValuesScreenBottomSheetType.None,
         )
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedTransactionForValuesScreenBottomSheetType: TransactionForValuesScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -105,7 +105,7 @@ internal class TransactionForValuesScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTransactionForIdToDelete(
+    override fun updateTransactionForIdToDelete(
         updatedTransactionForIdToDelete: Int?,
     ) {
         transactionForIdToDelete.update {

@@ -46,11 +46,11 @@ internal interface SettingsScreenUIStateDelegate {
 
     fun resetScreenSnackbarType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedSettingsScreenBottomSheetType: SettingsScreenBottomSheetType,
     )
 
-    fun setScreenSnackbarType(
+    fun updateScreenSnackbarType(
         updatedSettingsScreenSnackbarType: SettingsScreenSnackbarType,
     )
     // endregion

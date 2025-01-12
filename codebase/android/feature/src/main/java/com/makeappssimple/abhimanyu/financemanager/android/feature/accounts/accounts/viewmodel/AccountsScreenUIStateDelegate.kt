@@ -28,7 +28,7 @@ internal interface AccountsScreenUIStateDelegate : ScreenUICommonState {
         shouldRefresh: Boolean = true,
     )
 
-    fun setDefaultAccountIdInDataStore()
+    fun updateDefaultAccountIdInDataStore()
 
     fun updateScreenBottomSheetType(
         updatedAccountsScreenBottomSheetType: AccountsScreenBottomSheetType,

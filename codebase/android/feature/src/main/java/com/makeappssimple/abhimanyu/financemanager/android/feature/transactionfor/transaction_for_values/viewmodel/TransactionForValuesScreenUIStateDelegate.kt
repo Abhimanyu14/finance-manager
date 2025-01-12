@@ -37,11 +37,11 @@ internal interface TransactionForValuesScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedTransactionForValuesScreenBottomSheetType: TransactionForValuesScreenBottomSheetType,
     )
 
-    fun setTransactionForIdToDelete(
+    fun updateTransactionForIdToDelete(
         updatedTransactionForIdToDelete: Int?,
     )
     // endregion

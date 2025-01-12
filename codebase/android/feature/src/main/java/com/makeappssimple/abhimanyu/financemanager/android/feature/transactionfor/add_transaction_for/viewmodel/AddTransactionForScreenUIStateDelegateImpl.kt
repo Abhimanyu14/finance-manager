@@ -91,12 +91,12 @@ internal class AddTransactionForScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedAddTransactionForScreenBottomSheetType = AddTransactionForScreenBottomSheetType.None,
         )
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedAddTransactionForScreenBottomSheetType: AddTransactionForScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -104,7 +104,7 @@ internal class AddTransactionForScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTitle(
+    override fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         title.update {

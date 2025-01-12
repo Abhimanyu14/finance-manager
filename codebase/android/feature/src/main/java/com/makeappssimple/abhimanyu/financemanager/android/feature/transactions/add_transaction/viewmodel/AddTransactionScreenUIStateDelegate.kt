@@ -64,59 +64,59 @@ internal interface AddTransactionScreenUIStateDelegate {
 
     fun resetScreenSnackbarType()
 
-    fun setAccountFrom(
+    fun updateAccountFrom(
         updatedAccountFrom: Account?,
     )
 
-    fun setAccountTo(
+    fun updateAccountTo(
         updatedAccountTo: Account?,
     )
 
-    fun setAmount(
+    fun updateAmount(
         updatedAmount: TextFieldValue,
     )
 
-    fun setAmount(
+    fun updateAmount(
         updatedAmount: String,
     )
 
-    fun setCategory(
+    fun updateCategory(
         updatedCategory: Category?,
     )
 
-    fun setIsTransactionDatePickerDialogVisible(
+    fun updateIsTransactionDatePickerDialogVisible(
         updatedIsTransactionDatePickerDialogVisible: Boolean,
     )
 
-    fun setIsTransactionTimePickerDialogVisible(
+    fun updateIsTransactionTimePickerDialogVisible(
         updatedIsTransactionTimePickerDialogVisible: Boolean,
     )
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedAddTransactionScreenBottomSheetType: AddTransactionScreenBottomSheetType,
     )
 
-    fun setScreenSnackbarType(
+    fun updateScreenSnackbarType(
         updatedAddTransactionScreenSnackbarType: AddTransactionScreenSnackbarType,
     )
 
-    fun setSelectedTransactionForIndex(
+    fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     )
 
-    fun setSelectedTransactionTypeIndex(
+    fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     )
 
-    fun setTitle(
+    fun updateTitle(
         updatedTitle: TextFieldValue,
     )
 
-    fun setTransactionDate(
+    fun updateTransactionDate(
         updatedTransactionDate: LocalDate,
     )
 
-    fun setTransactionTime(
+    fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
     )
     // endregion

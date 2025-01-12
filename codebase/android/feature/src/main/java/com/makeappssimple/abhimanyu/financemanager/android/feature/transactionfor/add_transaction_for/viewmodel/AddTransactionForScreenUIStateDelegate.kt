@@ -37,11 +37,11 @@ internal interface AddTransactionForScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedAddTransactionForScreenBottomSheetType: AddTransactionForScreenBottomSheetType,
     )
 
-    fun setTitle(
+    fun updateTitle(
         updatedTitle: TextFieldValue,
     )
     // endregion

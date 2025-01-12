@@ -93,11 +93,11 @@ public class TransactionsScreenViewModel @Inject constructor(
         removeFromSelectedTransactions = ::removeFromSelectedTransactions,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
         selectAllTransactions = ::selectAllTransactions,
-        setIsInSelectionMode = ::setIsInSelectionMode,
-        setScreenBottomSheetType = ::setScreenBottomSheetType,
-        setSearchText = ::setSearchText,
-        setSelectedFilter = ::setSelectedFilter,
-        setSelectedSortOption = ::setSelectedSortOption,
+        setIsInSelectionMode = ::updateIsInSelectionMode,
+        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        setSearchText = ::updateSearchText,
+        setSelectedFilter = ::updateSelectedFilter,
+        setSelectedSortOption = ::updateSelectedSortOption,
         updateTransactionForValuesInTransactions = ::updateTransactionForValuesInTransactions,
     )
     // endregion

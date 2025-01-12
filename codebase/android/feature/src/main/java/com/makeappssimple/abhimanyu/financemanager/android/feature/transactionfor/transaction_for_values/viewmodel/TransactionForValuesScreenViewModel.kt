@@ -58,8 +58,8 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
             navigateToEditTransactionForScreen = ::navigateToEditTransactionForScreen,
             navigateUp = ::navigateUp,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setScreenBottomSheetType = ::setScreenBottomSheetType,
-            setTransactionForIdToDelete = ::setTransactionForIdToDelete,
+            setScreenBottomSheetType = ::updateScreenBottomSheetType,
+            setTransactionForIdToDelete = ::updateTransactionForIdToDelete,
         )
     // endregion
 

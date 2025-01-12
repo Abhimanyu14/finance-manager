@@ -20,7 +20,7 @@ private object HomeScreenUIStateDelegateImplConstants {
 }
 
 internal class HomeScreenUIStateDelegateImpl(
-    private val dateTimeKit: DateTimeKit,
+    dateTimeKit: DateTimeKit,
     private val navigationKit: NavigationKit,
 ) : HomeScreenUIStateDelegate {
     // region UI state
@@ -170,12 +170,12 @@ internal class HomeScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedHomeScreenBottomSheetType = HomeScreenBottomSheetType.None,
         )
     }
 
-    override fun setBalanceVisible(
+    override fun updateIsBalanceVisible(
         updatedIsBalanceVisible: Boolean,
     ) {
         isBalanceVisible.update {
@@ -183,13 +183,13 @@ internal class HomeScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setOverviewTabSelectionIndex(
+    override fun updateOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
     ) {
         overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedHomeScreenBottomSheetType: HomeScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {

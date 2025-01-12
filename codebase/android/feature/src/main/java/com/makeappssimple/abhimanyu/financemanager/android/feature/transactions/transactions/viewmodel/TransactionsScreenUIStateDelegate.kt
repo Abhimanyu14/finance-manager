@@ -61,23 +61,23 @@ internal interface TransactionsScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedTransactionsScreenBottomSheetType: TransactionsScreenBottomSheetType,
     )
 
-    fun setIsInSelectionMode(
+    fun updateIsInSelectionMode(
         updatedIsInSelectionMode: Boolean,
     )
 
-    fun setSearchText(
+    fun updateSearchText(
         updatedSearchText: String,
     )
 
-    fun setSelectedFilter(
+    fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     )
 
-    fun setSelectedSortOption(
+    fun updateSelectedSortOption(
         updatedSelectedSortOption: SortOption,
     )
 

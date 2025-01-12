@@ -46,7 +46,7 @@ internal interface ViewTransactionScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedViewTransactionScreenBottomSheetType: ViewTransactionScreenBottomSheetType,
     )
     // endregion

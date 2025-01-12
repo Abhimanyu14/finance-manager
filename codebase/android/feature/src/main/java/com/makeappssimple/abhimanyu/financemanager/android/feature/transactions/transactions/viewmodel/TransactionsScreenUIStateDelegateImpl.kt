@@ -146,12 +146,12 @@ internal class TransactionsScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedTransactionsScreenBottomSheetType = TransactionsScreenBottomSheetType.None,
         )
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedTransactionsScreenBottomSheetType: TransactionsScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -159,7 +159,7 @@ internal class TransactionsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setIsInSelectionMode(
+    override fun updateIsInSelectionMode(
         updatedIsInSelectionMode: Boolean,
     ) {
         isInSelectionMode.update {
@@ -167,7 +167,7 @@ internal class TransactionsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSearchText(
+    override fun updateSearchText(
         updatedSearchText: String,
     ) {
         searchText.update {
@@ -175,7 +175,7 @@ internal class TransactionsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedFilter(
+    override fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     ) {
         selectedFilter.update {
@@ -183,7 +183,7 @@ internal class TransactionsScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedSortOption(
+    override fun updateSelectedSortOption(
         updatedSelectedSortOption: SortOption,
     ) {
         selectedSortOption.update {

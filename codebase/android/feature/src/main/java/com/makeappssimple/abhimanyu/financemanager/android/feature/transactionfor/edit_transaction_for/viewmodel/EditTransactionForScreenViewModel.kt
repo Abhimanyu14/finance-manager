@@ -64,8 +64,8 @@ public class EditTransactionForScreenViewModel @Inject constructor(
             clearTitle = ::clearTitle,
             navigateUp = ::navigateUp,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setScreenBottomSheetType = ::setScreenBottomSheetType,
-            setTitle = ::setTitle,
+            setScreenBottomSheetType = ::updateScreenBottomSheetType,
+            setTitle = ::updateTitle,
             updateTransactionFor = {
                 updateTransactionFor(
                     uiState = uiState.value
@@ -113,7 +113,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     // region processCurrentTransactionFor
     private fun processCurrentTransactionFor() {
         val currentTransactionForValue = currentTransactionFor ?: return
-        setTitle(
+        updateTitle(
             updatedTitle = title.value
                 .copy(
                     text = currentTransactionForValue.title,

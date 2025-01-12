@@ -120,18 +120,18 @@ public class AddTransactionScreenViewModel @Inject constructor(
             navigateUp = ::navigateUp,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
             resetScreenSnackbarType = ::resetScreenSnackbarType,
-            setAccountFrom = ::setAccountFrom,
-            setAccountTo = ::setAccountTo,
-            setAmount = ::setAmount,
-            setCategory = ::setCategory,
-            setIsTransactionDatePickerDialogVisible = ::setIsTransactionDatePickerDialogVisible,
-            setIsTransactionTimePickerDialogVisible = ::setIsTransactionTimePickerDialogVisible,
-            setScreenBottomSheetType = ::setScreenBottomSheetType,
-            setSelectedTransactionForIndex = ::setSelectedTransactionForIndex,
-            setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
-            setTitle = ::setTitle,
-            setTransactionDate = ::setTransactionDate,
-            setTransactionTime = ::setTransactionTime,
+            setAccountFrom = ::updateAccountFrom,
+            setAccountTo = ::updateAccountTo,
+            setAmount = this::updateAmount,
+            setCategory = ::updateCategory,
+            setIsTransactionDatePickerDialogVisible = ::updateIsTransactionDatePickerDialogVisible,
+            setIsTransactionTimePickerDialogVisible = ::updateIsTransactionTimePickerDialogVisible,
+            setScreenBottomSheetType = ::updateScreenBottomSheetType,
+            setSelectedTransactionForIndex = ::updateSelectedTransactionForIndex,
+            setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
+            setTitle = ::updateTitle,
+            setTransactionDate = ::updateTransactionDate,
+            setTransactionTime = ::updateTransactionTime,
         )
     // endregion
 
@@ -306,16 +306,16 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun processInitialDataForRefundTransaction(
         originalTransactionData: TransactionData,
     ) {
-        setSelectedTransactionTypeIndex(
+        updateSelectedTransactionTypeIndex(
             validTransactionTypesForNewTransaction.indexOf(
                 element = TransactionType.REFUND,
             )
         )
-        setAmount(maxRefundAmount.orEmpty().value.toString())
-        setCategory(originalTransactionData.category)
-        setAccountFrom(null)
-        setAccountTo(originalTransactionData.accountFrom)
-        setSelectedTransactionForIndex(
+        updateAmount(maxRefundAmount.orEmpty().value.toString())
+        updateCategory(originalTransactionData.category)
+        updateAccountFrom(null)
+        updateAccountTo(originalTransactionData.accountFrom)
+        updateSelectedTransactionForIndex(
             transactionForValues.indexOf(
                 element = transactionForValues.firstOrNull {
                     it.id == originalTransactionData.transaction.id
@@ -325,10 +325,10 @@ public class AddTransactionScreenViewModel @Inject constructor(
     }
 
     private fun processInitialDataForOtherTransactions() {
-        setCategory(defaultExpenseCategory)
-        setAccountFrom(defaultAccount)
-        setAccountTo(defaultAccount)
-        setSelectedTransactionTypeIndex(
+        updateCategory(defaultExpenseCategory)
+        updateAccountFrom(defaultAccount)
+        updateAccountTo(defaultAccount)
+        updateSelectedTransactionTypeIndex(
             validTransactionTypesForNewTransaction.indexOf(
                 element = TransactionType.EXPENSE,
             )
@@ -524,49 +524,49 @@ public class AddTransactionScreenViewModel @Inject constructor(
     private fun handleSelectedTransactionTypeChangeToIncome() {
         setUiVisibilityState(AddTransactionScreenUiVisibilityState.Income)
 
-        setCategory(originalTransactionData?.category ?: defaultIncomeCategory)
+        updateCategory(originalTransactionData?.category ?: defaultIncomeCategory)
         clearTitle()
-        setAccountFrom(null)
-        setAccountTo(originalTransactionData?.accountTo ?: defaultAccount)
+        updateAccountFrom(null)
+        updateAccountTo(originalTransactionData?.accountTo ?: defaultAccount)
     }
 
     private fun handleSelectedTransactionTypeChangeToExpense() {
         setUiVisibilityState(AddTransactionScreenUiVisibilityState.Expense)
 
-        setCategory(originalTransactionData?.category ?: defaultExpenseCategory)
+        updateCategory(originalTransactionData?.category ?: defaultExpenseCategory)
         clearTitle()
-        setAccountFrom(originalTransactionData?.accountFrom ?: defaultAccount)
-        setAccountTo(null)
+        updateAccountFrom(originalTransactionData?.accountFrom ?: defaultAccount)
+        updateAccountTo(null)
     }
 
     private fun handleSelectedTransactionTypeChangeToTransfer() {
         setUiVisibilityState(AddTransactionScreenUiVisibilityState.Transfer)
 
         clearTitle()
-        setAccountFrom(originalTransactionData?.accountFrom ?: defaultAccount)
-        setAccountTo(originalTransactionData?.accountTo ?: defaultAccount)
+        updateAccountFrom(originalTransactionData?.accountFrom ?: defaultAccount)
+        updateAccountTo(originalTransactionData?.accountTo ?: defaultAccount)
     }
 
     private fun handleSelectedTransactionTypeChangeToInvestment() {
         setUiVisibilityState(AddTransactionScreenUiVisibilityState.Investment)
 
-        setCategory(originalTransactionData?.category ?: defaultInvestmentCategory)
+        updateCategory(originalTransactionData?.category ?: defaultInvestmentCategory)
         clearTitle()
-        setAccountFrom(originalTransactionData?.accountFrom ?: defaultAccount)
-        setAccountTo(null)
+        updateAccountFrom(originalTransactionData?.accountFrom ?: defaultAccount)
+        updateAccountTo(null)
     }
 
     private fun handleSelectedTransactionTypeChangeToRefund() {
         setUiVisibilityState(AddTransactionScreenUiVisibilityState.Refund)
 
-        setAmount(maxRefundAmount.orEmpty().value.toString())
-        setAccountTo(originalTransactionData?.accountFrom)
-        setTransactionDate(
+        updateAmount(maxRefundAmount.orEmpty().value.toString())
+        updateAccountTo(originalTransactionData?.accountFrom)
+        updateTransactionDate(
             updatedTransactionDate = dateTimeKit.getLocalDate(
                 timestamp = originalTransactionData?.transaction?.transactionTimestamp.orZero(),
             ),
         )
-        setTransactionTime(
+        updateTransactionTime(
             updatedTransactionTime = dateTimeKit.getLocalTime(
                 timestamp = originalTransactionData?.transaction?.transactionTimestamp.orZero(),
             ),

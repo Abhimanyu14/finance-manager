@@ -112,12 +112,12 @@ internal class ViewTransactionScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedViewTransactionScreenBottomSheetType = ViewTransactionScreenBottomSheetType.None,
         )
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedViewTransactionScreenBottomSheetType: ViewTransactionScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
