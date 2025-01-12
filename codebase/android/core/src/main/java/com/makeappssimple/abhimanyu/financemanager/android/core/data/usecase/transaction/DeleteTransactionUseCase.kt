@@ -11,7 +11,7 @@ public class DeleteTransactionUseCase @Inject constructor(
     public suspend operator fun invoke(
         id: Int,
     ): Boolean {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return transactionRepository.deleteTransaction(
             id = id,
         )

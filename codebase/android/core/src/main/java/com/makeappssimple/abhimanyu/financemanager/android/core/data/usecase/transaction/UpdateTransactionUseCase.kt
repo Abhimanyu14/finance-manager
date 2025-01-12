@@ -13,7 +13,7 @@ public class UpdateTransactionUseCase @Inject constructor(
         @Suppress("UNUSED_PARAMETER") originalTransaction: Transaction,
         updatedTransaction: Transaction,
     ) {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         transactionRepository.updateTransaction(
             transaction = updatedTransaction,
         )

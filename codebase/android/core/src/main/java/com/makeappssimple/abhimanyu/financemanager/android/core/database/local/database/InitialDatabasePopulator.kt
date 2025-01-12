@@ -107,7 +107,7 @@ public class InitialDatabasePopulatorImpl(
                         accounts = it.accountsData.toTypedArray(),
                     )
                 }
-            myPreferencesDataSource.setAccountDataVersionNumber(
+            myPreferencesDataSource.updateAccountDataVersionNumber(
                 accountDataVersionNumber = initialDatabaseData.defaultAccounts.versionNumber,
             )
         }
@@ -129,7 +129,7 @@ public class InitialDatabasePopulatorImpl(
                         categories = it.categoriesData.toTypedArray(),
                     )
                 }
-            myPreferencesDataSource.setCategoryDataVersionNumber(
+            myPreferencesDataSource.updateCategoryDataVersionNumber(
                 categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
             )
         }
@@ -151,7 +151,7 @@ public class InitialDatabasePopulatorImpl(
                         transactionForValues = it.transactionForValuesData.toTypedArray(),
                     )
                 }
-            myPreferencesDataSource.setTransactionForDataVersionNumber(
+            myPreferencesDataSource.updateTransactionForDataVersionNumber(
                 transactionForDataVersionNumber = initialDatabaseData.defaultTransactionForValues.versionNumber,
             )
         }
@@ -171,7 +171,7 @@ public class InitialDatabasePopulatorImpl(
                     transactions = transactions,
                 ).toTypedArray()
             )
-            myPreferencesDataSource.setTransactionDataVersionNumber(
+            myPreferencesDataSource.updateTransactionDataVersionNumber(
                 transactionDataVersionNumber = currentTransactionsDataVersion,
             )
         }

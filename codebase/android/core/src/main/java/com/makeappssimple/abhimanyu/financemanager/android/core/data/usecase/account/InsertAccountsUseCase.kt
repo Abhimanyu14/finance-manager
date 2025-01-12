@@ -13,7 +13,7 @@ public class InsertAccountsUseCase @Inject constructor(
     public suspend operator fun invoke(
         vararg accounts: Account,
     ): ImmutableList<Long> {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return accountRepository.insertAccounts(
             accounts = accounts,
         )

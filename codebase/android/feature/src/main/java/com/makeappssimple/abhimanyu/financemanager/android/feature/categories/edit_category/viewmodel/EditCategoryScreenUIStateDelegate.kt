@@ -43,23 +43,23 @@ internal interface EditCategoryScreenUIStateDelegate {
 
     fun resetScreenBottomSheetType()
 
-    fun setEmoji(
+    fun updateEmoji(
         updatedEmoji: String,
     )
 
-    fun setTitle(
+    fun updateTitle(
         updatedTitle: TextFieldValue,
     )
 
-    fun setScreenBottomSheetType(
+    fun updateScreenBottomSheetType(
         updatedEditCategoryScreenBottomSheetType: EditCategoryScreenBottomSheetType,
     )
 
-    fun setSearchText(
+    fun updateSearchText(
         updatedSearchText: String,
     )
 
-    fun setSelectedTransactionTypeIndex(
+    fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     )
 

@@ -9,7 +9,7 @@ public class DeleteAllTransactionsUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) {
     public suspend operator fun invoke(): Boolean {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return transactionRepository.deleteAllTransactions()
     }
 }

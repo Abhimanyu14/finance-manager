@@ -12,7 +12,7 @@ public class UpdateAccountsUseCase @Inject constructor(
     public suspend operator fun invoke(
         vararg accounts: Account,
     ): Boolean {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return accountRepository.updateAccounts(
             accounts = accounts,
         )

@@ -24,43 +24,43 @@ public interface MyPreferencesRepository {
 
     public suspend fun getReminder(): Reminder?
 
-    public suspend fun setCategoryDataVersionNumber(
+    public suspend fun updateCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ): Boolean
 
-    public suspend fun setDefaultExpenseCategoryId(
+    public suspend fun updateDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ): Boolean
 
-    public suspend fun setDefaultIncomeCategoryId(
+    public suspend fun updateDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ): Boolean
 
-    public suspend fun setDefaultInvestmentCategoryId(
+    public suspend fun updateDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ): Boolean
 
-    public suspend fun setDefaultAccountId(
+    public suspend fun updateDefaultAccountId(
         accountId: Int,
     ): Boolean
 
-    public suspend fun setIsReminderEnabled(
+    public suspend fun updateIsReminderEnabled(
         isReminderEnabled: Boolean,
     ): Boolean
 
-    public suspend fun setLastDataBackupTimestamp(
+    public suspend fun updateLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long = getCurrentTimeMillis(),
     ): Boolean
 
-    public suspend fun setLastDataChangeTimestamp(
+    public suspend fun updateLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long = getCurrentTimeMillis(),
     ): Boolean
 
-    public suspend fun setTransactionsDataVersionNumber(
+    public suspend fun updateTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     ): Boolean
 
-    public suspend fun setReminderTime(
+    public suspend fun updateReminderTime(
         hour: Int,
         min: Int,
     ): Boolean

@@ -20,7 +20,7 @@ public class UpdateTransactionForUseCase @Inject constructor(
             .copy(
                 title = title,
             )
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return transactionForRepository.updateTransactionForValues(
             updatedTransactionFor,
         )

@@ -102,12 +102,12 @@ internal class EditCategoryScreenUIStateDelegateImpl(
     }
 
     override fun resetScreenBottomSheetType() {
-        setScreenBottomSheetType(
+        updateScreenBottomSheetType(
             updatedEditCategoryScreenBottomSheetType = EditCategoryScreenBottomSheetType.None,
         )
     }
 
-    override fun setEmoji(
+    override fun updateEmoji(
         updatedEmoji: String,
     ) {
         emoji.update {
@@ -115,7 +115,7 @@ internal class EditCategoryScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setTitle(
+    override fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         title.update {
@@ -123,7 +123,7 @@ internal class EditCategoryScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setScreenBottomSheetType(
+    override fun updateScreenBottomSheetType(
         updatedEditCategoryScreenBottomSheetType: EditCategoryScreenBottomSheetType,
     ) {
         screenBottomSheetType.update {
@@ -131,7 +131,7 @@ internal class EditCategoryScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSearchText(
+    override fun updateSearchText(
         updatedSearchText: String,
     ) {
         searchText.update {
@@ -139,7 +139,7 @@ internal class EditCategoryScreenUIStateDelegateImpl(
         }
     }
 
-    override fun setSelectedTransactionTypeIndex(
+    override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         selectedTransactionTypeIndex.update {

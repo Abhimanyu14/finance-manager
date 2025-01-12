@@ -12,7 +12,7 @@ public class DeleteCategoriesUseCase @Inject constructor(
     public suspend operator fun invoke(
         vararg categories: Category,
     ): Boolean {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return categoryRepository.deleteCategories(
             categories = categories,
         )

@@ -75,7 +75,7 @@ public class CategoriesScreenViewModel @Inject constructor(
         resetScreenSnackbarType = ::resetScreenSnackbarType,
         setCategoryIdToDelete = ::updateCategoryIdToDelete,
         setClickedItemId = ::updateClickedItemId,
-        setDefaultCategoryIdInDataStore = ::setDefaultCategoryIdInDataStore,
+        setDefaultCategoryIdInDataStore = ::updateDefaultCategoryIdInDataStore,
         setScreenBottomSheetType = ::updateScreenBottomSheetType,
         setScreenSnackbarType = ::updateScreenSnackbarType,
     )

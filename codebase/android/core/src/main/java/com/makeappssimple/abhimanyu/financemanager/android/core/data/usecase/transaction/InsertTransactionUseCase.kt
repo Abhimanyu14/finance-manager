@@ -85,7 +85,7 @@ public class InsertTransactionUseCase @Inject constructor(
         )
         val isTransactionInserted = id != -1L
         if (isTransactionInserted) {
-            myPreferencesRepository.setLastDataChangeTimestamp()
+            myPreferencesRepository.updateLastDataChangeTimestamp()
         }
         return isTransactionInserted
     }

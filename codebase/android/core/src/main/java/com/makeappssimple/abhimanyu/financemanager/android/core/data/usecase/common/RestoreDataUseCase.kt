@@ -103,45 +103,45 @@ public class RestoreDataUseCase @Inject constructor(
             ) {
                 awaitAll(
                     async {
-                        setCategoryDataVersionNumber(
+                        updateCategoryDataVersionNumber(
                             categoryDataVersionNumber = datastoreData.initialDataVersionNumber.category,
                         )
                     },
                     async {
-                        setDefaultExpenseCategoryId(
+                        updateDefaultExpenseCategoryId(
                             defaultExpenseCategoryId = datastoreData.defaultDataId.expenseCategory,
                         )
                     },
                     async {
-                        setDefaultIncomeCategoryId(
+                        updateDefaultIncomeCategoryId(
                             defaultIncomeCategoryId = datastoreData.defaultDataId.incomeCategory,
                         )
                     },
                     async {
-                        setDefaultInvestmentCategoryId(
+                        updateDefaultInvestmentCategoryId(
                             defaultInvestmentCategoryId = datastoreData.defaultDataId.investmentCategory,
                         )
                     },
                     async {
-                        setDefaultAccountId(
+                        updateDefaultAccountId(
                             accountId = datastoreData.defaultDataId.account,
                         )
                     },
                     async {
-                        setIsReminderEnabled(
+                        updateIsReminderEnabled(
                             isReminderEnabled = datastoreData.reminder.isEnabled,
                         )
                     },
                     async {
-                        setTransactionsDataVersionNumber(
+                        updateTransactionsDataVersionNumber(
                             transactionsDataVersionNumber = datastoreData.initialDataVersionNumber.transaction,
                         )
                     },
                     async {
-                        setLastDataChangeTimestamp()
+                        updateLastDataChangeTimestamp()
                     },
                     async {
-                        setLastDataBackupTimestamp()
+                        updateLastDataBackupTimestamp()
                     },
                 )
             }.all { it }

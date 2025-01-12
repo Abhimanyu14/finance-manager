@@ -12,7 +12,7 @@ public class UpdateAccountBalanceAmountUseCase @Inject constructor(
     public suspend operator fun invoke(
         accountsBalanceAmountChange: ImmutableList<Pair<Int, Long>>,
     ): Boolean {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return accountRepository.updateAccountBalanceAmount(
             accountsBalanceAmountChange = accountsBalanceAmountChange,
         )

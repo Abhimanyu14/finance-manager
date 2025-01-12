@@ -36,7 +36,7 @@ public class RecalculateTotalUseCase @Inject constructor(
             val allTransactionData: ImmutableList<TransactionData> =
                 deferredList[1].filterIsInstance<TransactionData>()
 
-            myPreferencesRepository.setLastDataChangeTimestamp()
+            myPreferencesRepository.updateLastDataChangeTimestamp()
             val accountBalances = hashMapOf<Int, Long>()
             allTransactionData.forEach { transactionData ->
                 transactionData.accountFrom?.let {

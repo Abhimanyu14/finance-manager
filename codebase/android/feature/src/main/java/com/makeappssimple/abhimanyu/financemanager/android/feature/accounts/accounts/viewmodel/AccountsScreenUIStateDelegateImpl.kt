@@ -67,7 +67,7 @@ internal class AccountsScreenUIStateDelegateImpl(
     override fun updateDefaultAccountIdInDataStore() {
         coroutineScope.launch {
             clickedItemId?.let { accountId ->
-                val isDefaultAccountUpdated = myPreferencesRepository.setDefaultAccountId(
+                val isDefaultAccountUpdated = myPreferencesRepository.updateDefaultAccountId(
                     accountId = accountId,
                 )
                 if (!isDefaultAccountUpdated) {

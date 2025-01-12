@@ -26,7 +26,7 @@ public class InsertAccountUseCase @Inject constructor(
         } else {
             null
         }
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return accountRepository.insertAccounts(
             Account(
                 type = accountType,

@@ -42,7 +42,7 @@ public class BackupDataUseCase @Inject constructor(
         val jsonString = Json.encodeToString(
             value = backupData,
         )
-        myPreferencesRepository.setLastDataBackupTimestamp()
+        myPreferencesRepository.updateLastDataBackupTimestamp()
         return jsonWriterKit.writeJsonToFile(
             uri = uri,
             jsonString = jsonString,

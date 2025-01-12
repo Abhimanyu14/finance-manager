@@ -139,7 +139,7 @@ internal class CategoriesScreenUIStateDelegateImpl(
         )
     }
 
-    override fun setDefaultCategoryIdInDataStore(
+    override fun updateDefaultCategoryIdInDataStore(
         selectedTabIndex: Int,
     ) {
         coroutineScope.launch {

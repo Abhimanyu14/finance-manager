@@ -41,61 +41,61 @@ public class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
         return null
     }
 
-    override suspend fun setCategoryDataVersionNumber(
+    override suspend fun updateCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ): Boolean {
         return true
     }
 
-    override suspend fun setDefaultExpenseCategoryId(
+    override suspend fun updateDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ): Boolean {
         return true
     }
 
-    override suspend fun setDefaultIncomeCategoryId(
+    override suspend fun updateDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ): Boolean {
         return true
     }
 
-    override suspend fun setDefaultInvestmentCategoryId(
+    override suspend fun updateDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ): Boolean {
         return true
     }
 
-    override suspend fun setDefaultAccountId(
+    override suspend fun updateDefaultAccountId(
         accountId: Int,
     ): Boolean {
         return true
     }
 
-    override suspend fun setIsReminderEnabled(
+    override suspend fun updateIsReminderEnabled(
         isReminderEnabled: Boolean,
     ): Boolean {
         return true
     }
 
-    override suspend fun setLastDataBackupTimestamp(
+    override suspend fun updateLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
     ): Boolean {
         return true
     }
 
-    override suspend fun setLastDataChangeTimestamp(
+    override suspend fun updateLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
     ): Boolean {
         return true
     }
 
-    override suspend fun setTransactionsDataVersionNumber(
+    override suspend fun updateTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     ): Boolean {
         return true
     }
 
-    override suspend fun setReminderTime(
+    override suspend fun updateReminderTime(
         hour: Int,
         min: Int,
     ): Boolean {

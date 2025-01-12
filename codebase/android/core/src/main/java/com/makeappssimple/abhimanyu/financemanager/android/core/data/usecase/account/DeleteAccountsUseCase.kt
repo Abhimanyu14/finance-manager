@@ -12,7 +12,7 @@ public class DeleteAccountsUseCase @Inject constructor(
     public suspend operator fun invoke(
         vararg accounts: Account,
     ): Boolean {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return accountRepository.deleteAccounts(
             accounts = accounts,
         )

@@ -11,7 +11,7 @@ public class DeleteAccountUseCase @Inject constructor(
     public suspend operator fun invoke(
         id: Int,
     ): Boolean {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return accountRepository.deleteAccount(
             id = id,
         )

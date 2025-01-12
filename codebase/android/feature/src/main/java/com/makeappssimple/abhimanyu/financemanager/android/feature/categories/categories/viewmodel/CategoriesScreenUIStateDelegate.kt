@@ -55,7 +55,7 @@ internal interface CategoriesScreenUIStateDelegate {
 
     fun resetScreenSnackbarType()
 
-    fun setDefaultCategoryIdInDataStore(
+    fun updateDefaultCategoryIdInDataStore(
         selectedTabIndex: Int,
     )
 

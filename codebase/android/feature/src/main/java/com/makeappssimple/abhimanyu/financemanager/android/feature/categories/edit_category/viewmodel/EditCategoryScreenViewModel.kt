@@ -75,11 +75,11 @@ public class EditCategoryScreenViewModel @Inject constructor(
         clearTitle = ::clearTitle,
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-        setEmoji = ::setEmoji,
-        setTitle = ::setTitle,
-        setScreenBottomSheetType = ::setScreenBottomSheetType,
-        setSearchText = ::setSearchText,
-        setSelectedTransactionTypeIndex = ::setSelectedTransactionTypeIndex,
+        setEmoji = ::updateEmoji,
+        setTitle = ::updateTitle,
+        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        setSearchText = ::updateSearchText,
+        setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
         updateCategory = ::updateCategory,
     )
     // endregion
@@ -96,7 +96,7 @@ public class EditCategoryScreenViewModel @Inject constructor(
                 getAllCategories()
                 getOriginalCategory()
                 transactionType?.let { originalTransactionType ->
-                    setSelectedTransactionTypeIndex(
+                    updateSelectedTransactionTypeIndex(
                         validTransactionTypes.indexOf(
                             element = TransactionType.entries.find { transactionType ->
                                 transactionType.title == originalTransactionType
@@ -134,18 +134,18 @@ public class EditCategoryScreenViewModel @Inject constructor(
                 }
 
                 category.value.let { category ->
-                    setSelectedTransactionTypeIndex(
+                    updateSelectedTransactionTypeIndex(
                         validTransactionTypes.indexOf(
                             element = category?.transactionType,
                         )
                     )
-                    setTitle(
+                    updateTitle(
                         title.value.copy(
                             text = category?.title.orEmpty(),
                             selection = TextRange(category?.title.orEmpty().length),
                         )
                     )
-                    setEmoji(category?.emoji.orEmpty())
+                    updateEmoji(category?.emoji.orEmpty())
                 }
             }
         }

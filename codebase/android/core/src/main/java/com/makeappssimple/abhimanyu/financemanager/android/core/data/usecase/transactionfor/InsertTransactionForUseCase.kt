@@ -15,7 +15,7 @@ public class InsertTransactionForUseCase @Inject constructor(
         if (title.isBlank()) {
             return -1
         }
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return transactionForRepository.insertTransactionForValues(
             TransactionFor(
                 title = title,

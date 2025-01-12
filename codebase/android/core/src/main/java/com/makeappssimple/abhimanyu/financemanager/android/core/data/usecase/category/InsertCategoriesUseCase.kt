@@ -13,7 +13,7 @@ public class InsertCategoriesUseCase @Inject constructor(
     public suspend operator fun invoke(
         vararg categories: Category,
     ): ImmutableList<Long> {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return categoryRepository.insertCategories(
             categories = categories,
         )

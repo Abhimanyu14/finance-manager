@@ -13,7 +13,7 @@ public class InsertTransactionsUseCase @Inject constructor(
     public suspend operator fun invoke(
         vararg transactions: Transaction,
     ): ImmutableList<Long> {
-        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.updateLastDataChangeTimestamp()
         return transactionRepository.insertTransactions(
             transactions = transactions,
         )

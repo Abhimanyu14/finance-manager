@@ -13,19 +13,19 @@ public class SetDefaultCategoryUseCase @Inject constructor(
     ): Boolean {
         return when (transactionType) {
             TransactionType.EXPENSE -> {
-                myPreferencesRepository.setDefaultExpenseCategoryId(
+                myPreferencesRepository.updateDefaultExpenseCategoryId(
                     defaultExpenseCategoryId = defaultCategoryId,
                 )
             }
 
             TransactionType.INCOME -> {
-                myPreferencesRepository.setDefaultIncomeCategoryId(
+                myPreferencesRepository.updateDefaultIncomeCategoryId(
                     defaultIncomeCategoryId = defaultCategoryId,
                 )
             }
 
             TransactionType.INVESTMENT -> {
-                myPreferencesRepository.setDefaultInvestmentCategoryId(
+                myPreferencesRepository.updateDefaultInvestmentCategoryId(
                     defaultInvestmentCategoryId = defaultCategoryId,
                 )
             }

@@ -28,7 +28,7 @@ public class AlarmKitImpl(
 
         disableBroadcastReceivers()
 
-        isAlarmCancelled = setIsReminderEnabledInPreferences(
+        isAlarmCancelled = updateIsReminderEnabledInPreferences(
             isReminderEnabled = false,
         )
 
@@ -54,7 +54,7 @@ public class AlarmKitImpl(
 
         enableBroadcastReceivers()
 
-        isAlarmSet = setIsReminderEnabledInPreferences(
+        isAlarmSet = updateIsReminderEnabledInPreferences(
             isReminderEnabled = true,
         )
 
@@ -152,10 +152,10 @@ public class AlarmKitImpl(
     // endregion
 
     // region preferences
-    private suspend fun setIsReminderEnabledInPreferences(
+    private suspend fun updateIsReminderEnabledInPreferences(
         isReminderEnabled: Boolean,
     ): Boolean {
-        return myPreferencesRepository.setIsReminderEnabled(
+        return myPreferencesRepository.updateIsReminderEnabled(
             isReminderEnabled = isReminderEnabled,
         )
     }

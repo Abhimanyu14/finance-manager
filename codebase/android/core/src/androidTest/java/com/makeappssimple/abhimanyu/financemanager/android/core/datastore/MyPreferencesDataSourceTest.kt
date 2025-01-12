@@ -87,8 +87,8 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setLastDataBackupTimestamp_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setLastDataBackupTimestamp(
+    fun updateLastDataBackupTimestamp_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateLastDataBackupTimestamp(
             lastDataBackupTimestamp = TEST_TIMESTAMP,
         )
 
@@ -101,8 +101,8 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setLastDataChangeTimestamp_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setLastDataChangeTimestamp(
+    fun updateLastDataChangeTimestamp_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateLastDataChangeTimestamp(
             lastDataChangeTimestamp = TEST_TIMESTAMP,
         )
 
@@ -157,8 +157,8 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultExpenseCategoryId_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setDefaultExpenseCategoryId(
+    fun updateDefaultExpenseCategoryId_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateDefaultExpenseCategoryId(
             defaultExpenseCategoryId = TEST_ID,
         )
 
@@ -171,8 +171,8 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultIncomeCategoryId_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setDefaultIncomeCategoryId(
+    fun updateDefaultIncomeCategoryId_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateDefaultIncomeCategoryId(
             defaultIncomeCategoryId = TEST_ID,
         )
 
@@ -185,8 +185,8 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultInvestmentCategoryId_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setDefaultInvestmentCategoryId(
+    fun updateDefaultInvestmentCategoryId_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateDefaultInvestmentCategoryId(
             defaultInvestmentCategoryId = TEST_ID,
         )
 
@@ -199,8 +199,8 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultAccountId_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setDefaultAccountId(
+    fun updateDefaultAccountId_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateDefaultAccountId(
             defaultAccountId = TEST_ID,
         )
 
@@ -258,8 +258,8 @@ internal class MyPreferencesDataSourceTest {
         }
 
     @Test
-    fun setAccountDataVersionNumber_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setAccountDataVersionNumber(
+    fun updateAccountDataVersionNumber_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateAccountDataVersionNumber(
             accountDataVersionNumber = TEST_ID,
         )
 
@@ -272,8 +272,8 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setCategoryDataVersionNumber_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setCategoryDataVersionNumber(
+    fun updateCategoryDataVersionNumber_defaultTest() = runTestAndClearDataStore {
+        myPreferencesDataSource.updateCategoryDataVersionNumber(
             categoryDataVersionNumber = TEST_ID,
         )
 
@@ -286,9 +286,9 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setTransactionDataVersionNumber_defaultTest() =
+    fun updateTransactionDataVersionNumber_defaultTest() =
         runTestAndClearDataStore {
-            myPreferencesDataSource.setTransactionDataVersionNumber(
+            myPreferencesDataSource.updateTransactionDataVersionNumber(
                 transactionDataVersionNumber = TEST_ID,
             )
 
@@ -301,9 +301,9 @@ internal class MyPreferencesDataSourceTest {
         }
 
     @Test
-    fun setTransactionForDataVersionNumber_defaultTest() =
+    fun updateTransactionForDataVersionNumber_defaultTest() =
         runTestAndClearDataStore {
-            myPreferencesDataSource.setTransactionForDataVersionNumber(
+            myPreferencesDataSource.updateTransactionForDataVersionNumber(
                 transactionForDataVersionNumber = TEST_ID,
             )
 
@@ -344,9 +344,9 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setIsReminderEnabled_defaultTest() = runTestAndClearDataStore {
+    fun updateIsReminderEnabled_defaultTest() = runTestAndClearDataStore {
         val testValue = true
-        myPreferencesDataSource.setIsReminderEnabled(
+        myPreferencesDataSource.updateIsReminderEnabled(
             isReminderEnabled = testValue,
         )
 
@@ -359,10 +359,10 @@ internal class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setReminderTime_defaultTest() = runTestAndClearDataStore {
+    fun updateReminderTime_defaultTest() = runTestAndClearDataStore {
         val testHourValue = 10
         val testMinValue = 12
-        myPreferencesDataSource.setReminderTime(
+        myPreferencesDataSource.updateReminderTime(
             hour = testHourValue,
             min = testMinValue,
         )

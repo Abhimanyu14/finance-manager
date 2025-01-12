@@ -84,7 +84,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setAccountDataVersionNumber(
+    public suspend fun updateAccountDataVersionNumber(
         accountDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -94,7 +94,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setCategoryDataVersionNumber(
+    public suspend fun updateCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -104,7 +104,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setDefaultExpenseCategoryId(
+    public suspend fun updateDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -114,7 +114,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setDefaultIncomeCategoryId(
+    public suspend fun updateDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -124,7 +124,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setDefaultInvestmentCategoryId(
+    public suspend fun updateDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -134,7 +134,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setDefaultAccountId(
+    public suspend fun updateDefaultAccountId(
         defaultAccountId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -144,7 +144,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setIsReminderEnabled(
+    public suspend fun updateIsReminderEnabled(
         isReminderEnabled: Boolean,
     ): Boolean {
         return tryDataStoreEdit {
@@ -154,7 +154,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setLastDataBackupTimestamp(
+    public suspend fun updateLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
     ): Boolean {
         return tryDataStoreEdit {
@@ -164,7 +164,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setLastDataChangeTimestamp(
+    public suspend fun updateLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
     ): Boolean {
         return tryDataStoreEdit {
@@ -174,7 +174,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setReminderTime(
+    public suspend fun updateReminderTime(
         hour: Int,
         min: Int,
     ): Boolean {
@@ -186,7 +186,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setTransactionDataVersionNumber(
+    public suspend fun updateTransactionDataVersionNumber(
         transactionDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -197,7 +197,7 @@ public class MyPreferencesDataSource(
         }
     }
 
-    public suspend fun setTransactionForDataVersionNumber(
+    public suspend fun updateTransactionForDataVersionNumber(
         transactionForDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {

@@ -53,103 +53,103 @@ public class MyPreferencesRepositoryImpl(
         }
     }
 
-    override suspend fun setCategoryDataVersionNumber(
+    override suspend fun updateCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setCategoryDataVersionNumber(
+            myPreferencesDataSource.updateCategoryDataVersionNumber(
                 categoryDataVersionNumber = categoryDataVersionNumber,
             )
         }
     }
 
-    override suspend fun setDefaultExpenseCategoryId(
+    override suspend fun updateDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setDefaultExpenseCategoryId(
+            myPreferencesDataSource.updateDefaultExpenseCategoryId(
                 defaultExpenseCategoryId = defaultExpenseCategoryId,
             )
         }
     }
 
-    override suspend fun setDefaultIncomeCategoryId(
+    override suspend fun updateDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setDefaultIncomeCategoryId(
+            myPreferencesDataSource.updateDefaultIncomeCategoryId(
                 defaultIncomeCategoryId = defaultIncomeCategoryId,
             )
         }
     }
 
-    override suspend fun setDefaultInvestmentCategoryId(
+    override suspend fun updateDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setDefaultInvestmentCategoryId(
+            myPreferencesDataSource.updateDefaultInvestmentCategoryId(
                 defaultInvestmentCategoryId = defaultInvestmentCategoryId,
             )
         }
     }
 
-    override suspend fun setDefaultAccountId(
+    override suspend fun updateDefaultAccountId(
         accountId: Int,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setDefaultAccountId(
+            myPreferencesDataSource.updateDefaultAccountId(
                 defaultAccountId = accountId,
             )
         }
     }
 
-    override suspend fun setIsReminderEnabled(
+    override suspend fun updateIsReminderEnabled(
         isReminderEnabled: Boolean,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setIsReminderEnabled(
+            myPreferencesDataSource.updateIsReminderEnabled(
                 isReminderEnabled = isReminderEnabled,
             )
         }
     }
 
-    override suspend fun setLastDataBackupTimestamp(
+    override suspend fun updateLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setLastDataBackupTimestamp(
+            myPreferencesDataSource.updateLastDataBackupTimestamp(
                 lastDataBackupTimestamp = lastDataBackupTimestamp,
             )
         }
     }
 
-    override suspend fun setLastDataChangeTimestamp(
+    override suspend fun updateLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setLastDataChangeTimestamp(
+            myPreferencesDataSource.updateLastDataChangeTimestamp(
                 lastDataChangeTimestamp = lastDataChangeTimestamp,
             )
         }
     }
 
-    override suspend fun setReminderTime(
+    override suspend fun updateReminderTime(
         hour: Int,
         min: Int,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setReminderTime(
+            myPreferencesDataSource.updateReminderTime(
                 hour = hour,
                 min = min,
             )
         }
     }
 
-    override suspend fun setTransactionsDataVersionNumber(
+    override suspend fun updateTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     ): Boolean {
         return dispatcherProvider.executeOnIoDispatcher {
-            myPreferencesDataSource.setTransactionDataVersionNumber(
+            myPreferencesDataSource.updateTransactionDataVersionNumber(
                 transactionDataVersionNumber = transactionsDataVersionNumber,
             )
         }
