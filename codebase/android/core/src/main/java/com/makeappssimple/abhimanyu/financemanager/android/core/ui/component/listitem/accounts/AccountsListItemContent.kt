@@ -79,6 +79,27 @@ public fun AccountsListItemContent(
 }
 
 @Composable
+public fun AccountsListItemContentLoadingUI(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(
+                height = AccountsListItemContentConstants.loadingUIHeight,
+            )
+            .padding(
+                horizontal = AccountsListItemContentConstants.loadingUIHorizontalPadding,
+                vertical = AccountsListItemContentConstants.loadingUIVerticalPadding,
+            )
+            .clip(
+                shape = MaterialTheme.shapes.small,
+            )
+            .shimmer(),
+    )
+}
+
+@Composable
 private fun AccountsListItemContentUI(
     modifier: Modifier = Modifier,
     data: AccountsListItemContentData,
@@ -167,25 +188,4 @@ private fun AccountsListItemContentUI(
             )
         }
     }
-}
-
-@Composable
-public fun AccountsListItemContentLoadingUI(
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(
-                height = AccountsListItemContentConstants.loadingUIHeight,
-            )
-            .padding(
-                horizontal = AccountsListItemContentConstants.loadingUIHorizontalPadding,
-                vertical = AccountsListItemContentConstants.loadingUIVerticalPadding,
-            )
-            .clip(
-                shape = MaterialTheme.shapes.small,
-            )
-            .shimmer(),
-    )
 }

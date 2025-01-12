@@ -17,6 +17,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
+private object MyPreferencesDataSourceConstants {
+    const val DEFAULT_ID = -1
+    const val DEFAULT_TIMESTAMP = -1L
+}
+
 public class MyPreferencesDataSource(
     private val dataStore: DataStore<Preferences>,
     private val logKit: LogKit,
@@ -34,8 +39,10 @@ public class MyPreferencesDataSource(
     public fun getDataTimestamp(): Flow<DataTimestamp?> {
         return preferences.map {
             DataTimestamp(
-                lastBackup = it[DataStoreConstants.DataTimestamp.LAST_DATA_BACKUP].orZero(),
-                lastChange = it[DataStoreConstants.DataTimestamp.LAST_DATA_CHANGE].orZero(),
+                lastBackup = it[DataStoreConstants.DataTimestamp.LAST_DATA_BACKUP]
+                    ?: MyPreferencesDataSourceConstants.DEFAULT_TIMESTAMP,
+                lastChange = it[DataStoreConstants.DataTimestamp.LAST_DATA_CHANGE]
+                    ?: MyPreferencesDataSourceConstants.DEFAULT_TIMESTAMP,
             )
         }
     }
@@ -43,10 +50,14 @@ public class MyPreferencesDataSource(
     public fun getDefaultDataId(): Flow<DefaultDataId?> {
         return preferences.map {
             DefaultDataId(
-                expenseCategory = it[DataStoreConstants.DefaultId.EXPENSE_CATEGORY].orZero(),
-                incomeCategory = it[DataStoreConstants.DefaultId.INCOME_CATEGORY].orZero(),
-                investmentCategory = it[DataStoreConstants.DefaultId.INVESTMENT_CATEGORY].orZero(),
-                account = it[DataStoreConstants.DefaultId.ACCOUNT].orZero(),
+                expenseCategory = it[DataStoreConstants.DefaultId.EXPENSE_CATEGORY]
+                    ?: MyPreferencesDataSourceConstants.DEFAULT_ID,
+                incomeCategory = it[DataStoreConstants.DefaultId.INCOME_CATEGORY]
+                    ?: MyPreferencesDataSourceConstants.DEFAULT_ID,
+                investmentCategory = it[DataStoreConstants.DefaultId.INVESTMENT_CATEGORY]
+                    ?: MyPreferencesDataSourceConstants.DEFAULT_ID,
+                account = it[DataStoreConstants.DefaultId.ACCOUNT]
+                    ?: MyPreferencesDataSourceConstants.DEFAULT_ID,
             )
         }
     }

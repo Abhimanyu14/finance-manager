@@ -208,6 +208,24 @@ private fun LazyListScope.accountsList(
     }
 }
 
+private fun LazyListScope.accountsListLoadingUI() {
+    repeat(3) {
+        item {
+            AccountsListItemHeaderLoadingUI()
+        }
+        repeat(5) {
+            item {
+                AccountsListItemContentLoadingUI()
+            }
+        }
+        item {
+            VerticalSpacer(
+                height = 16.dp,
+            )
+        }
+    }
+}
+
 private fun LazyListScope.accountsListUI(
     uiState: AccountsScreenUIState,
     handleUIEvent: (uiEvent: AccountsScreenUIEvent) -> Unit,
@@ -243,24 +261,6 @@ private fun LazyListScope.accountsListUI(
                     data = listItem,
                 )
             }
-        }
-    }
-}
-
-private fun LazyListScope.accountsListLoadingUI() {
-    repeat(3) {
-        item {
-            AccountsListItemHeaderLoadingUI()
-        }
-        repeat(5) {
-            item {
-                AccountsListItemContentLoadingUI()
-            }
-        }
-        item {
-            VerticalSpacer(
-                height = 16.dp,
-            )
         }
     }
 }
