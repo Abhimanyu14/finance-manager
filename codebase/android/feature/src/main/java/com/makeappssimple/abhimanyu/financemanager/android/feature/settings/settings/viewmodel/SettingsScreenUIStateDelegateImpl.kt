@@ -81,7 +81,7 @@ internal class SettingsScreenUIStateDelegateImpl(
 
     override fun enableReminder() {
         coroutineScope.launch {
-            alarmKit.setReminderAlarm()
+            alarmKit.scheduleReminderAlarm()
         }
     }
 

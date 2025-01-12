@@ -40,12 +40,12 @@ public class AlarmKitImpl(
         return isAlarmCancelled
     }
 
-    override suspend fun setReminderAlarm(): Boolean {
+    override suspend fun scheduleReminderAlarm(): Boolean {
         val reminder = myPreferencesRepository.getReminder() ?: return false
         val initialAlarmTimestamp = getInitialAlarmTimestamp(
             reminder = reminder,
         )
-        var isAlarmSet = setAlarm(
+        var isAlarmSet = scheduleAlarm(
             initialAlarmTimestamp = initialAlarmTimestamp,
         )
         if (!isAlarmSet) {
@@ -67,7 +67,7 @@ public class AlarmKitImpl(
     }
 
     // region alarm
-    private fun setAlarm(
+    private fun scheduleAlarm(
         initialAlarmTimestamp: Long,
     ): Boolean {
         val alarmManager = getAlarmManager() ?: return false

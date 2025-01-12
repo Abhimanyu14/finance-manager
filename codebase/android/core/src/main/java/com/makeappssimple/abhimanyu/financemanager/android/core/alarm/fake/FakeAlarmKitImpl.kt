@@ -7,7 +7,7 @@ public class FakeAlarmKitImpl : AlarmKit {
         return true
     }
 
-    public override suspend fun setReminderAlarm(): Boolean {
+    public override suspend fun scheduleReminderAlarm(): Boolean {
         return true
     }
 }

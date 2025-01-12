@@ -32,7 +32,7 @@ public class BootCompletedReceiver : BroadcastReceiver() {
     private suspend fun doWork() {
         val reminder = myPreferencesRepository.getReminder() ?: return
         if (reminder.isEnabled.orFalse()) {
-            alarmKit.setReminderAlarm()
+            alarmKit.scheduleReminderAlarm()
         }
     }
 }
