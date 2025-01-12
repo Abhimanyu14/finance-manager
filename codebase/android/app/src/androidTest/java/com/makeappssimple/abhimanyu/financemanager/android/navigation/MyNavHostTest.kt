@@ -13,6 +13,7 @@ import org.junit.Test
 internal class MyNavHostTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+
     private lateinit var navHostController: TestNavHostController
 
     @Before
