@@ -26,7 +26,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.Accounts,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -36,7 +36,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.AddAccount,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -51,7 +51,7 @@ internal class NavigationKitTest {
             MyNavigationDirections.AddCategory(
                 transactionType = TransactionType.INCOME.title,
             ),
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -66,7 +66,7 @@ internal class NavigationKitTest {
             MyNavigationDirections.AddTransaction(
                 transactionId = transactionId,
             ),
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -76,7 +76,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.AddTransactionFor,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -86,7 +86,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.Analysis,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -96,7 +96,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.Categories,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -111,7 +111,7 @@ internal class NavigationKitTest {
             MyNavigationDirections.EditAccount(
                 accountId = accountId,
             ),
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -126,7 +126,7 @@ internal class NavigationKitTest {
             MyNavigationDirections.EditCategory(
                 categoryId = categoryId,
             ),
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -141,7 +141,7 @@ internal class NavigationKitTest {
             MyNavigationDirections.EditTransaction(
                 transactionId = transactionId,
             ),
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -156,7 +156,7 @@ internal class NavigationKitTest {
             MyNavigationDirections.EditTransactionFor(
                 transactionForId = transactionForId,
             ),
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -166,7 +166,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.Home,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -176,7 +176,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.OpenSourceLicenses,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -186,7 +186,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.Settings,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -196,7 +196,7 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.TransactionForValues,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -206,7 +206,17 @@ internal class NavigationKitTest {
 
         Assert.assertEquals(
             MyNavigationDirections.Transactions,
-            navigationKit.command.first()
+            navigationKit.command.first(),
+        )
+    }
+
+    @Test
+    fun navigateUp() = runTestWithTimeout {
+        navigationKit.navigateUp()
+
+        Assert.assertEquals(
+            MyNavigationDirections.NavigateUp,
+            navigationKit.command.first(),
         )
     }
 
@@ -221,17 +231,7 @@ internal class NavigationKitTest {
             MyNavigationDirections.ViewTransaction(
                 transactionId = transactionId,
             ),
-            navigationKit.command.first()
-        )
-    }
-
-    @Test
-    fun navigateUp() = runTestWithTimeout {
-        navigationKit.navigateUp()
-
-        Assert.assertEquals(
-            MyNavigationDirections.NavigateUp,
-            navigationKit.command.first()
+            navigationKit.command.first(),
         )
     }
 
@@ -263,7 +263,7 @@ internal class NavigationKitTest {
 
     private fun setupSUT() {
         navigationKit = NavigationKitImpl(
-            testScope
+            coroutineScope = testScope,
         )
     }
 

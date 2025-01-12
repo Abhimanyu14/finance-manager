@@ -132,6 +132,12 @@ public class NavigationKitImpl(
         )
     }
 
+    override fun navigateUp(): Job {
+        return navigate(
+            navigationCommand = MyNavigationDirections.NavigateUp,
+        )
+    }
+
     override fun navigateToViewTransactionScreen(
         transactionId: Int,
     ): Job {
@@ -139,12 +145,6 @@ public class NavigationKitImpl(
             navigationCommand = MyNavigationDirections.ViewTransaction(
                 transactionId = transactionId,
             ),
-        )
-    }
-
-    override fun navigateUp(): Job {
-        return navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 

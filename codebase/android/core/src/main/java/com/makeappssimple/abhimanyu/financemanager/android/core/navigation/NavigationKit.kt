@@ -50,9 +50,9 @@ public interface NavigationKit {
 
     public fun navigateToTransactionsScreen(): Job
 
+    public fun navigateUp(): Job
+
     public fun navigateToViewTransactionScreen(
         transactionId: Int,
     ): Job
-
-    public fun navigateUp(): Job
 }
