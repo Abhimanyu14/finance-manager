@@ -285,12 +285,12 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
                 },
             )
             calculateValidTransactionTypesForNewTransaction()
-            setDefaultCategory()
-            setDefaultAccount()
+            updateDefaultCategory()
+            updateDefaultAccount()
             if (isAddingRefundTransactionOrEditingAnyTransaction()) {
                 getTransactionDataForAddingRefundTransactionOrEditingAnyTransaction() // TODO(Abhi): Better naming
             } else {
-                setInitialSelectedTransactionType()
+                updateInitialSelectedTransactionType()
             }
             isDataFetchCompleted.update {
                 true
@@ -898,10 +898,10 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
             updatedEditTransactionScreenUiStateData = initialEditTransactionScreenUiStateData,
         )
 
-        setInitialSelectedTransactionType()
+        updateInitialSelectedTransactionType()
     }
 
-    private fun setDefaultCategory() {
+    private fun updateDefaultCategory() {
         defaultExpenseCategory = getCategory(
             categoryId = defaultDataIdFromDataStore?.expenseCategory,
         ) ?: categories.firstOrNull { category ->
@@ -925,7 +925,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         }
     }
 
-    private fun setDefaultAccount() {
+    private fun updateDefaultAccount() {
         defaultAccount = getAccount(
             accountId = defaultDataIdFromDataStore?.account,
         ) ?: accounts.value.firstOrNull { account ->
@@ -935,7 +935,7 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
         }
     }
 
-    private fun setInitialSelectedTransactionType() {
+    private fun updateInitialSelectedTransactionType() {
         selectedTransactionType.value =
             if (editingTransactionData?.transaction?.transactionType == TransactionType.REFUND) {
                 TransactionType.REFUND

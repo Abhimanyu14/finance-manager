@@ -531,7 +531,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     }
 
     private fun handleSelectedTransactionTypeChangeToIncome() {
-        setUiVisibilityState(EditTransactionScreenUiVisibilityState.Income)
+        updateUiVisibilityState(EditTransactionScreenUiVisibilityState.Income)
 
         updateCategory(originalTransactionData?.category ?: defaultIncomeCategory)
         clearTitle()
@@ -540,7 +540,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     }
 
     private fun handleSelectedTransactionTypeChangeToExpense() {
-        setUiVisibilityState(EditTransactionScreenUiVisibilityState.Expense)
+        updateUiVisibilityState(EditTransactionScreenUiVisibilityState.Expense)
 
         updateCategory(originalTransactionData?.category ?: defaultExpenseCategory)
         clearTitle()
@@ -549,7 +549,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     }
 
     private fun handleSelectedTransactionTypeChangeToTransfer() {
-        setUiVisibilityState(EditTransactionScreenUiVisibilityState.Transfer)
+        updateUiVisibilityState(EditTransactionScreenUiVisibilityState.Transfer)
 
         clearTitle()
         updateAccountFrom(originalTransactionData?.accountFrom ?: defaultAccount)
@@ -557,7 +557,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     }
 
     private fun handleSelectedTransactionTypeChangeToInvestment() {
-        setUiVisibilityState(EditTransactionScreenUiVisibilityState.Investment)
+        updateUiVisibilityState(EditTransactionScreenUiVisibilityState.Investment)
 
         updateCategory(originalTransactionData?.category ?: defaultInvestmentCategory)
         clearTitle()
@@ -566,7 +566,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
     }
 
     private fun handleSelectedTransactionTypeChangeToRefund() {
-        setUiVisibilityState(EditTransactionScreenUiVisibilityState.Refund)
+        updateUiVisibilityState(EditTransactionScreenUiVisibilityState.Refund)
 
         updateAmount(maxRefundAmount.orEmpty().value.toString())
         updateAccountTo(originalTransactionData?.accountFrom)
@@ -582,7 +582,7 @@ public class EditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun setUiVisibilityState(
+    private fun updateUiVisibilityState(
         updatedUiVisibilityState: EditTransactionScreenUiVisibilityState,
     ) {
         uiVisibilityState = updatedUiVisibilityState

@@ -17,7 +17,7 @@ internal class MyNavHostTest {
     private lateinit var navHostController: TestNavHostController
 
     @Before
-    fun setupAppNavHost() {
+    fun setUp() {
         composeTestRule.setContent {
             navHostController = TestNavHostController(
                 context = LocalContext.current,
