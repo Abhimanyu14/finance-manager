@@ -39,13 +39,13 @@ import javax.inject.Inject
 internal class EditAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
-    internal val logKit: LogKit,
     private val editAccountScreenDataValidationUseCase: EditAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,
     private val navigationKit: NavigationKit,
     private val screenUICommonState: ScreenUICommonState,
     private val updateAccountUseCase: UpdateAccountUseCase,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditAccountScreenUIStateDelegate by EditAccountScreenUIStateDelegateImpl(

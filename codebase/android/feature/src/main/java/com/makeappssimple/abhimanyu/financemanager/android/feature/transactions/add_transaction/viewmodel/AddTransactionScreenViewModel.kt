@@ -58,7 +58,6 @@ internal class AddTransactionScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    internal val logKit: LogKit,
     private val addTransactionScreenDataValidationUseCase: AddTransactionScreenDataValidationUseCase,
     private val dateTimeKit: DateTimeKit,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -70,6 +69,7 @@ internal class AddTransactionScreenViewModel @Inject constructor(
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigationKit: NavigationKit,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddTransactionScreenUIStateDelegate by AddTransactionScreenUIStateDelegateImpl(

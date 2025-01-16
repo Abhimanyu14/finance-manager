@@ -62,7 +62,6 @@ internal class EditTransactionScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    internal val logKit: LogKit,
     private val dateTimeKit: DateTimeKit,
     private val editTransactionScreenDataValidationUseCase: EditTransactionScreenDataValidationUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -75,6 +74,7 @@ internal class EditTransactionScreenViewModel @Inject constructor(
     private val navigationKit: NavigationKit,
     private val updateAccountBalanceAmountUseCase: UpdateAccountBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), EditTransactionScreenUIStateDelegate by EditTransactionScreenUIStateDelegateImpl(

@@ -31,11 +31,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TransactionForValuesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val checkIfTransactionForValuesAreUsedInTransactionsUseCase: CheckIfTransactionForValuesAreUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val navigationKit: NavigationKit,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), TransactionForValuesScreenUIStateDelegate by TransactionForValuesScreenUIStateDelegateImpl(

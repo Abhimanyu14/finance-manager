@@ -25,11 +25,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AddTransactionForScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val addTransactionForScreenDataValidationUseCase: AddTransactionForScreenDataValidationUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val insertTransactionForUseCase: InsertTransactionForUseCase,
     private val navigationKit: NavigationKit,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddTransactionForScreenUIStateDelegate by AddTransactionForScreenUIStateDelegateImpl(

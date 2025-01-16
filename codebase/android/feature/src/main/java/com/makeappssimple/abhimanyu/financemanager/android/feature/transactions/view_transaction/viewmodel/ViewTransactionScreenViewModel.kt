@@ -28,7 +28,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,11 +35,11 @@ internal class ViewTransactionScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    internal val logKit: LogKit,
     private val dateTimeKit: DateTimeKit,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
-    @VisibleForTesting internal val navigationKit: NavigationKit,
+    private val navigationKit: NavigationKit,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), ViewTransactionScreenUIStateDelegate by ViewTransactionScreenUIStateDelegateImpl(

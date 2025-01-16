@@ -42,10 +42,10 @@ private object AnalysisScreenViewModelConstants {
 @HiltViewModel
 internal class AnalysisScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val dateTimeKit: DateTimeKit,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val navigationKit: NavigationKit,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AnalysisScreenUIStateDelegate by AnalysisScreenUIStateDelegateImpl(

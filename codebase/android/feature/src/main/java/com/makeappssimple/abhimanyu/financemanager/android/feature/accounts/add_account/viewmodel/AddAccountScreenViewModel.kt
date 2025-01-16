@@ -30,11 +30,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AddAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val addAccountScreenDataValidationUseCase: AddAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val insertAccountUseCase: InsertAccountUseCase,
     private val navigationKit: NavigationKit,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AddAccountScreenUIStateDelegate by AddAccountScreenUIStateDelegateImpl(

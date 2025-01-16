@@ -61,3 +61,15 @@
 
 ## Component Composable
 - 
+
+# Ordering
+
+## ViewModel constructor
+
+Each group should be internally ordered in alphabetical order according to the data type, and then
+according to the name.
+
+1. Local parameters.
+2. Private properties
+3. Internal properties
+4. Public properties

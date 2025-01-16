@@ -30,14 +30,14 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SettingsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val alarmKit: AlarmKit,
     private val appVersionKit: AppVersionKit,
     private val backupDataUseCase: BackupDataUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    @VisibleForTesting internal val navigationKit: NavigationKit,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
+    internal val logKit: LogKit,
+    @VisibleForTesting internal val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), SettingsScreenUIStateDelegate by SettingsScreenUIStateDelegateImpl(

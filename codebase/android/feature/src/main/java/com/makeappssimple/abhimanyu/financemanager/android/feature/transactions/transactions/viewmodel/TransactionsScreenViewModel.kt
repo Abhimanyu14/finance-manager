@@ -52,13 +52,13 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TransactionsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val dispatcherProvider: DispatcherProvider,
     private val dateTimeKit: DateTimeKit,
     private val getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val navigationKit: NavigationKit,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), TransactionsScreenUIStateDelegate by TransactionsScreenUIStateDelegateImpl(

@@ -32,7 +32,6 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AccountsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     private val getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
@@ -42,6 +41,7 @@ internal class AccountsScreenViewModel @Inject constructor(
     private val getDefaultAccountIdFlowUseCase: GetDefaultAccountIdFlowUseCase,
     private val navigationKit: NavigationKit,
     private val screenUICommonState: ScreenUICommonState,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), AccountsScreenUIStateDelegate by AccountsScreenUIStateDelegateImpl(

@@ -41,13 +41,13 @@ import javax.inject.Inject
 @HiltViewModel
 internal class CategoriesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
-    internal val logKit: LogKit,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
     private val navigationKit: NavigationKit,
+    internal val logKit: LogKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,
 ), CategoriesScreenUIStateDelegate by CategoriesScreenUIStateDelegateImpl(
