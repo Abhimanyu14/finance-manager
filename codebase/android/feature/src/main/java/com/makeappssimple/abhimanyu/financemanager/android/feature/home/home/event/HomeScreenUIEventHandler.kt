@@ -1,13 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.event
 
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateEvents
 
 internal class HomeScreenUIEventHandler internal constructor(
     private val uiStateEvents: HomeScreenUIStateEvents,
     private val createDocument: ((uri: Uri?) -> Unit) -> Unit,
-) {
-    fun handleUIEvent(
+) : ScreenUIEventHandler<HomeScreenUIEvent> {
+    override fun handleUIEvent(
         uiEvent: HomeScreenUIEvent,
     ) {
         when (uiEvent) {

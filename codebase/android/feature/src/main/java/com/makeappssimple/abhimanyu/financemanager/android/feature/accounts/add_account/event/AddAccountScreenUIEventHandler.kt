@@ -1,11 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.event
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIStateEvents
 
 internal class AddAccountScreenUIEventHandler internal constructor(
     private val uiStateEvents: AddAccountScreenUIStateEvents,
-) {
-    fun handleUIEvent(
+) : ScreenUIEventHandler<AddAccountScreenUIEvent> {
+    override fun handleUIEvent(
         uiEvent: AddAccountScreenUIEvent,
     ) {
         when (uiEvent) {

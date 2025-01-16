@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.event
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.bottomsheet.AccountsScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.state.AccountsScreenUIStateEvents
 
 internal class AccountsScreenUIEventHandler internal constructor(
     private val uiStateEvents: AccountsScreenUIStateEvents,
-) {
-    fun handleUIEvent(
+) : ScreenUIEventHandler<AccountsScreenUIEvent> {
+    override fun handleUIEvent(
         uiEvent: AccountsScreenUIEvent,
     ) {
         when (uiEvent) {

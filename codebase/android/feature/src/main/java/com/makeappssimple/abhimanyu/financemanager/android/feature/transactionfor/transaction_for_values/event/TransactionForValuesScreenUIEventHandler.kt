@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.event
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.bottomsheet.TransactionForValuesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.state.TransactionForValuesScreenUIStateEvents
 
 internal class TransactionForValuesScreenUIEventHandler internal constructor(
     private val uiStateEvents: TransactionForValuesScreenUIStateEvents,
-) {
-    fun handleUIEvent(
+) : ScreenUIEventHandler<TransactionForValuesScreenUIEvent> {
+    override fun handleUIEvent(
         uiEvent: TransactionForValuesScreenUIEvent,
     ) {
         when (uiEvent) {

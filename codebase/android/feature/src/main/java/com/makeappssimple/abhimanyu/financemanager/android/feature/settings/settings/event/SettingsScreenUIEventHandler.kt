@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import android.net.Uri
 import android.os.Build
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.state.SettingsScreenUIStateEvents
 
 internal class SettingsScreenUIEventHandler internal constructor(
@@ -10,8 +11,8 @@ internal class SettingsScreenUIEventHandler internal constructor(
     private val createDocument: ((uri: Uri?) -> Unit) -> Unit,
     private val openDocument: () -> Unit,
     private val requestNotificationsPermission: () -> Unit,
-) {
-    fun handleUIEvent(
+) : ScreenUIEventHandler<SettingsScreenUIEvent> {
+    override fun handleUIEvent(
         uiEvent: SettingsScreenUIEvent,
     ) {
         when (uiEvent) {

@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.event
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.bottomsheet.EditTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.state.EditTransactionScreenUIStateEvents
 
 internal class EditTransactionScreenUIEventHandler internal constructor(
     private val uiStateEvents: EditTransactionScreenUIStateEvents,
-) {
-    fun handleUIEvent(
+) : ScreenUIEventHandler<EditTransactionScreenUIEvent> {
+    override fun handleUIEvent(
         uiEvent: EditTransactionScreenUIEvent,
     ) {
         when (uiEvent) {

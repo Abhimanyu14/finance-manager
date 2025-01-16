@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.event
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.state.AddCategoryScreenUIStateEvents
 
 internal class AddCategoryScreenUIEventHandler internal constructor(
     private val uiStateEvents: AddCategoryScreenUIStateEvents,
-) {
-    fun handleUIEvent(
+) : ScreenUIEventHandler<AddCategoryScreenUIEvent> {
+    override fun handleUIEvent(
         uiEvent: AddCategoryScreenUIEvent,
     ) {
         when (uiEvent) {
