@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.viewmodel.AddAccountScreenViewModel
 
 @Composable
-public fun AddAccountScreen(
+internal fun AddAccountScreen(
     screenViewModel: AddAccountScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(

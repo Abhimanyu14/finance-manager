@@ -45,7 +45,7 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 @HiltViewModel
-public class HomeScreenViewModel @Inject constructor(
+internal class HomeScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,

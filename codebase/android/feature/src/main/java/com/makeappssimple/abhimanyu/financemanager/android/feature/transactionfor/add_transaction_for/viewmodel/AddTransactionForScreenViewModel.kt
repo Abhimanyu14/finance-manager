@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-public class AddTransactionForScreenViewModel @Inject constructor(
+internal class AddTransactionForScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     private val addTransactionForScreenDataValidationUseCase: AddTransactionForScreenDataValidationUseCase,

@@ -23,7 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 
 @Composable
-public fun SettingsScreen(
+internal fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(

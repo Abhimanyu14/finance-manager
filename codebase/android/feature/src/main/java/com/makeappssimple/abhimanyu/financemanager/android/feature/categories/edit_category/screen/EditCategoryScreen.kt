@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ed
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModel
 
 @Composable
-public fun EditCategoryScreen(
+internal fun EditCategoryScreen(
     screenViewModel: EditCategoryScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(

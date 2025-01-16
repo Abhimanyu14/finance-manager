@@ -50,7 +50,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-public class TransactionsScreenViewModel @Inject constructor(
+internal class TransactionsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     private val dispatcherProvider: DispatcherProvider,

@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
 
 @Composable
-public fun AddTransactionScreen(
+internal fun AddTransactionScreen(
     screenViewModel: AddTransactionScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(

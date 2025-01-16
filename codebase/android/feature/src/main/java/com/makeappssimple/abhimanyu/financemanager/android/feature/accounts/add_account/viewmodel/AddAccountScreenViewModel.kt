@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-public class AddAccountScreenViewModel @Inject constructor(
+internal class AddAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     private val addAccountScreenDataValidationUseCase: AddAccountScreenDataValidationUseCase,

@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModel
 
 @Composable
-public fun CategoriesScreen(
+internal fun CategoriesScreen(
     screenViewModel: CategoriesScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(

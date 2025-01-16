@@ -28,7 +28,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 @HiltViewModel
-public class SettingsScreenViewModel @Inject constructor(
+internal class SettingsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     private val alarmKit: AlarmKit,

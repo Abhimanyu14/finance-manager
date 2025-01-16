@@ -40,7 +40,7 @@ private object AnalysisScreenViewModelConstants {
 }
 
 @HiltViewModel
-public class AnalysisScreenViewModel @Inject constructor(
+internal class AnalysisScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     private val dateTimeKit: DateTimeKit,

@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-public class TransactionForValuesScreenViewModel @Inject constructor(
+internal class TransactionForValuesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     private val getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,

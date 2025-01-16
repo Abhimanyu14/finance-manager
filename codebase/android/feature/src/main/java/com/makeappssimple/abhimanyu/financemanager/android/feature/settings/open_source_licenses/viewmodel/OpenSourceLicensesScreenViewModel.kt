@@ -18,7 +18,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 @HiltViewModel
-public class OpenSourceLicensesScreenViewModel @Inject constructor(
+internal class OpenSourceLicensesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     @VisibleForTesting internal val navigationKit: NavigationKit,

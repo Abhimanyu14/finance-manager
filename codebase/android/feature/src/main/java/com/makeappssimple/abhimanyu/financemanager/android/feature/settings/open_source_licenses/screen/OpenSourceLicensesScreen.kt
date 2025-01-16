@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel.OpenSourceLicensesScreenViewModel
 
 @Composable
-public fun OpenSourceLicensesScreen(
+internal fun OpenSourceLicensesScreen(
     screenViewModel: OpenSourceLicensesScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(

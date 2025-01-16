@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-public class AccountsScreenViewModel @Inject constructor(
+internal class AccountsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     internal val logKit: LogKit,
     private val deleteAccountUseCase: DeleteAccountUseCase,

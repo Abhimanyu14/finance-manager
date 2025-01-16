@@ -32,7 +32,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 @HiltViewModel
-public class ViewTransactionScreenViewModel @Inject constructor(
+internal class ViewTransactionScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,

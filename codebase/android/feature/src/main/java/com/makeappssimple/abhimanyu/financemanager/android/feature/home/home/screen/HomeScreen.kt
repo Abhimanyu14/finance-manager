@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.sta
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.viewmodel.HomeScreenViewModel
 
 @Composable
-public fun HomeScreen(
+internal fun HomeScreen(
     screenViewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(

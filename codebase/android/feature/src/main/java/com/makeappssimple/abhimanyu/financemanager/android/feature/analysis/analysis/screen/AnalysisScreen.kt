@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.anal
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.viewmodel.AnalysisScreenViewModel
 
 @Composable
-public fun AnalysisScreen(
+internal fun AnalysisScreen(
     screenViewModel: AnalysisScreenViewModel = hiltViewModel(),
 ) {
     screenViewModel.logKit.logInfo(
