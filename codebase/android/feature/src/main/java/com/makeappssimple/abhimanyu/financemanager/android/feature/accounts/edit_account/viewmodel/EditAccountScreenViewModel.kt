@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
@@ -38,6 +39,7 @@ import javax.inject.Inject
 public class EditAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
+    internal val logKit: LogKit,
     private val editAccountScreenDataValidationUseCase: EditAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAccountUseCase: GetAccountUseCase,

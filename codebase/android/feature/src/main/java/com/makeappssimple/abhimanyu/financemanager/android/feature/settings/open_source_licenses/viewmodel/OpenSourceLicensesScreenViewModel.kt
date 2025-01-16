@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.combineAndCollectLatest
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.bottomsheet.OpenSourceLicensesScreenBottomSheetType
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class OpenSourceLicensesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    internal val logKit: LogKit,
     @VisibleForTesting internal val navigationKit: NavigationKit,
 ) : ScreenViewModel(
     viewModelScope = coroutineScope,

@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.state.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -31,6 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class AccountsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    internal val logKit: LogKit,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     private val getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,

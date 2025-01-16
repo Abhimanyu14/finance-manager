@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalLogKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.event.EditCategoryScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.state.EditCategoryScreenUIStateEvents
@@ -16,8 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ed
 public fun EditCategoryScreen(
     screenViewModel: EditCategoryScreenViewModel = hiltViewModel(),
 ) {
-    val myLogger = LocalLogKit.current
-    myLogger.logInfo(
+    screenViewModel.logKit.logInfo(
         message = "Inside EditCategoryScreen",
     )
 

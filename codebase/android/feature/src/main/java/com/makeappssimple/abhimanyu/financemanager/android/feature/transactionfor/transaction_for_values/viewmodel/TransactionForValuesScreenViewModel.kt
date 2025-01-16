@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.CheckIfTransactionForValuesAreUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.DeleteTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -30,6 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class TransactionForValuesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    internal val logKit: LogKit,
     private val getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val checkIfTransactionForValuesAreUsedInTransactionsUseCase: CheckIfTransactionForValuesAreUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,

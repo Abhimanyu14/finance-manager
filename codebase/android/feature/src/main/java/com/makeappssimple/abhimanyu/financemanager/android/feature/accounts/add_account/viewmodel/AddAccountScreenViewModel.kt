@@ -5,6 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.map
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
@@ -29,6 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class AddAccountScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    internal val logKit: LogKit,
     private val addAccountScreenDataValidationUseCase: AddAccountScreenDataValidationUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val insertAccountUseCase: InsertAccountUseCase,

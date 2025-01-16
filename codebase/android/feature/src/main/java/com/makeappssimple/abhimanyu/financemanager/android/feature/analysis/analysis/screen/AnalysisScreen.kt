@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalLogKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.event.AnalysisScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.analysis.state.AnalysisScreenUIStateEvents
@@ -16,8 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.anal
 public fun AnalysisScreen(
     screenViewModel: AnalysisScreenViewModel = hiltViewModel(),
 ) {
-    val myLogger = LocalLogKit.current
-    myLogger.logInfo(
+    screenViewModel.logKit.logInfo(
         message = "Inside AnalysisScreen",
     )
 

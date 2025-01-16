@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.InsertCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
@@ -33,6 +34,7 @@ public class AddCategoryScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    internal val logKit: LogKit,
     private val addCategoryScreenDataValidationUseCase: AddCategoryScreenDataValidationUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,

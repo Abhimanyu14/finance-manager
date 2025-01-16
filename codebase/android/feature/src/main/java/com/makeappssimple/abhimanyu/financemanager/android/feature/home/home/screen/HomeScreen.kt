@@ -11,7 +11,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalLogKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.event.HomeScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.state.HomeScreenUIStateEvents
@@ -21,8 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.home.vie
 public fun HomeScreen(
     screenViewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
-    val myLogger = LocalLogKit.current
-    myLogger.logInfo(
+    screenViewModel.logKit.logInfo(
         message = "Inside HomeScreen",
     )
     val onDocumentCreated: (Uri?) -> Unit = { uri: Uri? ->

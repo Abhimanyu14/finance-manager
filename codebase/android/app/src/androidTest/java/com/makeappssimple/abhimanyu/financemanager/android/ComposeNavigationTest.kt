@@ -52,7 +52,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTIONS
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTION_FOR_VALUES
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_VIEW_TRANSACTION
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeLogKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.R
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -165,7 +164,6 @@ internal class ComposeNavigationTest {
                 )
             }
             MyApp(
-                logKit = FakeLogKitImpl(),
                 navHostController = testNavHostController,
             )
         }

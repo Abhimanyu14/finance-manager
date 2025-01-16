@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.bottomsheet.SettingsScreenBottomSheetType
@@ -29,6 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class SettingsScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    internal val logKit: LogKit,
     private val alarmKit: AlarmKit,
     private val appVersionKit: AppVersionKit,
     private val backupDataUseCase: BackupDataUseCase,

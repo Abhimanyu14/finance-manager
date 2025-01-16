@@ -25,7 +25,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.activity.MainActivity
 import com.makeappssimple.abhimanyu.financemanager.android.activity.MyApp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_OVERVIEW_CARD
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_TOTAL_BALANCE_CARD
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ACCOUNTS
@@ -55,7 +54,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTION_FOR_VALUES
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_VIEW_TRANSACTION
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.feature.R
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -268,11 +266,7 @@ internal class NavigationTest {
 
         composeTestRule.activity.setContent {
             MyAppTheme {
-                MyApp(
-                    logKit = LogKitImpl(
-                        buildConfigKit = BuildConfigKitImpl(),
-                    ),
-                )
+                MyApp()
             }
         }
     }

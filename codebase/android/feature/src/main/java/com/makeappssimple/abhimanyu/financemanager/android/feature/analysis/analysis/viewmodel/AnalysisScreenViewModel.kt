@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionDataMappedByCategory
@@ -41,6 +42,7 @@ private object AnalysisScreenViewModelConstants {
 @HiltViewModel
 public class AnalysisScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    internal val logKit: LogKit,
     private val dateTimeKit: DateTimeKit,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val navigationKit: NavigationKit,

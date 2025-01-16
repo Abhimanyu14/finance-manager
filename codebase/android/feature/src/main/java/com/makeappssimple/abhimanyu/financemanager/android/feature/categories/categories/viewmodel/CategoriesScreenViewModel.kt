@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.SetDefaultCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.CheckIfCategoryIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.tabrow.MyTabData
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -40,6 +41,7 @@ import javax.inject.Inject
 @HiltViewModel
 public class CategoriesScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
+    internal val logKit: LogKit,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,

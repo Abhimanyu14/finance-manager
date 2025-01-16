@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionsBetweenTimestampsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -49,6 +50,7 @@ public class HomeScreenViewModel @Inject constructor(
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     shouldShowBackupCardUseCase: ShouldShowBackupCardUseCase,
+    internal val logKit: LogKit,
     private val backupDataUseCase: BackupDataUseCase,
     private val dateTimeKit: DateTimeKit,
     private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,

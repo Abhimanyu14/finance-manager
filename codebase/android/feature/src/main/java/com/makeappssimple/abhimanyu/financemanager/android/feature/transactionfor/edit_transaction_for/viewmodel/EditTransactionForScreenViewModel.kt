@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.UpdateTransactionForUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LogKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -31,6 +32,7 @@ public class EditTransactionForScreenViewModel @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    internal val logKit: LogKit,
     private val editTransactionForScreenDataValidationUseCase: EditTransactionForScreenDataValidationUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,

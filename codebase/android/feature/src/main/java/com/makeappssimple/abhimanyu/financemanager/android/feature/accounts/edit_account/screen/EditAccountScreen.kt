@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalLogKit
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.event.EditAccountScreenUIEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.state.EditAccountScreenUIStateEvents
@@ -16,8 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit
 public fun EditAccountScreen(
     screenViewModel: EditAccountScreenViewModel = hiltViewModel(),
 ) {
-    val myLogger = LocalLogKit.current
-    myLogger.logInfo(
+    screenViewModel.logKit.logInfo(
         message = "Inside EditAccountScreen",
     )
 
