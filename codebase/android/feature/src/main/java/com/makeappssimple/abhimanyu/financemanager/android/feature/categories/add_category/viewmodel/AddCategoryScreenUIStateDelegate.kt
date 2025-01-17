@@ -2,19 +2,16 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateDelegate
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 
-internal interface AddCategoryScreenUIStateDelegate {
+internal interface AddCategoryScreenUIStateDelegate : ScreenUIStateDelegate {
     // region initial data
     val validTransactionTypes: ImmutableList<TransactionType>
     // endregion
 
     // region UI state
-    val refreshSignal: MutableSharedFlow<Unit>
-    val isLoading: MutableStateFlow<Boolean>
     val title: TextFieldValue
     val searchText: String
     val emoji: String
@@ -22,28 +19,14 @@ internal interface AddCategoryScreenUIStateDelegate {
     val screenBottomSheetType: AddCategoryScreenBottomSheetType
     // endregion
 
-    // region refresh
-    fun refresh()
-    // endregion
-
-    // region loading
-    fun startLoading()
-
-    fun completeLoading()
-
-    fun <T> withLoading(
-        block: () -> T,
-    ): T
-
-    suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T
-    // endregion
-
     // region state events
-    fun clearSearchText()
+    fun clearSearchText(
+        refresh: Boolean = true,
+    )
 
-    fun clearTitle()
+    fun clearTitle(
+        refresh: Boolean = true,
+    )
 
     fun insertCategory()
 
@@ -53,22 +36,27 @@ internal interface AddCategoryScreenUIStateDelegate {
 
     fun updateEmoji(
         updatedEmoji: String,
+        refresh: Boolean = true,
     )
 
     fun updateScreenBottomSheetType(
         updatedAddCategoryScreenBottomSheetType: AddCategoryScreenBottomSheetType,
+        refresh: Boolean = true,
     )
 
     fun updateSearchText(
         updatedSearchText: String,
+        refresh: Boolean = true,
     )
 
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
+        refresh: Boolean = true,
     )
 
     fun updateTitle(
         updatedTitle: TextFieldValue,
+        refresh: Boolean = true,
     )
     // endregion
 }

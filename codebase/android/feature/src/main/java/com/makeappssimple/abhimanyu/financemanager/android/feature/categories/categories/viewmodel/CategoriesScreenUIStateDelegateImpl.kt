@@ -4,12 +4,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.SetDefaultCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateDelegateImpl
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 internal class CategoriesScreenUIStateDelegateImpl(
@@ -17,7 +17,7 @@ internal class CategoriesScreenUIStateDelegateImpl(
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val setDefaultCategoryUseCase: SetDefaultCategoryUseCase,
     private val navigationKit: NavigationKit,
-) : CategoriesScreenUIStateDelegate {
+) : CategoriesScreenUIStateDelegate, ScreenUIStateDelegateImpl() {
     // region initial data
     override val validTransactionTypes: PersistentList<TransactionType> = persistentListOf(
         TransactionType.EXPENSE,
@@ -27,73 +27,12 @@ internal class CategoriesScreenUIStateDelegateImpl(
     // endregion
 
     // region UI state
-    override val refreshSignal: MutableSharedFlow<Unit> = MutableSharedFlow(
-        replay = 0,
-        extraBufferCapacity = 1,
-    )
-    override var isLoading: Boolean = true
-        set(value) {
-            field = value
-            refresh()
-        }
     override var screenBottomSheetType: CategoriesScreenBottomSheetType =
         CategoriesScreenBottomSheetType.None
-        set(value) {
-            field = value
-            refresh()
-        }
     override var screenSnackbarType: CategoriesScreenSnackbarType =
         CategoriesScreenSnackbarType.None
-        set(value) {
-            field = value
-            refresh()
-        }
     override var categoryIdToDelete: Int? = null
-        set(value) {
-            field = value
-            refresh()
-        }
     override var clickedItemId: Int? = null
-        set(value) {
-            field = value
-            refresh()
-        }
-    // endregion
-
-    // region refresh
-    override fun refresh() {
-        refreshSignal.tryEmit(Unit)
-    }
-    // endregion
-
-    // region loading
-    override fun startLoading() {
-        isLoading = true
-    }
-
-    override fun completeLoading() {
-        isLoading = false
-    }
-
-    override fun <T> withLoading(
-        block: () -> T,
-    ): T {
-        startLoading()
-        val result = block()
-        completeLoading()
-        return result
-    }
-
-    override suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T {
-        startLoading()
-        try {
-            return block()
-        } finally {
-            completeLoading()
-        }
-    }
     // endregion
 
     // region state events
@@ -163,26 +102,42 @@ internal class CategoriesScreenUIStateDelegateImpl(
 
     override fun updateCategoryIdToDelete(
         updatedCategoryIdToDelete: Int?,
+        refresh: Boolean,
     ) {
         categoryIdToDelete = updatedCategoryIdToDelete
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun updateClickedItemId(
         updatedClickedItemId: Int?,
+        refresh: Boolean,
     ) {
         clickedItemId = updatedClickedItemId
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun updateScreenBottomSheetType(
         updatedCategoriesScreenBottomSheetType: CategoriesScreenBottomSheetType,
+        refresh: Boolean,
     ) {
         screenBottomSheetType = updatedCategoriesScreenBottomSheetType
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun updateScreenSnackbarType(
         updatedCategoriesScreenSnackbarType: CategoriesScreenSnackbarType,
+        refresh: Boolean,
     ) {
         screenSnackbarType = updatedCategoriesScreenSnackbarType
+        if (refresh) {
+            refresh()
+        }
     }
     // endregion
 }

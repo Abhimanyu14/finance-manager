@@ -107,8 +107,8 @@ internal class TransactionsScreenViewModel @Inject constructor(
     // region initViewModel
     internal fun initViewModel() {
         startTrackingScreenInit()
-        fetchData()
         observeData()
+        fetchData()
     }
 
     private fun fetchData() {

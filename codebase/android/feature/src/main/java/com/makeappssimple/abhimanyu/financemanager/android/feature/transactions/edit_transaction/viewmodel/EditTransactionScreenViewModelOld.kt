@@ -255,8 +255,8 @@ public class EditTransactionScreenViewModelOld @Inject constructor(
 
     // region initViewModel
     internal fun initViewModel() {
-        fetchData()
         observeData()
+        fetchData()
     }
 
     private fun fetchData() {

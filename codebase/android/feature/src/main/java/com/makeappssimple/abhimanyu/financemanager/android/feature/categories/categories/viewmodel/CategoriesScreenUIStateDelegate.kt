@@ -1,41 +1,21 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateDelegate
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.bottomsheet.CategoriesScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.snackbar.CategoriesScreenSnackbarType
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal interface CategoriesScreenUIStateDelegate {
+internal interface CategoriesScreenUIStateDelegate : ScreenUIStateDelegate {
     // region initial data
     val validTransactionTypes: PersistentList<TransactionType>
     // endregion
 
     // region UI state
-    val refreshSignal: MutableSharedFlow<Unit>
-    val isLoading: Boolean
     val screenBottomSheetType: CategoriesScreenBottomSheetType
     val screenSnackbarType: CategoriesScreenSnackbarType
     val categoryIdToDelete: Int?
     val clickedItemId: Int?
-    // endregion
-
-    // region refresh
-    fun refresh()
-    // endregion
-
-    // region loading
-    fun startLoading()
-
-    fun completeLoading()
-
-    fun <T> withLoading(
-        block: () -> T,
-    ): T
-
-    suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T
     // endregion
 
     // region state events
@@ -61,18 +41,22 @@ internal interface CategoriesScreenUIStateDelegate {
 
     fun updateCategoryIdToDelete(
         updatedCategoryIdToDelete: Int?,
+        refresh: Boolean = true,
     )
 
     fun updateClickedItemId(
         updatedClickedItemId: Int?,
+        refresh: Boolean = true,
     )
 
     fun updateScreenBottomSheetType(
         updatedCategoriesScreenBottomSheetType: CategoriesScreenBottomSheetType,
+        refresh: Boolean = true,
     )
 
     fun updateScreenSnackbarType(
         updatedCategoriesScreenSnackbarType: CategoriesScreenSnackbarType,
+        refresh: Boolean = true,
     )
     // endregion
 }

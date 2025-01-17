@@ -6,19 +6,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.InsertAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateDelegateImpl
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 internal class AddAccountScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val insertAccountUseCase: InsertAccountUseCase,
     private val navigationKit: NavigationKit,
-) : AddAccountScreenUIStateDelegate {
+) : AddAccountScreenUIStateDelegate, ScreenUIStateDelegateImpl() {
     // region initial data
     override val validAccountTypesForNewAccount: ImmutableList<AccountType> =
         AccountType.entries.filter {
@@ -27,11 +27,6 @@ internal class AddAccountScreenUIStateDelegateImpl(
     // endregion
 
     // region UI state
-    override val refreshSignal: MutableSharedFlow<Unit> = MutableSharedFlow(
-        replay = 0,
-        extraBufferCapacity = 1,
-    )
-    override var isLoading: Boolean = true
     override var screenBottomSheetType: AddAccountScreenBottomSheetType =
         AddAccountScreenBottomSheetType.None
     override var screenSnackbarType: AddAccountScreenSnackbarType =
@@ -42,12 +37,6 @@ internal class AddAccountScreenUIStateDelegateImpl(
         )
     override var name = TextFieldValue()
     override var minimumAccountBalanceAmountValue = TextFieldValue()
-    // endregion
-
-    // region refresh
-    override fun refresh() {
-        refreshSignal.tryEmit(Unit)
-    }
     // endregion
 
     // region state events
@@ -68,15 +57,6 @@ internal class AddAccountScreenUIStateDelegateImpl(
         name = name.copy(
             text = "",
         )
-        if (refresh) {
-            refresh()
-        }
-    }
-
-    override fun completeLoading(
-        refresh: Boolean,
-    ) {
-        isLoading = false
         if (refresh) {
             refresh()
         }
@@ -115,15 +95,6 @@ internal class AddAccountScreenUIStateDelegateImpl(
         updateScreenSnackbarType(
             updatedAddAccountScreenSnackbarType = AddAccountScreenSnackbarType.None,
         )
-    }
-
-    override fun startLoading(
-        refresh: Boolean,
-    ) {
-        isLoading = true
-        if (refresh) {
-            refresh()
-        }
     }
 
     override fun updateMinimumAccountBalanceAmountValue(

@@ -79,24 +79,23 @@ internal class AddCategoryScreenViewModel @Inject constructor(
 
     // region initViewModel
     internal fun initViewModel() {
-        fetchData()
         observeData()
+        fetchData()
     }
 
     private fun fetchData() {
         viewModelScope.launch {
-            withLoadingSuspend {
-                fetchCategories()
-                transactionType?.let { originalTransactionType ->
-                    updateSelectedTransactionTypeIndex(
-                        updatedSelectedTransactionTypeIndex = validTransactionTypes.indexOf(
-                            element = TransactionType.entries.find { transactionType ->
-                                transactionType.title == originalTransactionType
-                            },
-                        ),
-                    )
-                }
+            fetchCategories()
+            transactionType?.let { originalTransactionType ->
+                updateSelectedTransactionTypeIndex(
+                    updatedSelectedTransactionTypeIndex = validTransactionTypes.indexOf(
+                        element = TransactionType.entries.find { transactionType ->
+                            transactionType.title == originalTransactionType
+                        },
+                    ),
+                )
             }
+            completeLoading()
         }
     }
 
@@ -113,18 +112,7 @@ internal class AddCategoryScreenViewModel @Inject constructor(
 
     // region observeForUiStateAndStateEvents
     private fun observeForUiStateAndStateEvents() {
-        observeForIsLoading()
         observeForRefreshSignal()
-    }
-
-    private fun observeForIsLoading() {
-        viewModelScope.launch {
-            isLoading.collectLatest { isLoading ->
-                updateUiStateAndStateEvents(
-                    isLoading = isLoading,
-                )
-            }
-        }
     }
 
     private fun observeForRefreshSignal() {

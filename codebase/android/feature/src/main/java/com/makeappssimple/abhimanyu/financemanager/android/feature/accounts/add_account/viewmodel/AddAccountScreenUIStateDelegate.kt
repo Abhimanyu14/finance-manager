@@ -2,29 +2,23 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateDelegate
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.bottomsheet.AddAccountScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.snackbar.AddAccountScreenSnackbarType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.state.AddAccountScreenUIState
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal interface AddAccountScreenUIStateDelegate {
+internal interface AddAccountScreenUIStateDelegate : ScreenUIStateDelegate {
     // region initial data
     val validAccountTypesForNewAccount: ImmutableList<AccountType>
     // endregion
 
     // region UI state
-    val refreshSignal: MutableSharedFlow<Unit>
-    val isLoading: Boolean
     val screenBottomSheetType: AddAccountScreenBottomSheetType
     val screenSnackbarType: AddAccountScreenSnackbarType
     val selectedAccountTypeIndex: Int
     val name: TextFieldValue
     val minimumAccountBalanceAmountValue: TextFieldValue
-    // endregion
-
-    // region refresh
-    fun refresh()
     // endregion
 
     // region state events
@@ -33,10 +27,6 @@ internal interface AddAccountScreenUIStateDelegate {
     )
 
     fun clearName(
-        refresh: Boolean = true,
-    )
-
-    fun completeLoading(
         refresh: Boolean = true,
     )
 
@@ -49,10 +39,6 @@ internal interface AddAccountScreenUIStateDelegate {
     fun resetScreenBottomSheetType()
 
     fun resetScreenSnackbarType()
-
-    fun startLoading(
-        refresh: Boolean = true,
-    )
 
     fun updateMinimumAccountBalanceAmountValue(
         updatedMinimumAccountBalanceAmountValue: TextFieldValue,

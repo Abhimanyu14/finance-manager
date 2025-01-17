@@ -6,20 +6,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationKit
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateDelegateImpl
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.bottomsheet.AddCategoryScreenBottomSheetType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class AddCategoryScreenUIStateDelegateImpl(
     private val coroutineScope: CoroutineScope,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val navigationKit: NavigationKit,
-) : AddCategoryScreenUIStateDelegate {
+) : AddCategoryScreenUIStateDelegate, ScreenUIStateDelegateImpl() {
     // region initial data
     override val validTransactionTypes: ImmutableList<TransactionType> = persistentListOf(
         TransactionType.INCOME,
@@ -29,93 +27,36 @@ internal class AddCategoryScreenUIStateDelegateImpl(
     // endregion
 
     // region UI state
-    override val refreshSignal: MutableSharedFlow<Unit> = MutableSharedFlow(
-        replay = 0,
-        extraBufferCapacity = 1,
-    )
-    override val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(
-        value = true,
-    )
     override var title = TextFieldValue()
-        set(value) {
-            field = value
-            refresh()
-        }
     override var searchText = ""
-        set(value) {
-            field = value
-            refresh()
-        }
     override var emoji = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES
-        set(value) {
-            field = value
-            refresh()
-        }
     override var selectedTransactionTypeIndex = validTransactionTypes
         .indexOf(
             element = TransactionType.EXPENSE,
         )
-        set(value) {
-            field = value
-            refresh()
-        }
     override var screenBottomSheetType: AddCategoryScreenBottomSheetType =
         AddCategoryScreenBottomSheetType.None
-        set(value) {
-            field = value
-            refresh()
-        }
-    // endregion
-
-    // region refresh
-    override fun refresh() {
-        refreshSignal.tryEmit(Unit)
-    }
-    // endregion
-
-    // region loading
-    override fun startLoading() {
-        isLoading.update {
-            true
-        }
-    }
-
-    override fun completeLoading() {
-        isLoading.update {
-            false
-        }
-    }
-
-    override fun <T> withLoading(
-        block: () -> T,
-    ): T {
-        startLoading()
-        val result = block()
-        completeLoading()
-        return result
-    }
-
-    override suspend fun <T> withLoadingSuspend(
-        block: suspend () -> T,
-    ): T {
-        startLoading()
-        try {
-            return block()
-        } finally {
-            completeLoading()
-        }
-    }
     // endregion
 
     // region state events
-    override fun clearSearchText() {
+    override fun clearSearchText(
+        refresh: Boolean,
+    ) {
         searchText = ""
+        if (refresh) {
+            refresh()
+        }
     }
 
-    override fun clearTitle() {
+    override fun clearTitle(
+        refresh: Boolean,
+    ) {
         title = title.copy(
             text = "",
         )
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun insertCategory() {
@@ -142,32 +83,52 @@ internal class AddCategoryScreenUIStateDelegateImpl(
 
     override fun updateEmoji(
         updatedEmoji: String,
+        refresh: Boolean,
     ) {
         emoji = updatedEmoji
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun updateScreenBottomSheetType(
         updatedAddCategoryScreenBottomSheetType: AddCategoryScreenBottomSheetType,
+        refresh: Boolean,
     ) {
         screenBottomSheetType = updatedAddCategoryScreenBottomSheetType
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun updateSearchText(
         updatedSearchText: String,
+        refresh: Boolean,
     ) {
         searchText = updatedSearchText
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
+        refresh: Boolean,
     ) {
         selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex
+        if (refresh) {
+            refresh()
+        }
     }
 
     override fun updateTitle(
         updatedTitle: TextFieldValue,
+        refresh: Boolean,
     ) {
         title = updatedTitle
+        if (refresh) {
+            refresh()
+        }
     }
     // endregion
 }
