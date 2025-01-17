@@ -24,7 +24,7 @@ internal class AnalysisScreenUIEventHandlerTest {
     fun `on filter action button click`() {
         val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit = mock()
         whenever(
-            methodCall = uiStateEvents.setScreenBottomSheetType,
+            methodCall = uiStateEvents.updateScreenBottomSheetType,
         ).thenReturn(setScreenBottomSheetType)
 
         analysisScreenUIEventHandler.handleUIEvent(AnalysisScreenUIEvent.OnFilterActionButtonClick)
@@ -68,7 +68,7 @@ internal class AnalysisScreenUIEventHandlerTest {
         val resetScreenBottomSheetType: () -> Unit = mock()
         val setSelectedFilter: (Filter) -> Unit = mock()
         whenever(
-            methodCall = uiStateEvents.setSelectedFilter,
+            methodCall = uiStateEvents.updateSelectedFilter,
         ).thenReturn(setSelectedFilter)
         whenever(
             methodCall = uiStateEvents.resetScreenBottomSheetType,
@@ -93,7 +93,7 @@ internal class AnalysisScreenUIEventHandlerTest {
         val updatedSelectedTransactionTypeIndex = 1
         val setSelectedTransactionTypeIndex: (Int) -> Unit = mock()
         whenever(
-            methodCall = uiStateEvents.setSelectedTransactionTypeIndex,
+            methodCall = uiStateEvents.updateSelectedTransactionTypeIndex,
         ).thenReturn(setSelectedTransactionTypeIndex)
 
         analysisScreenUIEventHandler.handleUIEvent(

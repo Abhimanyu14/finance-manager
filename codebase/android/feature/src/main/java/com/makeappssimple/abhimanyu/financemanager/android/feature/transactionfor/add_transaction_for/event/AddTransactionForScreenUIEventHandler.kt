@@ -27,7 +27,7 @@ internal class AddTransactionForScreenUIEventHandler internal constructor(
             }
 
             is AddTransactionForScreenUIEvent.OnTitleUpdated -> {
-                uiStateEvents.setTitle(uiEvent.updatedTitle)
+                uiStateEvents.updateTitle(uiEvent.updatedTitle)
             }
         }
     }

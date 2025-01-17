@@ -75,11 +75,11 @@ internal class CategoriesScreenViewModel @Inject constructor(
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
         resetScreenSnackbarType = ::resetScreenSnackbarType,
-        setCategoryIdToDelete = ::updateCategoryIdToDelete,
-        setClickedItemId = ::updateClickedItemId,
-        setDefaultCategoryIdInDataStore = ::updateDefaultCategoryIdInDataStore,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
-        setScreenSnackbarType = ::updateScreenSnackbarType,
+        updateCategoryIdToDelete = ::updateCategoryIdToDelete,
+        updateClickedItemId = ::updateClickedItemId,
+        updateDefaultCategoryIdInDataStore = ::updateDefaultCategoryIdInDataStore,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateScreenSnackbarType = ::updateScreenSnackbarType,
     )
     // endregion
 

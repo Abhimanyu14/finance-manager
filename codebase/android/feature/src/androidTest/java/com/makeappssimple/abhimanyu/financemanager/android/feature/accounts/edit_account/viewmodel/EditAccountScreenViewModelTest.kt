@@ -222,7 +222,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setBalanceAmountValue(
+                uiStateEvents().updateBalanceAmountValue(
                     uiState().balanceAmountValue.copy(
                         text = TEST_BALANCE_AMOUNT_VALUE,
                     ),
@@ -266,7 +266,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setMinimumAccountBalanceAmountValue(
+                uiStateEvents().updateMinimumAccountBalanceAmountValue(
                     uiState().minimumBalanceAmountValue.copy(
                         text = TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
                     ),
@@ -309,7 +309,7 @@ internal class EditAccountScreenViewModelTest {
                 Unit,
                 awaitItem(),
             )
-            uiStateEvents().setName(
+            uiStateEvents().updateName(
                 uiState().name.copy(
                     text = TEST_NAME,
                 ),
@@ -366,7 +366,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setScreenBottomSheetType(testScreenBottomSheetType)
+                uiStateEvents().updateScreenBottomSheetType(testScreenBottomSheetType)
                 advanceUntilIdle()
                 assertEquals(
                     testScreenBottomSheetType,
@@ -406,7 +406,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setBalanceAmountValue(
+                uiStateEvents().updateBalanceAmountValue(
                     uiState().balanceAmountValue.copy(
                         text = EMPTY_STRING,
                     ),
@@ -421,7 +421,7 @@ internal class EditAccountScreenViewModelTest {
                     awaitItem(),
                 )
 
-                uiStateEvents().setBalanceAmountValue(
+                uiStateEvents().updateBalanceAmountValue(
                     uiState().balanceAmountValue.copy(
                         text = TEST_BALANCE_AMOUNT_VALUE,
                     ),
@@ -454,7 +454,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setMinimumAccountBalanceAmountValue(
+                uiStateEvents().updateMinimumAccountBalanceAmountValue(
                     uiState().minimumBalanceAmountValue.copy(
                         text = EMPTY_STRING,
                     ),
@@ -469,7 +469,7 @@ internal class EditAccountScreenViewModelTest {
                     awaitItem(),
                 )
 
-                uiStateEvents().setMinimumAccountBalanceAmountValue(
+                uiStateEvents().updateMinimumAccountBalanceAmountValue(
                     uiState().minimumBalanceAmountValue.copy(
                         text = TEST_MINIMUM_BALANCE_AMOUNT_VALUE,
                     ),
@@ -501,7 +501,7 @@ internal class EditAccountScreenViewModelTest {
                 Unit,
                 awaitItem(),
             )
-            uiStateEvents().setName(
+            uiStateEvents().updateName(
                 uiState().name.copy(
                     text = EMPTY_STRING,
                 ),
@@ -516,7 +516,7 @@ internal class EditAccountScreenViewModelTest {
                 awaitItem(),
             )
 
-            uiStateEvents().setName(
+            uiStateEvents().updateName(
                 uiState().name.copy(
                     text = TEST_NAME,
                 ),
@@ -549,7 +549,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setScreenBottomSheetType(EditAccountScreenBottomSheetType.None)
+                uiStateEvents().updateScreenBottomSheetType(EditAccountScreenBottomSheetType.None)
                 advanceUntilIdle()
                 assertEquals(
                     EditAccountScreenBottomSheetType.None,
@@ -560,7 +560,7 @@ internal class EditAccountScreenViewModelTest {
                     awaitItem(),
                 )
 
-                uiStateEvents().setScreenBottomSheetType(testScreenBottomSheetType)
+                uiStateEvents().updateScreenBottomSheetType(testScreenBottomSheetType)
                 advanceUntilIdle()
 
                 assertEquals(
@@ -589,7 +589,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setScreenSnackbarType(EditAccountScreenSnackbarType.None)
+                uiStateEvents().updateScreenSnackbarType(EditAccountScreenSnackbarType.None)
                 advanceUntilIdle()
                 assertEquals(
                     EditAccountScreenSnackbarType.None,
@@ -600,7 +600,7 @@ internal class EditAccountScreenViewModelTest {
                     awaitItem(),
                 )
 
-                uiStateEvents().setScreenSnackbarType(testScreenSnackbarType)
+                uiStateEvents().updateScreenSnackbarType(testScreenSnackbarType)
                 advanceUntilIdle()
 
                 assertEquals(
@@ -629,7 +629,7 @@ internal class EditAccountScreenViewModelTest {
                     Unit,
                     awaitItem(),
                 )
-                uiStateEvents().setSelectedAccountTypeIndex(0)
+                uiStateEvents().updateSelectedAccountTypeIndex(0)
                 advanceUntilIdle()
                 assertEquals(
                     0,
@@ -640,7 +640,7 @@ internal class EditAccountScreenViewModelTest {
                     awaitItem(),
                 )
 
-                uiStateEvents().setSelectedAccountTypeIndex(TEST_ACCOUNT_TYPE_INDEX)
+                uiStateEvents().updateSelectedAccountTypeIndex(TEST_ACCOUNT_TYPE_INDEX)
                 advanceUntilIdle()
 
                 assertEquals(

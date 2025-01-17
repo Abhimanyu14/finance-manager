@@ -10,5 +10,5 @@ internal class AddTransactionForScreenUIStateEvents(
     val insertTransactionFor: () -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
-    val setTitle: (updatedTitle: TextFieldValue) -> Unit = {},
+    val updateTitle: (updatedTitle: TextFieldValue) -> Unit = {},
 ) : ScreenUIStateEvents

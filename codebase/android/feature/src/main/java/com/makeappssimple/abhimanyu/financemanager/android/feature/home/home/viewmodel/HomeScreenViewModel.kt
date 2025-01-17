@@ -85,9 +85,9 @@ internal class HomeScreenViewModel @Inject constructor(
         navigateToTransactionsScreen = ::navigateToTransactionsScreen,
         navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-        setBalanceVisible = ::updateIsBalanceVisible,
-        setOverviewTabSelectionIndex = ::updateOverviewTabSelectionIndex,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateIsBalanceVisible = ::updateIsBalanceVisible,
+        updateOverviewTabSelectionIndex = ::updateOverviewTabSelectionIndex,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
     )
     // endregion
 

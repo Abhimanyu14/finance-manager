@@ -63,11 +63,11 @@ internal class AddAccountScreenViewModel @Inject constructor(
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
         resetScreenSnackbarType = ::resetScreenSnackbarType,
-        setMinimumAccountBalanceAmountValue = ::updateMinimumAccountBalanceAmountValue,
-        setName = ::updateName,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
-        setScreenSnackbarType = ::updateScreenSnackbarType,
-        setSelectedAccountTypeIndex = ::updateSelectedAccountTypeIndex,
+        updateMinimumAccountBalanceAmountValue = ::updateMinimumAccountBalanceAmountValue,
+        updateName = ::updateName,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateScreenSnackbarType = ::updateScreenSnackbarType,
+        updateSelectedAccountTypeIndex = ::updateSelectedAccountTypeIndex,
     )
     // endregion
 

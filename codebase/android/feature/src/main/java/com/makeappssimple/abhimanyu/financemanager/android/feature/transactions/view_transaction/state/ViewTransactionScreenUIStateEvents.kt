@@ -12,6 +12,6 @@ internal class ViewTransactionScreenUIStateEvents(
     val navigateToViewTransactionScreen: (transactionId: Int) -> Unit = {},
     val onRefundButtonClick: (transactionId: Int) -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
-    val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit = {},
-    val setTransactionIdToDelete: (Int?) -> Unit = {},
+    val updateScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit = {},
+    val updateTransactionIdToDelete: (Int?) -> Unit = {},
 ) : ScreenUIStateEvents

@@ -66,8 +66,8 @@ internal class EditTransactionForScreenViewModel @Inject constructor(
             clearTitle = ::clearTitle,
             navigateUp = ::navigateUp,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setScreenBottomSheetType = ::updateScreenBottomSheetType,
-            setTitle = ::updateTitle,
+            updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+            updateTitle = ::updateTitle,
             updateTransactionFor = {
                 updateTransactionFor(
                     uiState = uiState.value

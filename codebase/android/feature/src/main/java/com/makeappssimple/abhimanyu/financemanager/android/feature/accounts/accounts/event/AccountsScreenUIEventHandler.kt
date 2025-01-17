@@ -13,17 +13,17 @@ internal class AccountsScreenUIEventHandler internal constructor(
         when (uiEvent) {
             is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick -> {
                 uiStateEvents.resetScreenBottomSheetType()
-                uiStateEvents.setClickedItemId(null)
+                uiStateEvents.updateClickedItemId(null)
             }
 
             is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick -> {
                 uiStateEvents.deleteAccount()
-                uiStateEvents.setClickedItemId(null)
+                uiStateEvents.updateClickedItemId(null)
                 uiStateEvents.resetScreenBottomSheetType()
             }
 
             is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.DeleteButtonClick -> {
-                uiStateEvents.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
+                uiStateEvents.updateScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
             }
 
             is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.EditButtonClick -> {
@@ -32,23 +32,23 @@ internal class AccountsScreenUIEventHandler internal constructor(
             }
 
             is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.SetAsDefaultButtonClick -> {
-                uiStateEvents.setScreenBottomSheetType(AccountsScreenBottomSheetType.SetAsDefaultConfirmation)
+                uiStateEvents.updateScreenBottomSheetType(AccountsScreenBottomSheetType.SetAsDefaultConfirmation)
             }
 
             is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick -> {
                 uiStateEvents.resetScreenBottomSheetType()
-                uiStateEvents.setClickedItemId(null)
+                uiStateEvents.updateClickedItemId(null)
             }
 
             is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick -> {
-                uiStateEvents.setDefaultAccountIdInDataStore()
-                uiStateEvents.setClickedItemId(null)
+                uiStateEvents.updateDefaultAccountIdInDataStore()
+                uiStateEvents.updateClickedItemId(null)
                 uiStateEvents.resetScreenBottomSheetType()
             }
 
             is AccountsScreenUIEvent.OnAccountsListItemContent.Click -> {
                 uiEvent.accountId?.let { accountId ->
-                    uiStateEvents.setScreenBottomSheetType(
+                    uiStateEvents.updateScreenBottomSheetType(
                         AccountsScreenBottomSheetType.Menu(
                             isDeleteVisible = uiEvent.isDeleteEnabled,
                             isEditVisible = true,
@@ -57,7 +57,7 @@ internal class AccountsScreenUIEventHandler internal constructor(
                         )
                     )
                 }
-                uiStateEvents.setClickedItemId(uiEvent.accountId)
+                uiStateEvents.updateClickedItemId(uiEvent.accountId)
             }
 
             is AccountsScreenUIEvent.OnFloatingActionButtonClick -> {

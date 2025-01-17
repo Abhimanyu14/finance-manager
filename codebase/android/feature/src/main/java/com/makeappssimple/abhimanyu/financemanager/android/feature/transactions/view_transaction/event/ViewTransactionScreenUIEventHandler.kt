@@ -21,12 +21,12 @@ internal class ViewTransactionScreenUIEventHandler internal constructor(
 
             is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.NegativeButtonClick -> {
                 uiStateEvents.resetScreenBottomSheetType()
-                uiStateEvents.setTransactionIdToDelete(null)
+                uiStateEvents.updateTransactionIdToDelete(null)
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.PositiveButtonClick -> {
                 uiStateEvents.deleteTransaction()
-                uiStateEvents.setTransactionIdToDelete(null)
+                uiStateEvents.updateTransactionIdToDelete(null)
                 uiStateEvents.resetScreenBottomSheetType()
             }
 
@@ -39,8 +39,8 @@ internal class ViewTransactionScreenUIEventHandler internal constructor(
             }
 
             is ViewTransactionScreenUIEvent.OnTransactionListItem.DeleteButtonClick -> {
-                uiStateEvents.setTransactionIdToDelete(uiEvent.transactionId)
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateTransactionIdToDelete(uiEvent.transactionId)
+                uiStateEvents.updateScreenBottomSheetType(
                     ViewTransactionScreenBottomSheetType.DeleteConfirmation
                 )
             }

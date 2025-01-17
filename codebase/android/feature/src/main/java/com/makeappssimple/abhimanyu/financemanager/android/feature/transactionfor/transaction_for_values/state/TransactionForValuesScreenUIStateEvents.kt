@@ -11,6 +11,6 @@ internal class TransactionForValuesScreenUIStateEvents(
     val navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
-    val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit = {},
-    val setTransactionForIdToDelete: (Int?) -> Unit = {},
+    val updateScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit = {},
+    val updateTransactionForIdToDelete: (Int?) -> Unit = {},
 ) : ScreenUIStateEvents

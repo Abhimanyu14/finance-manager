@@ -13,7 +13,7 @@ internal class EditCategoryScreenUIEventHandler internal constructor(
         when (uiEvent) {
             is EditCategoryScreenUIEvent.OnBottomSheetDismissed -> {
                 uiStateEvents.resetScreenBottomSheetType()
-                uiStateEvents.setSearchText("")
+                uiStateEvents.updateSearchText("")
             }
 
             is EditCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
@@ -29,7 +29,7 @@ internal class EditCategoryScreenUIEventHandler internal constructor(
             }
 
             is EditCategoryScreenUIEvent.OnEmojiCircleClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     EditCategoryScreenBottomSheetType.SelectEmoji
                 )
             }
@@ -39,19 +39,19 @@ internal class EditCategoryScreenUIEventHandler internal constructor(
             }
 
             is EditCategoryScreenUIEvent.OnEmojiUpdated -> {
-                uiStateEvents.setEmoji(uiEvent.updatedEmoji)
+                uiStateEvents.updateEmoji(uiEvent.updatedEmoji)
             }
 
             is EditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                uiStateEvents.setSearchText(uiEvent.updatedSearchText)
+                uiStateEvents.updateSearchText(uiEvent.updatedSearchText)
             }
 
             is EditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                uiStateEvents.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
+                uiStateEvents.updateSelectedTransactionTypeIndex(uiEvent.updatedIndex)
             }
 
             is EditCategoryScreenUIEvent.OnTitleUpdated -> {
-                uiStateEvents.setTitle(uiEvent.updatedTitle)
+                uiStateEvents.updateTitle(uiEvent.updatedTitle)
             }
         }
     }

@@ -31,27 +31,27 @@ internal class AddTransactionScreenUIEventHandler(
             }
 
             is AddTransactionScreenUIEvent.OnAccountFromTextFieldClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     AddTransactionScreenBottomSheetType.SelectAccountFrom
                 )
             }
 
             is AddTransactionScreenUIEvent.OnAccountToTextFieldClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     AddTransactionScreenBottomSheetType.SelectAccountTo
                 )
             }
 
             is AddTransactionScreenUIEvent.OnTransactionTimeTextFieldClick -> {
-                uiStateEvents.setIsTransactionTimePickerDialogVisible(true)
+                uiStateEvents.updateIsTransactionTimePickerDialogVisible(true)
             }
 
             is AddTransactionScreenUIEvent.OnTransactionDateTextFieldClick -> {
-                uiStateEvents.setIsTransactionDatePickerDialogVisible(true)
+                uiStateEvents.updateIsTransactionDatePickerDialogVisible(true)
             }
 
             is AddTransactionScreenUIEvent.OnCategoryTextFieldClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     AddTransactionScreenBottomSheetType.SelectCategory
                 )
             }
@@ -61,49 +61,49 @@ internal class AddTransactionScreenUIEventHandler(
             }
 
             is AddTransactionScreenUIEvent.OnAccountFromUpdated -> {
-                uiStateEvents.setAccountFrom(uiEvent.updatedAccountFrom)
+                uiStateEvents.updateAccountFrom(uiEvent.updatedAccountFrom)
             }
 
             is AddTransactionScreenUIEvent.OnAccountToUpdated -> {
-                uiStateEvents.setAccountTo(uiEvent.updatedAccountTo)
+                uiStateEvents.updateAccountTo(uiEvent.updatedAccountTo)
             }
 
             is AddTransactionScreenUIEvent.OnAmountUpdated -> {
-                uiStateEvents.setAmount(uiEvent.updatedAmount)
+                uiStateEvents.updateAmount(uiEvent.updatedAmount)
             }
 
             is AddTransactionScreenUIEvent.OnCategoryUpdated -> {
-                uiStateEvents.setCategory(uiEvent.updatedCategory)
+                uiStateEvents.updateCategory(uiEvent.updatedCategory)
             }
 
             is AddTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated -> {
-                uiStateEvents.setSelectedTransactionForIndex(uiEvent.updatedSelectedTransactionForIndex)
+                uiStateEvents.updateSelectedTransactionForIndex(uiEvent.updatedSelectedTransactionForIndex)
             }
 
             is AddTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                uiStateEvents.setSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
+                uiStateEvents.updateSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
             }
 
             is AddTransactionScreenUIEvent.OnTransactionTimePickerDismissed -> {
-                uiStateEvents.setIsTransactionTimePickerDialogVisible(false)
+                uiStateEvents.updateIsTransactionTimePickerDialogVisible(false)
             }
 
             is AddTransactionScreenUIEvent.OnTransactionDatePickerDismissed -> {
-                uiStateEvents.setIsTransactionDatePickerDialogVisible(false)
+                uiStateEvents.updateIsTransactionDatePickerDialogVisible(false)
             }
 
             is AddTransactionScreenUIEvent.OnTitleUpdated -> {
-                uiStateEvents.setTitle(uiEvent.updatedTitle)
+                uiStateEvents.updateTitle(uiEvent.updatedTitle)
             }
 
             is AddTransactionScreenUIEvent.OnTransactionDateUpdated -> {
-                uiStateEvents.setTransactionDate(uiEvent.updatedTransactionDate)
-                uiStateEvents.setIsTransactionDatePickerDialogVisible(false)
+                uiStateEvents.updateTransactionDate(uiEvent.updatedTransactionDate)
+                uiStateEvents.updateIsTransactionDatePickerDialogVisible(false)
             }
 
             is AddTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
-                uiStateEvents.setTransactionTime(uiEvent.updatedTransactionTime)
-                uiStateEvents.setIsTransactionTimePickerDialogVisible(false)
+                uiStateEvents.updateTransactionTime(uiEvent.updatedTransactionTime)
+                uiStateEvents.updateIsTransactionTimePickerDialogVisible(false)
             }
 
             is AddTransactionScreenUIEvent.OnSnackbarDismissed -> {

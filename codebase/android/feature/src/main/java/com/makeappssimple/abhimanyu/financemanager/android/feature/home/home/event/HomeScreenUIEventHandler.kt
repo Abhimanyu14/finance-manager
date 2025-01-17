@@ -21,7 +21,7 @@ internal class HomeScreenUIEventHandler internal constructor(
             }
 
             is HomeScreenUIEvent.OnTotalBalanceCardViewBalanceClick -> {
-                uiStateEvents.setBalanceVisible(true)
+                uiStateEvents.updateIsBalanceVisible(true)
             }
 
             is HomeScreenUIEvent.OnFloatingActionButtonClick -> {
@@ -53,7 +53,7 @@ internal class HomeScreenUIEventHandler internal constructor(
             }
 
             is HomeScreenUIEvent.OnOverviewCard.TabClick -> {
-                uiStateEvents.setOverviewTabSelectionIndex(uiEvent.index)
+                uiStateEvents.updateOverviewTabSelectionIndex(uiEvent.index)
             }
         }
     }

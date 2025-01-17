@@ -12,7 +12,7 @@ internal class AnalysisScreenUIEventHandler internal constructor(
     ) {
         when (uiEvent) {
             is AnalysisScreenUIEvent.OnFilterActionButtonClick -> {
-                uiStateEvents.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
+                uiStateEvents.updateScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
             }
 
             is AnalysisScreenUIEvent.OnNavigationBackButtonClick -> {
@@ -24,12 +24,12 @@ internal class AnalysisScreenUIEventHandler internal constructor(
             }
 
             is AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick -> {
-                uiStateEvents.setSelectedFilter(uiEvent.updatedSelectedFilter)
+                uiStateEvents.updateSelectedFilter(uiEvent.updatedSelectedFilter)
                 uiStateEvents.resetScreenBottomSheetType()
             }
 
             is AnalysisScreenUIEvent.OnTransactionTypeChange -> {
-                uiStateEvents.setSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
+                uiStateEvents.updateSelectedTransactionTypeIndex(uiEvent.updatedSelectedTransactionTypeIndex)
             }
         }
     }

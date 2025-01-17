@@ -56,7 +56,7 @@ internal class AddTransactionForScreenViewModel @Inject constructor(
             },
             navigateUp = ::navigateUp,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setTitle = ::updateTitle,
+            updateTitle = ::updateTitle,
         )
     // endregion
 

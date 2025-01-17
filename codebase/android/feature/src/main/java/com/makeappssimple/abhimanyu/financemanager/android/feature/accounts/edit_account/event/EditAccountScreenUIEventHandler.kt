@@ -16,7 +16,7 @@ internal class EditAccountScreenUIEventHandler internal constructor(
             }
 
             is EditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
-                uiStateEvents.setBalanceAmountValue(
+                uiStateEvents.updateBalanceAmountValue(
                     uiEvent.updatedBalanceAmountValue.copy(
                         text = uiEvent.updatedBalanceAmountValue.text.filterDigits(),
                     )
@@ -44,15 +44,15 @@ internal class EditAccountScreenUIEventHandler internal constructor(
             }
 
             is EditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                uiStateEvents.setMinimumAccountBalanceAmountValue(uiEvent.updatedMinimumAccountBalanceAmountValue)
+                uiStateEvents.updateMinimumAccountBalanceAmountValue(uiEvent.updatedMinimumAccountBalanceAmountValue)
             }
 
             is EditAccountScreenUIEvent.OnNameUpdated -> {
-                uiStateEvents.setName(uiEvent.updatedName)
+                uiStateEvents.updateName(uiEvent.updatedName)
             }
 
             is EditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                uiStateEvents.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
+                uiStateEvents.updateSelectedAccountTypeIndex(uiEvent.updatedIndex)
             }
         }
     }

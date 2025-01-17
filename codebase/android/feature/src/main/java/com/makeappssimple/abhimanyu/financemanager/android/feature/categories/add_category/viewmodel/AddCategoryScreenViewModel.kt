@@ -69,11 +69,11 @@ internal class AddCategoryScreenViewModel @Inject constructor(
         insertCategory = ::insertCategory,
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-        setEmoji = ::updateEmoji,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
-        setSearchText = ::updateSearchText,
-        setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
-        setTitle = ::updateTitle,
+        updateEmoji = ::updateEmoji,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateSearchText = ::updateSearchText,
+        updateSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
+        updateTitle = ::updateTitle,
     )
     // endregion
 

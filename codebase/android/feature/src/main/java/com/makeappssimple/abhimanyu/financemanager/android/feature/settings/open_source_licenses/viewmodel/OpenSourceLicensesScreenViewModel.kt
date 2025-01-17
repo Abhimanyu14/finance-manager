@@ -36,7 +36,7 @@ internal class OpenSourceLicensesScreenViewModel @Inject constructor(
         OpenSourceLicensesScreenUIStateEvents(
             navigateUp = ::navigateUp,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setScreenBottomSheetType = ::updateScreenBottomSheetType,
+            updateScreenBottomSheetType = ::updateScreenBottomSheetType,
         )
     // endregion
 

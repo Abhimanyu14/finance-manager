@@ -8,5 +8,5 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open
 internal class OpenSourceLicensesScreenUIStateEvents(
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
-    val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
+    val updateScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
 ) : ScreenUIStateEvents

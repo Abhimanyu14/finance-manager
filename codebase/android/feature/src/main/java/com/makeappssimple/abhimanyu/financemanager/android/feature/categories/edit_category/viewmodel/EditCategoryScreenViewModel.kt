@@ -77,12 +77,12 @@ internal class EditCategoryScreenViewModel @Inject constructor(
         clearTitle = ::clearTitle,
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-        setEmoji = ::updateEmoji,
-        setTitle = ::updateTitle,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
-        setSearchText = ::updateSearchText,
-        setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
         updateCategory = ::updateCategory,
+        updateEmoji = ::updateEmoji,
+        updateTitle = ::updateTitle,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateSearchText = ::updateSearchText,
+        updateSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
     )
     // endregion
 

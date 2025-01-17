@@ -29,7 +29,7 @@ internal class AddCategoryScreenUIEventHandler internal constructor(
             }
 
             is AddCategoryScreenUIEvent.OnEmojiCircleClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     AddCategoryScreenBottomSheetType.SelectEmoji
                 )
             }
@@ -39,19 +39,19 @@ internal class AddCategoryScreenUIEventHandler internal constructor(
             }
 
             is AddCategoryScreenUIEvent.OnEmojiUpdated -> {
-                uiStateEvents.setEmoji(uiEvent.updatedEmoji)
+                uiStateEvents.updateEmoji(uiEvent.updatedEmoji)
             }
 
             is AddCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                uiStateEvents.setSearchText(uiEvent.updatedSearchText)
+                uiStateEvents.updateSearchText(uiEvent.updatedSearchText)
             }
 
             is AddCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                uiStateEvents.setSelectedTransactionTypeIndex(uiEvent.updatedIndex)
+                uiStateEvents.updateSelectedTransactionTypeIndex(uiEvent.updatedIndex)
             }
 
             is AddCategoryScreenUIEvent.OnTitleUpdated -> {
-                uiStateEvents.setTitle(uiEvent.updatedTitle)
+                uiStateEvents.updateTitle(uiEvent.updatedTitle)
             }
         }
     }

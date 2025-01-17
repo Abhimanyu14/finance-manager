@@ -74,8 +74,8 @@ internal class ViewTransactionScreenViewModel @Inject constructor(
             navigateToViewTransactionScreen = ::navigateToViewTransactionScreen,
             onRefundButtonClick = ::onRefundButtonClick,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-            setScreenBottomSheetType = ::updateScreenBottomSheetType,
-            setTransactionIdToDelete = {
+            updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+            updateTransactionIdToDelete = {
                 transactionIdToDelete = it
             },
         )

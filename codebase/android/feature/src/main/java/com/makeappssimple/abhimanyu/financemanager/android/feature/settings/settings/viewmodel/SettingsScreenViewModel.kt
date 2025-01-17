@@ -69,8 +69,8 @@ internal class SettingsScreenViewModel @Inject constructor(
         recalculateTotal = ::recalculateTotal,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
         resetScreenSnackbarType = ::resetScreenSnackbarType,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
-        setScreenSnackbarType = ::updateScreenSnackbarType,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateScreenSnackbarType = ::updateScreenSnackbarType,
     )
     // endregion
 

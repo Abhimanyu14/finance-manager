@@ -17,6 +17,6 @@ internal data class SettingsScreenUIStateEvents(
     val recalculateTotal: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
     val resetScreenSnackbarType: () -> Unit = {},
-    val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
-    val setScreenSnackbarType: (SettingsScreenSnackbarType) -> Unit = {},
+    val updateScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
+    val updateScreenSnackbarType: (SettingsScreenSnackbarType) -> Unit = {},
 ) : ScreenUIStateEvents

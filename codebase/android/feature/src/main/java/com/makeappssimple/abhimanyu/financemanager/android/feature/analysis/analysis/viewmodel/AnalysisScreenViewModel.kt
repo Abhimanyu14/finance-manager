@@ -80,9 +80,9 @@ internal class AnalysisScreenViewModel @Inject constructor(
     internal val uiStateEvents: AnalysisScreenUIStateEvents = AnalysisScreenUIStateEvents(
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
-        setSelectedFilter = ::updateSelectedFilter,
-        setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateSelectedFilter = ::updateSelectedFilter,
+        updateSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
     )
     // endregion
 

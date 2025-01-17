@@ -15,7 +15,7 @@ internal class HomeScreenUIStateEvents(
     val navigateToTransactionsScreen: () -> Unit = {},
     val navigateToViewTransactionScreen: (transactionId: Int) -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
-    val setBalanceVisible: (Boolean) -> Unit = {},
-    val setOverviewTabSelectionIndex: (updatedOverviewTabSelectionIndex: Int) -> Unit = {},
-    val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit = {},
+    val updateIsBalanceVisible: (Boolean) -> Unit = {},
+    val updateOverviewTabSelectionIndex: (updatedOverviewTabSelectionIndex: Int) -> Unit = {},
+    val updateScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit = {},
 ) : ScreenUIStateEvents

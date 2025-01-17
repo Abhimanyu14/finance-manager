@@ -31,17 +31,17 @@ internal class AddAccountScreenUIEventHandler internal constructor(
             }
 
             is AddAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                uiStateEvents.setMinimumAccountBalanceAmountValue(
+                uiStateEvents.updateMinimumAccountBalanceAmountValue(
                     uiEvent.updatedMinimumAccountBalanceAmountValue,
                 )
             }
 
             is AddAccountScreenUIEvent.OnNameUpdated -> {
-                uiStateEvents.setName(uiEvent.updatedName)
+                uiStateEvents.updateName(uiEvent.updatedName)
             }
 
             is AddAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                uiStateEvents.setSelectedAccountTypeIndex(uiEvent.updatedIndex)
+                uiStateEvents.updateSelectedAccountTypeIndex(uiEvent.updatedIndex)
             }
 
             else -> {

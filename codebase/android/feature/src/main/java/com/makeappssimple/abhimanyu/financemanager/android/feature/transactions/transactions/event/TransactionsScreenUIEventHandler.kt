@@ -17,32 +17,32 @@ internal class TransactionsScreenUIEventHandler internal constructor(
             }
 
             is TransactionsScreenUIEvent.OnSelectionModeTopAppBarMoreOptionsButtonClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.Menu
                 )
             }
 
             is TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick -> {
-                uiStateEvents.setIsInSelectionMode(false)
+                uiStateEvents.updateIsInSelectionMode(false)
                 uiStateEvents.clearSelectedTransactions()
             }
 
             is TransactionsScreenUIEvent.OnFilterActionButtonClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.Filters
                 )
             }
 
             is TransactionsScreenUIEvent.OnSortActionButtonClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.Sort
                 )
             }
 
             is TransactionsScreenUIEvent.OnNavigationBackButtonClick -> {
-                uiStateEvents.setSearchText("")
-                uiStateEvents.setSelectedFilter(Filter())
-                uiStateEvents.setIsInSelectionMode(false)
+                uiStateEvents.updateSearchText("")
+                uiStateEvents.updateSelectedFilter(Filter())
+                uiStateEvents.updateIsInSelectionMode(false)
                 uiStateEvents.clearSelectedTransactions()
                 uiStateEvents.resetScreenBottomSheetType()
             }
@@ -67,7 +67,7 @@ internal class TransactionsScreenUIEventHandler internal constructor(
                         uiStateEvents.addToSelectedTransactions(uiEvent.transactionId)
                     }
                 } else {
-                    uiStateEvents.setIsInSelectionMode(true)
+                    uiStateEvents.updateIsInSelectionMode(true)
                     uiStateEvents.addToSelectedTransactions(uiEvent.transactionId)
                 }
             }
@@ -86,25 +86,25 @@ internal class TransactionsScreenUIEventHandler internal constructor(
             }
 
             is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.UpdateTransactionForButtonClick -> {
-                uiStateEvents.setScreenBottomSheetType(
+                uiStateEvents.updateScreenBottomSheetType(
                     TransactionsScreenBottomSheetType.SelectTransactionFor
                 )
             }
 
             is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
-                uiStateEvents.setSearchText(uiEvent.updatedSearchText)
+                uiStateEvents.updateSearchText(uiEvent.updatedSearchText)
             }
 
             is TransactionsScreenUIEvent.OnSelectedFilterUpdated -> {
-                uiStateEvents.setSelectedFilter(uiEvent.updatedSelectedFilter)
+                uiStateEvents.updateSelectedFilter(uiEvent.updatedSelectedFilter)
             }
 
             is TransactionsScreenUIEvent.OnSelectedSortOptionUpdated -> {
-                uiStateEvents.setSelectedSortOption(uiEvent.updatedSelectedSortOption)
+                uiStateEvents.updateSelectedSortOption(uiEvent.updatedSelectedSortOption)
             }
 
             is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
-                uiStateEvents.setIsInSelectionMode(false)
+                uiStateEvents.updateIsInSelectionMode(false)
                 uiStateEvents.resetScreenBottomSheetType()
                 uiStateEvents.updateTransactionForValuesInTransactions(
                     uiEvent.updatedTransactionForValues,

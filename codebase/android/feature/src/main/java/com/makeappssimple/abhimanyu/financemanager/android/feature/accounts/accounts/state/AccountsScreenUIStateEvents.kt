@@ -11,7 +11,7 @@ internal data class AccountsScreenUIStateEvents(
     val navigateToEditAccountScreen: (accountId: Int) -> Unit = {},
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
-    val setClickedItemId: (Int?) -> Unit = {},
-    val setDefaultAccountIdInDataStore: () -> Unit = {},
-    val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit = {},
+    val updateClickedItemId: (Int?) -> Unit = {},
+    val updateDefaultAccountIdInDataStore: () -> Unit = {},
+    val updateScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit = {},
 ) : ScreenUIStateEvents

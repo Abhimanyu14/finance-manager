@@ -71,9 +71,9 @@ internal class AccountsScreenViewModel @Inject constructor(
         navigateToEditAccountScreen = ::navigateToEditAccountScreen,
         navigateUp = ::navigateUp,
         resetScreenBottomSheetType = ::resetScreenBottomSheetType,
-        setClickedItemId = ::updateClickedItemId,
-        setDefaultAccountIdInDataStore = ::updateDefaultAccountIdInDataStore,
-        setScreenBottomSheetType = ::updateScreenBottomSheetType,
+        updateClickedItemId = ::updateClickedItemId,
+        updateDefaultAccountIdInDataStore = ::updateDefaultAccountIdInDataStore,
+        updateScreenBottomSheetType = ::updateScreenBottomSheetType,
     )
     // endregion
 

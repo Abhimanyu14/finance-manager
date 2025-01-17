@@ -126,23 +126,23 @@ internal class EditTransactionScreenViewModel @Inject constructor(
             navigateUp = ::navigateUp,
             resetScreenBottomSheetType = ::resetScreenBottomSheetType,
             resetScreenSnackbarType = ::resetScreenSnackbarType,
-            setAccountFrom = ::updateAccountFrom,
-            setAccountTo = ::updateAccountTo,
-            setAmount = ::updateAmount,
-            setCategory = ::updateCategory,
-            setIsTransactionDatePickerDialogVisible = ::updateIsTransactionDatePickerDialogVisible,
-            setIsTransactionTimePickerDialogVisible = ::updateIsTransactionTimePickerDialogVisible,
-            setScreenBottomSheetType = ::updateScreenBottomSheetType,
-            setSelectedTransactionForIndex = ::updateSelectedTransactionForIndex,
-            setSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
-            setTitle = ::updateTitle,
-            setTransactionDate = ::updateTransactionDate,
-            setTransactionTime = ::updateTransactionTime,
+            updateAccountFrom = ::updateAccountFrom,
+            updateAccountTo = ::updateAccountTo,
+            updateAmount = ::updateAmount,
+            updateCategory = ::updateCategory,
+            updateIsTransactionDatePickerDialogVisible = ::updateIsTransactionDatePickerDialogVisible,
+            updateIsTransactionTimePickerDialogVisible = ::updateIsTransactionTimePickerDialogVisible,
+            updateScreenBottomSheetType = ::updateScreenBottomSheetType,
+            updateSelectedTransactionForIndex = ::updateSelectedTransactionForIndex,
+            updateSelectedTransactionTypeIndex = ::updateSelectedTransactionTypeIndex,
+            updateTitle = ::updateTitle,
             updateTransaction = {
                 updateTransaction(
                     uiState = uiState.value,
                 )
             },
+            updateTransactionDate = ::updateTransactionDate,
+            updateTransactionTime = ::updateTransactionTime,
         )
     // endregion
 

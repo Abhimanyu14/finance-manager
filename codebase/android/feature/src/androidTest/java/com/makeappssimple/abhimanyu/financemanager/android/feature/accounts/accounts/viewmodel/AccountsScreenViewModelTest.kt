@@ -180,7 +180,7 @@ internal class AccountsScreenViewModelTest {
             refreshSignal().test {
                 initViewModel()
                 advanceUntilIdle()
-                uiStateEvents().setClickedItemId(null)
+                uiStateEvents().updateClickedItemId(null)
                 advanceUntilIdle()
                 assertEquals(
                     Unit,
@@ -207,7 +207,7 @@ internal class AccountsScreenViewModelTest {
 
             initViewModel()
             advanceUntilIdle()
-            uiStateEvents().setClickedItemId(TEST_CLICKED_ITEM_ID)
+            uiStateEvents().updateClickedItemId(TEST_CLICKED_ITEM_ID)
             advanceUntilIdle()
 
             uiStateEvents().deleteAccount()

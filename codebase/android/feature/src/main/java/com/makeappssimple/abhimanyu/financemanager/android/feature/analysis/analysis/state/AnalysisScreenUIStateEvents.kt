@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.anal
 internal class AnalysisScreenUIStateEvents(
     val navigateUp: () -> Unit = {},
     val resetScreenBottomSheetType: () -> Unit = {},
-    val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit = {},
-    val setSelectedFilter: (updatedSelectedFilter: Filter) -> Unit = {},
-    val setSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit = {},
+    val updateScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit = {},
+    val updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit = {},
+    val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit = {},
 ) : ScreenUIStateEvents
