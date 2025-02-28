@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.chart.composepie.data.PieChartData
+import com.makeappssimple.abhimanyu.financemanager.android.core.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
